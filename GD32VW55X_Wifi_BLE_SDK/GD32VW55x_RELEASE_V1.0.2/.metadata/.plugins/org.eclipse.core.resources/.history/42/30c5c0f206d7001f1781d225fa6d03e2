@@ -1,0 +1,101 @@
+#include <stdint.h>
+#include "gd32vw55x_platform.h"
+#include "wrapper_os.h"
+#include "wifi_export.h"
+#include "mqtt_cmd.h"  // Include mqtt_cmd for MQTT functionality
+#include "wifi_management.h"
+
+// Wi-Fi credentials
+#define WIFI_SSID "Mobiliz NaRGE_Guest"
+#define WIFI_PASSWORD "M@b!lz12.*"
+
+// Retry configuration
+#define WIFI_RETRY_LIMIT 5
+#define WIFI_RETRY_INTERVAL 2000 // in milliseconds
+
+/**
+ * @brief Connect to Wi-Fi with retries
+ *
+ * @return int 0 if connected successfully, -1 otherwise
+ */
+static int wifi_connect_with_retry(void) {
+    int retry_count = 0;
+    int status;
+
+    while (retry_count < WIFI_RETRY_LIMIT || WIFI_RETRY_LIMIT == 0) {
+        app_print("Attempting to connect to Wi-Fi...\n");
+        status = wifi_management_connect(WIFI_SSID, WIFI_PASSWORD, 1); // Blocked connect
+        if (status == 0) {
+            app_print("Wi-Fi connected successfully.\n");
+            return 0;
+        }
+
+        app_print("Wi-Fi connection failed. Retrying...\n");
+        sys_ms_sleep(WIFI_RETRY_INTERVAL);
+        retry_count++;
+    }
+
+    app_print("Wi-Fi connection failed after maximum retries.\n");
+    return -1;
+}
+
+int main(void) {
+    // Initialize the platform
+    platform_init();
+
+    // Initialize Wi-Fi management
+    if (wifi_management_init() != 0) {
+        app_print("Failed to initialize Wi-Fi management. Halting...\n");
+        return -1;
+    }
+
+    // Connect to Wi-Fi with retry mechanism
+    if (wifi_connect_with_retry() != 0) {
+        app_print("Failed to connect to Wi-Fi. Halting...\n");
+        return -1;
+    }
+
+    // Start the OS
+    sys_os_start();
+
+    // Use mqtt_cmd to connect to the MQTT server
+    char *mqtt_connect_args[] = {
+        "mqtt",
+        "connect",
+        "192.168.1.1",  // Replace with your MQTT server IP
+        "1883",         // Port
+        "0",            // No encryption
+        "username",     // Optional username
+        "password"      // Optional password
+    };
+    cmd_mqtt(7, mqtt_connect_args);
+
+    // Publish a test message
+    char *mqtt_publish_args[] = {
+        "mqtt",
+        "publish",
+        "test/topic",    // Topic
+        "Hello, MQTT!",  // Message
+        "0",             // QoS 0
+        "0"              // Retain flag
+    };
+    cmd_mqtt(6, mqtt_publish_args);
+
+    // Subscribe to a topic
+    char *mqtt_subscribe_args[] = {
+        "mqtt",
+        "subscribe",
+        "test/topic",    // Topic
+        "0",             // QoS 0
+        "1"              // Subscribe (1 to subscribe, 0 to unsubscribe)
+    };
+    cmd_mqtt(5, mqtt_subscribe_args);
+
+    // Main task loop
+    for (;;) {
+        // Handle periodic tasks, e.g., checking for MQTT events
+        sys_ms_sleep(1000); // Simulate periodic processing
+    }
+
+    return 0;
+}

@@ -1,0 +1,1691 @@
+   1              		.file	"handlers.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.Exception_Init,"ax",@progbits
+  10              		.align	1
+  11              		.globl	Exception_Init
+  13              	Exception_Init:
+  14              	.LFB367:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /*!
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     \file    handlers.c
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     \brief   Interrupt and exception and NMI handling for GD32VW55x SDK.
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** */
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /*
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     Redistribution and use in source and binary forms, with or without modification,
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** are permitted provided that the following conditions are met:
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****        list of conditions and the following disclaimer.
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****        this list of conditions and the following disclaimer in the documentation
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****        and/or other materials provided with the distribution.
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****        may be used to endorse or promote products derived from this software without
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****        specific prior written permission.
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** OF SUCH DAMAGE.
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** */
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #include "gd32vw55x.h"
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifndef EXEC_USING_STD_PRINTF
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #include "log_uart.h"
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #include "rom_export.h"
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #include "raw_flash_api.h"
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #include "wrapper_os.h"
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #define EXC_LOG_TO_FLASH    1
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #define UART_CMD_IN_EXC     1
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** extern uint32_t _sp[];
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** typedef struct EXC_Frame {
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifdef __riscv_flen
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f0;
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f1;
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f2;
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f3;
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f4;
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f5;
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f6;
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f7;
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f10;
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f11;
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f12;
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f13;
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f14;
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f15;
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f16;
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f17;
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f28;
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f29;
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f30;
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long f31;
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long fcsr;
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long ra;                /* ra: x1, return address for jump */
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long tp;                /* tp: x4, thread pointer */
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long t0;                /* t0: x5, temporary register 0 */
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long t1;                /* t1: x6, temporary register 1 */
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long t2;                /* t2: x7, temporary register 2 */
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long a0;                /* a0: x10, return value or function argument 0 */
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long a1;                /* a1: x11, return value or function argument 1 */
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long a2;                /* a2: x12, function argument 2 */
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long a3;                /* a3: x13, function argument 3 */
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long a4;                /* a4: x14, function argument 4 */
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long a5;                /* a5: x15, function argument 5 */
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long mcause;            /* mcause: machine cause csr register */
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long mepc;              /* mepc: machine exception program counter csr register */
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long msubm;             /* msubm: machine sub-mode csr register, nuclei customized */
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifndef __riscv_32e
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long a6;                /* a6: x16, function argument 6 */
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long a7;                /* a7: x17, function argument 7 */
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long t3;                /* t3: x28, temporary register 3 */
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long t4;                /* t4: x29, temporary register 4 */
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long t5;                /* t5: x30, temporary register 5 */
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     unsigned long t6;                /* t6: x31, temporary register 6 */
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** } EXC_Frame_Type;
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \defgroup  NMSIS_Core_IntExcNMI_Handling   Interrupt and Exception and NMI Handling
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief Functions for interrupt, exception and nmi handle available in system_<device>.c.
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \details
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * Nuclei provide a template for interrupt, exception and NMI handling. Silicon Vendor could adapat
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * to their requirement. Silicon vendor could implement interface for different exception code and
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * replace current implementation.
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  *
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * @{
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /** \brief Max exception handler number, don't include the NMI(0xFFF) one */
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #define MAX_SYSTEM_EXCEPTION_NUM        12
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief      Store the exception handlers for each exception ID
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \note
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * - This SystemExceptionHandlers are used to store all the handlers for all
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * the exception codes Nuclei N/NX core provided.
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * - Exception code 0 - 11, totally 12 exceptions are mapped to SystemExceptionHandlers[0:11]
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * - Exception for NMI is also re-routed to exception handling(exception code 0xFFF) in startup cod
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** static unsigned long SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM + 1];
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief      Exception Handler Function Typedef
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \note
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * This typedef is only used internal in this system_<Device>.c file.
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * It is used to do type conversion for registered exception handler before calling it.
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** typedef void (*EXC_HANDLER)(unsigned long mcause, unsigned long sp);
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** void Exception_DumpFrame(unsigned long sp);
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifndef EXEC_USING_STD_PRINTF
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** void print_reg(char *title, uint32_t title_len, uint32_t val)
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     int i;
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char c;
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     log_uart_put_data((uint8_t *)title, title_len);
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     for (i = 28; i >= 0; i -= 4) {
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         c = ((val >> i ) & 0xF);
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         if (c >= 10)
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             c += 'a' - 10;
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         else
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             c += '0';
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         log_uart_putc_noint(c);
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     log_uart_put_data((const uint8_t *)"\r\n", strlen("\r\n"));
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifndef EXEC_USING_STD_PRINTF
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** void dumpStackInfo(unsigned long sp, int32_t num)
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint32_t i = 0;
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     int8_t j = 0;
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char c;
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     while(num > 0)
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     {
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         uint8_t val = *(uint8_t *)sp;
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         for (j = 4; j >= 0; j -= 4) {
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             c = ((val >> j ) & 0xF);
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             if (c >= 10)
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 c += 'a' - 10;
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             else
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 c += '0';
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint(c);
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         i++;
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         sp++;
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         if ((i % 16) == 0) {
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_put_data((uint8_t *)"\r\n", strlen("\r\n"));
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         else {
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint(',');
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint(' ');
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         num--;
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** void xCurrentTaskDumpInfo(unsigned long sp)
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     int8_t j = 0;
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char *pcTaskName = sys_task_name_get(NULL);
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     int32_t num = sys_current_task_stack_depth(sp);
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #if (configRECORD_STACK_HIGH_ADDRESS == 0)
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     log_uart_put_data((const uint8_t *)"set configRECORD_STACK_HIGH_ADDRESS=1 to get precise data\r
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                        strlen("set configRECORD_STACK_HIGH_ADDRESS=1 to get precise data\r\n"));
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     for(j = 0; j < 100; j++)
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     {
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         if (pcTaskName[j] != '\0')
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         {
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint(pcTaskName[j]);
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         else
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             break;
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     log_uart_put_data((uint8_t *)" Stack Dump:\r\n", strlen(" Stack Dump:\r\n"));
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     dumpStackInfo(sp, num);
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** static bool parseUartCmd(char *p_buf, uint8_t buf_len, unsigned long sp) {
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint8_t idx = 0;
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint8_t state = 0;
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint32_t start_addr = 0;
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint8_t len = 0;
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     int8_t i, j;
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char c;
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char cmdr[] = {'r', 'm', 'e', 'm', ' '};
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char cmdd[] = {'d', 'u', 'm', 'p'};
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char cmdh[] = {'h', 'e', 'l', 'p'};
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     while(idx < buf_len) {
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         switch (state) {
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         case 0:
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             if (p_buf[idx] == 'r' && (buf_len - idx) > 5) {
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 for (i = 0; i < 5; i++) {
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     if (p_buf[idx] != cmdr[i]) {
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                         return false;
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     }
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     idx++;
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 }
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 state = 1;
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 continue;
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             else if (p_buf[idx] == 'd' && (buf_len - idx) >= 4) {
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 for (i = 0; i < 4; i++) {
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     if (p_buf[idx] != cmdd[i]) {
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                         return false;
+ 238:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     }
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     idx++;
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 }
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 Exception_DumpFrame(sp);
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 // Trap from task
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 if ((MSUBM_PTYP & __RV_CSR_READ(CSR_MSUBM)) == 0) {
+ 244:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     print_reg("SP     :      0x", 16, sp);
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     xCurrentTaskDumpInfo(sp);
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 }
+ 247:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 // Trap from interrupt
+ 248:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 else if ((MSUBM_PTYP & __RV_CSR_READ(CSR_MSUBM)) == 0x0100) {
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     unsigned long int_sp = __RV_CSR_READ(CSR_MSCRATCH);
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     print_reg("SP     :      0x", 16, int_sp);
+ 251:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifndef __riscv_32e
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     int32_t num = 80;
+ 253:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 254:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     int32_t num = 64;
+ 255:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 256:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 257:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifdef __riscv_flen
+ 258:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     num += 80;
+ 259:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 260:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     log_uart_put_data((uint8_t *)"Interrupt Stack Dump:\r\n", strlen("Interrupt Sta
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     dumpStackInfo(sp, num);
+ 262:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     num = (uint32_t)_sp - int_sp;
+ 263:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     dumpStackInfo(int_sp, num);
+ 264:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 }
+ 265:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 266:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 log_uart_put_data((const uint8_t *)"Please use bloodhound tool to parse log above!\
+ 267:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 return true;
+ 268:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             else if (p_buf[idx] == 'h' && (buf_len - idx) >= 4) {
+ 270:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 for (i = 0; i < 4; i++) {
+ 271:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     if (p_buf[idx] != cmdh[i]) {
+ 272:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                         return false;
+ 273:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     }
+ 274:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     idx++;
+ 275:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 }
+ 276:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 log_uart_put_data((uint8_t *)"rmem XXXXXXXX(8 bytes Hex) DD(decimal)\r\n", strlen("
+ 277:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 log_uart_put_data((uint8_t *)"dump\r\n", strlen("dump\r\n"));
+ 278:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 279:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 return true;
+ 280:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 281:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             break;
+ 282:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         case 1:
+ 283:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             if (p_buf[idx] == ' ') {
+ 284:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 break;
+ 285:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 286:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             else if ((buf_len - idx) < 10) {
+ 287:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 return false;
+ 288:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 289:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 290:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             for (i = 28; i >= 0; i -= 4) {
+ 291:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 if (p_buf[idx] >= '0' && p_buf[idx] <= '9') {
+ 292:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     start_addr |= ((p_buf[idx] - '0') << i);
+ 293:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 }
+ 294:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 else if (p_buf[idx] >= 'a' && p_buf[idx] <= 'f') {
+ 295:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     start_addr |= ((p_buf[idx] - 'a') + 10) << i;
+ 296:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 }
+ 297:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 else if (p_buf[idx] >= 'A' && p_buf[idx] <= 'F') {
+ 298:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     start_addr |= ((p_buf[idx] - 'A') + 10) << i;
+ 299:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 }
+ 300:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 else {
+ 301:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                     return false;
+ 302:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 }
+ 303:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 idx++;
+ 304:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 305:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 306:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             state = 2;
+ 307:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             continue;
+ 308:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             break;
+ 309:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         case 2:
+ 310:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             if (p_buf[idx] == ' ') {
+ 311:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 break;
+ 312:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 313:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 314:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             if (p_buf[idx] >= '0' && p_buf[idx] <= '9') {
+ 315:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 len = len * 10 + (p_buf[idx] - '0');
+ 316:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 317:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             else {
+ 318:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 return false;
+ 319:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 320:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 321:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         default:
+ 322:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             break;
+ 323:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 324:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         idx++;
+ 325:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 326:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 327:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     // we need to check read addr is ok
+ 328:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     for (i = 1; i <= len; i++) {
+ 329:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         uint8_t val = *(uint8_t *)start_addr;
+ 330:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         for (j = 4; j >= 0; j -= 4) {
+ 331:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             c = ((val >> j ) & 0xF);
+ 332:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             if (c >= 10)
+ 333:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 c += 'a' - 10;
+ 334:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             else
+ 335:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 c += '0';
+ 336:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint(c);
+ 337:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 338:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 339:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         start_addr++;
+ 340:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         if ((i % 16) == 0) {
+ 341:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_put_data((uint8_t *)"\r\n", strlen("\r\n"));
+ 342:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 343:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         else {
+ 344:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint(',');
+ 345:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint(' ');
+ 346:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 347:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 348:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 349:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     return true;
+ 350:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 351:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 352:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 353:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #if EXC_LOG_TO_FLASH
+ 354:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #define WR_REGION_SPAGE    ((uint32_t)0x003FE000U)       /*!< start page of write protection region
+ 355:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #define WR_REGION_EPAGE    ((uint32_t)0x003FF000U)       /*!< end page of write protection region: 
+ 356:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 357:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** static void dump_info_2_flash(unsigned long sp)
+ 358:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+ 359:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char prefix[3];
+ 360:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint32_t reg_val = 0;
+ 361:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint32_t offset = WR_REGION_SPAGE;
+ 362:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 363:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     if (raw_flash_erase(WR_REGION_SPAGE, FLASH_PAGE_SIZE))
+ 364:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         return;
+ 365:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 366:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     prefix[0] = 20;
+ 367:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     prefix[1] = 0;
+ 368:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     prefix[2] = 0x01;   //register value
+ 369:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     raw_flash_write(offset, (void *)&prefix, 3);
+ 370:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     offset += 3;
+ 371:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 372:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     reg_val = __RV_CSR_READ(CSR_MCAUSE);
+ 373:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     raw_flash_write(offset, (void *)&reg_val, 4);
+ 374:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     offset += 4;
+ 375:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 376:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     reg_val = __RV_CSR_READ(CSR_MDCAUSE);
+ 377:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     raw_flash_write(offset, (void *)&reg_val, 4);
+ 378:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     offset += 4;
+ 379:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 380:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     reg_val = __RV_CSR_READ(CSR_MEPC);
+ 381:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     raw_flash_write(offset, (void *)&reg_val, 4);
+ 382:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     offset += 4;
+ 383:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 384:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     reg_val = __RV_CSR_READ(CSR_MTVAL);
+ 385:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     raw_flash_write(offset, (void *)&reg_val, 4);
+ 386:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     offset += 4;
+ 387:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 388:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     reg_val = __RV_CSR_READ(CSR_MSUBM);
+ 389:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     raw_flash_write(offset, (void *)&reg_val, 4);
+ 390:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     offset += 4;
+ 391:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 392:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     prefix[2] = 0x02;   //stack type
+ 393:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     // Trap from task
+ 394:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     if ((MSUBM_PTYP & __RV_CSR_READ(CSR_MSUBM)) == 0) {
+ 395:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         int32_t num = sys_current_task_stack_depth(sp);
+ 396:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         if ((offset + num + 6) > WR_REGION_EPAGE) {
+ 397:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             num = WR_REGION_EPAGE - offset - 6;
+ 398:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 399:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         prefix[0] = num & 0xFF;
+ 400:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         prefix[1] = (num >> 8) & 0xFF;
+ 401:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         raw_flash_write(offset, (void *)prefix, 3);
+ 402:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         offset += 3;
+ 403:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         raw_flash_write(offset, (void *)sp, num);
+ 404:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         offset += num;
+ 405:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 406:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     // Trap from interrupt
+ 407:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     else if ((MSUBM_PTYP & __RV_CSR_READ(CSR_MSUBM)) == 0x0100) {
+ 408:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****           unsigned long int_sp = __RV_CSR_READ(CSR_MSCRATCH);
+ 409:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****           int32_t sk_num = (uint32_t)_sp - int_sp;
+ 410:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifndef __riscv_32e
+ 411:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         int32_t num = 80;
+ 412:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 413:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         int32_t num = 64;
+ 414:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 415:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 416:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifdef __riscv_flen
+ 417:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         num += 80;
+ 418:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 419:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 420:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         if ((offset + num + sk_num + 6) > WR_REGION_EPAGE) {
+ 421:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             sk_num = WR_REGION_EPAGE - offset - 6 - num;
+ 422:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 423:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 424:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         num += sk_num;
+ 425:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         prefix[0] = num & 0xFF;
+ 426:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         prefix[1] = (num >> 8) & 0xFF;
+ 427:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         raw_flash_write(offset, (void *)prefix, 3);
+ 428:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         offset += 3;
+ 429:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 430:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         num -= sk_num;
+ 431:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         raw_flash_write(offset, (void *)sp, num);
+ 432:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         offset += num;
+ 433:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 434:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         num = sk_num;
+ 435:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         raw_flash_write(offset, (void *)int_sp, num);
+ 436:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         offset += num;
+ 437:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 438:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 439:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     prefix[0] = 0;
+ 440:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     prefix[1] = 0;
+ 441:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     raw_flash_write(offset, (void *)&prefix, 3);
+ 442:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 443:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 444:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 445:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+ 446:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief      System Default Exception Handler
+ 447:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \details
+ 448:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * This function provided a default exception and NMI handling code for all exception ids.
+ 449:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * By default, It will just print some information for debug, Vendor can customize it according to 
+ 450:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 451:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** static void system_default_exception_handler(unsigned long mcause, unsigned long sp)
+ 452:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+ 453:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 454:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifdef EXEC_USING_STD_PRINTF
+ 455:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MCAUSE : 0x%lx\r\n", mcause);
+ 456:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MDCAUSE: 0x%lx\r\n", __RV_CSR_READ(CSR_MDCAUSE));
+ 457:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 458:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 459:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 460:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char ch;
+ 461:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     char uart_buf[64];
+ 462:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint8_t uart_index = 0;
+ 463:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 464:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     log_uart_put_data((const uint8_t *)"System Default Exception \r\n", strlen("System Default Exce
+ 465:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MCAUSE :      0x", 16, mcause);
+ 466:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MDCAUSE:      0x", 16, __RV_CSR_READ(CSR_MDCAUSE));
+ 467:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MEPC   :      0x", 16, __RV_CSR_READ(CSR_MEPC));
+ 468:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MTVAL  :      0x", 16, __RV_CSR_READ(CSR_MTVAL));
+ 469:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MSUBM  :      0x", 16, __RV_CSR_READ(CSR_MSUBM));
+ 470:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 471:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     Exception_DumpFrame(sp);
+ 472:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 473:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifndef EXEC_USING_STD_PRINTF
+ 474:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     // Trap from task
+ 475:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     if ((MSUBM_PTYP & __RV_CSR_READ(CSR_MSUBM)) == 0) {
+ 476:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         print_reg("SP     :      0x", 16, sp);
+ 477:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         xCurrentTaskDumpInfo(sp);
+ 478:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 479:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     // Trap from interrupt
+ 480:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     else if ((MSUBM_PTYP & __RV_CSR_READ(CSR_MSUBM)) == 0x0100) {
+ 481:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         unsigned long int_sp = __RV_CSR_READ(CSR_MSCRATCH);
+ 482:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         print_reg("SP     :      0x", 16, int_sp);
+ 483:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifndef __riscv_32e
+ 484:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         int32_t num = 80;
+ 485:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 486:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         int32_t num = 64;
+ 487:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 488:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 489:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifdef __riscv_flen
+ 490:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         num += 84;
+ 491:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 492:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         log_uart_put_data((uint8_t *)"Interrupt Stack Dump:\r\n", strlen("Interrupt Stack Dump:\r\n
+ 493:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         dumpStackInfo(sp, num);
+ 494:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         num = (uint32_t)_sp - int_sp;
+ 495:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         dumpStackInfo(int_sp, num);
+ 496:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 497:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     log_uart_put_data((const uint8_t *)"Please use bloodhound tool to parse log above!\r\n", strlen
+ 498:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 499:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #if EXC_LOG_TO_FLASH
+ 500:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     dump_info_2_flash(sp);
+ 501:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 502:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 503:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #if (UART_CMD_IN_EXC == 1)
+ 504:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uart_config(LOG_UART, DEFAULT_LOG_BAUDRATE, false, false, false);
+ 505:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     log_uart_put_data((const uint8_t *)"\r\n", strlen("\r\n"));
+ 506:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     log_uart_put_data((const uint8_t *)"print help to get cmd\r\n", strlen("print help to get cmd\r
+ 507:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     while (1) {
+ 508:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         // We should have chance to check overflow error
+ 509:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         // Otherwise it may cause dead loop handle rx interrupt
+ 510:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         if (RESET != usart_flag_get(LOG_UART, USART_FLAG_ORERR)) {
+ 511:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             usart_flag_clear(LOG_UART, USART_FLAG_ORERR);
+ 512:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 513:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 514:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         if ((RESET != usart_flag_get(LOG_UART, USART_FLAG_RBNE))) {
+ 515:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             ch = (char)usart_data_receive(LOG_UART);
+ 516:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 517:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         else {
+ 518:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             continue;
+ 519:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 520:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 521:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         if (ch == '\r' || ch == '\n') { /* putty doesn't transmit '\n' */
+ 522:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint('\r');
+ 523:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint('\n');
+ 524:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 525:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             if (uart_index > 0) {
+ 526:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 parseUartCmd(uart_buf, uart_index, sp);
+ 527:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 528:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint('#');
+ 529:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint(' ');
+ 530:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             uart_index = 0;
+ 531:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         } else if (ch == '\b') { /* non-destructive backspace */
+ 532:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             if (uart_index > 0) {
+ 533:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 uart_buf[--uart_index] = '\0';
+ 534:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 535:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 536:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         else {
+ 537:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             uart_buf[uart_index++] = ch;
+ 538:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             if (uart_index >= 64) {
+ 539:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****                 uart_index = 0;
+ 540:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             }
+ 541:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****             log_uart_putc_noint(ch);
+ 542:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         }
+ 543:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 544:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 545:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 546:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     while (1);
+ 547:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 548:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 549:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+ 550:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief      NMI Handler
+ 551:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \details
+ 552:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * This function provided a NMI handling code for NMI_EXCn.
+ 553:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * By default, It will just print some information for debug, Vendor can customize it according to 
+ 554:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 555:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** void nmi_handler(unsigned long mcause, unsigned long sp)
+ 556:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+ 557:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 558:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifdef EXEC_USING_STD_PRINTF
+ 559:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("NMI \r\n");
+ 560:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MCAUSE : 0x%lx\r\n", mcause);
+ 561:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MDCAUSE: 0x%lx\r\n", __RV_CSR_READ(CSR_MDCAUSE));
+ 562:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 563:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 564:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 565:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     log_uart_put_data((const uint8_t *)"NMI \r\n", strlen("NMI \r\n"));
+ 566:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MCAUSE :      0x", 16, mcause);
+ 567:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MDCAUSE:      0x", 16, __RV_CSR_READ(CSR_MDCAUSE));
+ 568:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MEPC   :      0x", 16, __RV_CSR_READ(CSR_MEPC));
+ 569:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MTVAL  :      0x", 16, __RV_CSR_READ(CSR_MTVAL));
+ 570:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("MSUBM  :      0x", 16, __RV_CSR_READ(CSR_MSUBM));
+ 571:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 572:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     Exception_DumpFrame(sp);
+ 573:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 574:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     while (1);
+ 575:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 576:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 577:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+ 578:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief      Initialize all the default core exception handlers
+ 579:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \details
+ 580:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * The core exception handler for each exception id will be initialized to \ref system_default_exce
+ 581:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \note
+ 582:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * Called in \ref _init function, used to initialize default exception handlers for all exception I
+ 583:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 584:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** void Exception_Init(void)
+ 585:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+  16              		.loc 1 585 1
+  17              		.cfi_startproc
+ 586:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     for (int i = 0; i < MAX_SYSTEM_EXCEPTION_NUM + 1; i++) {
+  18              		.loc 1 586 5
+  19              	.LBB2:
+  20              		.loc 1 586 10
+  21              	.LVL0:
+  22              		.loc 1 586 21
+  23 0000 B7070000 		lui	a5,%hi(.LANCHOR0)
+  24 0004 93870700 		addi	a5,a5,%lo(.LANCHOR0)
+ 587:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         SystemExceptionHandlers[i] = (unsigned long)system_default_exception_handler;
+  25              		.loc 1 587 38 is_stmt 0
+  26 0008 37070000 		lui	a4,%hi(system_default_exception_handler)
+  27 000c 13070700 		addi	a4,a4,%lo(system_default_exception_handler)
+  28 0010 93864703 		addi	a3,a5,52
+  29              	.LVL1:
+  30              	.L2:
+  31              		.loc 1 587 9 is_stmt 1 discriminator 3
+  32              		.loc 1 587 36 is_stmt 0 discriminator 3
+  33 0014 98C3     		sw	a4,0(a5)
+ 586:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     for (int i = 0; i < MAX_SYSTEM_EXCEPTION_NUM + 1; i++) {
+  34              		.loc 1 586 55 is_stmt 1 discriminator 3
+ 586:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     for (int i = 0; i < MAX_SYSTEM_EXCEPTION_NUM + 1; i++) {
+  35              		.loc 1 586 21 discriminator 3
+ 586:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     for (int i = 0; i < MAX_SYSTEM_EXCEPTION_NUM + 1; i++) {
+  36              		.loc 1 586 5 is_stmt 0 discriminator 3
+  37 0016 9107     		addi	a5,a5,4
+  38 0018 E39ED7FE 		bne	a5,a3,.L2
+  39              	.LBE2:
+ 588:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 589:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+  40              		.loc 1 589 1
+  41 001c 8280     		ret
+  42              		.cfi_endproc
+  43              	.LFE367:
+  45              		.section	.text.Exception_Register_EXC,"ax",@progbits
+  46              		.align	1
+  47              		.globl	Exception_Register_EXC
+  49              	Exception_Register_EXC:
+  50              	.LFB368:
+ 590:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 591:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+ 592:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief       Register an exception handler for exception code EXCn
+ 593:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \details
+ 594:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * * For EXCn < \ref MAX_SYSTEM_EXCEPTION_NUM, it will be registered into SystemExceptionHandlers[E
+ 595:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * * For EXCn == NMI_EXCn, it will be registered into SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_
+ 596:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \param   EXCn    See \ref EXCn_Type
+ 597:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \param   exc_handler     The exception handler for this exception code EXCn
+ 598:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 599:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** void Exception_Register_EXC(uint32_t EXCn, unsigned long exc_handler)
+ 600:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+  51              		.loc 1 600 1 is_stmt 1
+  52              		.cfi_startproc
+  53              	.LVL2:
+ 601:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM) && (EXCn >= 0)) {
+  54              		.loc 1 601 5
+  55              		.loc 1 601 8 is_stmt 0
+  56 0000 AD47     		li	a5,11
+  57 0002 63EAA700 		bgtu	a0,a5,.L6
+ 602:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         SystemExceptionHandlers[EXCn] = exc_handler;
+  58              		.loc 1 602 9 is_stmt 1
+  59              		.loc 1 602 39 is_stmt 0
+  60 0006 B7070000 		lui	a5,%hi(.LANCHOR0)
+  61 000a 93870700 		addi	a5,a5,%lo(.LANCHOR0)
+  62 000e 3345F520 		sh2add	a0,a0,a5
+  63              	.LVL3:
+  64 0012 0CC1     		sw	a1,0(a0)
+  65 0014 8280     		ret
+  66              	.LVL4:
+  67              	.L6:
+ 603:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else if (EXCn == NMI_EXCn) {
+  68              		.loc 1 603 12 is_stmt 1
+  69              		.loc 1 603 15 is_stmt 0
+  70 0016 8567     		li	a5,4096
+  71 0018 FD17     		addi	a5,a5,-1
+  72 001a 6303F500 		beq	a0,a5,.L8
+ 604:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM] = exc_handler;
+ 605:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 606:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+  73              		.loc 1 606 1
+  74 001e 8280     		ret
+  75              	.L8:
+ 604:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM] = exc_handler;
+  76              		.loc 1 604 9 is_stmt 1
+ 604:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM] = exc_handler;
+  77              		.loc 1 604 59 is_stmt 0
+  78 0020 B7070000 		lui	a5,%hi(.LANCHOR0+48)
+  79 0024 23A8B702 		sw	a1,%lo(.LANCHOR0+48)(a5)
+  80              		.loc 1 606 1
+  81 0028 8280     		ret
+  82              		.cfi_endproc
+  83              	.LFE368:
+  85              		.section	.text.Exception_Get_EXC,"ax",@progbits
+  86              		.align	1
+  87              		.globl	Exception_Get_EXC
+  89              	Exception_Get_EXC:
+  90              	.LFB369:
+ 607:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 608:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+ 609:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief       Get current exception handler for exception code EXCn
+ 610:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \details
+ 611:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * * For EXCn < \ref MAX_SYSTEM_EXCEPTION_NUM, it will return SystemExceptionHandlers[EXCn-1].
+ 612:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * * For EXCn == NMI_EXCn, it will return SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM].
+ 613:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \param   EXCn    See \ref EXCn_Type
+ 614:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \return  Current exception handler for exception code EXCn, if not found, return 0.
+ 615:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 616:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** unsigned long Exception_Get_EXC(uint32_t EXCn)
+ 617:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+  91              		.loc 1 617 1 is_stmt 1
+  92              		.cfi_startproc
+  93              	.LVL5:
+ 618:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM) && (EXCn >= 0)) {
+  94              		.loc 1 618 5
+  95              		.loc 1 618 8 is_stmt 0
+  96 0000 2D47     		li	a4,11
+ 617:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM) && (EXCn >= 0)) {
+  97              		.loc 1 617 1
+  98 0002 AA87     		mv	a5,a0
+  99              		.loc 1 618 8
+ 100 0004 637DA700 		bleu	a0,a4,.L13
+ 619:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         return SystemExceptionHandlers[EXCn];
+ 620:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else if (EXCn == NMI_EXCn) {
+ 101              		.loc 1 620 12 is_stmt 1
+ 102              		.loc 1 620 15 is_stmt 0
+ 103 0008 0567     		li	a4,4096
+ 104 000a 7D17     		addi	a4,a4,-1
+ 621:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         return SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM];
+ 622:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else {
+ 623:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         return 0;
+ 105              		.loc 1 623 16
+ 106 000c 0145     		li	a0,0
+ 107              	.LVL6:
+ 620:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         return SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM];
+ 108              		.loc 1 620 15
+ 109 000e 6383E700 		beq	a5,a4,.L14
+ 624:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 625:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 110              		.loc 1 625 1
+ 111 0012 8280     		ret
+ 112              	.L14:
+ 621:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else {
+ 113              		.loc 1 621 9 is_stmt 1
+ 621:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else {
+ 114              		.loc 1 621 39 is_stmt 0
+ 115 0014 B7070000 		lui	a5,%hi(.LANCHOR0+48)
+ 116              	.LVL7:
+ 117 0018 03A50703 		lw	a0,%lo(.LANCHOR0+48)(a5)
+ 118              		.loc 1 625 1
+ 119 001c 8280     		ret
+ 120              	.LVL8:
+ 121              	.L13:
+ 619:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else if (EXCn == NMI_EXCn) {
+ 122              		.loc 1 619 9 is_stmt 1
+ 619:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else if (EXCn == NMI_EXCn) {
+ 123              		.loc 1 619 39 is_stmt 0
+ 124 001e 37050000 		lui	a0,%hi(.LANCHOR0)
+ 125              	.LVL9:
+ 126 0022 13050500 		addi	a0,a0,%lo(.LANCHOR0)
+ 127 0026 B3C7A720 		sh2add	a5,a5,a0
+ 128              	.LVL10:
+ 129 002a 8843     		lw	a0,0(a5)
+ 130 002c 8280     		ret
+ 131              		.cfi_endproc
+ 132              	.LFE369:
+ 134              		.section	.text.core_exception_handler,"ax",@progbits
+ 135              		.align	1
+ 136              		.globl	core_exception_handler
+ 138              	core_exception_handler:
+ 139              	.LFB370:
+ 626:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 627:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+ 628:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief      Common NMI and Exception handler entry
+ 629:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \details
+ 630:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * This function provided a command entry for NMI and exception. Silicon Vendor could modify
+ 631:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * this template implementation according to requirement.
+ 632:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \remarks
+ 633:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * - RISCV provided common entry for all types of exception. This is proposed code template
+ 634:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  *   for exception entry function, Silicon Vendor could modify the implementation.
+ 635:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * - For the core_exception_handler template, we provided exception register function \ref Exceptio
+ 636:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  *   which can help developer to register your exception handler for specific exception number.
+ 637:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 638:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** uint32_t core_exception_handler(unsigned long mcause, unsigned long sp)
+ 639:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+ 140              		.loc 1 639 1 is_stmt 1
+ 141              		.cfi_startproc
+ 142              	.LVL11:
+ 640:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint32_t EXCn = (uint32_t)(mcause & 0X00000fff);
+ 143              		.loc 1 640 5
+ 144              		.loc 1 640 14 is_stmt 0
+ 145 0000 8567     		li	a5,4096
+ 146 0002 FD17     		addi	a5,a5,-1
+ 147 0004 3377F500 		and	a4,a0,a5
+ 148              	.LVL12:
+ 641:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     EXC_HANDLER exc_handler;
+ 149              		.loc 1 641 5 is_stmt 1
+ 642:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 643:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM) && (EXCn >= 0)) {
+ 150              		.loc 1 643 5
+ 151              		.loc 1 643 8 is_stmt 0
+ 152 0008 AD46     		li	a3,11
+ 153 000a 63E4E602 		bgtu	a4,a3,.L16
+ 644:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         exc_handler = (EXC_HANDLER)SystemExceptionHandlers[EXCn];
+ 154              		.loc 1 644 9 is_stmt 1
+ 155              		.loc 1 644 59 is_stmt 0
+ 156 000e B7070000 		lui	a5,%hi(.LANCHOR0)
+ 157 0012 93870700 		addi	a5,a5,%lo(.LANCHOR0)
+ 158 0016 3347F720 		sh2add	a4,a4,a5
+ 159              	.LVL13:
+ 160              		.loc 1 644 21
+ 161 001a 1C43     		lw	a5,0(a4)
+ 162              	.LVL14:
+ 645:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else if (EXCn == NMI_EXCn) {
+ 646:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         exc_handler = (EXC_HANDLER)SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM];
+ 647:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else {
+ 648:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         exc_handler = (EXC_HANDLER)system_default_exception_handler;
+ 649:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 650:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     if (exc_handler != NULL) {
+ 163              		.loc 1 650 5 is_stmt 1
+ 164              		.loc 1 650 8 is_stmt 0
+ 165 001c 9DCB     		beq	a5,zero,.L27
+ 166              	.L18:
+ 639:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint32_t EXCn = (uint32_t)(mcause & 0X00000fff);
+ 167              		.loc 1 639 1
+ 168 001e 17030000 		call	t0,__riscv_save_0
+ 168      E7020300 
+ 169              		.cfi_offset 1, -4
+ 170              		.cfi_def_cfa_offset 16
+ 651:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         exc_handler(mcause, sp);
+ 171              		.loc 1 651 9 is_stmt 1
+ 172 0026 8297     		jalr	a5
+ 173              	.LVL15:
+ 652:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 653:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     return 0;
+ 174              		.loc 1 653 5
+ 654:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 175              		.loc 1 654 1 is_stmt 0
+ 176 0028 0145     		li	a0,0
+ 177 002a 17030000 		tail	__riscv_restore_0
+ 177      67000300 
+ 178              		.cfi_restore 1
+ 179              		.cfi_def_cfa_offset 0
+ 180              	.LVL16:
+ 181              	.L16:
+ 645:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         exc_handler = (EXC_HANDLER)SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM];
+ 182              		.loc 1 645 12 is_stmt 1
+ 645:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         exc_handler = (EXC_HANDLER)SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM];
+ 183              		.loc 1 645 15 is_stmt 0
+ 184 0032 6302F702 		beq	a4,a5,.L28
+ 648:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 185              		.loc 1 648 21
+ 186 0036 B7070000 		lui	a5,%hi(system_default_exception_handler)
+ 187 003a 93870700 		addi	a5,a5,%lo(system_default_exception_handler)
+ 639:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     uint32_t EXCn = (uint32_t)(mcause & 0X00000fff);
+ 188              		.loc 1 639 1
+ 189 003e 17030000 		call	t0,__riscv_save_0
+ 189      E7020300 
+ 190              		.cfi_offset 1, -4
+ 191              		.cfi_def_cfa_offset 16
+ 192              	.LVL17:
+ 651:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     }
+ 193              		.loc 1 651 9 is_stmt 1
+ 194 0046 8297     		jalr	a5
+ 195              	.LVL18:
+ 653:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 196              		.loc 1 653 5
+ 197              		.loc 1 654 1 is_stmt 0
+ 198 0048 0145     		li	a0,0
+ 199 004a 17030000 		tail	__riscv_restore_0
+ 199      67000300 
+ 200              		.cfi_restore 1
+ 201              		.cfi_def_cfa_offset 0
+ 202              	.LVL19:
+ 203              	.L27:
+ 653:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 204              		.loc 1 653 5 is_stmt 1
+ 205              		.loc 1 654 1 is_stmt 0
+ 206 0052 0145     		li	a0,0
+ 207              	.LVL20:
+ 208 0054 8280     		ret
+ 209              	.LVL21:
+ 210              	.L28:
+ 646:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else {
+ 211              		.loc 1 646 9 is_stmt 1
+ 646:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else {
+ 212              		.loc 1 646 59 is_stmt 0
+ 213 0056 B7070000 		lui	a5,%hi(.LANCHOR0+48)
+ 646:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     } else {
+ 214              		.loc 1 646 21
+ 215 005a 83A70703 		lw	a5,%lo(.LANCHOR0+48)(a5)
+ 216              	.LVL22:
+ 650:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         exc_handler(mcause, sp);
+ 217              		.loc 1 650 5 is_stmt 1
+ 650:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****         exc_handler(mcause, sp);
+ 218              		.loc 1 650 8 is_stmt 0
+ 219 005e E1F3     		bne	a5,zero,.L18
+ 220 0060 CDBF     		j	.L27
+ 221              		.cfi_endproc
+ 222              	.LFE370:
+ 224              		.section	.rodata.Exception_DumpFrame.str1.4,"aMS",@progbits,1
+ 225              		.align	2
+ 226              	.LC0:
+ 227 0000 72613A20 		.string	"ra: 0x%x, tp: 0x%x, t0: 0x%x, t1: 0x%x, t2: 0x%x, t3: 0x%x, t4: 0x%x, t5: 0x%x, t6: 0x%x\
+ 227      30782578 
+ 227      2C207470 
+ 227      3A203078 
+ 227      25782C20 
+ 228              		.section	.text.Exception_DumpFrame,"ax",@progbits
+ 229              		.align	1
+ 230              		.globl	Exception_DumpFrame
+ 232              	Exception_DumpFrame:
+ 233              	.LFB371:
+ 655:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /** @} */ /* End of Doxygen Group NMSIS_Core_ExceptionAndNMI */
+ 656:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 657:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** /**
+ 658:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \brief      Dump Exception Frame
+ 659:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * \details
+ 660:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  * This function provided feature to dump exception frame stored in stack.
+ 661:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****  */
+ 662:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** void Exception_DumpFrame(unsigned long sp)
+ 663:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** {
+ 234              		.loc 1 663 1 is_stmt 1
+ 235              		.cfi_startproc
+ 236              	.LVL23:
+ 237 0000 17030000 		call	t0,__riscv_save_0
+ 237      E7020300 
+ 238              		.cfi_offset 1, -4
+ 239              		.cfi_def_cfa_offset 16
+ 664:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     EXC_Frame_Type *exc_frame = (EXC_Frame_Type *)sp;
+ 240              		.loc 1 664 5
+ 663:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     EXC_Frame_Type *exc_frame = (EXC_Frame_Type *)sp;
+ 241              		.loc 1 663 1 is_stmt 0
+ 242 0008 2A83     		mv	t1,a0
+ 243              	.LVL24:
+ 665:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifndef __riscv_32e
+ 666:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 667:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #ifdef EXEC_USING_STD_PRINTF
+ 668:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("ra: 0x%x, tp: 0x%x, t0: 0x%x, t1: 0x%x, t2: 0x%x, t3: 0x%x, t4: 0x%x, t5: 0x%x, t6: 0x%
+ 244              		.loc 1 668 5 is_stmt 1
+ 245 000a 03258508 		lw	a0,136(a0)
+ 246              	.LVL25:
+ 663:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     EXC_Frame_Type *exc_frame = (EXC_Frame_Type *)sp;
+ 247              		.loc 1 663 1 is_stmt 0
+ 248 000e 3971     		addi	sp,sp,-64
+ 249              		.cfi_def_cfa_offset 80
+ 250              		.loc 1 668 5
+ 251 0010 83288309 		lw	a7,152(t1)
+ 252 0014 03284309 		lw	a6,148(t1)
+ 253 0018 83274306 		lw	a5,100(t1)
+ 254 001c 03270306 		lw	a4,96(t1)
+ 255 0020 8326C305 		lw	a3,92(t1)
+ 256 0024 03268305 		lw	a2,88(t1)
+ 257 0028 83254305 		lw	a1,84(t1)
+ 258 002c 2AD8     		sw	a0,48(sp)
+ 259 002e 03254308 		lw	a0,132(t1)
+ 260 0032 2AD6     		sw	a0,44(sp)
+ 261 0034 03250308 		lw	a0,128(t1)
+ 262 0038 2AD4     		sw	a0,40(sp)
+ 263 003a 03250309 		lw	a0,144(t1)
+ 264 003e 2AD2     		sw	a0,36(sp)
+ 265 0040 0325C308 		lw	a0,140(t1)
+ 266 0044 2AD0     		sw	a0,32(sp)
+ 267 0046 032EC307 		lw	t3,124(t1)
+ 268 004a 37050000 		lui	a0,%hi(.LC0)
+ 269 004e 13050500 		addi	a0,a0,%lo(.LC0)
+ 270 0052 72CE     		sw	t3,28(sp)
+ 271 0054 032E8307 		lw	t3,120(t1)
+ 272 0058 72CC     		sw	t3,24(sp)
+ 273 005a 032E4307 		lw	t3,116(t1)
+ 274 005e 72CA     		sw	t3,20(sp)
+ 275 0060 032E0307 		lw	t3,112(t1)
+ 276 0064 72C8     		sw	t3,16(sp)
+ 277 0066 032EC306 		lw	t3,108(t1)
+ 278 006a 72C6     		sw	t3,12(sp)
+ 279 006c 032E8306 		lw	t3,104(t1)
+ 280 0070 72C4     		sw	t3,8(sp)
+ 281 0072 032E030A 		lw	t3,160(t1)
+ 282 0076 72C2     		sw	t3,4(sp)
+ 283 0078 0323C309 		lw	t1,156(t1)
+ 284              	.LVL26:
+ 285 007c 1AC0     		sw	t1,0(sp)
+ 286 007e 97000000 		call	printf
+ 286      E7800000 
+ 287              	.LVL27:
+ 669:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****            "a0: 0x%x, a1: 0x%x, a2: 0x%x, a3: 0x%x, a4: 0x%x, a5: 0x%x, a6: 0x%x, a7: 0x%x\n" \
+ 670:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****            "mcause: 0x%x, mepc: 0x%x, msubm: 0x%x\n", exc_frame->ra, exc_frame->tp, exc_frame->t0, 
+ 671:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****            exc_frame->t1, exc_frame->t2, exc_frame->t3, exc_frame->t4, exc_frame->t5, exc_frame->t6
+ 672:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****            exc_frame->a0, exc_frame->a1, exc_frame->a2, exc_frame->a3, exc_frame->a4, exc_frame->a5
+ 673:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****            exc_frame->a6, exc_frame->a7, exc_frame->mcause, exc_frame->mepc, exc_frame->msubm);
+ 674:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 675:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("ra     :      0x", 16, exc_frame->ra);
+ 676:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("tp     :      0x", 16, exc_frame->tp);
+ 677:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("t0     :      0x", 16, exc_frame->t0);
+ 678:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("t1     :      0x", 16, exc_frame->t1);
+ 679:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("t2     :      0x", 16, exc_frame->t1);
+ 680:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("t3     :      0x", 16, exc_frame->t3);
+ 681:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("t4     :      0x", 16, exc_frame->t4);
+ 682:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("t5     :      0x", 16, exc_frame->t5);
+ 683:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("t6     :      0x", 16, exc_frame->t6);
+ 684:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 685:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("a0     :      0x", 16, exc_frame->a0);
+ 686:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("a1     :      0x", 16, exc_frame->a1);
+ 687:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("a2     :      0x", 16, exc_frame->a2);
+ 688:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("a3     :      0x", 16, exc_frame->a3);
+ 689:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("a4     :      0x", 16, exc_frame->a4);
+ 690:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("a5     :      0x", 16, exc_frame->a5);
+ 691:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("a6     :      0x", 16, exc_frame->a6);
+ 692:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("mcause :      0x", 16, exc_frame->mcause);
+ 693:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("mepc   :      0x", 16, exc_frame->mepc);
+ 694:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     print_reg("msubm  :      0x", 16, exc_frame->msubm);
+ 695:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif
+ 696:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else /* __riscv_32e */
+ 697:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 698:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("ra: 0x%x, tp: 0x%x, t0: 0x%x, t1: 0x%x, t2: 0x%x\n" \
+ 699:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****            "a0: 0x%x, a1: 0x%x, a2: 0x%x, a3: 0x%x, a4: 0x%x, a5: 0x%x\n" \
+ 700:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****            "mcause: 0x%x, mepc: 0x%x, msubm: 0x%x\n", exc_frame->ra, exc_frame->tp, exc_frame->t0, 
+ 701:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****            exc_frame->t1, exc_frame->t2, exc_frame->a0, exc_frame->a1, exc_frame->a2, exc_frame->a3
+ 702:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****            exc_frame->a4, exc_frame->a5, exc_frame->mcause, exc_frame->mepc, exc_frame->msubm);
+ 703:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #endif /* __riscv_32e */
+ 704:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 288              		.loc 1 704 1
+ 289 0086 2161     		addi	sp,sp,64
+ 290              		.cfi_def_cfa_offset 0
+ 291 0088 17030000 		tail	__riscv_restore_0
+ 291      67000300 
+ 292              		.cfi_restore 1
+ 293              		.cfi_def_cfa_offset -16
+ 294              		.cfi_endproc
+ 295              	.LFE371:
+ 297              		.section	.rodata.nmi_handler.str1.4,"aMS",@progbits,1
+ 298              		.align	2
+ 299              	.LC1:
+ 300 0000 4E4D4920 		.string	"NMI \r"
+ 300      0D00
+ 301 0006 0000     		.align	2
+ 302              	.LC2:
+ 303 0008 4D434155 		.string	"MCAUSE : 0x%lx\r\n"
+ 303      5345203A 
+ 303      20307825 
+ 303      6C780D0A 
+ 303      00
+ 304 0019 000000   		.align	2
+ 305              	.LC3:
+ 306 001c 4D444341 		.string	"MDCAUSE: 0x%lx\r\n"
+ 306      5553453A 
+ 306      20307825 
+ 306      6C780D0A 
+ 306      00
+ 307 002d 000000   		.align	2
+ 308              	.LC4:
+ 309 0030 4D455043 		.string	"MEPC   : 0x%lx\r\n"
+ 309      2020203A 
+ 309      20307825 
+ 309      6C780D0A 
+ 309      00
+ 310 0041 000000   		.align	2
+ 311              	.LC5:
+ 312 0044 4D545641 		.string	"MTVAL  : 0x%lx\r\n"
+ 312      4C20203A 
+ 312      20307825 
+ 312      6C780D0A 
+ 312      00
+ 313              		.section	.text.nmi_handler,"ax",@progbits
+ 314              		.align	1
+ 315              		.globl	nmi_handler
+ 317              	nmi_handler:
+ 318              	.LFB366:
+ 556:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 319              		.loc 1 556 1 is_stmt 1
+ 320              		.cfi_startproc
+ 321              	.LVL28:
+ 322 0000 17030000 		call	t0,__riscv_save_2
+ 322      E7020300 
+ 323              		.cfi_offset 9, -12
+ 324              		.cfi_offset 8, -8
+ 325              		.cfi_offset 1, -4
+ 326              		.cfi_def_cfa_offset 16
+ 559:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MCAUSE : 0x%lx\r\n", mcause);
+ 327              		.loc 1 559 5
+ 556:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 328              		.loc 1 556 1 is_stmt 0
+ 329 0008 AA84     		mv	s1,a0
+ 559:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MCAUSE : 0x%lx\r\n", mcause);
+ 330              		.loc 1 559 5
+ 331 000a 37050000 		lui	a0,%hi(.LC1)
+ 332              	.LVL29:
+ 333 000e 13050500 		addi	a0,a0,%lo(.LC1)
+ 556:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 334              		.loc 1 556 1
+ 335 0012 2E84     		mv	s0,a1
+ 559:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MCAUSE : 0x%lx\r\n", mcause);
+ 336              		.loc 1 559 5
+ 337 0014 97000000 		call	puts
+ 337      E7800000 
+ 338              	.LVL30:
+ 560:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MDCAUSE: 0x%lx\r\n", __RV_CSR_READ(CSR_MDCAUSE));
+ 339              		.loc 1 560 5 is_stmt 1
+ 340 001c 37050000 		lui	a0,%hi(.LC2)
+ 341 0020 A685     		mv	a1,s1
+ 342 0022 13050500 		addi	a0,a0,%lo(.LC2)
+ 343 0026 97000000 		call	printf
+ 343      E7800000 
+ 344              	.LVL31:
+ 561:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 345              		.loc 1 561 5
+ 346              	.LBB3:
+ 561:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 347              		.loc 1 561 34
+ 561:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 348              		.loc 1 561 34
+ 349              	 #APP
+ 350              	# 561 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MS
+ 351              		csrr a1, 0x7C9
+ 352              	# 0 "" 2
+ 353              	.LVL32:
+ 561:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 354              		.loc 1 561 34
+ 355              	 #NO_APP
+ 356              	.LBE3:
+ 561:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 357              		.loc 1 561 5 is_stmt 0
+ 358 0032 37050000 		lui	a0,%hi(.LC3)
+ 359 0036 13050500 		addi	a0,a0,%lo(.LC3)
+ 360 003a 97000000 		call	printf
+ 360      E7800000 
+ 361              	.LVL33:
+ 562:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 362              		.loc 1 562 5 is_stmt 1
+ 363              	.LBB4:
+ 562:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 364              		.loc 1 562 34
+ 562:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 365              		.loc 1 562 34
+ 366              	 #APP
+ 367              	# 562 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MS
+ 368              		csrr a1, 0x341
+ 369              	# 0 "" 2
+ 370              	.LVL34:
+ 562:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 371              		.loc 1 562 34
+ 372              	 #NO_APP
+ 373              	.LBE4:
+ 562:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 374              		.loc 1 562 5 is_stmt 0
+ 375 0046 37050000 		lui	a0,%hi(.LC4)
+ 376 004a 13050500 		addi	a0,a0,%lo(.LC4)
+ 377 004e 97000000 		call	printf
+ 377      E7800000 
+ 378              	.LVL35:
+ 563:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 379              		.loc 1 563 5 is_stmt 1
+ 380              	.LBB5:
+ 563:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 381              		.loc 1 563 34
+ 563:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 382              		.loc 1 563 34
+ 383              	 #APP
+ 384              	# 563 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MS
+ 385              		csrr a1, 0x343
+ 386              	# 0 "" 2
+ 387              	.LVL36:
+ 563:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 388              		.loc 1 563 34
+ 389              	 #NO_APP
+ 390              	.LBE5:
+ 563:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 391              		.loc 1 563 5 is_stmt 0
+ 392 005a 37050000 		lui	a0,%hi(.LC5)
+ 393 005e 13050500 		addi	a0,a0,%lo(.LC5)
+ 394 0062 97000000 		call	printf
+ 394      E7800000 
+ 395              	.LVL37:
+ 572:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 396              		.loc 1 572 5 is_stmt 1
+ 397 006a 2285     		mv	a0,s0
+ 398 006c 97000000 		call	Exception_DumpFrame
+ 398      E7800000 
+ 399              	.LVL38:
+ 400              	.L32:
+ 574:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 401              		.loc 1 574 5 discriminator 1
+ 574:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 402              		.loc 1 574 14 discriminator 1
+ 574:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 403              		.loc 1 574 11 discriminator 1
+ 574:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 404              		.loc 1 574 5 discriminator 1
+ 574:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 405              		.loc 1 574 14 discriminator 1
+ 574:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 406              		.loc 1 574 11 discriminator 1
+ 407 0074 01A0     		j	.L32
+ 408              		.cfi_endproc
+ 409              	.LFE366:
+ 411              		.section	.text.system_default_exception_handler,"ax",@progbits
+ 412              		.align	1
+ 414              	system_default_exception_handler:
+ 415              	.LFB365:
+ 452:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 416              		.loc 1 452 1
+ 417              		.cfi_startproc
+ 418              	.LVL39:
+ 419 0000 17030000 		call	t0,__riscv_save_1
+ 419      E7020300 
+ 420              		.cfi_offset 8, -8
+ 421              		.cfi_offset 1, -4
+ 422              		.cfi_def_cfa_offset 16
+ 455:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MDCAUSE: 0x%lx\r\n", __RV_CSR_READ(CSR_MDCAUSE));
+ 423              		.loc 1 455 5
+ 452:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 424              		.loc 1 452 1 is_stmt 0
+ 425 0008 AA87     		mv	a5,a0
+ 455:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MDCAUSE: 0x%lx\r\n", __RV_CSR_READ(CSR_MDCAUSE));
+ 426              		.loc 1 455 5
+ 427 000a 37050000 		lui	a0,%hi(.LC2)
+ 428              	.LVL40:
+ 452:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     /* TODO: Uncomment this if you have implement printf function */
+ 429              		.loc 1 452 1
+ 430 000e 2E84     		mv	s0,a1
+ 455:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MDCAUSE: 0x%lx\r\n", __RV_CSR_READ(CSR_MDCAUSE));
+ 431              		.loc 1 455 5
+ 432 0010 13050500 		addi	a0,a0,%lo(.LC2)
+ 433 0014 BE85     		mv	a1,a5
+ 434              	.LVL41:
+ 435 0016 97000000 		call	printf
+ 435      E7800000 
+ 436              	.LVL42:
+ 456:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 437              		.loc 1 456 5 is_stmt 1
+ 438              	.LBB6:
+ 456:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 439              		.loc 1 456 34
+ 456:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 440              		.loc 1 456 34
+ 441              	 #APP
+ 442              	# 456 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MS
+ 443              		csrr a1, 0x7C9
+ 444              	# 0 "" 2
+ 445              	.LVL43:
+ 456:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 446              		.loc 1 456 34
+ 447              	 #NO_APP
+ 448              	.LBE6:
+ 456:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MEPC   : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+ 449              		.loc 1 456 5 is_stmt 0
+ 450 0022 37050000 		lui	a0,%hi(.LC3)
+ 451 0026 13050500 		addi	a0,a0,%lo(.LC3)
+ 452 002a 97000000 		call	printf
+ 452      E7800000 
+ 453              	.LVL44:
+ 457:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 454              		.loc 1 457 5 is_stmt 1
+ 455              	.LBB7:
+ 457:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 456              		.loc 1 457 34
+ 457:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 457              		.loc 1 457 34
+ 458              	 #APP
+ 459              	# 457 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MS
+ 460              		csrr a1, 0x341
+ 461              	# 0 "" 2
+ 462              	.LVL45:
+ 457:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 463              		.loc 1 457 34
+ 464              	 #NO_APP
+ 465              	.LBE7:
+ 457:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c ****     printf("MTVAL  : 0x%lx\r\n", __RV_CSR_READ(CSR_MTVAL));
+ 466              		.loc 1 457 5 is_stmt 0
+ 467 0036 37050000 		lui	a0,%hi(.LC4)
+ 468 003a 13050500 		addi	a0,a0,%lo(.LC4)
+ 469 003e 97000000 		call	printf
+ 469      E7800000 
+ 470              	.LVL46:
+ 458:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 471              		.loc 1 458 5 is_stmt 1
+ 472              	.LBB8:
+ 458:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 473              		.loc 1 458 34
+ 458:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 474              		.loc 1 458 34
+ 475              	 #APP
+ 476              	# 458 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MS
+ 477              		csrr a1, 0x343
+ 478              	# 0 "" 2
+ 479              	.LVL47:
+ 458:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 480              		.loc 1 458 34
+ 481              	 #NO_APP
+ 482              	.LBE8:
+ 458:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** #else
+ 483              		.loc 1 458 5 is_stmt 0
+ 484 004a 37050000 		lui	a0,%hi(.LC5)
+ 485 004e 13050500 		addi	a0,a0,%lo(.LC5)
+ 486 0052 97000000 		call	printf
+ 486      E7800000 
+ 487              	.LVL48:
+ 471:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** 
+ 488              		.loc 1 471 5 is_stmt 1
+ 489 005a 2285     		mv	a0,s0
+ 490 005c 97000000 		call	Exception_DumpFrame
+ 490      E7800000 
+ 491              	.LVL49:
+ 492              	.L35:
+ 546:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 493              		.loc 1 546 5 discriminator 1
+ 546:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 494              		.loc 1 546 14 discriminator 1
+ 546:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 495              		.loc 1 546 11 discriminator 1
+ 546:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 496              		.loc 1 546 5 discriminator 1
+ 546:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 497              		.loc 1 546 14 discriminator 1
+ 546:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c **** }
+ 498              		.loc 1 546 11 discriminator 1
+ 499 0064 01A0     		j	.L35
+ 500              		.cfi_endproc
+ 501              	.LFE365:
+ 503              		.section	.bss.SystemExceptionHandlers,"aw",@nobits
+ 504              		.align	2
+ 505              		.set	.LANCHOR0,. + 0
+ 508              	SystemExceptionHandlers:
+ 509 0000 00000000 		.zero	52
+ 509      00000000 
+ 509      00000000 
+ 509      00000000 
+ 509      00000000 
+ 510              		.text
+ 511              	.Letext0:
+ 512              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 513              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 514              		.file 4 "../../../../MSDK/plf/riscv/NMSIS/Core/Include/core_feature_base.h"
+ 515              		.file 5 "../../../../MSDK/plf/riscv/gd32vw55x/gd32vw55x.h"
+ 516              		.file 6 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 517              		.file 7 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 handlers.c
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:13     .text.Exception_Init:0000000000000000 Exception_Init
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:17     .text.Exception_Init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:18     .text.Exception_Init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:20     .text.Exception_Init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:22     .text.Exception_Init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:23     .text.Exception_Init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:414    .text.system_default_exception_handler:0000000000000000 system_default_exception_handler
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:26     .text.Exception_Init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:32     .text.Exception_Init:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:33     .text.Exception_Init:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:35     .text.Exception_Init:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:36     .text.Exception_Init:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:37     .text.Exception_Init:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:41     .text.Exception_Init:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:42     .text.Exception_Init:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:49     .text.Exception_Register_EXC:0000000000000000 Exception_Register_EXC
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:52     .text.Exception_Register_EXC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:54     .text.Exception_Register_EXC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:55     .text.Exception_Register_EXC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:56     .text.Exception_Register_EXC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:59     .text.Exception_Register_EXC:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:60     .text.Exception_Register_EXC:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:69     .text.Exception_Register_EXC:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:70     .text.Exception_Register_EXC:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:74     .text.Exception_Register_EXC:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:77     .text.Exception_Register_EXC:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:78     .text.Exception_Register_EXC:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:81     .text.Exception_Register_EXC:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:82     .text.Exception_Register_EXC:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:89     .text.Exception_Get_EXC:0000000000000000 Exception_Get_EXC
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:92     .text.Exception_Get_EXC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:94     .text.Exception_Get_EXC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:95     .text.Exception_Get_EXC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:96     .text.Exception_Get_EXC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:98     .text.Exception_Get_EXC:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:100    .text.Exception_Get_EXC:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:102    .text.Exception_Get_EXC:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:103    .text.Exception_Get_EXC:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:106    .text.Exception_Get_EXC:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:109    .text.Exception_Get_EXC:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:111    .text.Exception_Get_EXC:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:114    .text.Exception_Get_EXC:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:115    .text.Exception_Get_EXC:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:119    .text.Exception_Get_EXC:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:123    .text.Exception_Get_EXC:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:124    .text.Exception_Get_EXC:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:131    .text.Exception_Get_EXC:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:138    .text.core_exception_handler:0000000000000000 core_exception_handler
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:141    .text.core_exception_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:143    .text.core_exception_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:144    .text.core_exception_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:145    .text.core_exception_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:150    .text.core_exception_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:151    .text.core_exception_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:152    .text.core_exception_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:155    .text.core_exception_handler:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:156    .text.core_exception_handler:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:161    .text.core_exception_handler:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:164    .text.core_exception_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:165    .text.core_exception_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:168    .text.core_exception_handler:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:169    .text.core_exception_handler:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:170    .text.core_exception_handler:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:172    .text.core_exception_handler:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:175    .text.core_exception_handler:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:176    .text.core_exception_handler:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:178    .text.core_exception_handler:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:179    .text.core_exception_handler:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:183    .text.core_exception_handler:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:184    .text.core_exception_handler:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:186    .text.core_exception_handler:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:189    .text.core_exception_handler:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:190    .text.core_exception_handler:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:191    .text.core_exception_handler:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:194    .text.core_exception_handler:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:197    .text.core_exception_handler:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:198    .text.core_exception_handler:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:200    .text.core_exception_handler:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:201    .text.core_exception_handler:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:205    .text.core_exception_handler:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:206    .text.core_exception_handler:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:212    .text.core_exception_handler:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:213    .text.core_exception_handler:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:215    .text.core_exception_handler:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:218    .text.core_exception_handler:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:219    .text.core_exception_handler:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:221    .text.core_exception_handler:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:232    .text.Exception_DumpFrame:0000000000000000 Exception_DumpFrame
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:235    .text.Exception_DumpFrame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:237    .text.Exception_DumpFrame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:238    .text.Exception_DumpFrame:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:239    .text.Exception_DumpFrame:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:241    .text.Exception_DumpFrame:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:242    .text.Exception_DumpFrame:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:245    .text.Exception_DumpFrame:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:248    .text.Exception_DumpFrame:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:249    .text.Exception_DumpFrame:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:251    .text.Exception_DumpFrame:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:289    .text.Exception_DumpFrame:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:290    .text.Exception_DumpFrame:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:292    .text.Exception_DumpFrame:0000000000000090 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:293    .text.Exception_DumpFrame:0000000000000090 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:294    .text.Exception_DumpFrame:0000000000000090 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:317    .text.nmi_handler:0000000000000000 nmi_handler
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:320    .text.nmi_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:322    .text.nmi_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:323    .text.nmi_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:324    .text.nmi_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:325    .text.nmi_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:326    .text.nmi_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:328    .text.nmi_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:329    .text.nmi_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:331    .text.nmi_handler:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:335    .text.nmi_handler:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:337    .text.nmi_handler:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:340    .text.nmi_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:347    .text.nmi_handler:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:348    .text.nmi_handler:000000000000002e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c:561    .text.nmi_handler:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:357    .text.nmi_handler:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:358    .text.nmi_handler:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:364    .text.nmi_handler:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:365    .text.nmi_handler:0000000000000042 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c:562    .text.nmi_handler:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:374    .text.nmi_handler:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:375    .text.nmi_handler:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:381    .text.nmi_handler:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:382    .text.nmi_handler:0000000000000056 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c:563    .text.nmi_handler:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:391    .text.nmi_handler:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:392    .text.nmi_handler:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:397    .text.nmi_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:402    .text.nmi_handler:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:403    .text.nmi_handler:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:404    .text.nmi_handler:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:405    .text.nmi_handler:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:406    .text.nmi_handler:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:407    .text.nmi_handler:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:408    .text.nmi_handler:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:417    .text.system_default_exception_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:419    .text.system_default_exception_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:420    .text.system_default_exception_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:421    .text.system_default_exception_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:422    .text.system_default_exception_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:424    .text.system_default_exception_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:425    .text.system_default_exception_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:427    .text.system_default_exception_handler:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:430    .text.system_default_exception_handler:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:432    .text.system_default_exception_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:439    .text.system_default_exception_handler:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:440    .text.system_default_exception_handler:000000000000001e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c:456    .text.system_default_exception_handler:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:449    .text.system_default_exception_handler:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:450    .text.system_default_exception_handler:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:456    .text.system_default_exception_handler:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:457    .text.system_default_exception_handler:0000000000000032 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c:457    .text.system_default_exception_handler:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:466    .text.system_default_exception_handler:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:467    .text.system_default_exception_handler:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:473    .text.system_default_exception_handler:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:474    .text.system_default_exception_handler:0000000000000046 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env\handlers.c:458    .text.system_default_exception_handler:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:483    .text.system_default_exception_handler:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:484    .text.system_default_exception_handler:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:489    .text.system_default_exception_handler:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:494    .text.system_default_exception_handler:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:495    .text.system_default_exception_handler:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:496    .text.system_default_exception_handler:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:497    .text.system_default_exception_handler:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:498    .text.system_default_exception_handler:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:499    .text.system_default_exception_handler:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:500    .text.system_default_exception_handler:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:505    .bss.SystemExceptionHandlers:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:508    .bss.SystemExceptionHandlers:0000000000000000 SystemExceptionHandlers
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:45     .text.Exception_Init:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:85     .text.Exception_Register_EXC:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:134    .text.Exception_Get_EXC:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:224    .text.core_exception_handler:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:297    .text.Exception_DumpFrame:0000000000000090 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:411    .text.nmi_handler:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:503    .text.system_default_exception_handler:0000000000000066 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:30     .text.Exception_Init:0000000000000014 .L2
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:67     .text.Exception_Register_EXC:0000000000000016 .L6
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:75     .text.Exception_Register_EXC:0000000000000020 .L8
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:121    .text.Exception_Get_EXC:000000000000001e .L13
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:112    .text.Exception_Get_EXC:0000000000000014 .L14
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:181    .text.core_exception_handler:0000000000000032 .L16
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:203    .text.core_exception_handler:0000000000000052 .L27
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:210    .text.core_exception_handler:0000000000000056 .L28
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:166    .text.core_exception_handler:000000000000001e .L18
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:226    .rodata.Exception_DumpFrame.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:299    .rodata.nmi_handler.str1.4:0000000000000000 .LC1
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:302    .rodata.nmi_handler.str1.4:0000000000000008 .LC2
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:305    .rodata.nmi_handler.str1.4:000000000000001c .LC3
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:308    .rodata.nmi_handler.str1.4:0000000000000030 .LC4
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:311    .rodata.nmi_handler.str1.4:0000000000000044 .LC5
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:400    .text.nmi_handler:0000000000000074 .L32
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:492    .text.system_default_exception_handler:0000000000000064 .L35
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:1387   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2306   .debug_str:0000000000000137 .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2280   .debug_str:0000000000000026 .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2308   .debug_str:000000000000021e .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2256   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2274   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2368   .debug_str:0000000000000427 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2316   .debug_str:00000000000002b8 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2310   .debug_str:0000000000000292 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2282   .debug_str:000000000000009e .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2326   .debug_str:00000000000002ea .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2302   .debug_str:0000000000000127 .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2290   .debug_str:00000000000000cf .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2348   .debug_str:0000000000000392 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2288   .debug_str:00000000000000c1 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2300   .debug_str:0000000000000110 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2334   .debug_str:0000000000000328 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2320   .debug_str:00000000000002d3 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2338   .debug_str:0000000000000336 .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2344   .debug_str:000000000000036e .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2328   .debug_str:00000000000002fd .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2294   .debug_str:00000000000000ea .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2352   .debug_str:00000000000003b7 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2350   .debug_str:00000000000003a4 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2296   .debug_str:00000000000000f7 .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2286   .debug_str:00000000000000ae .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2312   .debug_str:00000000000002a0 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2292   .debug_str:00000000000000da .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2330   .debug_str:000000000000030e .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2324   .debug_str:00000000000002e1 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2336   .debug_str:000000000000032d .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2362   .debug_str:00000000000003fa .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2356   .debug_str:00000000000003da .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2370   .debug_str:0000000000000434 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2314   .debug_str:00000000000002b3 .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2284   .debug_str:00000000000000a8 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2318   .debug_str:00000000000002c4 .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2354   .debug_str:00000000000003c2 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2366   .debug_str:000000000000041b .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2346   .debug_str:000000000000037e .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:233    .text.Exception_DumpFrame:0000000000000000 .LFB371
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:295    .text.Exception_DumpFrame:0000000000000090 .LFE371
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:1886   .debug_loc:0000000000000000 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2332   .debug_str:000000000000031e .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:1904   .debug_loc:000000000000002c .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:287    .text.Exception_DumpFrame:0000000000000086 .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2278   .debug_str:000000000000000f .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:139    .text.core_exception_handler:0000000000000000 .LFB370
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:222    .text.core_exception_handler:0000000000000062 .LFE370
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:1922   .debug_loc:0000000000000058 .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:1962   .debug_loc:00000000000000b6 .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:1991   .debug_loc:00000000000000fb .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2298   .debug_str:0000000000000104 .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2054   .debug_loc:000000000000017c .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:195    .text.core_exception_handler:0000000000000048 .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2340   .debug_str:000000000000033b .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:90     .text.Exception_Get_EXC:0000000000000000 .LFB369
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:132    .text.Exception_Get_EXC:000000000000002e .LFE369
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2079   .debug_loc:00000000000001c0 .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2364   .debug_str:0000000000000404 .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:50     .text.Exception_Register_EXC:0000000000000000 .LFB368
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:83     .text.Exception_Register_EXC:000000000000002a .LFE368
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2112   .debug_loc:0000000000000210 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2360   .debug_str:00000000000003eb .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:14     .text.Exception_Init:0000000000000000 .LFB367
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:43     .text.Exception_Init:000000000000001e .LFE367
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:19     .text.Exception_Init:0000000000000000 .LBB2
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:39     .text.Exception_Init:000000000000001c .LBE2
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2130   .debug_loc:000000000000023c .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2358   .debug_str:00000000000003df .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:318    .text.nmi_handler:0000000000000000 .LFB366
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:409    .text.nmi_handler:0000000000000076 .LFE366
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2138   .debug_loc:0000000000000250 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2149   .debug_loc:000000000000026e .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:346    .text.nmi_handler:000000000000002e .LBB3
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:356    .text.nmi_handler:0000000000000032 .LBE3
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2160   .debug_loc:000000000000028c .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:363    .text.nmi_handler:0000000000000042 .LBB4
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:373    .text.nmi_handler:0000000000000046 .LBE4
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2167   .debug_loc:000000000000029f .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:380    .text.nmi_handler:0000000000000056 .LBB5
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:390    .text.nmi_handler:000000000000005a .LBE5
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2174   .debug_loc:00000000000002b2 .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:338    .text.nmi_handler:000000000000001c .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:344    .text.nmi_handler:000000000000002e .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:361    .text.nmi_handler:0000000000000042 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:378    .text.nmi_handler:0000000000000056 .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:395    .text.nmi_handler:000000000000006a .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:399    .text.nmi_handler:0000000000000074 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2342   .debug_str:000000000000034d .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:415    .text.system_default_exception_handler:0000000000000000 .LFB365
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:501    .text.system_default_exception_handler:0000000000000066 .LFE365
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2181   .debug_loc:00000000000002c5 .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2199   .debug_loc:00000000000002f1 .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:438    .text.system_default_exception_handler:000000000000001e .LBB6
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:448    .text.system_default_exception_handler:0000000000000022 .LBE6
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2210   .debug_loc:000000000000030f .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:455    .text.system_default_exception_handler:0000000000000032 .LBB7
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:465    .text.system_default_exception_handler:0000000000000036 .LBE7
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2217   .debug_loc:0000000000000322 .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:472    .text.system_default_exception_handler:0000000000000046 .LBB8
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:482    .text.system_default_exception_handler:000000000000004a .LBE8
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2224   .debug_loc:0000000000000335 .LLST18
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:436    .text.system_default_exception_handler:000000000000001e .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:453    .text.system_default_exception_handler:0000000000000032 .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:470    .text.system_default_exception_handler:0000000000000046 .LVL46
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:487    .text.system_default_exception_handler:000000000000005a .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:491    .text.system_default_exception_handler:0000000000000064 .LVL49
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2304   .debug_str:0000000000000130 .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2322   .debug_str:00000000000002dc .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:2276   .debug_str:0000000000000000 .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:236    .text.Exception_DumpFrame:0000000000000000 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:246    .text.Exception_DumpFrame:000000000000000e .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:284    .text.Exception_DumpFrame:000000000000007c .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:243    .text.Exception_DumpFrame:000000000000000a .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:142    .text.core_exception_handler:0000000000000000 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:173    .text.core_exception_handler:0000000000000028 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:180    .text.core_exception_handler:0000000000000032 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:202    .text.core_exception_handler:0000000000000052 .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:207    .text.core_exception_handler:0000000000000054 .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:209    .text.core_exception_handler:0000000000000056 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:148    .text.core_exception_handler:0000000000000008 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:159    .text.core_exception_handler:000000000000001a .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:162    .text.core_exception_handler:000000000000001c .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:192    .text.core_exception_handler:0000000000000046 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:216    .text.core_exception_handler:000000000000005e .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:93     .text.Exception_Get_EXC:0000000000000000 .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:107    .text.Exception_Get_EXC:000000000000000e .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:116    .text.Exception_Get_EXC:0000000000000018 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:120    .text.Exception_Get_EXC:000000000000001e .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:125    .text.Exception_Get_EXC:0000000000000022 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:128    .text.Exception_Get_EXC:000000000000002a .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:53     .text.Exception_Register_EXC:0000000000000000 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:63     .text.Exception_Register_EXC:0000000000000012 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:66     .text.Exception_Register_EXC:0000000000000016 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:21     .text.Exception_Init:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:29     .text.Exception_Init:0000000000000014 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:321    .text.nmi_handler:0000000000000000 .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:332    .text.nmi_handler:000000000000000e .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:353    .text.nmi_handler:0000000000000032 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:370    .text.nmi_handler:0000000000000046 .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:387    .text.nmi_handler:000000000000005a .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:418    .text.system_default_exception_handler:0000000000000000 .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:428    .text.system_default_exception_handler:000000000000000e .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:434    .text.system_default_exception_handler:0000000000000016 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:445    .text.system_default_exception_handler:0000000000000022 .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:462    .text.system_default_exception_handler:0000000000000036 .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:479    .text.system_default_exception_handler:000000000000004a .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccFVjEyu.s:519    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+__riscv_save_0
+__riscv_restore_0
+printf
+__riscv_save_2
+puts
+__riscv_save_1

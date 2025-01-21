@@ -1,0 +1,123 @@
+/*!
+    \file    main.c
+    \brief   Main loop of GD32VW55x SDK.
+
+    \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+ */
+
+/*
+    Copyright (c) 2023, GigaDevice Semiconductor Inc.
+
+    Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this
+       list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions and the following disclaimer in the documentation
+       and/or other materials provided with the distribution.
+    3. Neither the name of the copyright holder nor the names of its contributors
+       may be used to endorse or promote products derived from this software without
+       specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGE.
+ */
+
+#include <stdint.h>
+#include "wifi_export.h"
+#include "gd32vw55x_platform.h"
+#include "uart.h"
+#include "ble_init.h"
+#include "gd32vw55x.h"
+#include "wrapper_os.h"
+#include "cmd_shell.h"
+#include "atcmd.h"
+#include "util.h"
+#include "wlan_config.h"
+#include "wifi_init.h"
+#include "user_setting.h"
+#include "version.h"
+#include "_build_date.h"
+
+#include "wifi_management.h"  // Include Wi-Fi management header
+
+#ifdef CONFIG_FATFS_SUPPORT
+#include "fatfs.h"
+#endif
+#include "ble_app_config.h"
+#include "app_cmd.h"
+
+
+/**
+ ****************************************************************************************
+ * @brief Main entry point.
+ *
+ * This function is called right after the booting process has completed.
+ ****************************************************************************************
+ */
+
+#include <stdint.h>
+#include "wifi_export.h"
+#include "gd32vw55x_platform.h"
+#include "uart.h"
+#include "ble_init.h"
+#include "cmd_shell.h"
+#include "mqtt_cmd.h"
+#include "wrapper_os.h"
+
+// Define Wi-Fi credentials
+#define WIFI_SSID "Your_SSID"
+#define WIFI_PASSWORD "Your_Password"
+
+extern mqtt_client_t *mqtt_client;
+
+int main(void) {
+
+    platform_init();
+
+    dbg_print(NOTICE, "SDK Version: %s\n", WIFI_GIT_REVISION);
+    dbg_print(NOTICE, "Build date: %s\n", SDK_BUILD_DATE);
+
+
+    uint8_t *ssid = (uint8_t *)"Mobiliz NaRGE_Guest";       // Replace with your Wi-Fi SSID
+    uint8_t *password = (uint8_t *)"M@b!lz12.*"; // Replace with your Wi-Fi password
+    int status = 0;
+
+    if (wifi_init()) {
+            printf("wifi init failed.\r\n");
+        }
+
+//    if (wifi_management_init() != 0) {
+//        dbg_print(ERR, "Wi-Fi management initialization failed!\n");
+//        return -1;
+//    }
+//
+//
+//    status = wifi_management_connect((char *)ssid, (char *)password, true);
+//
+//    if (status != 0) {
+//        dbg_print(ERR, "Wi-Fi connection failed! Status: %d\n", status);
+//        return -1;
+//    }
+//
+//    dbg_print(NOTICE, "Wi-Fi connected successfully!\n");
+
+    sys_os_start();
+
+    for (;;) {
+
+    }
+
+    return 0;
+}
+
+

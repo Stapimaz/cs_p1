@@ -1,0 +1,853 @@
+   1              		.file	"coap_encode.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.coap_fls,"ax",@progbits
+  10              		.align	1
+  11              		.globl	coap_fls
+  13              	coap_fls:
+  14              	.LFB31:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** /* coap_encode.c -- encoding and decoding of CoAP data types
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  *
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  * Copyright (C) 2010,2011 Olaf Bergmann <bergmann@tzi.org>
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  *
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  * SPDX-License-Identifier: BSD-2-Clause
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  *
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  * This file is part of the CoAP library libcoap. Please see
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  * README for terms of use.
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  */
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** /**
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  * @file coap_encode.c
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  * @brief Encoding and decoding Coap data types functions
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****  */
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** #include "coap3/coap_internal.h"
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** /* Carsten suggested this when fls() is not available: */
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** #ifndef HAVE_FLS
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** int
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** coap_fls(unsigned int i) {
+  16              		.loc 1 21 26
+  17              		.cfi_startproc
+  18              	.LVL0:
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   return coap_flsll(i);
+  19              		.loc 1 22 3
+  20              	.LBB4:
+  21              	.LBB5:
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** }
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** #endif
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** #ifndef HAVE_FLSLL
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** int
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** coap_flsll(long long j) {
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned long long i = (unsigned long long)j;
+  22              		.loc 1 29 3
+  23              	.LBE5:
+  24              	.LBE4:
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   return coap_flsll(i);
+  25              		.loc 1 21 26 is_stmt 0
+  26 0000 AA87     		mv	a5,a0
+  27              	.LBB8:
+  28              	.LBB6:
+  29              		.loc 1 29 22
+  30 0002 0147     		li	a4,0
+  31              	.LVL1:
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   int n;
+  32              		.loc 1 30 3 is_stmt 1
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   for (n = 0; i; n++)
+  33              		.loc 1 31 3
+  34              		.loc 1 31 10 is_stmt 0
+  35 0004 0145     		li	a0,0
+  36              	.LVL2:
+  37              	.L2:
+  38              		.loc 1 31 15 is_stmt 1
+  39              		.loc 1 31 3 is_stmt 0
+  40 0006 B3E6E700 		or	a3,a5,a4
+  41 000a 91E2     		bne	a3,zero,.L3
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 1;
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   return n;
+  42              		.loc 1 33 3 is_stmt 1
+  43              	.LVL3:
+  44              	.LBE6:
+  45              	.LBE8:
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** #endif
+  46              		.loc 1 23 1 is_stmt 0
+  47 000c 8280     		ret
+  48              	.LVL4:
+  49              	.L3:
+  50              	.LBB9:
+  51              	.LBB7:
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 1;
+  52              		.loc 1 32 5 is_stmt 1
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 1;
+  53              		.loc 1 32 7 is_stmt 0
+  54 000e 9316F701 		slli	a3,a4,31
+  55 0012 8583     		srli	a5,a5,1
+  56              	.LVL5:
+  57 0014 D58F     		or	a5,a3,a5
+  58 0016 0583     		srli	a4,a4,1
+  59              	.LVL6:
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   for (n = 0; i; n++)
+  60              		.loc 1 31 18 is_stmt 1
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   for (n = 0; i; n++)
+  61              		.loc 1 31 19 is_stmt 0
+  62 0018 0505     		addi	a0,a0,1
+  63              	.LVL7:
+  64 001a F5B7     		j	.L2
+  65              	.LBE7:
+  66              	.LBE9:
+  67              		.cfi_endproc
+  68              	.LFE31:
+  70              		.section	.text.coap_flsll,"ax",@progbits
+  71              		.align	1
+  72              		.globl	coap_flsll
+  74              	coap_flsll:
+  75              	.LFB32:
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned long long i = (unsigned long long)j;
+  76              		.loc 1 28 25 is_stmt 1
+  77              		.cfi_startproc
+  78              	.LVL8:
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   int n;
+  79              		.loc 1 29 3
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   int n;
+  80              		.loc 1 29 22 is_stmt 0
+  81 0000 AA87     		mv	a5,a0
+  82              	.LVL9:
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   for (n = 0; i; n++)
+  83              		.loc 1 30 3 is_stmt 1
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 1;
+  84              		.loc 1 31 3
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 1;
+  85              		.loc 1 31 10 is_stmt 0
+  86 0002 0145     		li	a0,0
+  87              	.LVL10:
+  88              	.L5:
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 1;
+  89              		.loc 1 31 15 is_stmt 1 discriminator 1
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 1;
+  90              		.loc 1 31 3 is_stmt 0 discriminator 1
+  91 0004 33E7B700 		or	a4,a5,a1
+  92 0008 11E3     		bne	a4,zero,.L6
+  93              		.loc 1 33 3 is_stmt 1
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** }
+  94              		.loc 1 34 1 is_stmt 0
+  95 000a 8280     		ret
+  96              	.L6:
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   return n;
+  97              		.loc 1 32 5 is_stmt 1 discriminator 3
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   return n;
+  98              		.loc 1 32 7 is_stmt 0 discriminator 3
+  99 000c 1397F501 		slli	a4,a1,31
+ 100 0010 8583     		srli	a5,a5,1
+ 101              	.LVL11:
+ 102 0012 D98F     		or	a5,a4,a5
+ 103 0014 8581     		srli	a1,a1,1
+ 104              	.LVL12:
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 1;
+ 105              		.loc 1 31 18 is_stmt 1 discriminator 3
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 1;
+ 106              		.loc 1 31 19 is_stmt 0 discriminator 3
+ 107 0016 0505     		addi	a0,a0,1
+ 108              	.LVL13:
+ 109 0018 F5B7     		j	.L5
+ 110              		.cfi_endproc
+ 111              	.LFE32:
+ 113              		.section	.text.coap_decode_var_bytes,"ax",@progbits
+ 114              		.align	1
+ 115              		.globl	coap_decode_var_bytes
+ 117              	coap_decode_var_bytes:
+ 118              	.LFB33:
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** #endif
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** unsigned int
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** coap_decode_var_bytes(const uint8_t *buf, size_t len) {
+ 119              		.loc 1 38 55 is_stmt 1
+ 120              		.cfi_startproc
+ 121              	.LVL14:
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int i, n = 0;
+ 122              		.loc 1 39 3
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   for (i = 0; i < len; ++i)
+ 123              		.loc 1 40 3
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int i, n = 0;
+ 124              		.loc 1 38 55 is_stmt 0
+ 125 0000 2A87     		mv	a4,a0
+ 126              		.loc 1 40 10
+ 127 0002 8147     		li	a5,0
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int i, n = 0;
+ 128              		.loc 1 39 19
+ 129 0004 0145     		li	a0,0
+ 130              	.LVL15:
+ 131              	.L8:
+ 132              		.loc 1 40 15 is_stmt 1 discriminator 1
+ 133              		.loc 1 40 3 is_stmt 0 discriminator 1
+ 134 0006 6393B700 		bne	a5,a1,.L9
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   return n;
+ 135              		.loc 1 43 3 is_stmt 1
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** }
+ 136              		.loc 1 44 1 is_stmt 0
+ 137 000a 8280     		ret
+ 138              	.L9:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 139              		.loc 1 41 5 is_stmt 1 discriminator 3
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 140              		.loc 1 41 23 is_stmt 0 discriminator 3
+ 141 000c B306F700 		add	a3,a4,a5
+ 142 0010 83C60600 		lbu	a3,0(a3)
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 143              		.loc 1 41 12 discriminator 3
+ 144 0014 2205     		slli	a0,a0,8
+ 145              	.LVL16:
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 146              		.loc 1 40 24 discriminator 3
+ 147 0016 8507     		addi	a5,a5,1
+ 148              	.LVL17:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 149              		.loc 1 41 7 discriminator 3
+ 150 0018 3695     		add	a0,a3,a0
+ 151              	.LVL18:
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 152              		.loc 1 40 24 is_stmt 1 discriminator 3
+ 153 001a F5B7     		j	.L8
+ 154              		.cfi_endproc
+ 155              	.LFE33:
+ 157              		.section	.rodata.coap_encode_var_safe.str1.4,"aMS",@progbits,1
+ 158              		.align	2
+ 159              	.LC0:
+ 160 0000 6E203C3D 		.string	"n <= length"
+ 160      206C656E 
+ 160      67746800 
+ 161              		.align	2
+ 162              	.LC1:
+ 163 000c 433A2F55 		.string	"C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+ 163      73657273 
+ 163      2F737461 
+ 163      70692F4F 
+ 163      6E654472 
+ 164              		.section	.text.coap_encode_var_safe,"ax",@progbits
+ 165              		.align	1
+ 166              		.globl	coap_encode_var_safe
+ 168              	coap_encode_var_safe:
+ 169              	.LFB34:
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** unsigned int
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** coap_encode_var_safe(uint8_t *buf, size_t length, unsigned int val) {
+ 170              		.loc 1 47 69
+ 171              		.cfi_startproc
+ 172              	.LVL19:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int n, i;
+ 173              		.loc 1 48 3
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   for (n = 0, i = val; i && n < sizeof(val); ++n)
+ 174              		.loc 1 50 3
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int n, i;
+ 175              		.loc 1 47 69 is_stmt 0
+ 176 0000 2A87     		mv	a4,a0
+ 177              		.loc 1 50 17
+ 178 0002 B287     		mv	a5,a2
+ 179              		.loc 1 50 10
+ 180 0004 0145     		li	a0,0
+ 181              	.LVL20:
+ 182              		.loc 1 50 26
+ 183 0006 9146     		li	a3,4
+ 184              	.LVL21:
+ 185              	.L11:
+ 186              		.loc 1 50 24 is_stmt 1 discriminator 1
+ 187              		.loc 1 50 3 is_stmt 0 discriminator 1
+ 188 0008 99C3     		beq	a5,zero,.L12
+ 189              		.loc 1 50 26 discriminator 3
+ 190 000a 631CD502 		bne	a0,a3,.L13
+ 191              	.L12:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 8;
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   if (n > length) {
+ 192              		.loc 1 53 3 is_stmt 1
+ 193 000e B307A700 		add	a5,a4,a0
+ 194              	.LVL22:
+ 195              		.loc 1 53 6 is_stmt 0
+ 196 0012 63FFA502 		bleu	a0,a1,.L15
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int n, i;
+ 197              		.loc 1 47 69 discriminator 1
+ 198 0016 17030000 		call	t0,__riscv_save_0
+ 198      E7020300 
+ 199              		.cfi_offset 1, -4
+ 200              		.cfi_def_cfa_offset 16
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     assert(n <= length);
+ 201              		.loc 1 54 5 is_stmt 1 discriminator 1
+ 202 001e B7060000 		lui	a3,%hi(.LC0)
+ 203 0022 37060000 		lui	a2,%hi(.LANCHOR0)
+ 204              	.LVL23:
+ 205 0026 37050000 		lui	a0,%hi(.LC1)
+ 206              	.LVL24:
+ 207 002a 93860600 		addi	a3,a3,%lo(.LC0)
+ 208 002e 13060600 		addi	a2,a2,%lo(.LANCHOR0)
+ 209 0032 93056003 		li	a1,54
+ 210              	.LVL25:
+ 211 0036 13050500 		addi	a0,a0,%lo(.LC1)
+ 212 003a 97000000 		call	__assert_func
+ 212      E7800000 
+ 213              	.LVL26:
+ 214              	.L13:
+ 215              		.cfi_def_cfa_offset 0
+ 216              		.cfi_restore 1
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 8;
+ 217              		.loc 1 51 5 discriminator 4
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 8;
+ 218              		.loc 1 51 7 is_stmt 0 discriminator 4
+ 219 0042 A183     		srli	a5,a5,8
+ 220              	.LVL27:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     i >>= 8;
+ 221              		.loc 1 50 46 is_stmt 1 discriminator 4
+ 222 0044 0505     		addi	a0,a0,1
+ 223              	.LVL28:
+ 224 0046 C9B7     		j	.L11
+ 225              	.LVL29:
+ 226              	.L16:
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     return 0;
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   }
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   i = n;
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   while (i--) {
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     buf[i] = val & 0xff;
+ 227              		.loc 1 59 5
+ 228              		.loc 1 59 12 is_stmt 0
+ 229 0048 A38FC7FE 		sb	a2,-1(a5)
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     val >>= 8;
+ 230              		.loc 1 60 5 is_stmt 1
+ 231              		.loc 1 60 9 is_stmt 0
+ 232 004c 2182     		srli	a2,a2,8
+ 233              	.LVL30:
+ 234 004e FD17     		addi	a5,a5,-1
+ 235              	.LVL31:
+ 236              	.L15:
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     buf[i] = val & 0xff;
+ 237              		.loc 1 58 9 is_stmt 1
+ 238 0050 E31CF7FE 		bne	a4,a5,.L16
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   }
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   return n;
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** }
+ 239              		.loc 1 64 1 is_stmt 0
+ 240 0054 8280     		ret
+ 241              		.cfi_endproc
+ 242              	.LFE34:
+ 244              		.section	.text.coap_decode_var_bytes8,"ax",@progbits
+ 245              		.align	1
+ 246              		.globl	coap_decode_var_bytes8
+ 248              	coap_decode_var_bytes8:
+ 249              	.LFB35:
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** uint64_t
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** coap_decode_var_bytes8(const uint8_t *buf, size_t len) {
+ 250              		.loc 1 67 56 is_stmt 1
+ 251              		.cfi_startproc
+ 252              	.LVL32:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int i;
+ 253              		.loc 1 68 3
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   uint64_t n = 0;
+ 254              		.loc 1 69 3
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   for (i = 0; i < len && i < sizeof(uint64_t); ++i)
+ 255              		.loc 1 70 3
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int i;
+ 256              		.loc 1 67 56 is_stmt 0
+ 257 0000 AA86     		mv	a3,a0
+ 258 0002 2E86     		mv	a2,a1
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   uint64_t n = 0;
+ 259              		.loc 1 69 12
+ 260 0004 0145     		li	a0,0
+ 261              	.LVL33:
+ 262 0006 8145     		li	a1,0
+ 263              	.LVL34:
+ 264              		.loc 1 70 10
+ 265 0008 8147     		li	a5,0
+ 266              		.loc 1 70 23
+ 267 000a 2148     		li	a6,8
+ 268              	.LVL35:
+ 269              	.L23:
+ 270              		.loc 1 70 15 is_stmt 1 discriminator 1
+ 271              		.loc 1 70 3 is_stmt 0 discriminator 1
+ 272 000c 6384C700 		beq	a5,a2,.L22
+ 273              		.loc 1 70 23 discriminator 3
+ 274 0010 63930701 		bne	a5,a6,.L25
+ 275              	.L22:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   return n;
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** }
+ 276              		.loc 1 74 1
+ 277 0014 8280     		ret
+ 278              	.L25:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 279              		.loc 1 71 5 is_stmt 1 discriminator 4
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 280              		.loc 1 71 12 is_stmt 0 discriminator 4
+ 281 0016 13578501 		srli	a4,a0,24
+ 282 001a A205     		slli	a1,a1,8
+ 283              	.LVL36:
+ 284 001c D98D     		or	a1,a4,a1
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 285              		.loc 1 71 23 discriminator 4
+ 286 001e 3387F600 		add	a4,a3,a5
+ 287 0022 03470700 		lbu	a4,0(a4)
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 288              		.loc 1 71 12 discriminator 4
+ 289 0026 2205     		slli	a0,a0,8
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 290              		.loc 1 70 48 discriminator 4
+ 291 0028 8507     		addi	a5,a5,1
+ 292              	.LVL37:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 293              		.loc 1 71 7 discriminator 4
+ 294 002a 3A95     		add	a0,a4,a0
+ 295 002c 3337E500 		sltu	a4,a0,a4
+ 296 0030 BA95     		add	a1,a4,a1
+ 297              	.LVL38:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     n = (n << 8) + buf[i];
+ 298              		.loc 1 70 48 is_stmt 1 discriminator 4
+ 299 0032 E9BF     		j	.L23
+ 300              		.cfi_endproc
+ 301              	.LFE35:
+ 303              		.section	.text.coap_encode_var_safe8,"ax",@progbits
+ 304              		.align	1
+ 305              		.globl	coap_encode_var_safe8
+ 307              	coap_encode_var_safe8:
+ 308              	.LFB36:
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** unsigned int
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** coap_encode_var_safe8(uint8_t *buf, size_t length, uint64_t val) {
+ 309              		.loc 1 77 66
+ 310              		.cfi_startproc
+ 311              	.LVL39:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int n, i;
+ 312              		.loc 1 78 3
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   uint64_t tval = val;
+ 313              		.loc 1 79 3
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   for (n = 0; tval && n < sizeof(val); ++n)
+ 314              		.loc 1 81 3
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int n, i;
+ 315              		.loc 1 77 66 is_stmt 0
+ 316 0000 2A87     		mv	a4,a0
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   uint64_t tval = val;
+ 317              		.loc 1 79 12
+ 318 0002 B287     		mv	a5,a2
+ 319 0004 3688     		mv	a6,a3
+ 320              		.loc 1 81 10
+ 321 0006 0145     		li	a0,0
+ 322              	.LVL40:
+ 323              		.loc 1 81 20
+ 324 0008 A148     		li	a7,8
+ 325              	.LVL41:
+ 326              	.L28:
+ 327              		.loc 1 81 15 is_stmt 1 discriminator 1
+ 328              		.loc 1 81 3 is_stmt 0 discriminator 1
+ 329 000a 33E30701 		or	t1,a5,a6
+ 330 000e 63040300 		beq	t1,zero,.L29
+ 331              		.loc 1 81 20 discriminator 1
+ 332 0012 631C1503 		bne	a0,a7,.L31
+ 333              	.L29:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     tval >>= 8;
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   if (n > length) {
+ 334              		.loc 1 84 3 is_stmt 1
+ 335 0016 B307A700 		add	a5,a4,a0
+ 336              	.LVL42:
+ 337              		.loc 1 84 6 is_stmt 0
+ 338 001a 63F9A504 		bleu	a0,a1,.L33
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   unsigned int n, i;
+ 339              		.loc 1 77 66 discriminator 1
+ 340 001e 17030000 		call	t0,__riscv_save_0
+ 340      E7020300 
+ 341              		.cfi_offset 1, -4
+ 342              		.cfi_def_cfa_offset 16
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     assert(n <= length);
+ 343              		.loc 1 85 5 is_stmt 1 discriminator 1
+ 344 0026 B7060000 		lui	a3,%hi(.LC0)
+ 345 002a 37060000 		lui	a2,%hi(.LANCHOR1)
+ 346              	.LVL43:
+ 347 002e 37050000 		lui	a0,%hi(.LC1)
+ 348              	.LVL44:
+ 349 0032 93860600 		addi	a3,a3,%lo(.LC0)
+ 350 0036 13060600 		addi	a2,a2,%lo(.LANCHOR1)
+ 351 003a 93055005 		li	a1,85
+ 352              	.LVL45:
+ 353 003e 13050500 		addi	a0,a0,%lo(.LC1)
+ 354 0042 97000000 		call	__assert_func
+ 354      E7800000 
+ 355              	.LVL46:
+ 356              	.L31:
+ 357              		.cfi_def_cfa_offset 0
+ 358              		.cfi_restore 1
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     tval >>= 8;
+ 359              		.loc 1 82 5 discriminator 4
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     tval >>= 8;
+ 360              		.loc 1 82 10 is_stmt 0 discriminator 4
+ 361 004a 13138801 		slli	t1,a6,24
+ 362 004e A183     		srli	a5,a5,8
+ 363              	.LVL47:
+ 364 0050 B367F300 		or	a5,t1,a5
+ 365 0054 13588800 		srli	a6,a6,8
+ 366              	.LVL48:
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     tval >>= 8;
+ 367              		.loc 1 81 40 is_stmt 1 discriminator 4
+ 368 0058 0505     		addi	a0,a0,1
+ 369              	.LVL49:
+ 370 005a 45BF     		j	.L28
+ 371              	.LVL50:
+ 372              	.L34:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     return 0;
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   }
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   i = n;
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   while (i--) {
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     buf[i] = val & 0xff;
+ 373              		.loc 1 90 5
+ 374              		.loc 1 90 12 is_stmt 0
+ 375 005c A38FC7FE 		sb	a2,-1(a5)
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     val >>= 8;
+ 376              		.loc 1 91 5 is_stmt 1
+ 377              		.loc 1 91 9 is_stmt 0
+ 378 0060 93958601 		slli	a1,a3,24
+ 379 0064 2182     		srli	a2,a2,8
+ 380              	.LVL51:
+ 381 0066 4D8E     		or	a2,a1,a2
+ 382 0068 A182     		srli	a3,a3,8
+ 383              	.LVL52:
+ 384 006a FD17     		addi	a5,a5,-1
+ 385              	.LVL53:
+ 386              	.L33:
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****     buf[i] = val & 0xff;
+ 387              		.loc 1 89 9 is_stmt 1
+ 388 006c E318F7FE 		bne	a4,a5,.L34
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   }
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** 
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c ****   return n;
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_encode.c **** }
+ 389              		.loc 1 95 1 is_stmt 0
+ 390 0070 8280     		ret
+ 391              		.cfi_endproc
+ 392              	.LFE36:
+ 394              		.section	.rodata.__func__.0,"a"
+ 395              		.align	2
+ 396              		.set	.LANCHOR1,. + 0
+ 399              	__func__.0:
+ 400 0000 636F6170 		.string	"coap_encode_var_safe8"
+ 400      5F656E63 
+ 400      6F64655F 
+ 400      7661725F 
+ 400      73616665 
+ 401              		.section	.rodata.__func__.1,"a"
+ 402              		.align	2
+ 403              		.set	.LANCHOR0,. + 0
+ 406              	__func__.1:
+ 407 0000 636F6170 		.string	"coap_encode_var_safe"
+ 407      5F656E63 
+ 407      6F64655F 
+ 407      7661725F 
+ 407      73616665 
+ 408              		.text
+ 409              	.Letext0:
+ 410              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 411              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 412              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 413              		.file 5 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 coap_encode.c
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:13     .text.coap_fls:0000000000000000 coap_fls
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:17     .text.coap_fls:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:19     .text.coap_fls:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:22     .text.coap_fls:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:25     .text.coap_fls:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:26     .text.coap_fls:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:30     .text.coap_fls:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:33     .text.coap_fls:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:34     .text.coap_fls:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:35     .text.coap_fls:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:39     .text.coap_fls:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:40     .text.coap_fls:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:46     .text.coap_fls:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:47     .text.coap_fls:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:53     .text.coap_fls:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:54     .text.coap_fls:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:61     .text.coap_fls:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:62     .text.coap_fls:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:67     .text.coap_fls:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:74     .text.coap_flsll:0000000000000000 coap_flsll
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:77     .text.coap_flsll:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:79     .text.coap_flsll:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:80     .text.coap_flsll:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:81     .text.coap_flsll:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:84     .text.coap_flsll:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:85     .text.coap_flsll:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:86     .text.coap_flsll:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:90     .text.coap_flsll:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:91     .text.coap_flsll:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:94     .text.coap_flsll:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:95     .text.coap_flsll:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:98     .text.coap_flsll:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:99     .text.coap_flsll:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:106    .text.coap_flsll:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:107    .text.coap_flsll:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:110    .text.coap_flsll:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:117    .text.coap_decode_var_bytes:0000000000000000 coap_decode_var_bytes
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:120    .text.coap_decode_var_bytes:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:122    .text.coap_decode_var_bytes:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:123    .text.coap_decode_var_bytes:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:124    .text.coap_decode_var_bytes:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:125    .text.coap_decode_var_bytes:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:127    .text.coap_decode_var_bytes:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:129    .text.coap_decode_var_bytes:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:133    .text.coap_decode_var_bytes:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:134    .text.coap_decode_var_bytes:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:136    .text.coap_decode_var_bytes:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:137    .text.coap_decode_var_bytes:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:140    .text.coap_decode_var_bytes:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:141    .text.coap_decode_var_bytes:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:144    .text.coap_decode_var_bytes:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:147    .text.coap_decode_var_bytes:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:150    .text.coap_decode_var_bytes:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:153    .text.coap_decode_var_bytes:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:154    .text.coap_decode_var_bytes:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:168    .text.coap_encode_var_safe:0000000000000000 coap_encode_var_safe
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:171    .text.coap_encode_var_safe:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:173    .text.coap_encode_var_safe:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:174    .text.coap_encode_var_safe:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:175    .text.coap_encode_var_safe:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:176    .text.coap_encode_var_safe:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:178    .text.coap_encode_var_safe:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:180    .text.coap_encode_var_safe:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:183    .text.coap_encode_var_safe:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:187    .text.coap_encode_var_safe:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:188    .text.coap_encode_var_safe:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:190    .text.coap_encode_var_safe:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:193    .text.coap_encode_var_safe:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:196    .text.coap_encode_var_safe:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:198    .text.coap_encode_var_safe:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:199    .text.coap_encode_var_safe:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:200    .text.coap_encode_var_safe:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:202    .text.coap_encode_var_safe:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:215    .text.coap_encode_var_safe:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:216    .text.coap_encode_var_safe:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:218    .text.coap_encode_var_safe:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:219    .text.coap_encode_var_safe:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:222    .text.coap_encode_var_safe:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:228    .text.coap_encode_var_safe:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:229    .text.coap_encode_var_safe:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:231    .text.coap_encode_var_safe:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:232    .text.coap_encode_var_safe:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:238    .text.coap_encode_var_safe:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:240    .text.coap_encode_var_safe:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:241    .text.coap_encode_var_safe:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:248    .text.coap_decode_var_bytes8:0000000000000000 coap_decode_var_bytes8
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:251    .text.coap_decode_var_bytes8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:253    .text.coap_decode_var_bytes8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:254    .text.coap_decode_var_bytes8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:255    .text.coap_decode_var_bytes8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:256    .text.coap_decode_var_bytes8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:257    .text.coap_decode_var_bytes8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:260    .text.coap_decode_var_bytes8:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:265    .text.coap_decode_var_bytes8:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:267    .text.coap_decode_var_bytes8:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:271    .text.coap_decode_var_bytes8:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:272    .text.coap_decode_var_bytes8:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:274    .text.coap_decode_var_bytes8:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:277    .text.coap_decode_var_bytes8:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:280    .text.coap_decode_var_bytes8:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:281    .text.coap_decode_var_bytes8:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:286    .text.coap_decode_var_bytes8:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:289    .text.coap_decode_var_bytes8:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:291    .text.coap_decode_var_bytes8:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:294    .text.coap_decode_var_bytes8:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:299    .text.coap_decode_var_bytes8:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:300    .text.coap_decode_var_bytes8:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:307    .text.coap_encode_var_safe8:0000000000000000 coap_encode_var_safe8
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:310    .text.coap_encode_var_safe8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:312    .text.coap_encode_var_safe8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:313    .text.coap_encode_var_safe8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:314    .text.coap_encode_var_safe8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:315    .text.coap_encode_var_safe8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:316    .text.coap_encode_var_safe8:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:318    .text.coap_encode_var_safe8:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:321    .text.coap_encode_var_safe8:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:324    .text.coap_encode_var_safe8:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:328    .text.coap_encode_var_safe8:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:329    .text.coap_encode_var_safe8:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:332    .text.coap_encode_var_safe8:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:335    .text.coap_encode_var_safe8:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:338    .text.coap_encode_var_safe8:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:340    .text.coap_encode_var_safe8:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:341    .text.coap_encode_var_safe8:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:342    .text.coap_encode_var_safe8:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:344    .text.coap_encode_var_safe8:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:357    .text.coap_encode_var_safe8:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:358    .text.coap_encode_var_safe8:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:360    .text.coap_encode_var_safe8:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:361    .text.coap_encode_var_safe8:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:368    .text.coap_encode_var_safe8:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:374    .text.coap_encode_var_safe8:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:375    .text.coap_encode_var_safe8:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:377    .text.coap_encode_var_safe8:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:378    .text.coap_encode_var_safe8:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:388    .text.coap_encode_var_safe8:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:390    .text.coap_encode_var_safe8:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:391    .text.coap_encode_var_safe8:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:396    .rodata.__func__.0:0000000000000000 .LANCHOR1
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:399    .rodata.__func__.0:0000000000000000 __func__.0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:403    .rodata.__func__.1:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:406    .rodata.__func__.1:0000000000000000 __func__.1
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:70     .text.coap_fls:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:113    .text.coap_flsll:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:157    .text.coap_decode_var_bytes:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:244    .text.coap_encode_var_safe:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:303    .text.coap_decode_var_bytes8:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:394    .text.coap_encode_var_safe8:0000000000000072 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:49     .text.coap_fls:000000000000000e .L3
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:37     .text.coap_fls:0000000000000006 .L2
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:96     .text.coap_flsll:000000000000000c .L6
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:88     .text.coap_flsll:0000000000000004 .L5
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:138    .text.coap_decode_var_bytes:000000000000000c .L9
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:131    .text.coap_decode_var_bytes:0000000000000006 .L8
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:159    .rodata.coap_encode_var_safe.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:162    .rodata.coap_encode_var_safe.str1.4:000000000000000c .LC1
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:191    .text.coap_encode_var_safe:000000000000000e .L12
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:214    .text.coap_encode_var_safe:0000000000000042 .L13
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:236    .text.coap_encode_var_safe:0000000000000050 .L15
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:185    .text.coap_encode_var_safe:0000000000000008 .L11
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:226    .text.coap_encode_var_safe:0000000000000048 .L16
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:275    .text.coap_decode_var_bytes8:0000000000000014 .L22
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:278    .text.coap_decode_var_bytes8:0000000000000016 .L25
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:269    .text.coap_decode_var_bytes8:000000000000000c .L23
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:333    .text.coap_encode_var_safe8:0000000000000016 .L29
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:356    .text.coap_encode_var_safe8:000000000000004a .L31
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:386    .text.coap_encode_var_safe8:000000000000006c .L33
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:326    .text.coap_encode_var_safe8:000000000000000a .L28
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:372    .text.coap_encode_var_safe8:000000000000005c .L34
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:877    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1839   .debug_str:00000000000000eb .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1851   .debug_str:0000000000000223 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1833   .debug_str:0000000000000048 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1795   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1819   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1829   .debug_str:0000000000000023 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1871   .debug_str:0000000000000324 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1821   .debug_str:0000000000000000 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1831   .debug_str:000000000000003a .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1857   .debug_str:00000000000002c0 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1837   .debug_str:00000000000000d8 .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1865   .debug_str:0000000000000301 .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1835   .debug_str:00000000000000c6 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1853   .debug_str:00000000000002a7 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1859   .debug_str:00000000000002ca .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1843   .debug_str:00000000000001f2 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1847   .debug_str:0000000000000204 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1825   .debug_str:0000000000000011 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1823   .debug_str:000000000000000a .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1845   .debug_str:00000000000001ff .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1863   .debug_str:00000000000002eb .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:308    .text.coap_encode_var_safe8:0000000000000000 .LFB36
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:392    .text.coap_encode_var_safe8:0000000000000072 .LFE36
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1271   .debug_loc:0000000000000000 .LLST18
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1875   .debug_str:0000000000000339 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1293   .debug_loc:0000000000000037 .LLST19
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1318   .debug_loc:0000000000000071 .LLST20
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1366   .debug_loc:00000000000000c9 .LLST21
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1869   .debug_str:000000000000031f .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1382   .debug_loc:00000000000000f3 .LLST22
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1827   .debug_str:000000000000001a .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:355    .text.coap_encode_var_safe8:000000000000004a .LVL46
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1849   .debug_str:000000000000020c .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:249    .text.coap_decode_var_bytes8:0000000000000000 .LFB35
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:301    .text.coap_decode_var_bytes8:0000000000000034 .LFE35
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1421   .debug_loc:000000000000013b .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1432   .debug_loc:0000000000000159 .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1443   .debug_loc:0000000000000177 .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1465   .debug_loc:00000000000001ae .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1867   .debug_str:000000000000030a .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:169    .text.coap_encode_var_safe:0000000000000000 .LFB34
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:242    .text.coap_encode_var_safe:0000000000000056 .LFE34
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1492   .debug_loc:00000000000001ea .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1514   .debug_loc:0000000000000221 .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1532   .debug_loc:000000000000024d .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1550   .debug_loc:0000000000000279 .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1566   .debug_loc:00000000000002a3 .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:213    .text.coap_encode_var_safe:0000000000000042 .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1861   .debug_str:00000000000002d5 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:118    .text.coap_decode_var_bytes:0000000000000000 .LFB33
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:155    .text.coap_decode_var_bytes:000000000000001c .LFE33
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1591   .debug_loc:00000000000002dd .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1602   .debug_loc:00000000000002fb .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1624   .debug_loc:0000000000000332 .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1855   .debug_str:00000000000002b5 .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1873   .debug_str:0000000000000330 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:14     .text.coap_fls:0000000000000000 .LFB31
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:68     .text.coap_fls:000000000000001c .LFE31
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1640   .debug_loc:000000000000035c .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:20     .text.coap_fls:0000000000000000 .LBB4
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1654   .debug_loc:000000000000037d .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1693   .debug_loc:00000000000003c5 .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:75     .text.coap_flsll:0000000000000000 .LFB32
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:111    .text.coap_flsll:000000000000001a .LFE32
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1709   .debug_loc:00000000000003ef .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1730   .debug_loc:0000000000000417 .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1760   .debug_loc:000000000000044f .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:1841   .debug_str:00000000000001e4 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:311    .text.coap_encode_var_safe8:0000000000000000 .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:322    .text.coap_encode_var_safe8:0000000000000008 .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:352    .text.coap_encode_var_safe8:000000000000003e .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:371    .text.coap_encode_var_safe8:000000000000005c .LVL50
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:346    .text.coap_encode_var_safe8:000000000000002e .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:380    .text.coap_encode_var_safe8:0000000000000066 .LVL51
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:383    .text.coap_encode_var_safe8:000000000000006a .LVL52
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:325    .text.coap_encode_var_safe8:000000000000000a .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:348    .text.coap_encode_var_safe8:0000000000000032 .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:336    .text.coap_encode_var_safe8:000000000000001a .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:363    .text.coap_encode_var_safe8:0000000000000050 .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:366    .text.coap_encode_var_safe8:0000000000000058 .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:252    .text.coap_decode_var_bytes8:0000000000000000 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:261    .text.coap_decode_var_bytes8:0000000000000006 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:263    .text.coap_decode_var_bytes8:0000000000000008 .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:268    .text.coap_decode_var_bytes8:000000000000000c .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:292    .text.coap_decode_var_bytes8:000000000000002a .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:297    .text.coap_decode_var_bytes8:0000000000000032 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:283    .text.coap_decode_var_bytes8:000000000000001c .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:172    .text.coap_encode_var_safe:0000000000000000 .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:181    .text.coap_encode_var_safe:0000000000000006 .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:210    .text.coap_encode_var_safe:0000000000000036 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:204    .text.coap_encode_var_safe:0000000000000026 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:184    .text.coap_encode_var_safe:0000000000000008 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:206    .text.coap_encode_var_safe:000000000000002a .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:194    .text.coap_encode_var_safe:0000000000000012 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:225    .text.coap_encode_var_safe:0000000000000048 .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:121    .text.coap_decode_var_bytes:0000000000000000 .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:130    .text.coap_decode_var_bytes:0000000000000006 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:148    .text.coap_decode_var_bytes:0000000000000018 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:151    .text.coap_decode_var_bytes:000000000000001a .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:145    .text.coap_decode_var_bytes:0000000000000016 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:18     .text.coap_fls:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:36     .text.coap_fls:0000000000000006 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:31     .text.coap_fls:0000000000000004 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:43     .text.coap_fls:000000000000000c .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:48     .text.coap_fls:000000000000000e .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:56     .text.coap_fls:0000000000000014 .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:59     .text.coap_fls:0000000000000018 .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:78     .text.coap_flsll:0000000000000000 .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:87     .text.coap_flsll:0000000000000004 .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:82     .text.coap_flsll:0000000000000002 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:101    .text.coap_flsll:0000000000000012 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:104    .text.coap_flsll:0000000000000016 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:415    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:24     .text.coap_fls:0000000000000000 .LBE4
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:27     .text.coap_fls:0000000000000002 .LBB8
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:45     .text.coap_fls:000000000000000c .LBE8
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:50     .text.coap_fls:000000000000000e .LBB9
+C:\Users\stapi\AppData\Local\Temp\ccHB5qCw.s:66     .text.coap_fls:000000000000001c .LBE9
+
+UNDEFINED SYMBOLS
+__riscv_save_0
+__assert_func

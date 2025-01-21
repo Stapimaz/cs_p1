@@ -1,0 +1,66 @@
+#include <stdint.h>
+#include "gd32vw55x_platform.h"
+#include "wrapper_os.h"
+#include "wifi_export.h"
+#include "mqtt_cmd.h"  // Include mqtt_cmd for MQTT functionality
+#include "uart.h"
+
+// Define Wi-Fi credentials
+#define WIFI_SSID "Your_SSID"
+#define WIFI_PASSWORD "Your_Password"
+
+int main(void) {
+    // Initialize the platform
+    platform_init();
+
+    // Initialize Wi-Fi
+    if (wifi_init(WIFI_SSID, WIFI_PASSWORD) != 0) {
+        dbg_print("Failed to initialize Wi-Fi. Halting...\n");
+        return -1;
+    }
+    uart_print("Wi-Fi initialized and connected.\n");
+
+    // Start the OS
+    sys_os_start();
+
+    // Use mqtt_cmd to connect to the MQTT server
+    char *mqtt_connect_args[] = {
+        "mqtt",
+        "connect",
+        "192.168.1.1",  // Replace with your MQTT server IP
+        "1883",         // Port
+        "0",            // No encryption
+        "username",     // Optional username
+        "password"      // Optional password
+    };
+    cmd_mqtt(7, mqtt_connect_args);
+
+    // Publish a test message
+    char *mqtt_publish_args[] = {
+        "mqtt",
+        "publish",
+        "test/topic",    // Topic
+        "Hello, MQTT!",  // Message
+        "0",             // QoS 0
+        "0"              // Retain flag
+    };
+    cmd_mqtt(5, mqtt_publish_args);
+
+    // Subscribe to a topic
+    char *mqtt_subscribe_args[] = {
+        "mqtt",
+        "subscribe",
+        "test/topic",    // Topic
+        "0",             // QoS 0
+        "1"              // Subscribe (1 to subscribe, 0 to unsubscribe)
+    };
+    cmd_mqtt(5, mqtt_subscribe_args);
+
+    // Main task loop
+    for (;;) {
+        // Here we can handle periodic tasks, such as checking for MQTT commands or events
+        sys_ms_sleep(1000);  // Sleep for a while to simulate periodic processing
+    }
+
+    return 0;
+}

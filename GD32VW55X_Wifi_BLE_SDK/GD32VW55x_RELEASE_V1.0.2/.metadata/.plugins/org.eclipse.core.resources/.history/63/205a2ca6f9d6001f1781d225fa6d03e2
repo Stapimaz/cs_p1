@@ -1,0 +1,159 @@
+/*!
+    \file    main.c
+    \brief   Main loop of GD32VW55x SDK.
+
+    \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+*/
+
+/*
+    Copyright (c) 2023, GigaDevice Semiconductor Inc.
+
+    Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this
+       list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions and the following disclaimer in the documentation
+       and/or other materials provided with the distribution.
+    3. Neither the name of the copyright holder nor the names of its contributors
+       may be used to endorse or promote products derived from this software without
+       specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGE.
+*/
+
+#include <stdint.h>
+#include "wifi_export.h"
+#include "gd32vw55x_platform.h"
+#include "uart.h"
+#include "cmd_shell.h"
+#include "mqtt_cmd.h"
+#include "wrapper_os.h"
+#include "wifi_management.h"
+#include "util.h"
+
+// Wi-Fi and MQTT Configuration
+#define WIFI_SSID "Mobiliz NaRGE_Guest"
+#define WIFI_PASSWORD "M@b!lz12.*"
+
+#define MQTT_BROKER_IP "192.168.1.100" // Replace with your broker's IP
+#define MQTT_BROKER_PORT 1883
+#define MQTT_TOPIC "test_topic"
+#define MQTT_MESSAGE "Hello from GD32"
+
+// Global MQTT client variable
+mqtt_client_t *mqtt_client = NULL;
+
+// Function to connect to MQTT broker
+static int mqtt_connect_to_broker(void) {
+    mqtt_client = mqtt_client_new();
+    if (mqtt_client == NULL) {
+        dbg_print(ERR, "Failed to create MQTT client.\n");
+        return -1;
+    }
+
+    // Set up broker address and port
+    ip_addr_t broker_ip = IPADDR4_INIT_BYTES(192, 168, 1, 100); // Replace with your broker's IP
+    uint16_t broker_port = MQTT_BROKER_PORT;
+
+    struct mqtt_connect_client_info_t client_info = {
+        .client_id = "GD32Client",
+        .client_user = NULL, // Optional
+        .client_pass = NULL, // Optional
+        .keep_alive = 120,
+    };
+
+    // Connect to the broker
+    err_t result = mqtt_client_connect(
+        mqtt_client,
+        &broker_ip,
+        broker_port,
+        NULL,          // Optional callback for connection result
+        NULL,          // Argument for callback
+        &client_info   // MQTT client info
+    );
+
+    if (result != ERR_OK) {
+        dbg_print(ERR, "Failed to connect to MQTT broker, error: %d\n", result);
+        return -1;
+    }
+
+    dbg_print(NOTICE, "MQTT connected successfully to broker.\n");
+    return 0;
+}
+
+// Function to publish a message to a topic
+static void mqtt_publish_message(void) {
+    if (mqtt_client == NULL || !mqtt_client_is_connected(mqtt_client)) {
+        dbg_print(ERR, "MQTT client is not connected.\n");
+        return;
+    }
+
+    err_t result = mqtt_publish(
+        mqtt_client,
+        MQTT_TOPIC,
+        MQTT_MESSAGE,
+        strlen(MQTT_MESSAGE),
+        0, // QoS
+        0, // Retain flag
+        NULL, // Callback for publish result
+        NULL  // Argument for callback
+    );
+
+    if (result == ERR_OK) {
+        dbg_print(NOTICE, "MQTT message published successfully to topic: %s\n", MQTT_TOPIC);
+    } else {
+        dbg_print(ERR, "Failed to publish MQTT message, error: %d\n", result);
+    }
+}
+
+int main(void) {
+    // Initialize platform and debug
+    platform_init();
+    dbg_print(NOTICE, "Starting application...\n");
+
+    // Initialize Wi-Fi
+    dbg_print(NOTICE, "Initializing Wi-Fi...\n");
+    if (wifi_init() != 0) {
+        dbg_print(ERR, "Wi-Fi initialization failed.\n");
+        return -1;
+    }
+
+    dbg_print(NOTICE, "Connecting to Wi-Fi SSID: %s\n", WIFI_SSID);
+    if (wifi_management_connect(WIFI_SSID, WIFI_PASSWORD, true) != 0) {
+        dbg_print(ERR, "Wi-Fi connection failed.\n");
+        return -1;
+    }
+    dbg_print(NOTICE, "Wi-Fi connected successfully.\n");
+
+    // Initialize MQTT and connect to broker
+    dbg_print(NOTICE, "Initializing MQTT...\n");
+    if (mqtt_connect_to_broker() != 0) {
+        dbg_print(ERR, "MQTT initialization failed.\n");
+        return -1;
+    }
+
+    // Publish a test message
+    mqtt_publish_message();
+
+    // Start the OS scheduler
+    dbg_print(NOTICE, "Starting OS scheduler...\n");
+    sys_os_start();
+
+    // Main loop
+    for (;;) {
+        // Application logic
+    }
+
+    return 0;
+}

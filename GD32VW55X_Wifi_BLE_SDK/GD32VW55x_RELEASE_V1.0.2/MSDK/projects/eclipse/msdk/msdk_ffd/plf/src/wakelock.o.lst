@@ -1,0 +1,282 @@
+   1              		.file	"wakelock.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.sys_wakelock_acquire,"ax",@progbits
+  10              		.align	1
+  11              		.globl	sys_wakelock_acquire
+  13              	sys_wakelock_acquire:
+  14              	.LFB0:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** /*!
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \file    wakelock.c
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \brief   OS wake lock for GD32VW55x SDK.
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** */
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** /*
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     Redistribution and use in source and binary forms, with or without modification,
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** are permitted provided that the following conditions are met:
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****        list of conditions and the following disclaimer.
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****        this list of conditions and the following disclaimer in the documentation
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****        and/or other materials provided with the distribution.
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****        may be used to endorse or promote products derived from this software without
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****        specific prior written permission.
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** OF SUCH DAMAGE.
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** */
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** #include "wakelock.h"
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** #include <stdatomic.h>
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** /* wake_lock needs to be atomistic, multiple changes will result in unexpected values */
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** static atomic_uint wake_lock = ATOMIC_VAR_INIT(0);
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** /*!
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \brief      acquire wakelock and do not enter power saving mode
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[in]  lock_id: lock id
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[out] none
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \retval     none
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** */
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** void sys_wakelock_acquire(uint32_t lock_id)
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** {
+  16              		.loc 1 48 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     atomic_fetch_or(&wake_lock, (0x01 << lock_id));
+  19              		.loc 1 49 5
+  20 0000 B7070000 		lui	a5,%hi(.LANCHOR0)
+  21 0004 93870700 		addi	a5,a5,%lo(.LANCHOR0)
+  22 0008 3315A028 		bset	a0,x0,a0
+  23              	.LVL1:
+  24 000c 0F00500F 		fence iorw,ow; amoor.w.aq zero,a0,0(a5)
+  24      2FA0A744 
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** }
+  25              		.loc 1 50 1 is_stmt 0
+  26 0014 8280     		ret
+  27              		.cfi_endproc
+  28              	.LFE0:
+  30              		.section	.text.sys_wakelock_release,"ax",@progbits
+  31              		.align	1
+  32              		.globl	sys_wakelock_release
+  34              	sys_wakelock_release:
+  35              	.LFB1:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** /*!
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \brief      release wakelock and allow access to power saving mode
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[in]  lock_id: lock id
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[out] none
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \retval     none
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** */
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** void sys_wakelock_release(uint32_t lock_id)
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** {
+  36              		.loc 1 59 1 is_stmt 1
+  37              		.cfi_startproc
+  38              	.LVL2:
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     atomic_fetch_and(&wake_lock, ~(0x01 << lock_id));
+  39              		.loc 1 60 5
+  40 0000 B7070000 		lui	a5,%hi(.LANCHOR0)
+  41 0004 93870700 		addi	a5,a5,%lo(.LANCHOR0)
+  42 0008 3315A028 		bset	a0,x0,a0
+  43              	.LVL3:
+  44 000c 1345F5FF 		not	a0,a0
+  45 0010 0F00500F 		fence iorw,ow; amoand.w.aq zero,a0,0(a5)
+  45      2FA0A764 
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** }
+  46              		.loc 1 61 1 is_stmt 0
+  47 0018 8280     		ret
+  48              		.cfi_endproc
+  49              	.LFE1:
+  51              		.section	.text.sys_wakelock_status_get,"ax",@progbits
+  52              		.align	1
+  53              		.globl	sys_wakelock_status_get
+  55              	sys_wakelock_status_get:
+  56              	.LFB2:
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** /*!
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \brief      get wakelock status
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[in]  none
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[out] none
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \retval     none
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** */
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** uint32_t sys_wakelock_status_get(void)
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** {
+  57              		.loc 1 70 1 is_stmt 1
+  58              		.cfi_startproc
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     return (uint32_t)wake_lock;
+  59              		.loc 1 71 5
+  60              		.loc 1 71 22 is_stmt 0
+  61 0000 B7070000 		lui	a5,%hi(.LANCHOR0)
+  62 0004 0F00F00F 		fence	iorw,iorw
+  63 0008 03A50700 		lw	a0,%lo(.LANCHOR0)(a5)
+  64 000c 0F00F00F 		fence	iorw,iorw
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** }
+  65              		.loc 1 72 1
+  66 0010 8280     		ret
+  67              		.cfi_endproc
+  68              	.LFE2:
+  70              		.section	.text.systick_lock_acquire,"ax",@progbits
+  71              		.align	1
+  72              		.globl	systick_lock_acquire
+  74              	systick_lock_acquire:
+  75              	.LFB3:
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** /*!
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \brief      acquire wakelock by systick
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[in]  none
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[out] none
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \retval     none
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** */
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** void systick_lock_acquire(void)
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** {
+  76              		.loc 1 81 1 is_stmt 1
+  77              		.cfi_startproc
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     sys_wakelock_acquire(LOCK_ID_SYSTICK);
+  78              		.loc 1 82 5
+  79 0000 0945     		li	a0,2
+  80 0002 17030000 		tail	sys_wakelock_acquire
+  80      67000300 
+  81              	.LVL4:
+  82              		.cfi_endproc
+  83              	.LFE3:
+  85              		.section	.text.systick_lock_release,"ax",@progbits
+  86              		.align	1
+  87              		.globl	systick_lock_release
+  89              	systick_lock_release:
+  90              	.LFB4:
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** }
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** 
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** /*!
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \brief      release wakelock by systick
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[in]  none
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \param[out] none
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     \retval     none
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** */
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** void systick_lock_release()
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c **** {
+  91              		.loc 1 92 1
+  92              		.cfi_startproc
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src\wakelock.c ****     sys_wakelock_release(LOCK_ID_SYSTICK);
+  93              		.loc 1 93 5
+  94 0000 0945     		li	a0,2
+  95 0002 17030000 		tail	sys_wakelock_release
+  95      67000300 
+  96              	.LVL5:
+  97              		.cfi_endproc
+  98              	.LFE4:
+ 100              		.section	.sbss.wake_lock,"aw",@nobits
+ 101              		.align	2
+ 102              		.set	.LANCHOR0,. + 0
+ 105              	wake_lock:
+ 106 0000 00000000 		.zero	4
+ 107              		.text
+ 108              	.Letext0:
+ 109              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 110              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 wakelock.c
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:13     .text.sys_wakelock_acquire:0000000000000000 sys_wakelock_acquire
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:17     .text.sys_wakelock_acquire:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:19     .text.sys_wakelock_acquire:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:20     .text.sys_wakelock_acquire:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:26     .text.sys_wakelock_acquire:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:27     .text.sys_wakelock_acquire:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:34     .text.sys_wakelock_release:0000000000000000 sys_wakelock_release
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:37     .text.sys_wakelock_release:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:39     .text.sys_wakelock_release:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:40     .text.sys_wakelock_release:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:47     .text.sys_wakelock_release:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:48     .text.sys_wakelock_release:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:55     .text.sys_wakelock_status_get:0000000000000000 sys_wakelock_status_get
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:58     .text.sys_wakelock_status_get:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:59     .text.sys_wakelock_status_get:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:60     .text.sys_wakelock_status_get:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:61     .text.sys_wakelock_status_get:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:66     .text.sys_wakelock_status_get:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:67     .text.sys_wakelock_status_get:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:74     .text.systick_lock_acquire:0000000000000000 systick_lock_acquire
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:77     .text.systick_lock_acquire:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:78     .text.systick_lock_acquire:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:79     .text.systick_lock_acquire:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:82     .text.systick_lock_acquire:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:89     .text.systick_lock_release:0000000000000000 systick_lock_release
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:92     .text.systick_lock_release:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:93     .text.systick_lock_release:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:94     .text.systick_lock_release:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:97     .text.systick_lock_release:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:102    .sbss.wake_lock:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:105    .sbss.wake_lock:0000000000000000 wake_lock
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:30     .text.sys_wakelock_acquire:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:51     .text.sys_wakelock_release:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:70     .text.sys_wakelock_status_get:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:85     .text.systick_lock_acquire:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:100    .text.systick_lock_release:000000000000000a .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:285    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:567    .debug_str:00000000000000b9 .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:577    .debug_str:00000000000001e0 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:585    .debug_str:0000000000000279 .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:527    .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:541    .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:581    .debug_str:0000000000000265 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:563    .debug_str:00000000000000a6 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:589    .debug_str:000000000000030c .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:579    .debug_str:0000000000000252 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:569    .debug_str:00000000000001b2 .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:553    .debug_str:0000000000000051 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:555    .debug_str:000000000000005c .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:543    .debug_str:0000000000000000 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:557    .debug_str:000000000000006e .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:547    .debug_str:0000000000000023 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:549    .debug_str:0000000000000030 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:573    .debug_str:00000000000001c5 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:565    .debug_str:00000000000000b4 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:571    .debug_str:00000000000001bb .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:561    .debug_str:000000000000009a .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:575    .debug_str:00000000000001cb .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:90     .text.systick_lock_release:0000000000000000 .LFB4
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:98     .text.systick_lock_release:000000000000000a .LFE4
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:96     .text.systick_lock_release:000000000000000a .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:545    .debug_str:000000000000000e .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:75     .text.systick_lock_acquire:0000000000000000 .LFB3
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:83     .text.systick_lock_acquire:000000000000000a .LFE3
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:81     .text.systick_lock_acquire:000000000000000a .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:551    .debug_str:0000000000000039 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:56     .text.sys_wakelock_status_get:0000000000000000 .LFB2
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:68     .text.sys_wakelock_status_get:0000000000000012 .LFE2
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:587    .debug_str:00000000000002f7 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:35     .text.sys_wakelock_release:0000000000000000 .LFB1
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:49     .text.sys_wakelock_release:000000000000001a .LFE1
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:583    .debug_str:0000000000000271 .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:478    .debug_loc:0000000000000000 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:559    .debug_str:0000000000000085 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:14     .text.sys_wakelock_acquire:0000000000000000 .LFB0
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:28     .text.sys_wakelock_acquire:0000000000000016 .LFE0
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:492    .debug_loc:0000000000000021 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:38     .text.sys_wakelock_release:0000000000000000 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:43     .text.sys_wakelock_release:000000000000000c .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:18     .text.sys_wakelock_acquire:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:23     .text.sys_wakelock_acquire:000000000000000c .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccg1grya.s:112    .debug_info:0000000000000000 .Ldebug_info0
+
+NO UNDEFINED SYMBOLS

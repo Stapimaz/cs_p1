@@ -1,0 +1,49 @@
+// Add this function from the example code
+static int client_publish(char *topic, char *context, uint16_t length)
+{
+    err_t ret = ERR_OK;
+    ret = mqtt_msg_publish(mqtt_client, topic, context, length, TOPIC_QOS_PUB, TOPIC_RETAIN, mqtt_pub_cb, NULL);
+    return ret;
+}
+
+// Modify the mqtt_client_task to use the correct publish method
+static void mqtt_client_task(void *param)
+{
+    int status;
+    struct mac_scan_result candidate;
+
+    // Start Wi-Fi scan
+    printf("Start Wi-Fi scan.\r\n");
+    status = wifi_management_scan(1, SSID);
+    if (status != 0) {
+        printf("Wi-Fi scan failed.\r\n");
+        goto exit;
+    }
+
+    sys_memset(&candidate, 0, sizeof(struct mac_scan_result));
+    status = wifi_netlink_candidate_ap_find(WIFI_VIF_INDEX_DEFAULT, NULL, SSID, &candidate);
+    if (status != 0) {
+        goto exit;
+    }
+
+    // Connect to Wi-Fi
+    printf("Start Wi-Fi connection.\r\n");
+    if (wifi_management_connect(SSID, PASSWORD, 1) != 0) {
+        printf("Wi-Fi connection failed\r\n");
+        goto exit;
+    }
+
+    // Connect to MQTT broker
+    if (client_connect() == 0) {
+        // Publish a test message using the correct method
+        if (client_publish(topic_pub, context, strlen(context)) != 0) {
+            printf("MQTT publish failed.\r\n");
+            goto exit;
+        }
+    }
+
+exit:
+    printf("MQTT: close mqtt connection.\r\n");
+    mqtt_connect_free();
+    sys_task_delete(NULL);
+}

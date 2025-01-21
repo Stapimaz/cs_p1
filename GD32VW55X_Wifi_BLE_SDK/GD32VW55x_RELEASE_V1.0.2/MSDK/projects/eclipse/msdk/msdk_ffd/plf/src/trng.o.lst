@@ -1,0 +1,1153 @@
+   1              		.file	"trng.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.rodata.trng_configuration.part.0.str1.4,"aMS",@progbits,1
+  10              		.align	2
+  11              	.LC0:
+  12 0000 54524E47 		.string	"TRNG clock error(%d).\r\n"
+  12      20636C6F 
+  12      636B2065 
+  12      72726F72 
+  12      28256429 
+  13              		.align	2
+  14              	.LC1:
+  15 0018 54524E47 		.string	"TRNG seed error(%d).\r\n"
+  15      20736565 
+  15      64206572 
+  15      726F7228 
+  15      2564292E 
+  16              		.section	.text.trng_configuration.part.0,"ax",@progbits
+  17              		.align	1
+  19              	trng_configuration.part.0:
+  20              	.LFB371:
+  21              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** /*!
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \file    trng.c
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \brief   trng for GD32VW55x SDK
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** */
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** /*
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     Redistribution and use in source and binary forms, with or without modification,
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** are permitted provided that the following conditions are met:
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****        list of conditions and the following disclaimer.
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****        this list of conditions and the following disclaimer in the documentation
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****        and/or other materials provided with the distribution.
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****        may be used to endorse or promote products derived from this software without
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****        specific prior written permission.
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** OF SUCH DAMAGE.
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** */
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #include <stdlib.h>
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #include "gd32vw55x_rcu.h"
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #include "gd32vw55x_trng.h"
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #include "dbg_print.h"
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #include "wrapper_os.h"
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #include "trng.h"
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** static uint32_t trng_initialized = 0;
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** /*!
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \brief       check whether TRNG is ready
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[in]   none
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[out]  none
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \retval      1: TRNG is ready 0: TRNG is not ready
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** */
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** static int trng_ready_check(void)
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** {
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     uint32_t timeout = 0;
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     uint32_t trng_flag = STATUS_RESET;
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     int reval = 1;
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     /* check wherther the random data is valid */
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     do {
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         timeout++;
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_flag = trng_flag_get(TRNG_FLAG_DRDY);
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     } while((STATUS_RESET == trng_flag) && (0xFFFF > timeout));
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (STATUS_RESET == trng_flag) {
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* ready check timeout */
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_flag = trng_flag_get(TRNG_FLAG_CECS);
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         dbg_print(WARNING, "TRNG clock error(%d).\r\n", trng_flag);
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_flag = trng_flag_get(TRNG_FLAG_SECS);
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         dbg_print(WARNING, "TRNG seed error(%d).\r\n", trng_flag);
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         reval = 0;
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     /* return check status */
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     return reval;
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** }
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** /*!
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \brief      configure TRNG module
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[in]  none
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[out] none
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \retval     ErrStatus: SUCCESS or ERROR
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** */
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** static int trng_configuration(void)
+  22              		.loc 1 80 12
+  23              		.cfi_startproc
+  24 0000 17030000 		call	t0,__riscv_save_1
+  24      E7020300 
+  25              		.cfi_offset 8, -8
+  26              		.cfi_offset 1, -4
+  27              		.cfi_def_cfa_offset 16
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** {
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     int reval = 0;
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (!trng_initialized) {
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* TRNG module clock enable */
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         rcu_periph_clock_enable(RCU_TRNG);
+  28              		.loc 1 86 9
+  29 0008 0565     		li	a0,4096
+  30 000a 130565D0 		addi	a0,a0,-762
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* TRNG registers reset */
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_deinit();
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_enable();
+  31              		.loc 1 90 9 is_stmt 0
+  32 000e 4164     		li	s0,65536
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  33              		.loc 1 86 9
+  34 0010 97000000 		call	rcu_periph_clock_enable
+  34      E7800000 
+  35              	.LVL0:
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_enable();
+  36              		.loc 1 89 9 is_stmt 1
+  37              		.loc 1 90 9 is_stmt 0
+  38 0018 7D14     		addi	s0,s0,-1
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_enable();
+  39              		.loc 1 89 9
+  40 001a 97000000 		call	trng_deinit
+  40      E7800000 
+  41              	.LVL1:
+  42              		.loc 1 90 9 is_stmt 1
+  43 0022 97000000 		call	trng_enable
+  43      E7800000 
+  44              	.LVL2:
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* check TRNG work status */
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         if (!trng_ready_check()) {
+  45              		.loc 1 92 9
+  46              	.L3:
+  47              	.LBB4:
+  48              	.LBB5:
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         timeout++;
+  49              		.loc 1 56 5
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_flag = trng_flag_get(TRNG_FLAG_DRDY);
+  50              		.loc 1 57 9
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     } while((STATUS_RESET == trng_flag) && (0xFFFF > timeout));
+  51              		.loc 1 58 9
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     } while((STATUS_RESET == trng_flag) && (0xFFFF > timeout));
+  52              		.loc 1 58 21 is_stmt 0
+  53 002a 0545     		li	a0,1
+  54 002c 97000000 		call	trng_flag_get
+  54      E7800000 
+  55              	.LVL3:
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  56              		.loc 1 59 12 is_stmt 1
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  57              		.loc 1 59 5 is_stmt 0
+  58 0034 35E1     		bne	a0,zero,.L2
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  59              		.loc 1 59 41
+  60 0036 7D14     		addi	s0,s0,-1
+  61              	.LVL4:
+  62 0038 6DF8     		bne	s0,zero,.L3
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* ready check timeout */
+  63              		.loc 1 61 5 is_stmt 1
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         dbg_print(WARNING, "TRNG clock error(%d).\r\n", trng_flag);
+  64              		.loc 1 63 9
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         dbg_print(WARNING, "TRNG clock error(%d).\r\n", trng_flag);
+  65              		.loc 1 63 21 is_stmt 0
+  66 003a 0945     		li	a0,2
+  67              	.LVL5:
+  68 003c 97000000 		call	trng_flag_get
+  68      E7800000 
+  69              	.LVL6:
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_flag = trng_flag_get(TRNG_FLAG_SECS);
+  70              		.loc 1 64 9
+  71 0044 B7070000 		lui	a5,%hi(global_debug_level)
+  72 0048 83C60700 		lbu	a3,%lo(global_debug_level)(a5)
+  73 004c 0547     		li	a4,1
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         dbg_print(WARNING, "TRNG clock error(%d).\r\n", trng_flag);
+  74              		.loc 1 63 21
+  75 004e AA85     		mv	a1,a0
+  76              	.LVL7:
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_flag = trng_flag_get(TRNG_FLAG_SECS);
+  77              		.loc 1 64 9 is_stmt 1
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_flag = trng_flag_get(TRNG_FLAG_SECS);
+  78              		.loc 1 64 9
+  79 0050 3E84     		mv	s0,a5
+  80              	.LVL8:
+  81 0052 637AD700 		bleu	a3,a4,.L7
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_flag = trng_flag_get(TRNG_FLAG_SECS);
+  82              		.loc 1 64 9
+  83 0056 37050000 		lui	a0,%hi(.LC0)
+  84              	.LVL9:
+  85 005a 13050500 		addi	a0,a0,%lo(.LC0)
+  86 005e 97000000 		call	co_printf
+  86      E7800000 
+  87              	.LVL10:
+  88              	.L7:
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_flag = trng_flag_get(TRNG_FLAG_SECS);
+  89              		.loc 1 64 9
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         dbg_print(WARNING, "TRNG seed error(%d).\r\n", trng_flag);
+  90              		.loc 1 65 9
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         dbg_print(WARNING, "TRNG seed error(%d).\r\n", trng_flag);
+  91              		.loc 1 65 21 is_stmt 0
+  92 0066 1145     		li	a0,4
+  93 0068 97000000 		call	trng_flag_get
+  93      E7800000 
+  94              	.LVL11:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         reval = 0;
+  95              		.loc 1 66 9
+  96 0070 03470400 		lbu	a4,%lo(global_debug_level)(s0)
+  97 0074 8547     		li	a5,1
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         dbg_print(WARNING, "TRNG seed error(%d).\r\n", trng_flag);
+  98              		.loc 1 65 21
+  99 0076 AA85     		mv	a1,a0
+ 100              	.LVL12:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         reval = 0;
+ 101              		.loc 1 66 9 is_stmt 1
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         reval = 0;
+ 102              		.loc 1 66 9
+ 103              	.LBE5:
+ 104              	.LBE4:
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****             reval = -1;
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****             return reval;
+ 105              		.loc 1 94 20 is_stmt 0
+ 106 0078 7D54     		li	s0,-1
+ 107              	.LBB8:
+ 108              	.LBB6:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         reval = 0;
+ 109              		.loc 1 66 9
+ 110 007a 63FAE700 		bleu	a4,a5,.L1
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         reval = 0;
+ 111              		.loc 1 66 9 is_stmt 1
+ 112 007e 37050000 		lui	a0,%hi(.LC1)
+ 113              	.LVL13:
+ 114 0082 13050500 		addi	a0,a0,%lo(.LC1)
+ 115 0086 97000000 		call	co_printf
+ 115      E7800000 
+ 116              	.LVL14:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** }
+ 117              		.loc 1 71 5
+ 118              	.L1:
+ 119              	.LBE6:
+ 120              	.LBE8:
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         }
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_initialized = 1;
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     return reval;
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** }
+ 121              		.loc 1 100 1 is_stmt 0
+ 122 008e 2285     		mv	a0,s0
+ 123 0090 17030000 		tail	__riscv_restore_1
+ 123      67000300 
+ 124              		.cfi_remember_state
+ 125              		.cfi_restore 8
+ 126              		.cfi_restore 1
+ 127              		.cfi_def_cfa_offset 0
+ 128              	.LVL15:
+ 129              	.L2:
+ 130              		.cfi_restore_state
+ 131              	.LBB9:
+ 132              	.LBB7:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* ready check timeout */
+ 133              		.loc 1 61 5 is_stmt 1
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** }
+ 134              		.loc 1 71 5
+ 135              	.LBE7:
+ 136              	.LBE9:
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 137              		.loc 1 96 9
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 138              		.loc 1 96 26 is_stmt 0
+ 139 0098 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 140 009c 0547     		li	a4,1
+ 141 009e 23A0E700 		sw	a4,%lo(.LANCHOR0)(a5)
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** }
+ 142              		.loc 1 99 12
+ 143 00a2 0144     		li	s0,0
+ 144 00a4 EDB7     		j	.L1
+ 145              		.cfi_endproc
+ 146              	.LFE371:
+ 148              		.section	.text.random_get,"ax",@progbits
+ 149              		.align	1
+ 150              		.globl	random_get
+ 152              	random_get:
+ 153              	.LFB367:
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** /*!
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \brief      get random value
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[in]  len: length of random value want to get
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[out] output: pointer to the random value
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \retval     0 if succeed, non-zero otherwise
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** */
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** int random_get(unsigned char *output, unsigned int len)
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** {
+ 154              		.loc 1 110 1 is_stmt 1
+ 155              		.cfi_startproc
+ 156              	.LVL16:
+ 157 0000 17030000 		call	t0,__riscv_save_4
+ 157      E7020300 
+ 158              		.cfi_offset 19, -20
+ 159              		.cfi_offset 18, -16
+ 160              		.cfi_offset 9, -12
+ 161              		.cfi_offset 8, -8
+ 162              		.cfi_offset 1, -4
+ 163              		.cfi_def_cfa_offset 32
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #if 0 // use trng only, cost around 6500 cpu clk per 256 bytes
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     unsigned int n;
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     unsigned char *p = output;
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     unsigned int rand_data;
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     int length = (int)len;
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (trng_configuration() != 0) {
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         return -1;
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     while (length > 0) {
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         n = length;
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         if (n > 4)
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****             n = 4;
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         if (trng_ready_check()) {
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****             rand_data = trng_get_true_random_data();
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         } else {
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****             return -1;
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         }
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         sys_memcpy(p, (uint8_t *)&rand_data, n);
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         p += n;
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         length -= n;
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     return 0;
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #else // use trng to generate seed, cost around 5400 cpu clk per 256 bytes
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     uint32_t seed;
+ 164              		.loc 1 140 5
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     uint8_t *p = output;
+ 165              		.loc 1 141 5
+ 166              	.LBB12:
+ 167              	.LBB13:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* TRNG module clock enable */
+ 168              		.loc 1 84 8 is_stmt 0
+ 169 0008 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 170 000c 83A70700 		lw	a5,%lo(.LANCHOR0)(a5)
+ 171              	.LBE13:
+ 172              	.LBE12:
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #if 0 // use trng only, cost around 6500 cpu clk per 256 bytes
+ 173              		.loc 1 110 1
+ 174 0010 4111     		addi	sp,sp,-16
+ 175              		.cfi_def_cfa_offset 48
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     uint32_t temp = 0;
+ 176              		.loc 1 142 14
+ 177 0012 02C6     		sw	zero,12(sp)
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #if 0 // use trng only, cost around 6500 cpu clk per 256 bytes
+ 178              		.loc 1 110 1
+ 179 0014 AA84     		mv	s1,a0
+ 180              	.LVL17:
+ 181              		.loc 1 142 5 is_stmt 1
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     uint32_t n;
+ 182              		.loc 1 143 5
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     int length = (int)len;
+ 183              		.loc 1 144 5
+ 184              		.loc 1 144 9 is_stmt 0
+ 185 0016 2E84     		mv	s0,a1
+ 186              	.LVL18:
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (trng_configuration() != 0) {
+ 187              		.loc 1 146 5 is_stmt 1
+ 188              	.LBB16:
+ 189              	.LBB14:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 190              		.loc 1 82 5
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* TRNG module clock enable */
+ 191              		.loc 1 84 5
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* TRNG module clock enable */
+ 192              		.loc 1 84 8 is_stmt 0
+ 193 0018 91CF     		beq	a5,zero,.L13
+ 194              	.LVL19:
+ 195              	.L16:
+ 196              	.LBE14:
+ 197              	.LBE16:
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         return -1;
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     seed = trng_get_true_random_data();
+ 198              		.loc 1 150 5 is_stmt 1
+ 199              		.loc 1 150 12 is_stmt 0
+ 200 001a 97000000 		call	trng_get_true_random_data
+ 200      E7800000 
+ 201              	.LVL20:
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     srand(seed);
+ 202              		.loc 1 152 5 is_stmt 1
+ 203 0022 97000000 		call	srand
+ 203      E7800000 
+ 204              	.LVL21:
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     while (length > 0) {
+ 205              		.loc 1 154 5
+ 206 002a 9149     		li	s3,4
+ 207              	.LVL22:
+ 208              	.L14:
+ 209              		.loc 1 154 11
+ 210 002c 63408002 		bgt	s0,zero,.L17
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         n = length;
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         if (n > 4)
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****             n = 4;
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         temp = rand();
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         sys_memcpy(p, (uint8_t *)&temp, n);
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         p += n;
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         length -= n;
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     return 0;
+ 211              		.loc 1 166 12 is_stmt 0
+ 212 0030 8147     		li	a5,0
+ 213 0032 39A0     		j	.L12
+ 214              	.LVL23:
+ 215              	.L13:
+ 216              	.LBB17:
+ 217              	.LBB15:
+ 218 0034 97000000 		call	trng_configuration.part.0
+ 218      E7800000 
+ 219              	.LVL24:
+ 220              	.LBE15:
+ 221              	.LBE17:
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 222              		.loc 1 147 16
+ 223 003c FD57     		li	a5,-1
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         return -1;
+ 224              		.loc 1 146 8
+ 225 003e 71DD     		beq	a0,zero,.L16
+ 226              	.LVL25:
+ 227              	.L12:
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** #endif
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** }
+ 228              		.loc 1 168 1
+ 229 0040 3E85     		mv	a0,a5
+ 230 0042 4101     		addi	sp,sp,16
+ 231              		.cfi_remember_state
+ 232              		.cfi_def_cfa_offset 0
+ 233 0044 17030000 		tail	__riscv_restore_4
+ 233      67000300 
+ 234              		.cfi_restore 19
+ 235              		.cfi_restore 18
+ 236              		.cfi_restore 9
+ 237              		.cfi_restore 8
+ 238              		.cfi_restore 1
+ 239              		.cfi_def_cfa_offset -32
+ 240              	.LVL26:
+ 241              	.L17:
+ 242              		.cfi_restore_state
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         if (n > 4)
+ 243              		.loc 1 155 9 is_stmt 1
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****             n = 4;
+ 244              		.loc 1 156 9
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 245              		.loc 1 159 16 is_stmt 0
+ 246 004c 97000000 		call	rand
+ 246      E7800000 
+ 247              	.LVL27:
+ 248 0054 3359340B 		minu	s2,s0,s3
+ 249              	.LVL28:
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 250              		.loc 1 159 9 is_stmt 1
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 251              		.loc 1 159 14 is_stmt 0
+ 252 0058 2AC6     		sw	a0,12(sp)
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         p += n;
+ 253              		.loc 1 161 9 is_stmt 1
+ 254 005a 4A86     		mv	a2,s2
+ 255 005c 2685     		mv	a0,s1
+ 256 005e 6C00     		addi	a1,sp,12
+ 257 0060 97000000 		call	sys_memcpy
+ 257      E7800000 
+ 258              	.LVL29:
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         length -= n;
+ 259              		.loc 1 162 9
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         length -= n;
+ 260              		.loc 1 162 11 is_stmt 0
+ 261 0068 CA94     		add	s1,s1,s2
+ 262              	.LVL30:
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 263              		.loc 1 163 9 is_stmt 1
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 264              		.loc 1 163 16 is_stmt 0
+ 265 006a 33042441 		sub	s0,s0,s2
+ 266              	.LVL31:
+ 267 006e 7DBF     		j	.L14
+ 268              		.cfi_endproc
+ 269              	.LFE367:
+ 271              		.section	.text.gd_hardware_poll,"ax",@progbits
+ 272              		.align	1
+ 273              		.globl	gd_hardware_poll
+ 275              	gd_hardware_poll:
+ 276              	.LFB368:
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** /*!
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \brief      Entropy poll callback for gd hardware source
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[in]  data: pointer to the input data
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[in]  len: get random value length
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[out] output: pointer to the get random value
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[out] olen: pointer to the get random value length
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \retval     0: ok -1: not ok
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** */
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** int gd_hardware_poll( void *data,
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****                            unsigned char *output, size_t len, size_t *olen )
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** {
+ 277              		.loc 1 180 1 is_stmt 1
+ 278              		.cfi_startproc
+ 279              	.LVL32:
+ 280 0000 17030000 		call	t0,__riscv_save_2
+ 280      E7020300 
+ 281              		.cfi_offset 9, -12
+ 282              		.cfi_offset 8, -8
+ 283              		.cfi_offset 1, -4
+ 284              		.cfi_def_cfa_offset 16
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     int ret;
+ 285              		.loc 1 181 5
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     ((void) data);
+ 286              		.loc 1 182 5
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     ret = random_get(output, len);
+ 287              		.loc 1 184 5
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     int ret;
+ 288              		.loc 1 180 1 is_stmt 0
+ 289 0008 2E85     		mv	a0,a1
+ 290              	.LVL33:
+ 291              		.loc 1 184 11
+ 292 000a B285     		mv	a1,a2
+ 293              	.LVL34:
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     int ret;
+ 294              		.loc 1 180 1
+ 295 000c B284     		mv	s1,a2
+ 296 000e 3684     		mv	s0,a3
+ 297              		.loc 1 184 11
+ 298 0010 97000000 		call	random_get
+ 298      E7800000 
+ 299              	.LVL35:
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (ret < 0) {
+ 300              		.loc 1 185 5 is_stmt 1
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         return -1;
+ 301              		.loc 1 186 16 is_stmt 0
+ 302 0018 FD57     		li	a5,-1
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (ret < 0) {
+ 303              		.loc 1 185 8
+ 304 001a 63450500 		blt	a0,zero,.L20
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (olen)
+ 305              		.loc 1 188 5 is_stmt 1
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         *olen = len;
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     return( 0 );
+ 306              		.loc 1 191 11 is_stmt 0
+ 307 001e 8147     		li	a5,0
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         *olen = len;
+ 308              		.loc 1 188 8
+ 309 0020 11C0     		beq	s0,zero,.L20
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         *olen = len;
+ 310              		.loc 1 189 9 is_stmt 1
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         *olen = len;
+ 311              		.loc 1 189 15 is_stmt 0
+ 312 0022 04C0     		sw	s1,0(s0)
+ 313              	.L20:
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** }
+ 314              		.loc 1 192 1
+ 315 0024 3E85     		mv	a0,a5
+ 316              	.LVL36:
+ 317 0026 17030000 		tail	__riscv_restore_2
+ 317      67000300 
+ 318              		.cfi_restore 9
+ 319              		.cfi_restore 8
+ 320              		.cfi_restore 1
+ 321              		.cfi_def_cfa_offset 0
+ 322              		.cfi_endproc
+ 323              	.LFE368:
+ 325              		.section	.text.trng_get,"ax",@progbits
+ 326              		.align	1
+ 327              		.globl	trng_get
+ 329              	trng_get:
+ 330              	.LFB369:
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** /*!
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \brief      get TRNG value
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[in]  none
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[out] none
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \retval     getted TRNG value(0x00000000-0xffffffff)
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** */
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** uint32_t trng_get(void)
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** {
+ 331              		.loc 1 201 1 is_stmt 1
+ 332              		.cfi_startproc
+ 333 0000 17030000 		call	t0,__riscv_save_0
+ 333      E7020300 
+ 334              		.cfi_offset 1, -4
+ 335              		.cfi_def_cfa_offset 16
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     uint32_t rand;
+ 336              		.loc 1 202 5
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     int ret;
+ 337              		.loc 1 203 5
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     ret = trng_configuration();
+ 338              		.loc 1 205 5
+ 339              	.LBB20:
+ 340              	.LBB21:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 341              		.loc 1 82 5
+ 342              	.LVL37:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* TRNG module clock enable */
+ 343              		.loc 1 84 5
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         /* TRNG module clock enable */
+ 344              		.loc 1 84 8 is_stmt 0
+ 345 0008 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 346 000c 83A70700 		lw	a5,%lo(.LANCHOR0)(a5)
+ 347 0010 89CB     		beq	a5,zero,.L26
+ 348              	.L28:
+ 349              	.LBE21:
+ 350              	.LBE20:
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (ret < 0) {
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         return 0xFFFFFFFF;
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     rand = trng_get_true_random_data();
+ 351              		.loc 1 209 5 is_stmt 1
+ 352              		.loc 1 209 12 is_stmt 0
+ 353 0012 97000000 		call	trng_get_true_random_data
+ 353      E7800000 
+ 354              	.LVL38:
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     return rand;
+ 355              		.loc 1 211 5 is_stmt 1
+ 356              	.L25:
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** }
+ 357              		.loc 1 212 1 is_stmt 0
+ 358 001a 17030000 		tail	__riscv_restore_0
+ 358      67000300 
+ 359              		.cfi_remember_state
+ 360              		.cfi_restore 1
+ 361              		.cfi_def_cfa_offset 0
+ 362              	.L26:
+ 363              		.cfi_restore_state
+ 364              	.LBB23:
+ 365              	.LBB22:
+ 366 0022 97000000 		call	trng_configuration.part.0
+ 366      E7800000 
+ 367              	.LVL39:
+ 368              	.LBE22:
+ 369              	.LBE23:
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (ret < 0) {
+ 370              		.loc 1 206 5 is_stmt 1
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (ret < 0) {
+ 371              		.loc 1 206 8 is_stmt 0
+ 372 002a E35405FE 		bge	a0,zero,.L28
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 373              		.loc 1 207 16
+ 374 002e 7D55     		li	a0,-1
+ 375              	.LVL40:
+ 376 0030 EDB7     		j	.L25
+ 377              		.cfi_endproc
+ 378              	.LFE369:
+ 380              		.section	.text.trng_close,"ax",@progbits
+ 381              		.align	1
+ 382              		.globl	trng_close
+ 384              	trng_close:
+ 385              	.LFB370:
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** 
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** /*!
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \brief      close TRNG
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[in]  force, 1: force, 0: close if trng has been initialized
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \param[out] none
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     \retval     none
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** */
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** void trng_close(uint8_t force)
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** {
+ 386              		.loc 1 221 1 is_stmt 1
+ 387              		.cfi_startproc
+ 388              	.LVL41:
+ 389 0000 17030000 		call	t0,__riscv_save_1
+ 389      E7020300 
+ 390              		.cfi_offset 8, -8
+ 391              		.cfi_offset 1, -4
+ 392              		.cfi_def_cfa_offset 16
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     if (trng_initialized || force) {
+ 393              		.loc 1 222 5
+ 394              		.loc 1 222 9 is_stmt 0
+ 395 0008 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 396              		.loc 1 222 8
+ 397 000c 03A70700 		lw	a4,%lo(.LANCHOR0)(a5)
+ 398 0010 13840700 		addi	s0,a5,%lo(.LANCHOR0)
+ 399 0014 11E3     		bne	a4,zero,.L31
+ 400              		.loc 1 222 26 discriminator 1
+ 401 0016 11CD     		beq	a0,zero,.L30
+ 402              	.L31:
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_deinit();
+ 403              		.loc 1 223 9 is_stmt 1
+ 404 0018 97000000 		call	trng_deinit
+ 404      E7800000 
+ 405              	.LVL42:
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         rcu_periph_clock_disable(RCU_TRNG);
+ 406              		.loc 1 224 9
+ 407 0020 0565     		li	a0,4096
+ 408 0022 130565D0 		addi	a0,a0,-762
+ 409 0026 97000000 		call	rcu_periph_clock_disable
+ 409      E7800000 
+ 410              	.LVL43:
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****         trng_initialized = 0;
+ 411              		.loc 1 225 9
+ 412              		.loc 1 225 26 is_stmt 0
+ 413 002e 23200400 		sw	zero,0(s0)
+ 414              	.L30:
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c ****     }
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng\trng.c **** }
+ 415              		.loc 1 227 1
+ 416 0032 17030000 		tail	__riscv_restore_1
+ 416      67000300 
+ 417              		.cfi_restore 8
+ 418              		.cfi_restore 1
+ 419              		.cfi_def_cfa_offset 0
+ 420              		.cfi_endproc
+ 421              	.LFE370:
+ 423              		.section	.sbss.trng_initialized,"aw",@nobits
+ 424              		.align	2
+ 425              		.set	.LANCHOR0,. + 0
+ 428              	trng_initialized:
+ 429 0000 00000000 		.zero	4
+ 430              		.text
+ 431              	.Letext0:
+ 432              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 433              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 434              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 435              		.file 5 "..\\..\\..\\..\\plf\\GD32VW55x_standard_peripheral\\Include/gd32vw55x_trng.h"
+ 436              		.file 6 "..\\..\\..\\..\\plf\\GD32VW55x_standard_peripheral\\Include/gd32vw55x_rcu.h"
+ 437              		.file 7 "..\\..\\..\\..\\util\\include/dbg_print.h"
+ 438              		.file 8 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 439              		.file 9 "..\\..\\..\\..\\rtos\\rtos_wrapper/wrapper_os.h"
+ 440              		.file 10 "..\\..\\..\\..\\util\\include/debug_print.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 trng.c
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:19     .text.trng_configuration.part.0:0000000000000000 trng_configuration.part.0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:23     .text.trng_configuration.part.0:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:24     .text.trng_configuration.part.0:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:25     .text.trng_configuration.part.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:26     .text.trng_configuration.part.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:27     .text.trng_configuration.part.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:29     .text.trng_configuration.part.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:32     .text.trng_configuration.part.0:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:34     .text.trng_configuration.part.0:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:37     .text.trng_configuration.part.0:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:38     .text.trng_configuration.part.0:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:40     .text.trng_configuration.part.0:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:43     .text.trng_configuration.part.0:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:49     .text.trng_configuration.part.0:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:50     .text.trng_configuration.part.0:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:51     .text.trng_configuration.part.0:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:52     .text.trng_configuration.part.0:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:53     .text.trng_configuration.part.0:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:57     .text.trng_configuration.part.0:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:58     .text.trng_configuration.part.0:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:60     .text.trng_configuration.part.0:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:64     .text.trng_configuration.part.0:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:65     .text.trng_configuration.part.0:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:66     .text.trng_configuration.part.0:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:71     .text.trng_configuration.part.0:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:75     .text.trng_configuration.part.0:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:78     .text.trng_configuration.part.0:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:79     .text.trng_configuration.part.0:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:83     .text.trng_configuration.part.0:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:90     .text.trng_configuration.part.0:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:91     .text.trng_configuration.part.0:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:92     .text.trng_configuration.part.0:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:96     .text.trng_configuration.part.0:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:99     .text.trng_configuration.part.0:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:102    .text.trng_configuration.part.0:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:105    .text.trng_configuration.part.0:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:106    .text.trng_configuration.part.0:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:110    .text.trng_configuration.part.0:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:112    .text.trng_configuration.part.0:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:121    .text.trng_configuration.part.0:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:122    .text.trng_configuration.part.0:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:124    .text.trng_configuration.part.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:125    .text.trng_configuration.part.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:126    .text.trng_configuration.part.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:127    .text.trng_configuration.part.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:130    .text.trng_configuration.part.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:134    .text.trng_configuration.part.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:137    .text.trng_configuration.part.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:138    .text.trng_configuration.part.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:139    .text.trng_configuration.part.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:143    .text.trng_configuration.part.0:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:145    .text.trng_configuration.part.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:152    .text.random_get:0000000000000000 random_get
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:155    .text.random_get:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:157    .text.random_get:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:158    .text.random_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:159    .text.random_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:160    .text.random_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:161    .text.random_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:162    .text.random_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:163    .text.random_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:165    .text.random_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:168    .text.random_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:169    .text.random_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:174    .text.random_get:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:175    .text.random_get:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:177    .text.random_get:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:179    .text.random_get:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:182    .text.random_get:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:183    .text.random_get:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:184    .text.random_get:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:185    .text.random_get:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:190    .text.random_get:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:191    .text.random_get:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:192    .text.random_get:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:193    .text.random_get:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:199    .text.random_get:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:200    .text.random_get:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:203    .text.random_get:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:206    .text.random_get:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:210    .text.random_get:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:212    .text.random_get:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:223    .text.random_get:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:225    .text.random_get:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:229    .text.random_get:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:231    .text.random_get:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:232    .text.random_get:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:234    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:235    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:236    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:237    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:238    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:239    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:242    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:244    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:245    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:246    .text.random_get:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:251    .text.random_get:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:252    .text.random_get:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:254    .text.random_get:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:260    .text.random_get:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:261    .text.random_get:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:264    .text.random_get:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:265    .text.random_get:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:268    .text.random_get:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:275    .text.gd_hardware_poll:0000000000000000 gd_hardware_poll
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:278    .text.gd_hardware_poll:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:280    .text.gd_hardware_poll:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:281    .text.gd_hardware_poll:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:282    .text.gd_hardware_poll:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:283    .text.gd_hardware_poll:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:284    .text.gd_hardware_poll:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:286    .text.gd_hardware_poll:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:287    .text.gd_hardware_poll:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:288    .text.gd_hardware_poll:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:289    .text.gd_hardware_poll:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:292    .text.gd_hardware_poll:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:295    .text.gd_hardware_poll:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:298    .text.gd_hardware_poll:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:301    .text.gd_hardware_poll:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:302    .text.gd_hardware_poll:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:304    .text.gd_hardware_poll:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:306    .text.gd_hardware_poll:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:307    .text.gd_hardware_poll:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:309    .text.gd_hardware_poll:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:311    .text.gd_hardware_poll:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:312    .text.gd_hardware_poll:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:315    .text.gd_hardware_poll:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:318    .text.gd_hardware_poll:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:319    .text.gd_hardware_poll:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:320    .text.gd_hardware_poll:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:321    .text.gd_hardware_poll:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:322    .text.gd_hardware_poll:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:329    .text.trng_get:0000000000000000 trng_get
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:332    .text.trng_get:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:333    .text.trng_get:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:334    .text.trng_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:335    .text.trng_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:337    .text.trng_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:338    .text.trng_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:341    .text.trng_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:343    .text.trng_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:344    .text.trng_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:345    .text.trng_get:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:352    .text.trng_get:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:353    .text.trng_get:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:357    .text.trng_get:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:358    .text.trng_get:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:359    .text.trng_get:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:360    .text.trng_get:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:361    .text.trng_get:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:363    .text.trng_get:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:371    .text.trng_get:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:372    .text.trng_get:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:374    .text.trng_get:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:377    .text.trng_get:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:384    .text.trng_close:0000000000000000 trng_close
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:387    .text.trng_close:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:389    .text.trng_close:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:390    .text.trng_close:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:391    .text.trng_close:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:392    .text.trng_close:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:394    .text.trng_close:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:395    .text.trng_close:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:397    .text.trng_close:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:401    .text.trng_close:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:404    .text.trng_close:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:407    .text.trng_close:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:412    .text.trng_close:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:413    .text.trng_close:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:416    .text.trng_close:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:417    .text.trng_close:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:418    .text.trng_close:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:419    .text.trng_close:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:420    .text.trng_close:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:425    .sbss.trng_initialized:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:428    .sbss.trng_initialized:0000000000000000 trng_initialized
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:148    .text.trng_configuration.part.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:271    .text.random_get:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:325    .text.gd_hardware_poll:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:380    .text.trng_get:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:423    .text.trng_close:000000000000003a .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:11     .rodata.trng_configuration.part.0.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:14     .rodata.trng_configuration.part.0.str1.4:0000000000000018 .LC1
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:129    .text.trng_configuration.part.0:0000000000000098 .L2
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:46     .text.trng_configuration.part.0:000000000000002a .L3
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:88     .text.trng_configuration.part.0:0000000000000066 .L7
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:118    .text.trng_configuration.part.0:000000000000008e .L1
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:215    .text.random_get:0000000000000034 .L13
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:241    .text.random_get:000000000000004c .L17
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:227    .text.random_get:0000000000000040 .L12
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:195    .text.random_get:000000000000001a .L16
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:208    .text.random_get:000000000000002c .L14
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:313    .text.gd_hardware_poll:0000000000000024 .L20
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:362    .text.trng_get:0000000000000022 .L26
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:348    .text.trng_get:0000000000000012 .L28
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:356    .text.trng_get:000000000000001a .L25
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:402    .text.trng_close:0000000000000018 .L31
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:414    .text.trng_close:0000000000000032 .L30
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1175   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1990   .debug_str:0000000000000154 .LASF86
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1948   .debug_str:0000000000000014 .LASF87
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2076   .debug_str:000000000000041d .LASF88
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1906   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1942   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1960   .debug_str:00000000000000b4 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2038   .debug_str:0000000000000351 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1986   .debug_str:000000000000013d .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2122   .debug_str:000000000000057e .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2022   .debug_str:00000000000002d8 .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1958   .debug_str:00000000000000aa .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2066   .debug_str:00000000000003e5 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1998   .debug_str:000000000000025f .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1970   .debug_str:00000000000000f2 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2080   .debug_str:00000000000004ae .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1968   .debug_str:00000000000000e4 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1966   .debug_str:00000000000000cd .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2056   .debug_str:00000000000003bc .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1978   .debug_str:0000000000000116 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1982   .debug_str:0000000000000123 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2044   .debug_str:0000000000000374 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2034   .debug_str:0000000000000329 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2070   .debug_str:0000000000000402 .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1950   .debug_str:0000000000000087 .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1952   .debug_str:0000000000000091 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1954   .debug_str:000000000000009b .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2000   .debug_str:0000000000000268 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2026   .debug_str:00000000000002fe .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2028   .debug_str:0000000000000307 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2052   .debug_str:00000000000003a8 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2058   .debug_str:00000000000003c1 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2060   .debug_str:00000000000003cb .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2054   .debug_str:00000000000003b2 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2110   .debug_str:000000000000054c .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2102   .debug_str:000000000000052b .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2068   .debug_str:00000000000003f8 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2106   .debug_str:000000000000053b .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1992   .debug_str:000000000000024d .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2084   .debug_str:00000000000004c7 .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2020   .debug_str:00000000000002cf .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2010   .debug_str:0000000000000293 .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2012   .debug_str:000000000000029e .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2014   .debug_str:00000000000002a9 .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2030   .debug_str:0000000000000313 .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2016   .debug_str:00000000000002b4 .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2090   .debug_str:00000000000004e0 .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2086   .debug_str:00000000000004d0 .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2006   .debug_str:000000000000027f .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2108   .debug_str:0000000000000543 .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2046   .debug_str:0000000000000383 .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1972   .debug_str:00000000000000fd .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2008   .debug_str:0000000000000288 .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2092   .debug_str:00000000000004ea .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2094   .debug_str:00000000000004f4 .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1944   .debug_str:0000000000000000 .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1974   .debug_str:0000000000000105 .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1962   .debug_str:00000000000000bb .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2048   .debug_str:000000000000038b .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2118   .debug_str:000000000000056f .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2088   .debug_str:00000000000004db .LASF54
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2104   .debug_str:0000000000000533 .LASF55
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2074   .debug_str:0000000000000416 .LASF56
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2040   .debug_str:000000000000035e .LASF57
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1964   .debug_str:00000000000000c7 .LASF58
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1994   .debug_str:0000000000000255 .LASF59
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2018   .debug_str:00000000000002bc .LASF89
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2050   .debug_str:0000000000000397 .LASF60
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2112   .debug_str:0000000000000554 .LASF90
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:385    .text.trng_close:0000000000000000 .LFB370
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:421    .text.trng_close:000000000000003a .LFE370
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1976   .debug_str:0000000000000110 .LASF63
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1656   .debug_loc:0000000000000000 .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:405    .text.trng_close:0000000000000020 .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:410    .text.trng_close:000000000000002e .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2004   .debug_str:0000000000000276 .LASF61
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:330    .text.trng_get:0000000000000000 .LFB369
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:378    .text.trng_get:0000000000000032 .LFE369
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1980   .debug_str:000000000000011e .LASF71
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1670   .debug_loc:0000000000000021 .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:339    .text.trng_get:0000000000000008 .LBB20
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:367    .text.trng_get:000000000000002a .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:354    .text.trng_get:000000000000001a .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1984   .debug_str:000000000000012c .LASF62
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:276    .text.gd_hardware_poll:0000000000000000 .LFB368
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:323    .text.gd_hardware_poll:000000000000002e .LFE368
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2072   .debug_str:0000000000000411 .LASF64
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1677   .debug_loc:0000000000000034 .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2100   .debug_str:0000000000000524 .LASF65
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1691   .debug_loc:0000000000000055 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1709   .debug_loc:0000000000000081 .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1996   .debug_str:000000000000025a .LASF66
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1720   .debug_loc:000000000000009f .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1731   .debug_loc:00000000000000bd .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:299    .text.gd_hardware_poll:0000000000000018 .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2064   .debug_str:00000000000003da .LASF67
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:153    .text.random_get:0000000000000000 .LFB367
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:269    .text.random_get:0000000000000070 .LFE367
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1738   .debug_loc:00000000000000d0 .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1767   .debug_loc:0000000000000115 .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2062   .debug_str:00000000000003d5 .LASF68
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1796   .debug_loc:000000000000015a .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1803   .debug_loc:000000000000016d .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1956   .debug_str:00000000000000a5 .LASF69
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1814   .debug_loc:000000000000018b .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2082   .debug_str:00000000000004c0 .LASF70
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1825   .debug_loc:00000000000001a9 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:166    .text.random_get:0000000000000008 .LBB12
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:219    .text.random_get:000000000000003c .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:201    .text.random_get:0000000000000022 .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:204    .text.random_get:000000000000002a .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:247    .text.random_get:0000000000000054 .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:258    .text.random_get:0000000000000068 .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2078   .debug_str:000000000000049b .LASF73
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2002   .debug_str:0000000000000270 .LASF72
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2042   .debug_str:0000000000000363 .LASF74
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2120   .debug_str:0000000000000576 .LASF75
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2124   .debug_str:0000000000000588 .LASF76
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:20     .text.trng_configuration.part.0:0000000000000000 .LFB371
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:146    .text.trng_configuration.part.0:00000000000000a6 .LFE371
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:47     .text.trng_configuration.part.0:000000000000002a .LBB4
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1840   .debug_loc:00000000000001d2 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1862   .debug_loc:00000000000001fc .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:55     .text.trng_configuration.part.0:0000000000000034 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:69     .text.trng_configuration.part.0:0000000000000044 .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:87     .text.trng_configuration.part.0:0000000000000066 .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:94     .text.trng_configuration.part.0:0000000000000070 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:116    .text.trng_configuration.part.0:000000000000008e .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:35     .text.trng_configuration.part.0:0000000000000018 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:41     .text.trng_configuration.part.0:0000000000000022 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:44     .text.trng_configuration.part.0:000000000000002a .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2032   .debug_str:000000000000031d .LASF77
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2036   .debug_str:0000000000000338 .LASF78
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2098   .debug_str:000000000000050a .LASF79
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2116   .debug_str:0000000000000569 .LASF80
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1988   .debug_str:0000000000000149 .LASF81
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2096   .debug_str:00000000000004fc .LASF82
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2114   .debug_str:000000000000055f .LASF83
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:2024   .debug_str:00000000000002e6 .LASF84
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:1946   .debug_str:0000000000000008 .LASF85
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:388    .text.trng_close:0000000000000000 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:375    .text.trng_get:0000000000000030 .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:279    .text.gd_hardware_poll:0000000000000000 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:290    .text.gd_hardware_poll:000000000000000a .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:293    .text.gd_hardware_poll:000000000000000c .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:316    .text.gd_hardware_poll:0000000000000026 .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:156    .text.random_get:0000000000000000 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:194    .text.random_get:000000000000001a .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:207    .text.random_get:000000000000002c .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:214    .text.random_get:0000000000000034 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:226    .text.random_get:0000000000000040 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:180    .text.random_get:0000000000000016 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:240    .text.random_get:000000000000004c .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:249    .text.random_get:0000000000000058 .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:186    .text.random_get:0000000000000018 .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:61     .text.trng_configuration.part.0:0000000000000038 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:80     .text.trng_configuration.part.0:0000000000000052 .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:67     .text.trng_configuration.part.0:000000000000003c .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:76     .text.trng_configuration.part.0:0000000000000050 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:84     .text.trng_configuration.part.0:000000000000005a .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:100    .text.trng_configuration.part.0:0000000000000078 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:113    .text.trng_configuration.part.0:0000000000000082 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:442    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:104    .text.trng_configuration.part.0:0000000000000078 .LBE4
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:107    .text.trng_configuration.part.0:000000000000007a .LBB8
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:120    .text.trng_configuration.part.0:000000000000008e .LBE8
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:131    .text.trng_configuration.part.0:0000000000000098 .LBB9
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:136    .text.trng_configuration.part.0:0000000000000098 .LBE9
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:172    .text.random_get:0000000000000010 .LBE12
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:188    .text.random_get:0000000000000018 .LBB16
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:197    .text.random_get:000000000000001a .LBE16
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:216    .text.random_get:0000000000000034 .LBB17
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:221    .text.random_get:000000000000003c .LBE17
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:350    .text.trng_get:0000000000000012 .LBE20
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:364    .text.trng_get:0000000000000022 .LBB23
+C:\Users\stapi\AppData\Local\Temp\ccoNIGOP.s:369    .text.trng_get:000000000000002a .LBE23
+
+UNDEFINED SYMBOLS
+__riscv_save_1
+rcu_periph_clock_enable
+trng_deinit
+trng_enable
+trng_flag_get
+global_debug_level
+co_printf
+__riscv_restore_1
+__riscv_save_4
+trng_get_true_random_data
+srand
+__riscv_restore_4
+rand
+sys_memcpy
+__riscv_save_2
+__riscv_restore_2
+__riscv_save_0
+__riscv_restore_0
+rcu_periph_clock_disable

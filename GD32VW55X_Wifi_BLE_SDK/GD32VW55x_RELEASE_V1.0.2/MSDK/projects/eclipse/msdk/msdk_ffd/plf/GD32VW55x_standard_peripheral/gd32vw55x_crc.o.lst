@@ -1,0 +1,448 @@
+   1              		.file	"gd32vw55x_crc.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.crc_deinit,"ax",@progbits
+  10              		.align	1
+  11              		.globl	crc_deinit
+  13              	crc_deinit:
+  14              	.LFB365:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** /*!
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \file    gd32vw55x_crc.c
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \brief   CRC driver
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** */
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** /*
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     Redistribution and use in source and binary forms, with or without modification,
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** are permitted provided that the following conditions are met:
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****        list of conditions and the following disclaimer.
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****        this list of conditions and the following disclaimer in the documentation
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****        and/or other materials provided with the distribution.
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****        may be used to endorse or promote products derived from this software without
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****        specific prior written permission.
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** OF SUCH DAMAGE.
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** */
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** #include "gd32vw55x_crc.h"
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** #define CRC_DATA_RESET_VALUE      ((uint32_t)0xFFFFFFFFU)
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** #define CRC_FDATA_RESET_VALUE     ((uint32_t)0x00000000U)
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** /*!
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \brief      deinit CRC calculation unit
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[in]  none
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[out] none
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \retval     none
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** */
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** void crc_deinit(void)
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** {
+  16              		.loc 1 47 1
+  17              		.cfi_startproc
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     CRC_DATA = CRC_DATA_RESET_VALUE;
+  18              		.loc 1 48 5
+  19              		.loc 1 48 14 is_stmt 0
+  20 0000 B7370240 		li	a5,1073885184
+  21 0004 7D57     		li	a4,-1
+  22 0006 98C3     		sw	a4,0(a5)
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     CRC_FDATA = CRC_FDATA_RESET_VALUE;
+  23              		.loc 1 49 5 is_stmt 1
+  24              		.loc 1 49 15 is_stmt 0
+  25 0008 23A20700 		sw	zero,4(a5)
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     CRC_CTL = CRC_CTL_RST;
+  26              		.loc 1 50 5 is_stmt 1
+  27              		.loc 1 50 13 is_stmt 0
+  28 000c 0547     		li	a4,1
+  29 000e 98C7     		sw	a4,8(a5)
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** }
+  30              		.loc 1 51 1
+  31 0010 8280     		ret
+  32              		.cfi_endproc
+  33              	.LFE365:
+  35              		.section	.text.crc_data_register_reset,"ax",@progbits
+  36              		.align	1
+  37              		.globl	crc_data_register_reset
+  39              	crc_data_register_reset:
+  40              	.LFB366:
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** /*!
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \brief      reset data register(CRC_DATA) to the value of 0xFFFFFFFF
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[in]  none
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[out] none
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \retval     none
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** */
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** void crc_data_register_reset(void)
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** {
+  41              		.loc 1 60 1 is_stmt 1
+  42              		.cfi_startproc
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     CRC_CTL |= CRC_CTL_RST;
+  43              		.loc 1 61 5
+  44              		.loc 1 61 13 is_stmt 0
+  45 0000 37370240 		li	a4,1073885184
+  46 0004 1C47     		lw	a5,8(a4)
+  47 0006 93E71700 		ori	a5,a5,1
+  48 000a 1CC7     		sw	a5,8(a4)
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** }
+  49              		.loc 1 62 1
+  50 000c 8280     		ret
+  51              		.cfi_endproc
+  52              	.LFE366:
+  54              		.section	.text.crc_data_register_read,"ax",@progbits
+  55              		.align	1
+  56              		.globl	crc_data_register_read
+  58              	crc_data_register_read:
+  59              	.LFB367:
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** /*!
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \brief      read the value of the data register
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[in]  none
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[out] none
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \retval     32-bit value of the data register:0x00000000-0xFFFFFFFF
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** */
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** uint32_t crc_data_register_read(void)
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** {
+  60              		.loc 1 71 1 is_stmt 1
+  61              		.cfi_startproc
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     uint32_t data;
+  62              		.loc 1 72 5
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     data = CRC_DATA;
+  63              		.loc 1 73 5
+  64              		.loc 1 73 10 is_stmt 0
+  65 0000 B7370240 		li	a5,1073885184
+  66 0004 8843     		lw	a0,0(a5)
+  67              	.LVL0:
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     return (data);
+  68              		.loc 1 74 5 is_stmt 1
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** }
+  69              		.loc 1 75 1 is_stmt 0
+  70 0006 8280     		ret
+  71              		.cfi_endproc
+  72              	.LFE367:
+  74              		.section	.text.crc_free_data_register_read,"ax",@progbits
+  75              		.align	1
+  76              		.globl	crc_free_data_register_read
+  78              	crc_free_data_register_read:
+  79              	.LFB368:
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** /*!
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \brief      read the value of the free data register
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[in]  none
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[out] none
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \retval     8-bit value of the free data register:0x00-0xFF
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** */
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** uint8_t crc_free_data_register_read(void)
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** {
+  80              		.loc 1 84 1 is_stmt 1
+  81              		.cfi_startproc
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     uint8_t fdata;
+  82              		.loc 1 85 5
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     fdata = (uint8_t)CRC_FDATA;
+  83              		.loc 1 86 5
+  84              		.loc 1 86 22 is_stmt 0
+  85 0000 B7370240 		li	a5,1073885184
+  86 0004 C843     		lw	a0,4(a5)
+  87              	.LVL1:
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     return (fdata);
+  88              		.loc 1 87 5 is_stmt 1
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** }
+  89              		.loc 1 88 1 is_stmt 0
+  90 0006 1375F50F 		andi	a0,a0,0xff
+  91 000a 8280     		ret
+  92              		.cfi_endproc
+  93              	.LFE368:
+  95              		.section	.text.crc_free_data_register_write,"ax",@progbits
+  96              		.align	1
+  97              		.globl	crc_free_data_register_write
+  99              	crc_free_data_register_write:
+ 100              	.LFB369:
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** /*!
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \brief      write data to the free data register
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[in]  free_data: specified 8-bit data
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[out] none
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \retval     none
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** */
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** void crc_free_data_register_write(uint8_t free_data)
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** {
+ 101              		.loc 1 97 1 is_stmt 1
+ 102              		.cfi_startproc
+ 103              	.LVL2:
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     CRC_FDATA = (uint32_t)free_data;
+ 104              		.loc 1 98 5
+ 105              		.loc 1 98 15 is_stmt 0
+ 106 0000 B7370240 		li	a5,1073885184
+ 107 0004 C8C3     		sw	a0,4(a5)
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** }
+ 108              		.loc 1 99 1
+ 109 0006 8280     		ret
+ 110              		.cfi_endproc
+ 111              	.LFE369:
+ 113              		.section	.text.crc_single_data_calculate,"ax",@progbits
+ 114              		.align	1
+ 115              		.globl	crc_single_data_calculate
+ 117              	crc_single_data_calculate:
+ 118              	.LFB370:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** /*!
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \brief      calculate the CRC value of a 32-bit data
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[in]  sdata: specified 32-bit data
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[out] none
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \retval     32-bit value calculated by CRC:0x00000000-0xFFFFFFFF
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** */
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** uint32_t crc_single_data_calculate(uint32_t sdata)
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** {
+ 119              		.loc 1 108 1 is_stmt 1
+ 120              		.cfi_startproc
+ 121              	.LVL3:
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     CRC_DATA = sdata;
+ 122              		.loc 1 109 5
+ 123              		.loc 1 109 14 is_stmt 0
+ 124 0000 B7370240 		li	a5,1073885184
+ 125 0004 88C3     		sw	a0,0(a5)
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     return (CRC_DATA);
+ 126              		.loc 1 110 5 is_stmt 1
+ 127              		.loc 1 110 13 is_stmt 0
+ 128 0006 8843     		lw	a0,0(a5)
+ 129              	.LVL4:
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** }
+ 130              		.loc 1 111 1
+ 131 0008 8280     		ret
+ 132              		.cfi_endproc
+ 133              	.LFE370:
+ 135              		.section	.text.crc_block_data_calculate,"ax",@progbits
+ 136              		.align	1
+ 137              		.globl	crc_block_data_calculate
+ 139              	crc_block_data_calculate:
+ 140              	.LFB371:
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** 
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** /*!
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \brief      calculate the CRC value of an array of 32-bit values
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[in]  array: pointer to an array of 32-bit values
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[in]  size: size of the array
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \param[out] none
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     \retval     32-bit value calculated by CRC:0x00000000-0xFFFFFFFF
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** */
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** uint32_t crc_block_data_calculate(uint32_t array[], uint32_t size)
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** {
+ 141              		.loc 1 121 1 is_stmt 1
+ 142              		.cfi_startproc
+ 143              	.LVL5:
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     uint32_t index;
+ 144              		.loc 1 122 5
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     for(index = 0U; index < size; index++){
+ 145              		.loc 1 123 5
+ 146              		.loc 1 123 15 is_stmt 0
+ 147 0000 8147     		li	a5,0
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****         CRC_DATA = array[index];
+ 148              		.loc 1 124 18
+ 149 0002 37370240 		li	a4,1073885184
+ 150              	.LVL6:
+ 151              	.L8:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     for(index = 0U; index < size; index++){
+ 152              		.loc 1 123 21 is_stmt 1 discriminator 1
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     for(index = 0U; index < size; index++){
+ 153              		.loc 1 123 5 is_stmt 0 discriminator 1
+ 154 0006 6396B700 		bne	a5,a1,.L9
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     }
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     return (CRC_DATA);
+ 155              		.loc 1 126 5 is_stmt 1
+ 156              		.loc 1 126 13 is_stmt 0
+ 157 000a B7370240 		li	a5,1073885184
+ 158              	.LVL7:
+ 159 000e 8843     		lw	a0,0(a5)
+ 160              	.LVL8:
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c **** }
+ 161              		.loc 1 127 1
+ 162 0010 8280     		ret
+ 163              	.LVL9:
+ 164              	.L9:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****         CRC_DATA = array[index];
+ 165              		.loc 1 124 9 is_stmt 1 discriminator 3
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****         CRC_DATA = array[index];
+ 166              		.loc 1 124 25 is_stmt 0 discriminator 3
+ 167 0012 B3C6A720 		sh2add	a3,a5,a0
+ 168 0016 9442     		lw	a3,0(a3)
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****         CRC_DATA = array[index];
+ 169              		.loc 1 123 40 discriminator 3
+ 170 0018 8507     		addi	a5,a5,1
+ 171              	.LVL10:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****     }
+ 172              		.loc 1 124 18 discriminator 3
+ 173 001a 14C3     		sw	a3,0(a4)
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source\gd32vw55x_crc.c ****         CRC_DATA = array[index];
+ 174              		.loc 1 123 35 is_stmt 1 discriminator 3
+ 175              	.LVL11:
+ 176 001c EDB7     		j	.L8
+ 177              		.cfi_endproc
+ 178              	.LFE371:
+ 180              		.text
+ 181              	.Letext0:
+ 182              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 183              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 gd32vw55x_crc.c
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:13     .text.crc_deinit:0000000000000000 crc_deinit
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:17     .text.crc_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:18     .text.crc_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:19     .text.crc_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:20     .text.crc_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:24     .text.crc_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:25     .text.crc_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:27     .text.crc_deinit:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:28     .text.crc_deinit:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:31     .text.crc_deinit:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:32     .text.crc_deinit:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:39     .text.crc_data_register_reset:0000000000000000 crc_data_register_reset
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:42     .text.crc_data_register_reset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:43     .text.crc_data_register_reset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:44     .text.crc_data_register_reset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:45     .text.crc_data_register_reset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:50     .text.crc_data_register_reset:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:51     .text.crc_data_register_reset:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:58     .text.crc_data_register_read:0000000000000000 crc_data_register_read
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:61     .text.crc_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:62     .text.crc_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:63     .text.crc_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:64     .text.crc_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:65     .text.crc_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:69     .text.crc_data_register_read:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:70     .text.crc_data_register_read:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:71     .text.crc_data_register_read:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:78     .text.crc_free_data_register_read:0000000000000000 crc_free_data_register_read
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:81     .text.crc_free_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:82     .text.crc_free_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:83     .text.crc_free_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:84     .text.crc_free_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:85     .text.crc_free_data_register_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:89     .text.crc_free_data_register_read:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:90     .text.crc_free_data_register_read:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:92     .text.crc_free_data_register_read:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:99     .text.crc_free_data_register_write:0000000000000000 crc_free_data_register_write
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:102    .text.crc_free_data_register_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:104    .text.crc_free_data_register_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:105    .text.crc_free_data_register_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:106    .text.crc_free_data_register_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:109    .text.crc_free_data_register_write:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:110    .text.crc_free_data_register_write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:117    .text.crc_single_data_calculate:0000000000000000 crc_single_data_calculate
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:120    .text.crc_single_data_calculate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:122    .text.crc_single_data_calculate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:123    .text.crc_single_data_calculate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:124    .text.crc_single_data_calculate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:127    .text.crc_single_data_calculate:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:128    .text.crc_single_data_calculate:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:131    .text.crc_single_data_calculate:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:132    .text.crc_single_data_calculate:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:139    .text.crc_block_data_calculate:0000000000000000 crc_block_data_calculate
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:142    .text.crc_block_data_calculate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:144    .text.crc_block_data_calculate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:145    .text.crc_block_data_calculate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:146    .text.crc_block_data_calculate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:147    .text.crc_block_data_calculate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:149    .text.crc_block_data_calculate:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:153    .text.crc_block_data_calculate:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:154    .text.crc_block_data_calculate:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:156    .text.crc_block_data_calculate:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:157    .text.crc_block_data_calculate:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:162    .text.crc_block_data_calculate:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:166    .text.crc_block_data_calculate:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:167    .text.crc_block_data_calculate:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:170    .text.crc_block_data_calculate:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:173    .text.crc_block_data_calculate:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:176    .text.crc_block_data_calculate:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:177    .text.crc_block_data_calculate:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:35     .text.crc_deinit:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:54     .text.crc_data_register_reset:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:74     .text.crc_data_register_read:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:95     .text.crc_free_data_register_read:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:113    .text.crc_free_data_register_write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:135    .text.crc_single_data_calculate:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:180    .text.crc_block_data_calculate:000000000000001e .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:164    .text.crc_block_data_calculate:0000000000000012 .L9
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:151    .text.crc_block_data_calculate:0000000000000006 .L8
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:401    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:738    .debug_str:00000000000000f7 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:744    .debug_str:0000000000000208 .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:730    .debug_str:000000000000004e .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:700    .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:718    .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:742    .debug_str:00000000000001fb .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:774    .debug_str:0000000000000357 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:720    .debug_str:0000000000000000 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:728    .debug_str:0000000000000040 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:768    .debug_str:000000000000033b .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:734    .debug_str:00000000000000de .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:772    .debug_str:000000000000034e .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:740    .debug_str:00000000000001f0 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:732    .debug_str:00000000000000cc .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:762    .debug_str:000000000000030f .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:726    .debug_str:0000000000000029 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:750    .debug_str:00000000000002b0 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:752    .debug_str:00000000000002b5 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:770    .debug_str:0000000000000345 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:760    .debug_str:00000000000002f6 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:140    .text.crc_block_data_calculate:0000000000000000 .LFB371
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:178    .text.crc_block_data_calculate:000000000000001e .LFE371
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:736    .debug_str:00000000000000f1 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:619    .debug_loc:0000000000000000 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:776    .debug_str:0000000000000363 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:764    .debug_str:000000000000031d .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:637    .debug_loc:000000000000002c .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:722    .debug_str:000000000000000a .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:118    .text.crc_single_data_calculate:0000000000000000 .LFB370
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:133    .text.crc_single_data_calculate:000000000000000a .LFE370
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:756    .debug_str:00000000000002d9 .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:663    .debug_loc:000000000000006e .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:780    .debug_str:0000000000000373 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:100    .text.crc_free_data_register_write:0000000000000000 .LFB369
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:111    .text.crc_free_data_register_write:0000000000000008 .LFE369
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:746    .debug_str:00000000000002a0 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:754    .debug_str:00000000000002bd .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:79     .text.crc_free_data_register_read:0000000000000000 .LFB368
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:93     .text.crc_free_data_register_read:000000000000000c .LFE368
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:748    .debug_str:00000000000002aa .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:758    .debug_str:00000000000002df .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:59     .text.crc_data_register_read:0000000000000000 .LFB367
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:72     .text.crc_data_register_read:0000000000000008 .LFE367
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:724    .debug_str:0000000000000024 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:766    .debug_str:0000000000000323 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:40     .text.crc_data_register_reset:0000000000000000 .LFB366
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:52     .text.crc_data_register_reset:000000000000000e .LFE366
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:778    .debug_str:0000000000000368 .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:14     .text.crc_deinit:0000000000000000 .LFB365
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:33     .text.crc_deinit:0000000000000012 .LFE365
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:143    .text.crc_block_data_calculate:0000000000000000 .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:160    .text.crc_block_data_calculate:0000000000000010 .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:163    .text.crc_block_data_calculate:0000000000000012 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:150    .text.crc_block_data_calculate:0000000000000006 .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:158    .text.crc_block_data_calculate:000000000000000e .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:171    .text.crc_block_data_calculate:000000000000001a .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:175    .text.crc_block_data_calculate:000000000000001c .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:121    .text.crc_single_data_calculate:0000000000000000 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:129    .text.crc_single_data_calculate:0000000000000008 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccjeizrA.s:185    .debug_info:0000000000000000 .Ldebug_info0
+
+NO UNDEFINED SYMBOLS

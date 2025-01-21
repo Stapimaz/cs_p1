@@ -1,0 +1,1635 @@
+   1              		.file	"wifi_init.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.rodata.wifi_task_ready.str1.4,"aMS",@progbits,1
+  10              		.align	2
+  11              	.LC0:
+  12 0000 5461736B 		.string	"Task %d is now initialized\r\n"
+  12      20256420 
+  12      6973206E 
+  12      6F772069 
+  12      6E697469 
+  13 001d 000000   		.align	2
+  14              	.LC1:
+  15 0020 416C6C20 		.string	"All WIFI tasks are initialized\r\n"
+  15      57494649 
+  15      20746173 
+  15      6B732061 
+  15      72652069 
+  16              		.section	.text.wifi_task_ready,"ax",@progbits
+  17              		.align	1
+  18              		.globl	wifi_task_ready
+  20              	wifi_task_ready:
+  21              	.LFB18:
+  22              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*!
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \file    wifi_init.c
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \brief   WiFi Initialization for GD32VW55x SDK.
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** */
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     Redistribution and use in source and binary forms, with or without modification,
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** are permitted provided that the following conditions are met:
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****        list of conditions and the following disclaimer.
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****        this list of conditions and the following disclaimer in the documentation
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****        and/or other materials provided with the distribution.
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****        may be used to endorse or promote products derived from this software without
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****        specific prior written permission.
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** OF SUCH DAMAGE.
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** */
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #include "wrapper_os.h"
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #include "wifi_management.h"
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #include "wifi_export.h"
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #include "wifi_init.h"
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #include "dbg_print.h"
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #include "wifi_netif.h"
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #include "wifi_wpa.h"
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #include "lwip/tcpip.h"
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #include "gd32vw55x_platform.h"
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** // Semaphore signaled when all wifi tasks are ready
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** static os_sema_t wifi_ready_sem;
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** // Bitfield of task that are not yet fully initialized
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** static uint32_t wifi_pending_task;
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** // Semaphore signaled when all wifi tasks are terminated
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** static os_sema_t wifi_terminate_sem;
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** // Bitfield of task that are already terminated
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** static uint32_t wifi_terminated_task;
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** // Indicate WiFi is existed or not (CFG_WLAN_SUPPORT)
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** extern uint8_t wifi_exist_flag;
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****  * FUNCTIONS
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****  ****************************************************************************************
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****  */
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** static void wifi_ready_cb(void)
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** {
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #if !defined(CONFIG_INTERNAL_DEBUG) && !defined(CONFIG_RF_TEST_SUPPORT)
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     static uint8_t ext_heap_initialized = 0;
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (!ext_heap_initialized) {
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         sys_add_heap_region(0x20048000, 0x8000);
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         ext_heap_initialized = 1;
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #endif
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*!
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \brief      indicate the wifi task is ready
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[in]  task_id: index of wifi task
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[out] none
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \retval     none
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** */
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** void wifi_task_ready(enum wifi_task_id task_id)
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** {
+  23              		.loc 1 82 1
+  24              		.cfi_startproc
+  25              	.LVL0:
+  26 0000 17030000 		call	t0,__riscv_save_3
+  26      E7020300 
+  27              		.cfi_offset 18, -16
+  28              		.cfi_offset 9, -12
+  29              		.cfi_offset 8, -8
+  30              		.cfi_offset 1, -4
+  31              		.cfi_def_cfa_offset 16
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     sys_enter_critical();
+  32              		.loc 1 83 5
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     sys_enter_critical();
+  33              		.loc 1 82 1 is_stmt 0
+  34 0008 2A89     		mv	s2,a0
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_pending_task &= ~(CO_BIT(task_id));
+  35              		.loc 1 84 23
+  36 000a B7040000 		lui	s1,%hi(.LANCHOR0)
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     sys_enter_critical();
+  37              		.loc 1 83 5
+  38 000e 97000000 		call	sys_enter_critical
+  38      E7800000 
+  39              	.LVL1:
+  40              		.loc 1 84 5 is_stmt 1
+  41              		.loc 1 84 23 is_stmt 0
+  42 0016 13870400 		addi	a4,s1,%lo(.LANCHOR0)
+  43 001a 1C43     		lw	a5,0(a4)
+  44 001c 93840400 		addi	s1,s1,%lo(.LANCHOR0)
+  45 0020 B3972749 		bclr	a5,a5,s2
+  46 0024 1CC3     		sw	a5,0(a4)
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     sys_exit_critical();
+  47              		.loc 1 85 5 is_stmt 1
+  48 0026 97000000 		call	sys_exit_critical
+  48      E7800000 
+  49              	.LVL2:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     dbg_print(DEBUG, "Task %d is now initialized\r\n", task_id);
+  50              		.loc 1 88 5
+  51              		.loc 1 88 5
+  52 002e B7070000 		lui	a5,%hi(global_debug_level)
+  53 0032 83C60700 		lbu	a3,%lo(global_debug_level)(a5)
+  54 0036 1147     		li	a4,4
+  55 0038 3E84     		mv	s0,a5
+  56 003a 637BD700 		bleu	a3,a4,.L2
+  57              		.loc 1 88 5 discriminator 1
+  58 003e 37050000 		lui	a0,%hi(.LC0)
+  59 0042 CA85     		mv	a1,s2
+  60 0044 13050500 		addi	a0,a0,%lo(.LC0)
+  61 0048 97000000 		call	co_printf
+  61      E7800000 
+  62              	.LVL3:
+  63              	.L2:
+  64              		.loc 1 88 5 discriminator 3
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_pending_task == 0)
+  65              		.loc 1 90 5 discriminator 3
+  66              		.loc 1 90 8 is_stmt 0 discriminator 3
+  67 0050 9C40     		lw	a5,0(s1)
+  68 0052 95E7     		bne	a5,zero,.L1
+  69              	.LVL4:
+  70              	.LBB4:
+  71              	.LBB5:
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(DEBUG, "All WIFI tasks are initialized\r\n");
+  72              		.loc 1 92 9 is_stmt 1
+  73              		.loc 1 92 9
+  74 0054 03470400 		lbu	a4,%lo(global_debug_level)(s0)
+  75 0058 9147     		li	a5,4
+  76 005a 63FAE700 		bleu	a4,a5,.L4
+  77              		.loc 1 92 9
+  78 005e 37050000 		lui	a0,%hi(.LC1)
+  79 0062 13050500 		addi	a0,a0,%lo(.LC1)
+  80 0066 97000000 		call	co_printf
+  80      E7800000 
+  81              	.LVL5:
+  82              	.L4:
+  83              		.loc 1 92 9
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         sys_sema_up(&wifi_ready_sem);
+  84              		.loc 1 93 9
+  85 006e 37050000 		lui	a0,%hi(.LANCHOR1)
+  86 0072 13050500 		addi	a0,a0,%lo(.LANCHOR1)
+  87 0076 97000000 		call	sys_sema_up
+  87      E7800000 
+  88              	.LVL6:
+  89              	.L1:
+  90              	.LBE5:
+  91              	.LBE4:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+  92              		.loc 1 95 1 is_stmt 0
+  93 007e 17030000 		tail	__riscv_restore_3
+  93      67000300 
+  94              		.cfi_restore 18
+  95              		.cfi_restore 9
+  96              		.cfi_restore 8
+  97              		.cfi_restore 1
+  98              		.cfi_def_cfa_offset 0
+  99              		.cfi_endproc
+ 100              	.LFE18:
+ 102              		.section	.text.tcpip_init_done,"ax",@progbits
+ 103              		.align	1
+ 105              	tcpip_init_done:
+ 106              	.LFB22:
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*!
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \brief      wait for wifi to be ready
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[in]  none
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[out] none
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \retval     0 on success and != 0 if error occured.
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** */
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** int wifi_wait_ready(void)
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** {
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_ready_sem == NULL)
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (sys_sema_down(&wifi_ready_sem, 0))
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     // always re-signal the semaphore in case it is called by several tasks.
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     sys_sema_up(&wifi_ready_sem);
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_ready_cb();
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     return 0;
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*!
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \brief      terminate the wifi task
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[in]  task_id: index of wifi task
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[out] none
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \retval     none
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** */
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** void wifi_task_terminated(enum wifi_task_id task_id)
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** {
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_terminated_task |= CO_BIT(task_id);
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     dbg_print(DEBUG, "Task %d is now terminated\r\n", task_id);
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     sys_sema_up(&wifi_terminate_sem);
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*!
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \brief      wait for wifi task to be terminated
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[in]  task_id: index of wifi task
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[out] none
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \retval     0 on success and != 0 if error occured.
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** */
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** int wifi_wait_terminated(enum wifi_task_id task_id)
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** {
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_terminate_sem == NULL)
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (sys_sema_down(&wifi_terminate_sem, 0))
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (!(wifi_terminated_task & CO_BIT(task_id))) {
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "Task %d is not terminated!!!!!!\r\n", task_id);
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     return 0;
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** static void tcpip_init_done(void *arg)
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** {
+ 107              		.loc 1 156 1 is_stmt 1
+ 108              		.cfi_startproc
+ 109              	.LVL7:
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_task_ready(IP_TASK);
+ 110              		.loc 1 157 5
+ 111 0000 1145     		li	a0,4
+ 112              	.LVL8:
+ 113 0002 17030000 		tail	wifi_task_ready
+ 113      67000300 
+ 114              	.LVL9:
+ 115              		.cfi_endproc
+ 116              	.LFE22:
+ 118              		.section	.text.wifi_wait_ready,"ax",@progbits
+ 119              		.align	1
+ 120              		.globl	wifi_wait_ready
+ 122              	wifi_wait_ready:
+ 123              	.LFB19:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_ready_sem == NULL)
+ 124              		.loc 1 104 1
+ 125              		.cfi_startproc
+ 126 0000 17030000 		call	t0,__riscv_save_2
+ 126      E7020300 
+ 127              		.cfi_offset 9, -12
+ 128              		.cfi_offset 8, -8
+ 129              		.cfi_offset 1, -4
+ 130              		.cfi_def_cfa_offset 16
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 131              		.loc 1 105 5
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 132              		.loc 1 105 24 is_stmt 0
+ 133 0008 B7040000 		lui	s1,%hi(.LANCHOR1)
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 134              		.loc 1 105 8
+ 135 000c 83A70400 		lw	a5,%lo(.LANCHOR1)(s1)
+ 136 0010 99E7     		bne	a5,zero,.L9
+ 137              	.L11:
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 138              		.loc 1 106 16
+ 139 0012 7D54     		li	s0,-1
+ 140              	.L8:
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 141              		.loc 1 117 1
+ 142 0014 2285     		mv	a0,s0
+ 143 0016 17030000 		tail	__riscv_restore_2
+ 143      67000300 
+ 144              		.cfi_remember_state
+ 145              		.cfi_restore 9
+ 146              		.cfi_restore 8
+ 147              		.cfi_restore 1
+ 148              		.cfi_def_cfa_offset 0
+ 149              	.L9:
+ 150              		.cfi_restore_state
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 151              		.loc 1 108 5 is_stmt 1
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 152              		.loc 1 108 9 is_stmt 0
+ 153 001e 8145     		li	a1,0
+ 154 0020 13850400 		addi	a0,s1,%lo(.LANCHOR1)
+ 155 0024 97000000 		call	sys_sema_down
+ 155      E7800000 
+ 156              	.LVL10:
+ 157 002c 2A84     		mv	s0,a0
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 158              		.loc 1 108 8
+ 159 002e 75F1     		bne	a0,zero,.L11
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 160              		.loc 1 112 5 is_stmt 1
+ 161 0030 13850400 		addi	a0,s1,%lo(.LANCHOR1)
+ 162              	.LBB8:
+ 163              	.LBB9:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         sys_add_heap_region(0x20048000, 0x8000);
+ 164              		.loc 1 68 9 is_stmt 0
+ 165 0034 B7040000 		lui	s1,%hi(.LANCHOR2)
+ 166              	.LBE9:
+ 167              	.LBE8:
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 168              		.loc 1 112 5
+ 169 0038 97000000 		call	sys_sema_up
+ 169      E7800000 
+ 170              	.LVL11:
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 171              		.loc 1 114 5 is_stmt 1
+ 172              	.LBB11:
+ 173              	.LBB10:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (!ext_heap_initialized) {
+ 174              		.loc 1 67 5
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         sys_add_heap_region(0x20048000, 0x8000);
+ 175              		.loc 1 68 5
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         sys_add_heap_region(0x20048000, 0x8000);
+ 176              		.loc 1 68 9 is_stmt 0
+ 177 0040 93840400 		addi	s1,s1,%lo(.LANCHOR2)
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         sys_add_heap_region(0x20048000, 0x8000);
+ 178              		.loc 1 68 8
+ 179 0044 83C70400 		lbu	a5,0(s1)
+ 180 0048 F1F7     		bne	a5,zero,.L8
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         ext_heap_initialized = 1;
+ 181              		.loc 1 69 9 is_stmt 1
+ 182 004a A165     		li	a1,32768
+ 183 004c 37850420 		li	a0,537165824
+ 184 0050 97000000 		call	sys_add_heap_region
+ 184      E7800000 
+ 185              	.LVL12:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 186              		.loc 1 70 9
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 187              		.loc 1 70 30 is_stmt 0
+ 188 0058 8547     		li	a5,1
+ 189 005a 2380F400 		sb	a5,0(s1)
+ 190 005e 5DBF     		j	.L8
+ 191              	.LBE10:
+ 192              	.LBE11:
+ 193              		.cfi_endproc
+ 194              	.LFE19:
+ 196              		.section	.rodata.wifi_task_terminated.str1.4,"aMS",@progbits,1
+ 197              		.align	2
+ 198              	.LC2:
+ 199 0000 5461736B 		.string	"Task %d is now terminated\r\n"
+ 199      20256420 
+ 199      6973206E 
+ 199      6F772074 
+ 199      65726D69 
+ 200              		.section	.text.wifi_task_terminated,"ax",@progbits
+ 201              		.align	1
+ 202              		.globl	wifi_task_terminated
+ 204              	wifi_task_terminated:
+ 205              	.LFB20:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_terminated_task |= CO_BIT(task_id);
+ 206              		.loc 1 126 1 is_stmt 1
+ 207              		.cfi_startproc
+ 208              	.LVL13:
+ 209 0000 17030000 		call	t0,__riscv_save_0
+ 209      E7020300 
+ 210              		.cfi_offset 1, -4
+ 211              		.cfi_def_cfa_offset 16
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 212              		.loc 1 127 5
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 213              		.loc 1 127 26 is_stmt 0
+ 214 0008 B7070000 		lui	a5,%hi(.LANCHOR3)
+ 215 000c 93870700 		addi	a5,a5,%lo(.LANCHOR3)
+ 216 0010 9843     		lw	a4,0(a5)
+ 217 0012 3317A728 		bset	a4,a4,a0
+ 218 0016 98C3     		sw	a4,0(a5)
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 219              		.loc 1 129 5 is_stmt 1
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 220              		.loc 1 129 5
+ 221 0018 B7070000 		lui	a5,%hi(global_debug_level)
+ 222 001c 03C70700 		lbu	a4,%lo(global_debug_level)(a5)
+ 223 0020 9147     		li	a5,4
+ 224 0022 63FBE700 		bleu	a4,a5,.L14
+ 225 0026 AA85     		mv	a1,a0
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 226              		.loc 1 129 5 discriminator 1
+ 227 0028 37050000 		lui	a0,%hi(.LC2)
+ 228              	.LVL14:
+ 229 002c 13050500 		addi	a0,a0,%lo(.LC2)
+ 230 0030 97000000 		call	co_printf
+ 230      E7800000 
+ 231              	.LVL15:
+ 232              	.L14:
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 233              		.loc 1 129 5 discriminator 3
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+ 234              		.loc 1 131 5 discriminator 3
+ 235 0038 37050000 		lui	a0,%hi(.LANCHOR4)
+ 236 003c 13050500 		addi	a0,a0,%lo(.LANCHOR4)
+ 237 0040 97000000 		call	sys_sema_up
+ 237      E7800000 
+ 238              	.LVL16:
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 239              		.loc 1 132 1 is_stmt 0 discriminator 3
+ 240 0048 17030000 		tail	__riscv_restore_0
+ 240      67000300 
+ 241              		.cfi_restore 1
+ 242              		.cfi_def_cfa_offset 0
+ 243              		.cfi_endproc
+ 244              	.LFE20:
+ 246              		.section	.rodata.wifi_wait_terminated.str1.4,"aMS",@progbits,1
+ 247              		.align	2
+ 248              	.LC3:
+ 249 0000 5461736B 		.string	"Task %d is not terminated!!!!!!\r\n"
+ 249      20256420 
+ 249      6973206E 
+ 249      6F742074 
+ 249      65726D69 
+ 250              		.section	.text.wifi_wait_terminated,"ax",@progbits
+ 251              		.align	1
+ 252              		.globl	wifi_wait_terminated
+ 254              	wifi_wait_terminated:
+ 255              	.LFB21:
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_terminate_sem == NULL)
+ 256              		.loc 1 141 1 is_stmt 1
+ 257              		.cfi_startproc
+ 258              	.LVL17:
+ 259 0000 17030000 		call	t0,__riscv_save_2
+ 259      E7020300 
+ 260              		.cfi_offset 9, -12
+ 261              		.cfi_offset 8, -8
+ 262              		.cfi_offset 1, -4
+ 263              		.cfi_def_cfa_offset 16
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 264              		.loc 1 142 5
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_terminate_sem == NULL)
+ 265              		.loc 1 141 1 is_stmt 0
+ 266 0008 AA84     		mv	s1,a0
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 267              		.loc 1 142 28
+ 268 000a 37050000 		lui	a0,%hi(.LANCHOR4)
+ 269              	.LVL18:
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 270              		.loc 1 142 8
+ 271 000e 83270500 		lw	a5,%lo(.LANCHOR4)(a0)
+ 272 0012 99E7     		bne	a5,zero,.L17
+ 273              	.L19:
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 274              		.loc 1 143 16
+ 275 0014 7D54     		li	s0,-1
+ 276              	.L16:
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 277              		.loc 1 153 1
+ 278 0016 2285     		mv	a0,s0
+ 279 0018 17030000 		tail	__riscv_restore_2
+ 279      67000300 
+ 280              		.cfi_remember_state
+ 281              		.cfi_restore 9
+ 282              		.cfi_restore 8
+ 283              		.cfi_restore 1
+ 284              		.cfi_def_cfa_offset 0
+ 285              	.L17:
+ 286              		.cfi_restore_state
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 287              		.loc 1 145 5 is_stmt 1
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 288              		.loc 1 145 9 is_stmt 0
+ 289 0020 8145     		li	a1,0
+ 290 0022 13050500 		addi	a0,a0,%lo(.LANCHOR4)
+ 291 0026 97000000 		call	sys_sema_down
+ 291      E7800000 
+ 292              	.LVL19:
+ 293 002e 2A84     		mv	s0,a0
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 294              		.loc 1 145 8
+ 295 0030 75F1     		bne	a0,zero,.L19
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "Task %d is not terminated!!!!!!\r\n", task_id);
+ 296              		.loc 1 148 5 is_stmt 1
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "Task %d is not terminated!!!!!!\r\n", task_id);
+ 297              		.loc 1 148 9 is_stmt 0
+ 298 0032 B7070000 		lui	a5,%hi(.LANCHOR3)
+ 299 0036 83A70700 		lw	a5,%lo(.LANCHOR3)(a5)
+ 300 003a B3D79748 		bext	a5,a5,s1
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "Task %d is not terminated!!!!!!\r\n", task_id);
+ 301              		.loc 1 148 8
+ 302 003e E1FF     		bne	a5,zero,.L16
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 303              		.loc 1 149 9 is_stmt 1
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 304              		.loc 1 149 9
+ 305 0040 B7070000 		lui	a5,%hi(global_debug_level)
+ 306 0044 83C70700 		lbu	a5,%lo(global_debug_level)(a5)
+ 307 0048 F9D7     		beq	a5,zero,.L16
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 308              		.loc 1 149 9 discriminator 1
+ 309 004a 37050000 		lui	a0,%hi(.LC3)
+ 310 004e A685     		mv	a1,s1
+ 311 0050 13050500 		addi	a0,a0,%lo(.LC3)
+ 312 0054 97000000 		call	co_printf
+ 312      E7800000 
+ 313              	.LVL20:
+ 314 005c 6DBF     		j	.L16
+ 315              		.cfi_endproc
+ 316              	.LFE21:
+ 318              		.section	.rodata.wifi_sw_init.str1.4,"aMS",@progbits,1
+ 319              		.align	2
+ 320              	.LC4:
+ 321 0000 6E657420 		.string	"net init failed\r\n"
+ 321      696E6974 
+ 321      20666169 
+ 321      6C65640D 
+ 321      0A00
+ 322 0012 0000     		.align	2
+ 323              	.LC5:
+ 324 0014 77696669 		.string	"wifi core init failed\r\n"
+ 324      20636F72 
+ 324      6520696E 
+ 324      69742066 
+ 324      61696C65 
+ 325              		.align	2
+ 326              	.LC6:
+ 327 002c 77696669 		.string	"wifi wpa init failed\r\n"
+ 327      20777061 
+ 327      20696E69 
+ 327      74206661 
+ 327      696C6564 
+ 328 0043 00       		.align	2
+ 329              	.LC7:
+ 330 0044 77696669 		.string	"wifi management init failed\r\n"
+ 330      206D616E 
+ 330      6167656D 
+ 330      656E7420 
+ 330      696E6974 
+ 331              		.section	.text.wifi_sw_init,"ax",@progbits
+ 332              		.align	1
+ 333              		.globl	wifi_sw_init
+ 335              	wifi_sw_init:
+ 336              	.LFB23:
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*!
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \brief      Initialize wifi module
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[in]  none
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[out] none
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \retval     0 on success and != 0 if error occured.
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** */
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** int wifi_sw_init(void)
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** {
+ 337              		.loc 1 167 1
+ 338              		.cfi_startproc
+ 339 0000 17030000 		call	t0,__riscv_save_1
+ 339      E7020300 
+ 340              		.cfi_offset 8, -8
+ 341              		.cfi_offset 1, -4
+ 342              		.cfi_def_cfa_offset 16
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #ifdef CONFIG_RF_TEST_SUPPORT
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     uint32_t level = 0, module = 0;
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #endif
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     bool init_mac = true;
+ 343              		.loc 1 171 5
+ 344              	.LVL21:
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_wakelock_acquire();
+ 345              		.loc 1 173 5
+ 346 0008 97000000 		call	wifi_wakelock_acquire
+ 346      E7800000 
+ 347              	.LVL22:
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_pending_task |= (CO_BIT(MACIF_RX_TASK)     |
+ 348              		.loc 1 175 5
+ 349              		.loc 1 175 23 is_stmt 0
+ 350 0010 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 351 0014 93870700 		addi	a5,a5,%lo(.LANCHOR0)
+ 352 0018 9843     		lw	a4,0(a5)
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****                           CO_BIT(MACIF_TX_TASK)     |
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #ifdef CONFIG_WPA_SUPPLICANT
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****                           CO_BIT(MACIF_CONTROL_TASK)|
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #endif
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****                           CO_BIT(WIFI_CORE_TASK)    |
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****                           CO_BIT(WIFI_MGMT_TASK));
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_terminated_task = 0;
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     // Initialize the semaphores
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (sys_sema_init_ext(&wifi_ready_sem, 1, 0)) {
+ 353              		.loc 1 185 9
+ 354 001a 37050000 		lui	a0,%hi(.LANCHOR1)
+ 355 001e 0146     		li	a2,0
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****                           CO_BIT(MACIF_TX_TASK)     |
+ 356              		.loc 1 175 23
+ 357 0020 13677706 		ori	a4,a4,103
+ 358 0024 98C3     		sw	a4,0(a5)
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 359              		.loc 1 182 5 is_stmt 1
+ 360              		.loc 1 185 9 is_stmt 0
+ 361 0026 8545     		li	a1,1
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 362              		.loc 1 182 26
+ 363 0028 B7070000 		lui	a5,%hi(.LANCHOR3)
+ 364              		.loc 1 185 9
+ 365 002c 13050500 		addi	a0,a0,%lo(.LANCHOR1)
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 366              		.loc 1 182 26
+ 367 0030 23A00700 		sw	zero,%lo(.LANCHOR3)(a5)
+ 368              		.loc 1 185 5 is_stmt 1
+ 369              		.loc 1 185 9 is_stmt 0
+ 370 0034 97000000 		call	sys_sema_init_ext
+ 370      E7800000 
+ 371              	.LVL23:
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 372              		.loc 1 186 16
+ 373 003c 7D54     		li	s0,-1
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -1;
+ 374              		.loc 1 185 8
+ 375 003e 21E1     		bne	a0,zero,.L24
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (sys_sema_init_ext(&wifi_terminate_sem, 1, 0)) {
+ 376              		.loc 1 188 5 is_stmt 1
+ 377              		.loc 1 188 9 is_stmt 0
+ 378 0040 37050000 		lui	a0,%hi(.LANCHOR4)
+ 379 0044 0146     		li	a2,0
+ 380 0046 8545     		li	a1,1
+ 381 0048 13050500 		addi	a0,a0,%lo(.LANCHOR4)
+ 382 004c 97000000 		call	sys_sema_init_ext
+ 382      E7800000 
+ 383              	.LVL24:
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -2;
+ 384              		.loc 1 189 16
+ 385 0054 7954     		li	s0,-2
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -2;
+ 386              		.loc 1 188 8
+ 387 0056 05E5     		bne	a0,zero,.L24
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     // net l2 sema and mutex
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (net_init())
+ 388              		.loc 1 193 5 is_stmt 1
+ 389              		.loc 1 193 9 is_stmt 0
+ 390 0058 97000000 		call	net_init
+ 390      E7800000 
+ 391              	.LVL25:
+ 392              		.loc 1 193 8
+ 393 0060 05C5     		beq	a0,zero,.L26
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "net init failed\r\n");
+ 394              		.loc 1 195 9 is_stmt 1
+ 395              		.loc 1 195 9
+ 396 0062 B7070000 		lui	a5,%hi(global_debug_level)
+ 397 0066 83C70700 		lbu	a5,%lo(global_debug_level)(a5)
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -3;
+ 398              		.loc 1 196 16 is_stmt 0
+ 399 006a 7554     		li	s0,-3
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -3;
+ 400              		.loc 1 195 9
+ 401 006c 89CB     		beq	a5,zero,.L24
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -3;
+ 402              		.loc 1 195 9 is_stmt 1 discriminator 1
+ 403 006e 37050000 		lui	a0,%hi(.LC4)
+ 404 0072 13050500 		addi	a0,a0,%lo(.LC4)
+ 405              	.L43:
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     // WiFi core init
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #ifdef CONFIG_WPA_SUPPLICANT
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_core_init(init_mac, true))
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #else  /* CONFIG_WPA_SUPPLICANT */
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_core_init(init_mac, false))
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #endif  /* CONFIG_WPA_SUPPLICANT */
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "wifi core init failed\r\n");
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -4;
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #ifdef CONFIG_WPA_SUPPLICANT
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     // WPA supplicant environment
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_wpa_init())
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "wifi wpa init failed\r\n");
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -5;
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #endif  /* CONFIG_WPA_SUPPLICANT */
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     // Wifi management task
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (wifi_management_init())
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "wifi management init failed\r\n");
+ 406              		.loc 1 222 9 is_stmt 0 discriminator 1
+ 407 0076 97000000 		call	co_printf
+ 407      E7800000 
+ 408              	.LVL26:
+ 409              	.L24:
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -6;
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #ifdef CONFIG_RF_TEST_SUPPORT
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     // close DBG moudle.
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     macif_dbg_filter_get(&level, &module);
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     module = module & (~(0x01));
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     macif_dbg_filter_set(level, module);
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #endif
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     return 0;
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+ 410              		.loc 1 234 1
+ 411 007e 2285     		mv	a0,s0
+ 412 0080 17030000 		tail	__riscv_restore_1
+ 412      67000300 
+ 413              		.cfi_remember_state
+ 414              		.cfi_restore 8
+ 415              		.cfi_restore 1
+ 416              		.cfi_def_cfa_offset 0
+ 417              	.L26:
+ 418              		.cfi_restore_state
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #else  /* CONFIG_WPA_SUPPLICANT */
+ 419              		.loc 1 201 5 is_stmt 1
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #else  /* CONFIG_WPA_SUPPLICANT */
+ 420              		.loc 1 201 9 is_stmt 0
+ 421 0088 8545     		li	a1,1
+ 422 008a 0545     		li	a0,1
+ 423 008c 97000000 		call	wifi_core_init
+ 423      E7800000 
+ 424              	.LVL27:
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #else  /* CONFIG_WPA_SUPPLICANT */
+ 425              		.loc 1 201 8
+ 426 0094 01CD     		beq	a0,zero,.L27
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -4;
+ 427              		.loc 1 206 9 is_stmt 1
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -4;
+ 428              		.loc 1 206 9
+ 429 0096 B7070000 		lui	a5,%hi(global_debug_level)
+ 430 009a 83C70700 		lbu	a5,%lo(global_debug_level)(a5)
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 431              		.loc 1 207 16 is_stmt 0
+ 432 009e 7154     		li	s0,-4
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -4;
+ 433              		.loc 1 206 9
+ 434 00a0 F9DF     		beq	a5,zero,.L24
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -4;
+ 435              		.loc 1 206 9 is_stmt 1 discriminator 1
+ 436 00a2 37050000 		lui	a0,%hi(.LC5)
+ 437 00a6 13050500 		addi	a0,a0,%lo(.LC5)
+ 438 00aa F1B7     		j	.L43
+ 439              	.L27:
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 440              		.loc 1 212 5
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 441              		.loc 1 212 9 is_stmt 0
+ 442 00ac 97000000 		call	wifi_wpa_init
+ 442      E7800000 
+ 443              	.LVL28:
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 444              		.loc 1 212 8
+ 445 00b4 01CD     		beq	a0,zero,.L28
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -5;
+ 446              		.loc 1 214 9 is_stmt 1
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -5;
+ 447              		.loc 1 214 9
+ 448 00b6 B7070000 		lui	a5,%hi(global_debug_level)
+ 449 00ba 83C70700 		lbu	a5,%lo(global_debug_level)(a5)
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 450              		.loc 1 215 16 is_stmt 0
+ 451 00be 6D54     		li	s0,-5
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -5;
+ 452              		.loc 1 214 9
+ 453 00c0 DDDF     		beq	a5,zero,.L24
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -5;
+ 454              		.loc 1 214 9 is_stmt 1 discriminator 1
+ 455 00c2 37050000 		lui	a0,%hi(.LC6)
+ 456 00c6 13050500 		addi	a0,a0,%lo(.LC6)
+ 457 00ca 75B7     		j	.L43
+ 458              	.L28:
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 459              		.loc 1 220 5
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 460              		.loc 1 220 9 is_stmt 0
+ 461 00cc 97000000 		call	wifi_management_init
+ 461      E7800000 
+ 462              	.LVL29:
+ 463 00d4 2A84     		mv	s0,a0
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     {
+ 464              		.loc 1 220 8
+ 465 00d6 45D5     		beq	a0,zero,.L24
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -6;
+ 466              		.loc 1 222 9 is_stmt 1
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -6;
+ 467              		.loc 1 222 9
+ 468 00d8 B7070000 		lui	a5,%hi(global_debug_level)
+ 469 00dc 83C70700 		lbu	a5,%lo(global_debug_level)(a5)
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 470              		.loc 1 223 16 is_stmt 0
+ 471 00e0 6954     		li	s0,-6
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -6;
+ 472              		.loc 1 222 9
+ 473 00e2 D1DF     		beq	a5,zero,.L24
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return -6;
+ 474              		.loc 1 222 9 is_stmt 1 discriminator 1
+ 475 00e4 37050000 		lui	a0,%hi(.LC7)
+ 476 00e8 13050500 		addi	a0,a0,%lo(.LC7)
+ 477 00ec 69B7     		j	.L43
+ 478              		.cfi_endproc
+ 479              	.LFE23:
+ 481              		.section	.text.wifi_sw_deinit,"ax",@progbits
+ 482              		.align	1
+ 483              		.globl	wifi_sw_deinit
+ 485              	wifi_sw_deinit:
+ 486              	.LFB24:
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*!
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \brief      Release wifi module
+ 238:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[in]  none
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[out] none
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \retval     none
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** */
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** void wifi_sw_deinit(void)
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** {
+ 487              		.loc 1 243 1
+ 488              		.cfi_startproc
+ 489 0000 17030000 		call	t0,__riscv_save_1
+ 489      E7020300 
+ 490              		.cfi_offset 8, -8
+ 491              		.cfi_offset 1, -4
+ 492              		.cfi_def_cfa_offset 16
+ 244:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_management_deinit();
+ 493              		.loc 1 244 5
+ 494 0008 97000000 		call	wifi_management_deinit
+ 494      E7800000 
+ 495              	.LVL30:
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #ifdef CONFIG_WPA_SUPPLICANT
+ 247:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_wpa_deinit();
+ 496              		.loc 1 247 5
+ 497 0010 97000000 		call	wifi_wpa_deinit
+ 497      E7800000 
+ 498              	.LVL31:
+ 248:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #endif  /* CONFIG_WPA_SUPPLICANT */
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #ifdef CONFIG_WPA_SUPPLICANT
+ 251:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_core_deinit(true);
+ 499              		.loc 1 251 5
+ 500 0018 0545     		li	a0,1
+ 501 001a 97000000 		call	wifi_core_deinit
+ 501      E7800000 
+ 502              	.LVL32:
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #else
+ 253:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_core_deinit(false);
+ 254:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** #endif
+ 255:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 256:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_vifs_deinit();
+ 503              		.loc 1 256 5
+ 504 0022 97000000 		call	wifi_vifs_deinit
+ 504      E7800000 
+ 505              	.LVL33:
+ 257:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 258:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     net_deinit();
+ 506              		.loc 1 258 5
+ 507 002a 97000000 		call	net_deinit
+ 507      E7800000 
+ 508              	.LVL34:
+ 259:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 260:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     sys_sema_free(&wifi_ready_sem);
+ 509              		.loc 1 260 5
+ 510 0032 37050000 		lui	a0,%hi(.LANCHOR1)
+ 511 0036 13040500 		addi	s0,a0,%lo(.LANCHOR1)
+ 512 003a 13050500 		addi	a0,a0,%lo(.LANCHOR1)
+ 513 003e 97000000 		call	sys_sema_free
+ 513      E7800000 
+ 514              	.LVL35:
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_ready_sem = NULL;
+ 515              		.loc 1 261 5
+ 262:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 263:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     sys_sema_free(&wifi_terminate_sem);
+ 516              		.loc 1 263 5 is_stmt 0
+ 517 0046 37050000 		lui	a0,%hi(.LANCHOR4)
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_ready_sem = NULL;
+ 518              		.loc 1 261 20
+ 519 004a 23200400 		sw	zero,0(s0)
+ 520              		.loc 1 263 5 is_stmt 1
+ 521 004e 13040500 		addi	s0,a0,%lo(.LANCHOR4)
+ 522 0052 13050500 		addi	a0,a0,%lo(.LANCHOR4)
+ 523 0056 97000000 		call	sys_sema_free
+ 523      E7800000 
+ 524              	.LVL36:
+ 264:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_terminate_sem = NULL;
+ 525              		.loc 1 264 5
+ 526              		.loc 1 264 24 is_stmt 0
+ 527 005e 23200400 		sw	zero,0(s0)
+ 265:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 266:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_wakelock_release();
+ 528              		.loc 1 266 5 is_stmt 1
+ 529 0062 97000000 		call	wifi_wakelock_release
+ 529      E7800000 
+ 530              	.LVL37:
+ 267:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+ 531              		.loc 1 267 1 is_stmt 0
+ 532 006a 17030000 		tail	__riscv_restore_1
+ 532      67000300 
+ 533              		.cfi_restore 8
+ 534              		.cfi_restore 1
+ 535              		.cfi_def_cfa_offset 0
+ 536              		.cfi_endproc
+ 537              	.LFE24:
+ 539              		.section	.rodata.wifi_init.str1.4,"aMS",@progbits,1
+ 540              		.align	2
+ 541              	.LC8:
+ 542 0000 77696669 		.string	"wifi power on failed\r\n"
+ 542      20706F77 
+ 542      6572206F 
+ 542      6E206661 
+ 542      696C6564 
+ 543 0017 00       		.align	2
+ 544              	.LC9:
+ 545 0018 77696669 		.string	"wifi sw init failed\r\n"
+ 545      20737720 
+ 545      696E6974 
+ 545      20666169 
+ 545      6C65640D 
+ 546              		.section	.text.wifi_init,"ax",@progbits
+ 547              		.align	1
+ 548              		.globl	wifi_init
+ 550              	wifi_init:
+ 551              	.LFB25:
+ 268:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** /*!
+ 270:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \brief      Initialize wifi power and wifi module
+ 271:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[in]  none
+ 272:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \param[out] none
+ 273:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     \retval     0 on success and != 0 if error occured.
+ 274:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** */
+ 275:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** int wifi_init(void)
+ 276:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** {
+ 552              		.loc 1 276 1 is_stmt 1
+ 553              		.cfi_startproc
+ 554 0000 17030000 		call	t0,__riscv_save_1
+ 554      E7020300 
+ 555              		.cfi_offset 8, -8
+ 556              		.cfi_offset 1, -4
+ 557              		.cfi_def_cfa_offset 16
+ 277:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     int ret = 0;
+ 558              		.loc 1 277 5
+ 559              	.LVL38:
+ 278:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 279:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     /* 1. Initialize the TCP/IP stack */
+ 280:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     tcpip_init(tcpip_init_done, NULL);
+ 560              		.loc 1 280 5
+ 561 0008 37050000 		lui	a0,%hi(tcpip_init_done)
+ 562 000c 8145     		li	a1,0
+ 563 000e 13050500 		addi	a0,a0,%lo(tcpip_init_done)
+ 564 0012 97000000 		call	tcpip_init
+ 564      E7800000 
+ 565              	.LVL39:
+ 281:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_pending_task = CO_BIT(IP_TASK);
+ 566              		.loc 1 281 5
+ 567              		.loc 1 281 23 is_stmt 0
+ 568 001a B7070000 		lui	a5,%hi(.LANCHOR0)
+ 569 001e 4147     		li	a4,16
+ 570 0020 23A0E700 		sw	a4,%lo(.LANCHOR0)(a5)
+ 282:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 283:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     /* 2. wifi power on */
+ 284:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_exist_flag = 1;
+ 571              		.loc 1 284 5 is_stmt 1
+ 572              		.loc 1 284 21 is_stmt 0
+ 573 0024 B7070000 		lui	a5,%hi(wifi_exist_flag)
+ 574 0028 0547     		li	a4,1
+ 575 002a 2380E700 		sb	a4,%lo(wifi_exist_flag)(a5)
+ 285:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     ret = wifi_power_on();
+ 576              		.loc 1 285 5 is_stmt 1
+ 577              		.loc 1 285 11 is_stmt 0
+ 578 002e 97000000 		call	wifi_power_on
+ 578      E7800000 
+ 579              	.LVL40:
+ 286:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (ret) {
+ 580              		.loc 1 286 5 is_stmt 1
+ 581              		.loc 1 286 8 is_stmt 0
+ 582 0036 05C5     		beq	a0,zero,.L47
+ 287:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "wifi power on failed\r\n");
+ 583              		.loc 1 287 9
+ 584 0038 B7070000 		lui	a5,%hi(global_debug_level)
+ 585 003c 83C70700 		lbu	a5,%lo(global_debug_level)(a5)
+ 586 0040 2A84     		mv	s0,a0
+ 587              		.loc 1 287 9 is_stmt 1
+ 588              		.loc 1 287 9
+ 589 0042 89CB     		beq	a5,zero,.L46
+ 590              		.loc 1 287 9 discriminator 1
+ 591 0044 37050000 		lui	a0,%hi(.LC8)
+ 592              	.LVL41:
+ 593 0048 13050500 		addi	a0,a0,%lo(.LC8)
+ 594              	.LVL42:
+ 595              	.L59:
+ 288:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return ret;
+ 289:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 290:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     /* 3. wifi enable IRQ */
+ 291:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     wifi_irq_enable();
+ 292:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 293:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     /* 4. WiFi sw init */
+ 294:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     ret = wifi_sw_init();
+ 295:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (ret) {
+ 296:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "wifi sw init failed\r\n");
+ 596              		.loc 1 296 9 is_stmt 0 discriminator 1
+ 597 004c 97000000 		call	co_printf
+ 597      E7800000 
+ 598              	.LVL43:
+ 599              	.L46:
+ 297:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return ret;
+ 298:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     }
+ 299:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 300:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     return 0;
+ 301:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** }
+ 600              		.loc 1 301 1
+ 601 0054 2285     		mv	a0,s0
+ 602 0056 17030000 		tail	__riscv_restore_1
+ 602      67000300 
+ 603              		.cfi_remember_state
+ 604              		.cfi_restore 8
+ 605              		.cfi_restore 1
+ 606              		.cfi_def_cfa_offset 0
+ 607              	.LVL44:
+ 608              	.L47:
+ 609              		.cfi_restore_state
+ 291:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c **** 
+ 610              		.loc 1 291 5 is_stmt 1
+ 611 005e 97000000 		call	wifi_irq_enable
+ 611      E7800000 
+ 612              	.LVL45:
+ 294:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (ret) {
+ 613              		.loc 1 294 5
+ 294:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****     if (ret) {
+ 614              		.loc 1 294 11 is_stmt 0
+ 615 0066 97000000 		call	wifi_sw_init
+ 615      E7800000 
+ 616              	.LVL46:
+ 617 006e 2A84     		mv	s0,a0
+ 618              	.LVL47:
+ 295:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "wifi sw init failed\r\n");
+ 619              		.loc 1 295 5 is_stmt 1
+ 295:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         dbg_print(ERR, "wifi sw init failed\r\n");
+ 620              		.loc 1 295 8 is_stmt 0
+ 621 0070 75D1     		beq	a0,zero,.L46
+ 296:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return ret;
+ 622              		.loc 1 296 9 is_stmt 1
+ 296:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return ret;
+ 623              		.loc 1 296 9
+ 624 0072 B7070000 		lui	a5,%hi(global_debug_level)
+ 625 0076 83C70700 		lbu	a5,%lo(global_debug_level)(a5)
+ 626 007a E9DF     		beq	a5,zero,.L46
+ 296:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager\wifi_init.c ****         return ret;
+ 627              		.loc 1 296 9 discriminator 1
+ 628 007c 37050000 		lui	a0,%hi(.LC9)
+ 629 0080 13050500 		addi	a0,a0,%lo(.LC9)
+ 630 0084 E1B7     		j	.L59
+ 631              		.cfi_endproc
+ 632              	.LFE25:
+ 634              		.section	.sbss.ext_heap_initialized.0,"aw",@nobits
+ 635              		.set	.LANCHOR2,. + 0
+ 638              	ext_heap_initialized.0:
+ 639 0000 00       		.zero	1
+ 640              		.section	.sbss.wifi_pending_task,"aw",@nobits
+ 641              		.align	2
+ 642              		.set	.LANCHOR0,. + 0
+ 645              	wifi_pending_task:
+ 646 0000 00000000 		.zero	4
+ 647              		.section	.sbss.wifi_ready_sem,"aw",@nobits
+ 648              		.align	2
+ 649              		.set	.LANCHOR1,. + 0
+ 652              	wifi_ready_sem:
+ 653 0000 00000000 		.zero	4
+ 654              		.section	.sbss.wifi_terminate_sem,"aw",@nobits
+ 655              		.align	2
+ 656              		.set	.LANCHOR4,. + 0
+ 659              	wifi_terminate_sem:
+ 660 0000 00000000 		.zero	4
+ 661              		.section	.sbss.wifi_terminated_task,"aw",@nobits
+ 662              		.align	2
+ 663              		.set	.LANCHOR3,. + 0
+ 666              	wifi_terminated_task:
+ 667 0000 00000000 		.zero	4
+ 668              		.text
+ 669              	.Letext0:
+ 670              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 671              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 672              		.file 4 "..\\..\\..\\..\\rtos\\rtos_wrapper/wrapper_os.h"
+ 673              		.file 5 "..\\..\\..\\..\\macsw\\export/macif_types.h"
+ 674              		.file 6 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/netif.h"
+ 675              		.file 7 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/memp.h"
+ 676              		.file 8 "..\\..\\..\\..\\util\\include/dbg_print.h"
+ 677              		.file 9 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/tcpip.h"
+ 678              		.file 10 "..\\..\\..\\..\\plf\\src/gd32vw55x_platform.h"
+ 679              		.file 11 "..\\..\\..\\..\\util\\include/debug_print.h"
+ 680              		.file 12 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 681              		.file 13 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 682              		.file 14 "..\\..\\..\\..\\macsw\\export/wifi_export.h"
+ 683              		.file 15 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 684              		.file 16 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\port/wifi_netif.h"
+ 685              		.file 17 "..\\..\\..\\..\\macsw\\import/rtos_import.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 wifi_init.c
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:20     .text.wifi_task_ready:0000000000000000 wifi_task_ready
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:24     .text.wifi_task_ready:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:26     .text.wifi_task_ready:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:27     .text.wifi_task_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:28     .text.wifi_task_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:29     .text.wifi_task_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:30     .text.wifi_task_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:31     .text.wifi_task_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:33     .text.wifi_task_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:34     .text.wifi_task_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:36     .text.wifi_task_ready:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:38     .text.wifi_task_ready:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:41     .text.wifi_task_ready:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:42     .text.wifi_task_ready:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:48     .text.wifi_task_ready:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:51     .text.wifi_task_ready:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:52     .text.wifi_task_ready:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:58     .text.wifi_task_ready:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:65     .text.wifi_task_ready:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:66     .text.wifi_task_ready:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:67     .text.wifi_task_ready:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:73     .text.wifi_task_ready:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:74     .text.wifi_task_ready:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:78     .text.wifi_task_ready:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:84     .text.wifi_task_ready:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:85     .text.wifi_task_ready:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:93     .text.wifi_task_ready:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:94     .text.wifi_task_ready:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:95     .text.wifi_task_ready:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:96     .text.wifi_task_ready:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:97     .text.wifi_task_ready:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:98     .text.wifi_task_ready:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:99     .text.wifi_task_ready:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:105    .text.tcpip_init_done:0000000000000000 tcpip_init_done
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:108    .text.tcpip_init_done:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:110    .text.tcpip_init_done:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:111    .text.tcpip_init_done:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:115    .text.tcpip_init_done:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:122    .text.wifi_wait_ready:0000000000000000 wifi_wait_ready
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:125    .text.wifi_wait_ready:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:126    .text.wifi_wait_ready:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:127    .text.wifi_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:128    .text.wifi_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:129    .text.wifi_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:130    .text.wifi_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:132    .text.wifi_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:133    .text.wifi_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:135    .text.wifi_wait_ready:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:139    .text.wifi_wait_ready:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:142    .text.wifi_wait_ready:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:144    .text.wifi_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:145    .text.wifi_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:146    .text.wifi_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:147    .text.wifi_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:148    .text.wifi_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:150    .text.wifi_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:152    .text.wifi_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:153    .text.wifi_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:159    .text.wifi_wait_ready:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:161    .text.wifi_wait_ready:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:165    .text.wifi_wait_ready:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:169    .text.wifi_wait_ready:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:174    .text.wifi_wait_ready:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:175    .text.wifi_wait_ready:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:176    .text.wifi_wait_ready:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:177    .text.wifi_wait_ready:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:179    .text.wifi_wait_ready:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:182    .text.wifi_wait_ready:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:187    .text.wifi_wait_ready:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:188    .text.wifi_wait_ready:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:193    .text.wifi_wait_ready:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:204    .text.wifi_task_terminated:0000000000000000 wifi_task_terminated
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:207    .text.wifi_task_terminated:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:209    .text.wifi_task_terminated:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:210    .text.wifi_task_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:211    .text.wifi_task_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:213    .text.wifi_task_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:214    .text.wifi_task_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:220    .text.wifi_task_terminated:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:221    .text.wifi_task_terminated:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:227    .text.wifi_task_terminated:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:234    .text.wifi_task_terminated:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:235    .text.wifi_task_terminated:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:240    .text.wifi_task_terminated:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:241    .text.wifi_task_terminated:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:242    .text.wifi_task_terminated:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:243    .text.wifi_task_terminated:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:254    .text.wifi_wait_terminated:0000000000000000 wifi_wait_terminated
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:257    .text.wifi_wait_terminated:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:259    .text.wifi_wait_terminated:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:260    .text.wifi_wait_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:261    .text.wifi_wait_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:262    .text.wifi_wait_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:263    .text.wifi_wait_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:265    .text.wifi_wait_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:266    .text.wifi_wait_terminated:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:268    .text.wifi_wait_terminated:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:271    .text.wifi_wait_terminated:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:275    .text.wifi_wait_terminated:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:278    .text.wifi_wait_terminated:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:280    .text.wifi_wait_terminated:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:281    .text.wifi_wait_terminated:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:282    .text.wifi_wait_terminated:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:283    .text.wifi_wait_terminated:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:284    .text.wifi_wait_terminated:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:286    .text.wifi_wait_terminated:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:288    .text.wifi_wait_terminated:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:289    .text.wifi_wait_terminated:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:295    .text.wifi_wait_terminated:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:297    .text.wifi_wait_terminated:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:298    .text.wifi_wait_terminated:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:302    .text.wifi_wait_terminated:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:304    .text.wifi_wait_terminated:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:305    .text.wifi_wait_terminated:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:309    .text.wifi_wait_terminated:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:315    .text.wifi_wait_terminated:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:335    .text.wifi_sw_init:0000000000000000 wifi_sw_init
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:338    .text.wifi_sw_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:339    .text.wifi_sw_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:340    .text.wifi_sw_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:341    .text.wifi_sw_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:342    .text.wifi_sw_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:345    .text.wifi_sw_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:346    .text.wifi_sw_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:349    .text.wifi_sw_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:350    .text.wifi_sw_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:354    .text.wifi_sw_init:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:357    .text.wifi_sw_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:360    .text.wifi_sw_init:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:361    .text.wifi_sw_init:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:363    .text.wifi_sw_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:365    .text.wifi_sw_init:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:367    .text.wifi_sw_init:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:369    .text.wifi_sw_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:370    .text.wifi_sw_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:373    .text.wifi_sw_init:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:375    .text.wifi_sw_init:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:377    .text.wifi_sw_init:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:378    .text.wifi_sw_init:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:385    .text.wifi_sw_init:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:387    .text.wifi_sw_init:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:389    .text.wifi_sw_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:390    .text.wifi_sw_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:393    .text.wifi_sw_init:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:395    .text.wifi_sw_init:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:396    .text.wifi_sw_init:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:399    .text.wifi_sw_init:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:401    .text.wifi_sw_init:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:403    .text.wifi_sw_init:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:407    .text.wifi_sw_init:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:411    .text.wifi_sw_init:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:413    .text.wifi_sw_init:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:414    .text.wifi_sw_init:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:415    .text.wifi_sw_init:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:416    .text.wifi_sw_init:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:418    .text.wifi_sw_init:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:420    .text.wifi_sw_init:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:421    .text.wifi_sw_init:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:426    .text.wifi_sw_init:0000000000000094 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:428    .text.wifi_sw_init:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:429    .text.wifi_sw_init:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:432    .text.wifi_sw_init:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:434    .text.wifi_sw_init:00000000000000a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:436    .text.wifi_sw_init:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:441    .text.wifi_sw_init:00000000000000ac .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:442    .text.wifi_sw_init:00000000000000ac .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:445    .text.wifi_sw_init:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:447    .text.wifi_sw_init:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:448    .text.wifi_sw_init:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:451    .text.wifi_sw_init:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:453    .text.wifi_sw_init:00000000000000c0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:455    .text.wifi_sw_init:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:460    .text.wifi_sw_init:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:461    .text.wifi_sw_init:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:465    .text.wifi_sw_init:00000000000000d6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:467    .text.wifi_sw_init:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:468    .text.wifi_sw_init:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:471    .text.wifi_sw_init:00000000000000e0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:473    .text.wifi_sw_init:00000000000000e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:475    .text.wifi_sw_init:00000000000000e4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:478    .text.wifi_sw_init:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:485    .text.wifi_sw_deinit:0000000000000000 wifi_sw_deinit
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:488    .text.wifi_sw_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:489    .text.wifi_sw_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:490    .text.wifi_sw_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:491    .text.wifi_sw_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:492    .text.wifi_sw_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:494    .text.wifi_sw_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:497    .text.wifi_sw_deinit:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:500    .text.wifi_sw_deinit:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:504    .text.wifi_sw_deinit:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:507    .text.wifi_sw_deinit:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:510    .text.wifi_sw_deinit:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:516    .text.wifi_sw_deinit:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:517    .text.wifi_sw_deinit:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:519    .text.wifi_sw_deinit:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:521    .text.wifi_sw_deinit:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:526    .text.wifi_sw_deinit:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:527    .text.wifi_sw_deinit:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:529    .text.wifi_sw_deinit:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:532    .text.wifi_sw_deinit:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:533    .text.wifi_sw_deinit:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:534    .text.wifi_sw_deinit:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:535    .text.wifi_sw_deinit:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:536    .text.wifi_sw_deinit:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:550    .text.wifi_init:0000000000000000 wifi_init
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:553    .text.wifi_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:554    .text.wifi_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:555    .text.wifi_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:556    .text.wifi_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:557    .text.wifi_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:560    .text.wifi_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:561    .text.wifi_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:567    .text.wifi_init:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:568    .text.wifi_init:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:572    .text.wifi_init:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:573    .text.wifi_init:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:577    .text.wifi_init:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:578    .text.wifi_init:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:581    .text.wifi_init:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:582    .text.wifi_init:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:584    .text.wifi_init:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:588    .text.wifi_init:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:589    .text.wifi_init:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:591    .text.wifi_init:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:597    .text.wifi_init:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:601    .text.wifi_init:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:603    .text.wifi_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:604    .text.wifi_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:605    .text.wifi_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:606    .text.wifi_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:609    .text.wifi_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:611    .text.wifi_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:614    .text.wifi_init:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:615    .text.wifi_init:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:620    .text.wifi_init:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:621    .text.wifi_init:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:623    .text.wifi_init:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:624    .text.wifi_init:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:628    .text.wifi_init:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:631    .text.wifi_init:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:635    .sbss.ext_heap_initialized.0:0000000000000000 .LANCHOR2
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:638    .sbss.ext_heap_initialized.0:0000000000000000 ext_heap_initialized.0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:642    .sbss.wifi_pending_task:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:645    .sbss.wifi_pending_task:0000000000000000 wifi_pending_task
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:649    .sbss.wifi_ready_sem:0000000000000000 .LANCHOR1
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:652    .sbss.wifi_ready_sem:0000000000000000 wifi_ready_sem
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:656    .sbss.wifi_terminate_sem:0000000000000000 .LANCHOR4
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:659    .sbss.wifi_terminate_sem:0000000000000000 wifi_terminate_sem
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:663    .sbss.wifi_terminated_task:0000000000000000 .LANCHOR3
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:666    .sbss.wifi_terminated_task:0000000000000000 wifi_terminated_task
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:102    .text.wifi_task_ready:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:118    .text.tcpip_init_done:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:196    .text.wifi_wait_ready:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:246    .text.wifi_task_terminated:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:318    .text.wifi_wait_terminated:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:481    .text.wifi_sw_init:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:539    .text.wifi_sw_deinit:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:634    .text.wifi_init:0000000000000086 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:11     .rodata.wifi_task_ready.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:14     .rodata.wifi_task_ready.str1.4:0000000000000020 .LC1
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:63     .text.wifi_task_ready:0000000000000050 .L2
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:89     .text.wifi_task_ready:000000000000007e .L1
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:82     .text.wifi_task_ready:000000000000006e .L4
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:149    .text.wifi_wait_ready:000000000000001e .L9
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:137    .text.wifi_wait_ready:0000000000000012 .L11
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:140    .text.wifi_wait_ready:0000000000000014 .L8
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:198    .rodata.wifi_task_terminated.str1.4:0000000000000000 .LC2
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:232    .text.wifi_task_terminated:0000000000000038 .L14
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:248    .rodata.wifi_wait_terminated.str1.4:0000000000000000 .LC3
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:285    .text.wifi_wait_terminated:0000000000000020 .L17
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:273    .text.wifi_wait_terminated:0000000000000014 .L19
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:276    .text.wifi_wait_terminated:0000000000000016 .L16
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:320    .rodata.wifi_sw_init.str1.4:0000000000000000 .LC4
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:323    .rodata.wifi_sw_init.str1.4:0000000000000014 .LC5
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:326    .rodata.wifi_sw_init.str1.4:000000000000002c .LC6
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:329    .rodata.wifi_sw_init.str1.4:0000000000000044 .LC7
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:409    .text.wifi_sw_init:000000000000007e .L24
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:417    .text.wifi_sw_init:0000000000000088 .L26
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:439    .text.wifi_sw_init:00000000000000ac .L27
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:405    .text.wifi_sw_init:0000000000000076 .L43
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:458    .text.wifi_sw_init:00000000000000cc .L28
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:541    .rodata.wifi_init.str1.4:0000000000000000 .LC8
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:544    .rodata.wifi_init.str1.4:0000000000000018 .LC9
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:608    .text.wifi_init:000000000000005e .L47
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:599    .text.wifi_init:0000000000000054 .L46
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:595    .text.wifi_init:000000000000004c .L59
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:1591   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2339   .debug_str:000000000000019d .LASF90
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2429   .debug_str:00000000000005a2 .LASF91
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2361   .debug_str:0000000000000346 .LASF92
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2255   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2281   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2371   .debug_str:000000000000040c .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2355   .debug_str:000000000000030c .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2365   .debug_str:00000000000003da .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2297   .debug_str:000000000000007c .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2387   .debug_str:0000000000000487 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2347   .debug_str:00000000000002bd .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2311   .debug_str:00000000000000cf .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2417   .debug_str:0000000000000540 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2309   .debug_str:00000000000000c1 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2343   .debug_str:000000000000029b .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2379   .debug_str:0000000000000453 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2327   .debug_str:000000000000014a .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2377   .debug_str:000000000000044a .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2305   .debug_str:00000000000000ae .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2391   .debug_str:00000000000004a9 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2403   .debug_str:00000000000004f2 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2405   .debug_str:00000000000004f8 .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2369   .debug_str:00000000000003fd .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2433   .debug_str:000000000000061f .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2459   .debug_str:00000000000006df .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2285   .debug_str:000000000000000f .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2295   .debug_str:0000000000000074 .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2337   .debug_str:000000000000018e .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2467   .debug_str:0000000000000726 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2411   .debug_str:0000000000000516 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2423   .debug_str:000000000000056d .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2457   .debug_str:00000000000006d2 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2447   .debug_str:000000000000068c .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2329   .debug_str:0000000000000152 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2301   .debug_str:000000000000009b .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2283   .debug_str:0000000000000000 .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2389   .debug_str:000000000000049a .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2323   .debug_str:000000000000012a .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2469   .debug_str:0000000000000739 .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2439   .debug_str:000000000000064c .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2353   .debug_str:00000000000002f9 .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2313   .debug_str:00000000000000da .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2385   .debug_str:0000000000000477 .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2317   .debug_str:00000000000000f8 .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2335   .debug_str:0000000000000183 .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2407   .debug_str:0000000000000505 .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2435   .debug_str:000000000000062d .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2453   .debug_str:00000000000006b4 .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2287   .debug_str:000000000000001f .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2359   .debug_str:0000000000000324 .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2375   .debug_str:0000000000000428 .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2349   .debug_str:00000000000002c6 .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2431   .debug_str:000000000000061a .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2449   .debug_str:0000000000000699 .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2409   .debug_str:000000000000050f .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2381   .debug_str:0000000000000460 .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2303   .debug_str:00000000000000a8 .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2341   .debug_str:0000000000000296 .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2415   .debug_str:000000000000052d .LASF57
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2401   .debug_str:00000000000004e3 .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2383   .debug_str:0000000000000465 .LASF54
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2425   .debug_str:000000000000057a .LASF55
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2427   .debug_str:000000000000058d .LASF56
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2293   .debug_str:0000000000000064 .LASF58
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2441   .debug_str:0000000000000659 .LASF59
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:551    .text.wifi_init:0000000000000000 .LFB25
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:632    .text.wifi_init:0000000000000086 .LFE25
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2143   .debug_loc:0000000000000000 .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:565    .text.wifi_init:000000000000001a .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:579    .text.wifi_init:0000000000000036 .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:598    .text.wifi_init:0000000000000054 .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:612    .text.wifi_init:0000000000000066 .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:616    .text.wifi_init:000000000000006e .LVL46
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2289   .debug_str:0000000000000045 .LASF64
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:486    .text.wifi_sw_deinit:0000000000000000 .LFB24
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:537    .text.wifi_sw_deinit:0000000000000072 .LFE24
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:495    .text.wifi_sw_deinit:0000000000000010 .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:498    .text.wifi_sw_deinit:0000000000000018 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:502    .text.wifi_sw_deinit:0000000000000022 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:505    .text.wifi_sw_deinit:000000000000002a .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:508    .text.wifi_sw_deinit:0000000000000032 .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:514    .text.wifi_sw_deinit:0000000000000046 .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:524    .text.wifi_sw_deinit:000000000000005e .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:530    .text.wifi_sw_deinit:000000000000006a .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2421   .debug_str:0000000000000560 .LASF60
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:336    .text.wifi_sw_init:0000000000000000 .LFB23
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:479    .text.wifi_sw_init:00000000000000ee .LFE23
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2315   .debug_str:00000000000000ef .LASF61
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:347    .text.wifi_sw_init:0000000000000010 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:371    .text.wifi_sw_init:000000000000003c .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:383    .text.wifi_sw_init:0000000000000054 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:391    .text.wifi_sw_init:0000000000000060 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:408    .text.wifi_sw_init:000000000000007e .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:424    .text.wifi_sw_init:0000000000000094 .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:443    .text.wifi_sw_init:00000000000000b4 .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:462    .text.wifi_sw_init:00000000000000d4 .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2395   .debug_str:00000000000004bc .LASF93
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:106    .text.tcpip_init_done:0000000000000000 .LFB22
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:116    .text.tcpip_init_done:000000000000000a .LFE22
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2167   .debug_loc:0000000000000040 .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:114    .text.tcpip_init_done:000000000000000a .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2367   .debug_str:00000000000003e8 .LASF62
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:255    .text.wifi_wait_terminated:0000000000000000 .LFB21
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:316    .text.wifi_wait_terminated:000000000000005e .LFE21
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2333   .debug_str:000000000000017b .LASF63
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2181   .debug_loc:0000000000000061 .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:292    .text.wifi_wait_terminated:000000000000002e .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:313    .text.wifi_wait_terminated:000000000000005c .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2299   .debug_str:0000000000000086 .LASF65
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:205    .text.wifi_task_terminated:0000000000000000 .LFB20
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:244    .text.wifi_task_terminated:0000000000000050 .LFE20
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2192   .debug_loc:000000000000007f .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:231    .text.wifi_task_terminated:0000000000000038 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:238    .text.wifi_task_terminated:0000000000000048 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2319   .debug_str:0000000000000109 .LASF66
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:123    .text.wifi_wait_ready:0000000000000000 .LFB19
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:194    .text.wifi_wait_ready:0000000000000060 .LFE19
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:162    .text.wifi_wait_ready:0000000000000034 .LBB8
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:185    .text.wifi_wait_ready:0000000000000058 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:156    .text.wifi_wait_ready:000000000000002c .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:170    .text.wifi_wait_ready:0000000000000040 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2291   .debug_str:0000000000000054 .LASF94
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2419   .debug_str:0000000000000552 .LASF95
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2331   .debug_str:0000000000000166 .LASF67
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:21     .text.wifi_task_ready:0000000000000000 .LFB18
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:100    .text.wifi_task_ready:0000000000000086 .LFE18
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2210   .debug_loc:00000000000000ab .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:70     .text.wifi_task_ready:0000000000000054 .LBB4
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:91     .text.wifi_task_ready:000000000000007e .LBE4
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2221   .debug_loc:00000000000000c9 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:81     .text.wifi_task_ready:000000000000006e .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:88     .text.wifi_task_ready:000000000000007e .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:39     .text.wifi_task_ready:0000000000000016 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:49     .text.wifi_task_ready:000000000000002e .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:62     .text.wifi_task_ready:0000000000000050 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2345   .debug_str:00000000000002b2 .LASF68
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2393   .debug_str:00000000000004ae .LASF69
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2471   .debug_str:0000000000000745 .LASF70
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2373   .debug_str:0000000000000418 .LASF71
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2445   .debug_str:0000000000000675 .LASF72
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2437   .debug_str:000000000000063c .LASF73
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2325   .debug_str:0000000000000139 .LASF74
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2321   .debug_str:0000000000000119 .LASF75
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2397   .debug_str:00000000000004cc .LASF76
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2413   .debug_str:000000000000051f .LASF77
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2363   .debug_str:00000000000003c4 .LASF78
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2465   .debug_str:0000000000000710 .LASF79
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2443   .debug_str:0000000000000663 .LASF80
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2307   .debug_str:00000000000000b8 .LASF81
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2461   .debug_str:00000000000006ed .LASF82
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2473   .debug_str:000000000000074f .LASF83
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2455   .debug_str:00000000000006bd .LASF84
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2357   .debug_str:0000000000000316 .LASF85
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2399   .debug_str:00000000000004d7 .LASF86
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2463   .debug_str:00000000000006fc .LASF87
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2451   .debug_str:00000000000006a1 .LASF88
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:2351   .debug_str:00000000000002e7 .LASF89
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:559    .text.wifi_init:0000000000000008 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:592    .text.wifi_init:0000000000000048 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:594    .text.wifi_init:000000000000004c .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:607    .text.wifi_init:000000000000005e .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:618    .text.wifi_init:0000000000000070 .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:109    .text.tcpip_init_done:0000000000000000 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:112    .text.tcpip_init_done:0000000000000002 .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:258    .text.wifi_wait_terminated:0000000000000000 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:269    .text.wifi_wait_terminated:000000000000000e .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:208    .text.wifi_task_terminated:0000000000000000 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:228    .text.wifi_task_terminated:000000000000002c .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:25     .text.wifi_task_ready:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:69     .text.wifi_task_ready:0000000000000054 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:687    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:167    .text.wifi_wait_ready:0000000000000038 .LBE8
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:172    .text.wifi_wait_ready:0000000000000040 .LBB11
+C:\Users\stapi\AppData\Local\Temp\ccHQNL4O.s:192    .text.wifi_wait_ready:0000000000000060 .LBE11
+
+UNDEFINED SYMBOLS
+__riscv_save_3
+sys_enter_critical
+sys_exit_critical
+global_debug_level
+co_printf
+sys_sema_up
+__riscv_restore_3
+__riscv_save_2
+__riscv_restore_2
+sys_sema_down
+sys_add_heap_region
+__riscv_save_0
+__riscv_restore_0
+__riscv_save_1
+wifi_wakelock_acquire
+sys_sema_init_ext
+net_init
+__riscv_restore_1
+wifi_core_init
+wifi_wpa_init
+wifi_management_init
+wifi_management_deinit
+wifi_wpa_deinit
+wifi_core_deinit
+wifi_vifs_deinit
+net_deinit
+sys_sema_free
+wifi_wakelock_release
+tcpip_init
+wifi_exist_flag
+wifi_power_on
+wifi_irq_enable

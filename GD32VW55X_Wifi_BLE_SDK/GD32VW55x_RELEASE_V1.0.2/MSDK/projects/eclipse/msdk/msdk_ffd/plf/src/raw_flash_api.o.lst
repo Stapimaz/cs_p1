@@ -1,0 +1,2109 @@
+   1              		.file	"raw_flash_api.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.raw_flash_erase_handler,"ax",@progbits
+  10              		.align	1
+  12              	raw_flash_erase_handler:
+  13              	.LFB377:
+  14              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \file    raw_flash_api.c
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief   Flash RAW API for GD32VW55x SDK
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \version 2024-04-15, V1.0.0, firmware for GD32VW55x
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     Copyright (c) 2024, GigaDevice Semiconductor Inc.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     Redistribution and use in source and binary forms, with or without modification,
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** are permitted provided that the following conditions are met:
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****        list of conditions and the following disclaimer.
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****        this list of conditions and the following disclaimer in the documentation
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****        and/or other materials provided with the distribution.
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****        may be used to endorse or promote products derived from this software without
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****        specific prior written permission.
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** OF SUCH DAMAGE.
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #include "gd32vw55x.h"
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #include "string.h"
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #include "slist.h"
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #include "raw_flash_api.h"
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #include "wrapper_os.h"
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #include "gd32vw55x_fmc.h"
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #include "rom_export.h"
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** // Flash erase callback list
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** static struct list raw_erase_cb_list;
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** typedef struct
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     struct list_hdr hdr;
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     raw_flash_erase_handler_t callback;
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** } raw_erase_cb_list_item_t;
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief      flash initilization
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  none
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[out] none
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \retval     none
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** void raw_flash_init(void)
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     list_init(&raw_erase_cb_list);
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief      get flash total size
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  none
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[out] none
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \retval     flash total size
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** uint32_t raw_flash_total_size(void)
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     return FLASH_TOTAL_SIZE;
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief      get flash offset valid state
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  offset: flash offset
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[out] none
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \retval     result of state(1: offset is valid, or 0: offset is invalid)
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** int raw_flash_is_valid_offset(uint32_t offset)
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (offset < raw_flash_total_size()) {
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     return 0;
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief      get flash addr valid state
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  addr: flash address
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[out] none
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \retval     result of state(1: addr is valid, or 0: addr is not valid)
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** int raw_flash_is_valid_addr(uint32_t addr)
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if ((addr >= FLASH_BASE) && (addr < (FLASH_BASE + raw_flash_total_size()))) {
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     return 0;
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief      configure no real time decrypt areas for flash
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  nd_idx: no decrypt register index
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  start_page: start page of no real time decrypt area
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  end_page: end page of no real time decrypt area
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[out] none
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \retval     none
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** void raw_flash_nodec_config(uint32_t nd_idx, uint32_t start_page, uint32_t end_page)
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* unlock the flash program erase controller */
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_unlock();
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* unlock the option byte operation (include SECWM/HDP/WRP/NODEC/OFRG/OFVR) */
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     ob_unlock();
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* clear pending flags */
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_flag_clear(FMC_FLAG_END | FMC_FLAG_WPERR);
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* set no OTFDEC region for flash */
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_no_rtdec_config(start_page, end_page, nd_idx);
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* lock the option byte operation */
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     ob_lock();
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* lock the flash program erase controller */
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_lock();
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief      config flash offset region and value
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  of_spage: start page of offset region, 0~0x1FFF
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  of_epage: end page of offset region, 0~0x1FFF
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  of_value: offset value, 0~0x1FFF
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[out] none
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \retval     none
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** void raw_flash_offset_mapping(uint32_t of_spage, uint32_t of_epage, uint32_t of_value)
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_unlock();
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     ob_unlock();
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_offset_region_config(of_spage, of_epage);
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_offset_value_config(of_value);
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     ob_lock();
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_lock();
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief      read flash
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  offset: flash offset
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[out] data: pointer to the buffer store flash read data
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  len: length of data read from flash
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \retval     result of read flash(0: read ok, or -1: read error)
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** int raw_flash_read(uint32_t offset, void *data, int len)
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (!raw_flash_is_valid_offset(offset) || data == NULL
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (rom_flash_read(offset, data, len)) {
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     return 0;
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief      write flash
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  offset: flash offset
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  data: pointer to the data write to flash
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  len: length of data write to flash
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[out] none
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \retval     result of write flash(0: write ok, or -1: write error)
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** int raw_flash_write(uint32_t offset, const void *data, int len)
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (!raw_flash_is_valid_offset(offset) || data == NULL
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (rom_flash_write(offset, data, len)) {
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     return 0;
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** static void raw_flash_erase_handler(raw_erase_type_t type)
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+  15              		.loc 1 191 1
+  16              		.cfi_startproc
+  17              	.LVL0:
+  18 0000 17030000 		call	t0,__riscv_save_2
+  18      E7020300 
+  19              		.cfi_offset 9, -12
+  20              		.cfi_offset 8, -8
+  21              		.cfi_offset 1, -4
+  22              		.cfi_def_cfa_offset 16
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     struct list_hdr *elt = list_pick(&raw_erase_cb_list);
+  23              		.loc 1 192 5
+  24              	.LVL1:
+  25              	.LBB32:
+  26              	.LBB33:
+  27              		.file 2 "..\\..\\..\\..\\util\\include/slist.h"
+   1:..\..\..\..\util\include/slist.h **** /*!
+   2:..\..\..\..\util\include/slist.h ****     \file    slist.h
+   3:..\..\..\..\util\include/slist.h ****     \brief   Single linked list structures definitions
+   4:..\..\..\..\util\include/slist.h **** 
+   5:..\..\..\..\util\include/slist.h ****     \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6:..\..\..\..\util\include/slist.h **** */
+   7:..\..\..\..\util\include/slist.h **** 
+   8:..\..\..\..\util\include/slist.h **** /*
+   9:..\..\..\..\util\include/slist.h ****     Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10:..\..\..\..\util\include/slist.h **** 
+  11:..\..\..\..\util\include/slist.h ****     Redistribution and use in source and binary forms, with or without modification,
+  12:..\..\..\..\util\include/slist.h **** are permitted provided that the following conditions are met:
+  13:..\..\..\..\util\include/slist.h **** 
+  14:..\..\..\..\util\include/slist.h ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:..\..\..\..\util\include/slist.h ****        list of conditions and the following disclaimer.
+  16:..\..\..\..\util\include/slist.h ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:..\..\..\..\util\include/slist.h ****        this list of conditions and the following disclaimer in the documentation
+  18:..\..\..\..\util\include/slist.h ****        and/or other materials provided with the distribution.
+  19:..\..\..\..\util\include/slist.h ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:..\..\..\..\util\include/slist.h ****        may be used to endorse or promote products derived from this software without
+  21:..\..\..\..\util\include/slist.h ****        specific prior written permission.
+  22:..\..\..\..\util\include/slist.h **** 
+  23:..\..\..\..\util\include/slist.h ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:..\..\..\..\util\include/slist.h **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:..\..\..\..\util\include/slist.h **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:..\..\..\..\util\include/slist.h **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:..\..\..\..\util\include/slist.h **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:..\..\..\..\util\include/slist.h **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:..\..\..\..\util\include/slist.h **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:..\..\..\..\util\include/slist.h **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:..\..\..\..\util\include/slist.h **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:..\..\..\..\util\include/slist.h **** OF SUCH DAMAGE.
+  33:..\..\..\..\util\include/slist.h **** */
+  34:..\..\..\..\util\include/slist.h **** 
+  35:..\..\..\..\util\include/slist.h **** #ifndef _LIST_H_
+  36:..\..\..\..\util\include/slist.h **** #define _LIST_H_
+  37:..\..\..\..\util\include/slist.h **** /*
+  38:..\..\..\..\util\include/slist.h ****  * INCLUDE FILES
+  39:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+  40:..\..\..\..\util\include/slist.h ****  */
+  41:..\..\..\..\util\include/slist.h **** #include <stdint.h>
+  42:..\..\..\..\util\include/slist.h **** #include <stdbool.h>
+  43:..\..\..\..\util\include/slist.h **** #include <stddef.h>     // for NULL and size_t
+  44:..\..\..\..\util\include/slist.h **** #include "compiler.h"   // for __INLINE
+  45:..\..\..\..\util\include/slist.h **** 
+  46:..\..\..\..\util\include/slist.h **** /*
+  47:..\..\..\..\util\include/slist.h ****  * STRUCTURE DECLARATIONS
+  48:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+  49:..\..\..\..\util\include/slist.h ****  */
+  50:..\..\..\..\util\include/slist.h **** // structure of a list element header
+  51:..\..\..\..\util\include/slist.h **** struct list_hdr
+  52:..\..\..\..\util\include/slist.h **** {
+  53:..\..\..\..\util\include/slist.h ****     // Pointer to the next element in the list
+  54:..\..\..\..\util\include/slist.h ****     struct list_hdr *next;
+  55:..\..\..\..\util\include/slist.h **** };
+  56:..\..\..\..\util\include/slist.h **** 
+  57:..\..\..\..\util\include/slist.h **** // structure of a list
+  58:..\..\..\..\util\include/slist.h **** struct list
+  59:..\..\..\..\util\include/slist.h **** {
+  60:..\..\..\..\util\include/slist.h ****     // pointer to first element of the list
+  61:..\..\..\..\util\include/slist.h ****     struct list_hdr *first;
+  62:..\..\..\..\util\include/slist.h ****     // pointer to the last element
+  63:..\..\..\..\util\include/slist.h ****     struct list_hdr *last;
+  64:..\..\..\..\util\include/slist.h **** };
+  65:..\..\..\..\util\include/slist.h **** 
+  66:..\..\..\..\util\include/slist.h **** /*
+  67:..\..\..\..\util\include/slist.h ****  * FUNCTION DECLARATIONS
+  68:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+  69:..\..\..\..\util\include/slist.h ****  */
+  70:..\..\..\..\util\include/slist.h **** /**
+  71:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+  72:..\..\..\..\util\include/slist.h ****  * @brief Initialize a list to defaults values.
+  73:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure.
+  74:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+  75:..\..\..\..\util\include/slist.h ****  */
+  76:..\..\..\..\util\include/slist.h **** void list_init(struct list *list);
+  77:..\..\..\..\util\include/slist.h **** 
+  78:..\..\..\..\util\include/slist.h **** /**
+  79:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+  80:..\..\..\..\util\include/slist.h ****  * @brief Initialize a pool to default values, and initialize the relative free list.
+  81:..\..\..\..\util\include/slist.h ****  *
+  82:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure
+  83:..\..\..\..\util\include/slist.h ****  * @param[in] pool           Pointer to the pool to be initialized
+  84:..\..\..\..\util\include/slist.h ****  * @param[in] elmt_size      Size of one element of the pool
+  85:..\..\..\..\util\include/slist.h ****  * @param[in] elmt_cnt       Nb of elements available in the pool
+  86:..\..\..\..\util\include/slist.h ****  * @param[in] default_value  Pointer to the default value of each element (may be NULL)
+  87:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+  88:..\..\..\..\util\include/slist.h ****  */
+  89:..\..\..\..\util\include/slist.h **** void list_pool_init(struct list *list, void *pool, size_t elmt_size, uint32_t elmt_cnt, void *defau
+  90:..\..\..\..\util\include/slist.h **** 
+  91:..\..\..\..\util\include/slist.h **** /**
+  92:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+  93:..\..\..\..\util\include/slist.h ****  * @brief Add an element as last on the list.
+  94:..\..\..\..\util\include/slist.h ****  *
+  95:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure
+  96:..\..\..\..\util\include/slist.h ****  * @param[in] list_hdr       Pointer to the header to add at the end of the list
+  97:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+  98:..\..\..\..\util\include/slist.h ****  */
+  99:..\..\..\..\util\include/slist.h **** void list_push_back(struct list *list, struct list_hdr *list_hdr);
+ 100:..\..\..\..\util\include/slist.h **** 
+ 101:..\..\..\..\util\include/slist.h **** /**
+ 102:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 103:..\..\..\..\util\include/slist.h ****  * @brief Add an element as first on the list.
+ 104:..\..\..\..\util\include/slist.h ****  *
+ 105:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure
+ 106:..\..\..\..\util\include/slist.h ****  * @param[in] list_hdr       Pointer to the header to add at the beginning of the list
+ 107:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 108:..\..\..\..\util\include/slist.h ****  */
+ 109:..\..\..\..\util\include/slist.h **** void list_push_front(struct list *list, struct list_hdr *list_hdr);
+ 110:..\..\..\..\util\include/slist.h **** 
+ 111:..\..\..\..\util\include/slist.h **** /**
+ 112:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 113:..\..\..\..\util\include/slist.h ****  * @brief Extract the first element of the list.
+ 114:..\..\..\..\util\include/slist.h ****  *
+ 115:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure
+ 116:..\..\..\..\util\include/slist.h ****  *
+ 117:..\..\..\..\util\include/slist.h ****  * @return The pointer to the element extracted, and NULL if the list is empty.
+ 118:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 119:..\..\..\..\util\include/slist.h ****  */
+ 120:..\..\..\..\util\include/slist.h **** struct list_hdr *list_pop_front(struct list *list);
+ 121:..\..\..\..\util\include/slist.h **** 
+ 122:..\..\..\..\util\include/slist.h **** /**
+ 123:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 124:..\..\..\..\util\include/slist.h ****  * @brief Search for a given element in the list, and extract it if found.
+ 125:..\..\..\..\util\include/slist.h ****  *
+ 126:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure
+ 127:..\..\..\..\util\include/slist.h ****  * @param[in] list_hdr       Pointer to the searched element
+ 128:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 129:..\..\..\..\util\include/slist.h ****  */
+ 130:..\..\..\..\util\include/slist.h **** void list_extract(struct list *list, struct list_hdr *list_hdr);
+ 131:..\..\..\..\util\include/slist.h **** 
+ 132:..\..\..\..\util\include/slist.h **** /**
+ 133:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 134:..\..\..\..\util\include/slist.h ****  * @brief Searched a given element in the list.
+ 135:..\..\..\..\util\include/slist.h ****  *
+ 136:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure
+ 137:..\..\..\..\util\include/slist.h ****  * @param[in] list_hdr       Pointer to the searched element
+ 138:..\..\..\..\util\include/slist.h ****  *
+ 139:..\..\..\..\util\include/slist.h ****  * @return true if the element is found in the list, false otherwise
+ 140:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 141:..\..\..\..\util\include/slist.h ****  */
+ 142:..\..\..\..\util\include/slist.h **** bool list_find(struct list *list, struct list_hdr *list_hdr);
+ 143:..\..\..\..\util\include/slist.h **** 
+ 144:..\..\..\..\util\include/slist.h **** /**
+ 145:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 146:..\..\..\..\util\include/slist.h ****  * @brief Insert an element in a sorted list.
+ 147:..\..\..\..\util\include/slist.h ****  *
+ 148:..\..\..\..\util\include/slist.h ****  * This primitive use a comparison function from the parameter list to select where the
+ 149:..\..\..\..\util\include/slist.h ****  * element must be inserted.
+ 150:..\..\..\..\util\include/slist.h ****  *
+ 151:..\..\..\..\util\include/slist.h ****  * @param[in]  list     Pointer to the list.
+ 152:..\..\..\..\util\include/slist.h ****  * @param[in]  element  Pointer to the element to insert.
+ 153:..\..\..\..\util\include/slist.h ****  * @param[in]  cmp      Comparison function (return true if first element has to be
+ 154:..\..\..\..\util\include/slist.h ****  *                      inserted before the second one).
+ 155:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 156:..\..\..\..\util\include/slist.h ****  */
+ 157:..\..\..\..\util\include/slist.h **** void list_insert(struct list * const list, struct list_hdr * const element,
+ 158:..\..\..\..\util\include/slist.h ****                     bool (*cmp)(struct list_hdr const *elementA, struct list_hdr const *elementB));
+ 159:..\..\..\..\util\include/slist.h **** 
+ 160:..\..\..\..\util\include/slist.h **** /**
+ 161:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 162:..\..\..\..\util\include/slist.h ****  * @brief Insert an element in a list after the provided element.
+ 163:..\..\..\..\util\include/slist.h ****  *
+ 164:..\..\..\..\util\include/slist.h ****  * If @p prev_element is NULL then @p element is added in the front of the list.
+ 165:..\..\..\..\util\include/slist.h ****  * Otherwise this primitive first ensure that @p prev_element is part of the list before
+ 166:..\..\..\..\util\include/slist.h ****  * adding @p element, and does nothing if this is not the case.
+ 167:..\..\..\..\util\include/slist.h ****  *
+ 168:..\..\..\..\util\include/slist.h ****  * @param[in]  list           Pointer to the list.
+ 169:..\..\..\..\util\include/slist.h ****  * @param[in]  prev_element   Pointer to the element to find in the list
+ 170:..\..\..\..\util\include/slist.h ****  * @param[in]  element        Pointer to the element to insert.
+ 171:..\..\..\..\util\include/slist.h ****  *
+ 172:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 173:..\..\..\..\util\include/slist.h ****  */
+ 174:..\..\..\..\util\include/slist.h **** void list_insert_after(struct list * const list,
+ 175:..\..\..\..\util\include/slist.h ****                           struct list_hdr * const prev_element,
+ 176:..\..\..\..\util\include/slist.h ****                           struct list_hdr * const element);
+ 177:..\..\..\..\util\include/slist.h **** 
+ 178:..\..\..\..\util\include/slist.h **** /**
+ 179:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 180:..\..\..\..\util\include/slist.h ****  * @brief Insert an element in a list after the provided element.
+ 181:..\..\..\..\util\include/slist.h ****  *
+ 182:..\..\..\..\util\include/slist.h ****  * Same as @ref co_list_insert_after except that if @p prev_element is not NULL no check
+ 183:..\..\..\..\util\include/slist.h ****  * is done to ensure it is part of the list.
+ 184:..\..\..\..\util\include/slist.h ****  *
+ 185:..\..\..\..\util\include/slist.h ****  * @param[in]  list           Pointer to the list.
+ 186:..\..\..\..\util\include/slist.h ****  * @param[in]  prev_element   Pointer to the element after which the new element must
+ 187:..\..\..\..\util\include/slist.h ****  *                            be added
+ 188:..\..\..\..\util\include/slist.h ****  * @param[in]  element        Pointer to the element to insert.
+ 189:..\..\..\..\util\include/slist.h ****  *
+ 190:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 191:..\..\..\..\util\include/slist.h ****  */
+ 192:..\..\..\..\util\include/slist.h **** void list_insert_after_fast(struct list * const list,
+ 193:..\..\..\..\util\include/slist.h ****                                struct list_hdr * const prev_element,
+ 194:..\..\..\..\util\include/slist.h ****                                struct list_hdr * const element);
+ 195:..\..\..\..\util\include/slist.h **** 
+ 196:..\..\..\..\util\include/slist.h **** /**
+ 197:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 198:..\..\..\..\util\include/slist.h ****  * @brief Insert an element in a sorted list before the provided element.
+ 199:..\..\..\..\util\include/slist.h ****  *
+ 200:..\..\..\..\util\include/slist.h ****  * This primitive use a comparison function from the parameter list to select where the
+ 201:..\..\..\..\util\include/slist.h ****  * element must be inserted.
+ 202:..\..\..\..\util\include/slist.h ****  *
+ 203:..\..\..\..\util\include/slist.h ****  * @param[in]  list           Pointer to the list.
+ 204:..\..\..\..\util\include/slist.h ****  * @param[in]  next_element   Pointer to the element to find in the list
+ 205:..\..\..\..\util\include/slist.h ****  * @param[in]  element        Pointer to the element to insert.
+ 206:..\..\..\..\util\include/slist.h ****  *
+ 207:..\..\..\..\util\include/slist.h ****  * If next_element is not found, the provided element is not inserted
+ 208:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 209:..\..\..\..\util\include/slist.h ****  */
+ 210:..\..\..\..\util\include/slist.h **** void list_insert_before(struct list * const list,
+ 211:..\..\..\..\util\include/slist.h ****                            struct list_hdr * const next_element,
+ 212:..\..\..\..\util\include/slist.h ****                            struct list_hdr * const element);
+ 213:..\..\..\..\util\include/slist.h **** 
+ 214:..\..\..\..\util\include/slist.h **** /**
+ 215:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 216:..\..\..\..\util\include/slist.h ****  * @brief Concatenate two lists.
+ 217:..\..\..\..\util\include/slist.h ****  * The resulting list is the list passed as the first parameter. The second list is
+ 218:..\..\..\..\util\include/slist.h ****  * emptied.
+ 219:..\..\..\..\util\include/slist.h ****  *
+ 220:..\..\..\..\util\include/slist.h ****  * @param[in]  list1          First list (will get the result of the concatenation)
+ 221:..\..\..\..\util\include/slist.h ****  * @param[in]  list2          Second list (will be emptied after the concatenation)
+ 222:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 223:..\..\..\..\util\include/slist.h ****  */
+ 224:..\..\..\..\util\include/slist.h **** void list_concat(struct list *list1, struct list *list2);
+ 225:..\..\..\..\util\include/slist.h **** 
+ 226:..\..\..\..\util\include/slist.h **** /**
+ 227:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 228:..\..\..\..\util\include/slist.h ****  * @brief Remove the element in the list after the provided element.
+ 229:..\..\..\..\util\include/slist.h ****  *
+ 230:..\..\..\..\util\include/slist.h ****  * This primitive removes an element in the list. It is assume that element is part of
+ 231:..\..\..\..\util\include/slist.h ****  * the list.
+ 232:..\..\..\..\util\include/slist.h ****  *
+ 233:..\..\..\..\util\include/slist.h ****  * @param[in] list          Pointer to the list.
+ 234:..\..\..\..\util\include/slist.h ****  * @param[in] prev_element  Pointer to the previous element.
+ 235:..\..\..\..\util\include/slist.h ****  *                          NULL if @p element is the first element in the list
+ 236:..\..\..\..\util\include/slist.h ****  * @param[in] element       Pointer to the element to remove.
+ 237:..\..\..\..\util\include/slist.h ****  *
+ 238:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 239:..\..\..\..\util\include/slist.h ****  */
+ 240:..\..\..\..\util\include/slist.h **** void list_remove(struct list *list, struct list_hdr *prev_element, struct list_hdr *element);
+ 241:..\..\..\..\util\include/slist.h **** 
+ 242:..\..\..\..\util\include/slist.h **** /**
+ 243:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 244:..\..\..\..\util\include/slist.h ****  * @brief Test if the list is empty.
+ 245:..\..\..\..\util\include/slist.h ****  *
+ 246:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure.
+ 247:..\..\..\..\util\include/slist.h ****  *
+ 248:..\..\..\..\util\include/slist.h ****  * @return true if the list is empty, false else otherwise.
+ 249:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 250:..\..\..\..\util\include/slist.h ****  */
+ 251:..\..\..\..\util\include/slist.h **** __INLINE bool list_is_empty(const struct list *list)
+ 252:..\..\..\..\util\include/slist.h **** {
+ 253:..\..\..\..\util\include/slist.h ****     return (list->first == NULL);
+ 254:..\..\..\..\util\include/slist.h **** }
+ 255:..\..\..\..\util\include/slist.h **** 
+ 256:..\..\..\..\util\include/slist.h **** /**
+ 257:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 258:..\..\..\..\util\include/slist.h ****  * @brief Return the number of element of the list.
+ 259:..\..\..\..\util\include/slist.h ****  *
+ 260:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure.
+ 261:..\..\..\..\util\include/slist.h ****  *
+ 262:..\..\..\..\util\include/slist.h ****  * @return The number of elements in the list.
+ 263:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 264:..\..\..\..\util\include/slist.h ****  */
+ 265:..\..\..\..\util\include/slist.h **** uint32_t list_cnt(const struct list *list);
+ 266:..\..\..\..\util\include/slist.h **** 
+ 267:..\..\..\..\util\include/slist.h **** /**
+ 268:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 269:..\..\..\..\util\include/slist.h ****  * @brief Pick the first element from the list without removing it.
+ 270:..\..\..\..\util\include/slist.h ****  *
+ 271:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure.
+ 272:..\..\..\..\util\include/slist.h ****  *
+ 273:..\..\..\..\util\include/slist.h ****  * @return First element address. Returns NULL pointer if the list is empty.
+ 274:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 275:..\..\..\..\util\include/slist.h ****  */
+ 276:..\..\..\..\util\include/slist.h **** __INLINE struct list_hdr *list_pick(const struct list * const list)
+ 277:..\..\..\..\util\include/slist.h **** {
+ 278:..\..\..\..\util\include/slist.h ****     return list->first;
+  28              		.loc 2 278 5
+  29              		.loc 2 278 16 is_stmt 0
+  30 0008 B7070000 		lui	a5,%hi(.LANCHOR0)
+  31 000c 03A40700 		lw	s0,%lo(.LANCHOR0)(a5)
+  32              	.LVL2:
+  33              	.LBE33:
+  34              	.LBE32:
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     raw_erase_cb_list_item_t *p_item;
+  35              		.loc 1 193 5 is_stmt 1
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     while (elt != NULL) {
+  36              		.loc 1 195 5
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     struct list_hdr *elt = list_pick(&raw_erase_cb_list);
+  37              		.loc 1 191 1 is_stmt 0
+  38 0010 AA84     		mv	s1,a0
+  39              	.LVL3:
+  40              	.L2:
+  41              		.loc 1 195 11 is_stmt 1
+  42 0012 09E4     		bne	s0,zero,.L4
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         p_item = (raw_erase_cb_list_item_t *)elt;
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         if (p_item->callback)
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             p_item->callback(type);
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         elt = list_next(elt);
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+  43              		.loc 1 203 1 is_stmt 0
+  44 0014 17030000 		tail	__riscv_restore_2
+  44      67000300 
+  45              		.cfi_remember_state
+  46              		.cfi_restore 9
+  47              		.cfi_restore 8
+  48              		.cfi_restore 1
+  49              		.cfi_def_cfa_offset 0
+  50              	.L4:
+  51              		.cfi_restore_state
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         p_item = (raw_erase_cb_list_item_t *)elt;
+  52              		.loc 1 196 9 is_stmt 1
+  53              	.LVL4:
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             p_item->callback(type);
+  54              		.loc 1 198 9
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             p_item->callback(type);
+  55              		.loc 1 198 19 is_stmt 0
+  56 001c 5C40     		lw	a5,4(s0)
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             p_item->callback(type);
+  57              		.loc 1 198 12
+  58 001e 99C3     		beq	a5,zero,.L3
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+  59              		.loc 1 199 13 is_stmt 1
+  60 0020 2685     		mv	a0,s1
+  61 0022 8297     		jalr	a5
+  62              	.LVL5:
+  63              	.L3:
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+  64              		.loc 1 201 9
+  65              	.LBB34:
+  66              	.LBB35:
+ 279:..\..\..\..\util\include/slist.h **** }
+ 280:..\..\..\..\util\include/slist.h **** 
+ 281:..\..\..\..\util\include/slist.h **** /**
+ 282:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 283:..\..\..\..\util\include/slist.h ****  * @brief Pick the last element from the list without removing it.
+ 284:..\..\..\..\util\include/slist.h ****  *
+ 285:..\..\..\..\util\include/slist.h ****  * @param[in] list           Pointer to the list structure.
+ 286:..\..\..\..\util\include/slist.h ****  *
+ 287:..\..\..\..\util\include/slist.h ****  * @return Last element address. Returns invalid value if the list is empty.
+ 288:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 289:..\..\..\..\util\include/slist.h ****  */
+ 290:..\..\..\..\util\include/slist.h **** __INLINE struct list_hdr *list_pick_last(const struct list * const list)
+ 291:..\..\..\..\util\include/slist.h **** {
+ 292:..\..\..\..\util\include/slist.h ****     return list->last;
+ 293:..\..\..\..\util\include/slist.h **** }
+ 294:..\..\..\..\util\include/slist.h **** 
+ 295:..\..\..\..\util\include/slist.h **** /**
+ 296:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 297:..\..\..\..\util\include/slist.h ****  * @brief Return following element of a list element.
+ 298:..\..\..\..\util\include/slist.h ****  *
+ 299:..\..\..\..\util\include/slist.h ****  * @param[in] list_hdr     Pointer to the list element.
+ 300:..\..\..\..\util\include/slist.h ****  *
+ 301:..\..\..\..\util\include/slist.h ****  * @return The pointer to the next element.
+ 302:..\..\..\..\util\include/slist.h ****  ****************************************************************************************
+ 303:..\..\..\..\util\include/slist.h ****  */
+ 304:..\..\..\..\util\include/slist.h **** __INLINE struct list_hdr *list_next(const struct list_hdr * const list_hdr)
+ 305:..\..\..\..\util\include/slist.h **** {
+ 306:..\..\..\..\util\include/slist.h ****     return list_hdr->next;
+  67              		.loc 2 306 5
+  68              		.loc 2 306 20 is_stmt 0
+  69 0024 0040     		lw	s0,0(s0)
+  70              	.LVL6:
+  71 0026 F5B7     		j	.L2
+  72              	.LBE35:
+  73              	.LBE34:
+  74              		.cfi_endproc
+  75              	.LFE377:
+  77              		.section	.text.raw_flash_init,"ax",@progbits
+  78              		.align	1
+  79              		.globl	raw_flash_init
+  81              	raw_flash_init:
+  82              	.LFB369:
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     list_init(&raw_erase_cb_list);
+  83              		.loc 1 59 1 is_stmt 1
+  84              		.cfi_startproc
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+  85              		.loc 1 60 5
+  86 0000 37050000 		lui	a0,%hi(.LANCHOR0)
+  87 0004 13050500 		addi	a0,a0,%lo(.LANCHOR0)
+  88 0008 17030000 		tail	list_init
+  88      67000300 
+  89              	.LVL7:
+  90              		.cfi_endproc
+  91              	.LFE369:
+  93              		.section	.text.raw_flash_total_size,"ax",@progbits
+  94              		.align	1
+  95              		.globl	raw_flash_total_size
+  97              	raw_flash_total_size:
+  98              	.LFB370:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     return FLASH_TOTAL_SIZE;
+  99              		.loc 1 70 1
+ 100              		.cfi_startproc
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 101              		.loc 1 71 5
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 102              		.loc 1 72 1 is_stmt 0
+ 103 0000 37054000 		li	a0,4194304
+ 104 0004 8280     		ret
+ 105              		.cfi_endproc
+ 106              	.LFE370:
+ 108              		.section	.text.raw_flash_is_valid_offset,"ax",@progbits
+ 109              		.align	1
+ 110              		.globl	raw_flash_is_valid_offset
+ 112              	raw_flash_is_valid_offset:
+ 113              	.LFB371:
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (offset < raw_flash_total_size()) {
+ 114              		.loc 1 81 1 is_stmt 1
+ 115              		.cfi_startproc
+ 116              	.LVL8:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 117              		.loc 1 82 5
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 118              		.loc 1 71 5
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 119              		.loc 1 86 1 is_stmt 0
+ 120 0000 B7074000 		li	a5,4194304
+ 121 0004 3335F500 		sltu	a0,a0,a5
+ 122              	.LVL9:
+ 123 0008 8280     		ret
+ 124              		.cfi_endproc
+ 125              	.LFE371:
+ 127              		.section	.text.raw_flash_is_valid_addr,"ax",@progbits
+ 128              		.align	1
+ 129              		.globl	raw_flash_is_valid_addr
+ 131              	raw_flash_is_valid_addr:
+ 132              	.LFB372:
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if ((addr >= FLASH_BASE) && (addr < (FLASH_BASE + raw_flash_total_size()))) {
+ 133              		.loc 1 95 1 is_stmt 1
+ 134              		.cfi_startproc
+ 135              	.LVL10:
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 136              		.loc 1 96 5
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 137              		.loc 1 96 8 is_stmt 0
+ 138 0000 B70700F8 		li	a5,-134217728
+ 139 0004 3E95     		add	a0,a0,a5
+ 140              	.LVL11:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 141              		.loc 1 100 1
+ 142 0006 B7074000 		li	a5,4194304
+ 143 000a 3335F500 		sltu	a0,a0,a5
+ 144              	.LVL12:
+ 145 000e 8280     		ret
+ 146              		.cfi_endproc
+ 147              	.LFE372:
+ 149              		.section	.text.raw_flash_nodec_config,"ax",@progbits
+ 150              		.align	1
+ 151              		.globl	raw_flash_nodec_config
+ 153              	raw_flash_nodec_config:
+ 154              	.LFB373:
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* unlock the flash program erase controller */
+ 155              		.loc 1 111 1 is_stmt 1
+ 156              		.cfi_startproc
+ 157              	.LVL13:
+ 158 0000 17030000 		call	t0,__riscv_save_2
+ 158      E7020300 
+ 159              		.cfi_offset 9, -12
+ 160              		.cfi_offset 8, -8
+ 161              		.cfi_offset 1, -4
+ 162              		.cfi_def_cfa_offset 16
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* unlock the option byte operation (include SECWM/HDP/WRP/NODEC/OFRG/OFVR) */
+ 163              		.loc 1 113 5
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* unlock the flash program erase controller */
+ 164              		.loc 1 111 1 is_stmt 0
+ 165 0008 4111     		addi	sp,sp,-16
+ 166              		.cfi_def_cfa_offset 32
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* unlock the flash program erase controller */
+ 167              		.loc 1 111 1
+ 168 000a 2E84     		mv	s0,a1
+ 169 000c AA84     		mv	s1,a0
+ 170 000e 32C6     		sw	a2,12(sp)
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* unlock the option byte operation (include SECWM/HDP/WRP/NODEC/OFRG/OFVR) */
+ 171              		.loc 1 113 5
+ 172 0010 97000000 		call	fmc_unlock
+ 172      E7800000 
+ 173              	.LVL14:
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* clear pending flags */
+ 174              		.loc 1 115 5 is_stmt 1
+ 175 0018 97000000 		call	ob_unlock
+ 175      E7800000 
+ 176              	.LVL15:
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 177              		.loc 1 117 5
+ 178 0020 13050003 		li	a0,48
+ 179 0024 97000000 		call	fmc_flag_clear
+ 179      E7800000 
+ 180              	.LVL16:
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 181              		.loc 1 120 5
+ 182 002c B245     		lw	a1,12(sp)
+ 183 002e 2686     		mv	a2,s1
+ 184 0030 2285     		mv	a0,s0
+ 185 0032 97000000 		call	fmc_no_rtdec_config
+ 185      E7800000 
+ 186              	.LVL17:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     /* lock the flash program erase controller */
+ 187              		.loc 1 123 5
+ 188 003a 97000000 		call	ob_lock
+ 188      E7800000 
+ 189              	.LVL18:
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 190              		.loc 1 125 5
+ 191 0042 97000000 		call	fmc_lock
+ 191      E7800000 
+ 192              	.LVL19:
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 193              		.loc 1 127 1 is_stmt 0
+ 194 004a 4101     		addi	sp,sp,16
+ 195              		.cfi_def_cfa_offset 0
+ 196              	.LVL20:
+ 197 004c 17030000 		tail	__riscv_restore_2
+ 197      67000300 
+ 198              		.cfi_restore 9
+ 199              		.cfi_restore 8
+ 200              		.cfi_restore 1
+ 201              		.cfi_def_cfa_offset -16
+ 202              		.cfi_endproc
+ 203              	.LFE373:
+ 205              		.section	.text.raw_flash_offset_mapping,"ax",@progbits
+ 206              		.align	1
+ 207              		.globl	raw_flash_offset_mapping
+ 209              	raw_flash_offset_mapping:
+ 210              	.LFB374:
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_unlock();
+ 211              		.loc 1 138 1 is_stmt 1
+ 212              		.cfi_startproc
+ 213              	.LVL21:
+ 214 0000 17030000 		call	t0,__riscv_save_1
+ 214      E7020300 
+ 215              		.cfi_offset 8, -8
+ 216              		.cfi_offset 1, -4
+ 217              		.cfi_def_cfa_offset 16
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     ob_unlock();
+ 218              		.loc 1 139 5
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_unlock();
+ 219              		.loc 1 138 1 is_stmt 0
+ 220 0008 4111     		addi	sp,sp,-16
+ 221              		.cfi_def_cfa_offset 32
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_unlock();
+ 222              		.loc 1 138 1
+ 223 000a 3284     		mv	s0,a2
+ 224 000c 2AC6     		sw	a0,12(sp)
+ 225 000e 2EC4     		sw	a1,8(sp)
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     ob_unlock();
+ 226              		.loc 1 139 5
+ 227 0010 97000000 		call	fmc_unlock
+ 227      E7800000 
+ 228              	.LVL22:
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_offset_region_config(of_spage, of_epage);
+ 229              		.loc 1 140 5 is_stmt 1
+ 230 0018 97000000 		call	ob_unlock
+ 230      E7800000 
+ 231              	.LVL23:
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_offset_value_config(of_value);
+ 232              		.loc 1 141 5
+ 233 0020 A245     		lw	a1,8(sp)
+ 234 0022 3245     		lw	a0,12(sp)
+ 235 0024 97000000 		call	fmc_offset_region_config
+ 235      E7800000 
+ 236              	.LVL24:
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     ob_lock();
+ 237              		.loc 1 142 5
+ 238 002c 2285     		mv	a0,s0
+ 239 002e 97000000 		call	fmc_offset_value_config
+ 239      E7800000 
+ 240              	.LVL25:
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     fmc_lock();
+ 241              		.loc 1 143 5
+ 242 0036 97000000 		call	ob_lock
+ 242      E7800000 
+ 243              	.LVL26:
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 244              		.loc 1 144 5
+ 245 003e 97000000 		call	fmc_lock
+ 245      E7800000 
+ 246              	.LVL27:
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 247              		.loc 1 145 1 is_stmt 0
+ 248 0046 4101     		addi	sp,sp,16
+ 249              		.cfi_def_cfa_offset 0
+ 250              	.LVL28:
+ 251 0048 17030000 		tail	__riscv_restore_1
+ 251      67000300 
+ 252              		.cfi_restore 8
+ 253              		.cfi_restore 1
+ 254              		.cfi_def_cfa_offset -16
+ 255              		.cfi_endproc
+ 256              	.LFE374:
+ 258              		.section	.text.raw_flash_read,"ax",@progbits
+ 259              		.align	1
+ 260              		.globl	raw_flash_read
+ 262              	raw_flash_read:
+ 263              	.LFB375:
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (!raw_flash_is_valid_offset(offset) || data == NULL
+ 264              		.loc 1 155 1 is_stmt 1
+ 265              		.cfi_startproc
+ 266              	.LVL29:
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 267              		.loc 1 156 5
+ 268              	.LBB36:
+ 269              	.LBB37:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 270              		.loc 1 82 5
+ 271              	.LBE37:
+ 272              	.LBE36:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 273              		.loc 1 71 5
+ 274              	.LBB40:
+ 275              	.LBB38:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 276              		.loc 1 82 8 is_stmt 0
+ 277 0000 B7084000 		li	a7,4194304
+ 278              	.LBE38:
+ 279              	.LBE40:
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 280              		.loc 1 158 16
+ 281 0004 FD57     		li	a5,-1
+ 282              	.LBB41:
+ 283              	.LBB39:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 284              		.loc 1 82 8
+ 285 0006 637E1503 		bgeu	a0,a7,.L25
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 286              		.loc 1 83 9 is_stmt 1
+ 287              	.LVL30:
+ 288              	.LBE39:
+ 289              	.LBE41:
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 290              		.loc 1 158 16 is_stmt 0
+ 291 000a FD57     		li	a5,-1
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 292              		.loc 1 156 44
+ 293 000c 9DC9     		beq	a1,zero,.L25
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 294              		.loc 1 157 9
+ 295 000e 635AC002 		ble	a2,zero,.L25
+ 296              	.LVL31:
+ 297              	.LBB42:
+ 298              	.LBB43:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 299              		.loc 1 82 5 is_stmt 1 discriminator 1
+ 300              	.LBE43:
+ 301              	.LBE42:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 302              		.loc 1 71 5 discriminator 1
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 303              		.loc 1 157 25 is_stmt 0 discriminator 1
+ 304 0012 1307F6FF 		addi	a4,a2,-1
+ 305 0016 2A97     		add	a4,a4,a0
+ 306              	.LBB46:
+ 307              	.LBB44:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 308              		.loc 1 82 8 discriminator 1
+ 309 0018 63751703 		bgeu	a4,a7,.L25
+ 310              	.LBE44:
+ 311              	.LBE46:
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (!raw_flash_is_valid_offset(offset) || data == NULL
+ 312              		.loc 1 155 1
+ 313 001c 17030000 		call	t0,__riscv_save_0
+ 313      E7020300 
+ 314              		.cfi_offset 1, -4
+ 315              		.cfi_def_cfa_offset 16
+ 316              	.LBB47:
+ 317              	.LBB45:
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 318              		.loc 1 83 9 is_stmt 1
+ 319              	.LVL32:
+ 320              	.LBE45:
+ 321              	.LBE47:
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 322              		.loc 1 161 5
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 323              		.loc 1 161 9 is_stmt 0
+ 324 0024 B7070000 		lui	a5,%hi(p_rom_api)
+ 325 0028 83A70700 		lw	a5,%lo(p_rom_api)(a5)
+ 326 002c FC4B     		lw	a5,84(a5)
+ 327 002e 8297     		jalr	a5
+ 328              	.LVL33:
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 329              		.loc 1 161 8
+ 330 0030 B337A000 		snez	a5,a0
+ 331 0034 B307F040 		neg	a5,a5
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 332              		.loc 1 166 1
+ 333 0038 3E85     		mv	a0,a5
+ 334 003a 17030000 		tail	__riscv_restore_0
+ 334      67000300 
+ 335              		.cfi_restore 1
+ 336              		.cfi_def_cfa_offset 0
+ 337              	.LVL34:
+ 338              	.L25:
+ 339 0042 3E85     		mv	a0,a5
+ 340              	.LVL35:
+ 341 0044 8280     		ret
+ 342              		.cfi_endproc
+ 343              	.LFE375:
+ 345              		.section	.text.raw_flash_write,"ax",@progbits
+ 346              		.align	1
+ 347              		.globl	raw_flash_write
+ 349              	raw_flash_write:
+ 350              	.LFB376:
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (!raw_flash_is_valid_offset(offset) || data == NULL
+ 351              		.loc 1 177 1 is_stmt 1
+ 352              		.cfi_startproc
+ 353              	.LVL36:
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 354              		.loc 1 178 5
+ 355              	.LBB48:
+ 356              	.LBB49:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 357              		.loc 1 82 5
+ 358              	.LBE49:
+ 359              	.LBE48:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 360              		.loc 1 71 5
+ 361              	.LBB52:
+ 362              	.LBB50:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 363              		.loc 1 82 8 is_stmt 0
+ 364 0000 B7084000 		li	a7,4194304
+ 365              	.LBE50:
+ 366              	.LBE52:
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 367              		.loc 1 180 16
+ 368 0004 FD57     		li	a5,-1
+ 369              	.LBB53:
+ 370              	.LBB51:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 371              		.loc 1 82 8
+ 372 0006 637E1503 		bgeu	a0,a7,.L35
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 373              		.loc 1 83 9 is_stmt 1
+ 374              	.LVL37:
+ 375              	.LBE51:
+ 376              	.LBE53:
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 377              		.loc 1 180 16 is_stmt 0
+ 378 000a FD57     		li	a5,-1
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 379              		.loc 1 178 44
+ 380 000c 9DC9     		beq	a1,zero,.L35
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 381              		.loc 1 179 9
+ 382 000e 635AC002 		ble	a2,zero,.L35
+ 383              	.LVL38:
+ 384              	.LBB54:
+ 385              	.LBB55:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 386              		.loc 1 82 5 is_stmt 1 discriminator 1
+ 387              	.LBE55:
+ 388              	.LBE54:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 389              		.loc 1 71 5 discriminator 1
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 390              		.loc 1 179 25 is_stmt 0 discriminator 1
+ 391 0012 1307F6FF 		addi	a4,a2,-1
+ 392 0016 2A97     		add	a4,a4,a0
+ 393              	.LBB58:
+ 394              	.LBB56:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 395              		.loc 1 82 8 discriminator 1
+ 396 0018 63751703 		bgeu	a4,a7,.L35
+ 397              	.LBE56:
+ 398              	.LBE58:
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (!raw_flash_is_valid_offset(offset) || data == NULL
+ 399              		.loc 1 177 1
+ 400 001c 17030000 		call	t0,__riscv_save_0
+ 400      E7020300 
+ 401              		.cfi_offset 1, -4
+ 402              		.cfi_def_cfa_offset 16
+ 403              	.LBB59:
+ 404              	.LBB57:
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 405              		.loc 1 83 9 is_stmt 1
+ 406              	.LVL39:
+ 407              	.LBE57:
+ 408              	.LBE59:
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 409              		.loc 1 183 5
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 410              		.loc 1 183 9 is_stmt 0
+ 411 0024 B7070000 		lui	a5,%hi(p_rom_api)
+ 412 0028 83A70700 		lw	a5,%lo(p_rom_api)(a5)
+ 413 002c BC4F     		lw	a5,88(a5)
+ 414 002e 8297     		jalr	a5
+ 415              	.LVL40:
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 416              		.loc 1 183 8
+ 417 0030 B337A000 		snez	a5,a0
+ 418 0034 B307F040 		neg	a5,a5
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 419              		.loc 1 188 1
+ 420 0038 3E85     		mv	a0,a5
+ 421 003a 17030000 		tail	__riscv_restore_0
+ 421      67000300 
+ 422              		.cfi_restore 1
+ 423              		.cfi_def_cfa_offset 0
+ 424              	.LVL41:
+ 425              	.L35:
+ 426 0042 3E85     		mv	a0,a5
+ 427              	.LVL42:
+ 428 0044 8280     		ret
+ 429              		.cfi_endproc
+ 430              	.LFE376:
+ 432              		.section	.text.raw_flash_erase_handler_register,"ax",@progbits
+ 433              		.align	1
+ 434              		.globl	raw_flash_erase_handler_register
+ 436              	raw_flash_erase_handler_register:
+ 437              	.LFB378:
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** int raw_flash_erase_handler_register(raw_flash_erase_handler_t callback)
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+ 438              		.loc 1 206 1 is_stmt 1
+ 439              		.cfi_startproc
+ 440              	.LVL43:
+ 441 0000 17030000 		call	t0,__riscv_save_2
+ 441      E7020300 
+ 442              		.cfi_offset 9, -12
+ 443              		.cfi_offset 8, -8
+ 444              		.cfi_offset 1, -4
+ 445              		.cfi_def_cfa_offset 16
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     raw_erase_cb_list_item_t *p_item;
+ 446              		.loc 1 207 5
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     struct list_hdr *elt = list_pick(&raw_erase_cb_list);
+ 447              		.loc 1 208 5
+ 448              	.LVL44:
+ 449              	.LBB60:
+ 450              	.LBB61:
+ 278:..\..\..\..\util\include/slist.h **** }
+ 451              		.loc 2 278 5
+ 278:..\..\..\..\util\include/slist.h **** }
+ 452              		.loc 2 278 16 is_stmt 0
+ 453 0008 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 454 000c 03A70700 		lw	a4,%lo(.LANCHOR0)(a5)
+ 455              	.LVL45:
+ 456              	.LBE61:
+ 457              	.LBE60:
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     while (elt != NULL) {
+ 458              		.loc 1 210 5 is_stmt 1
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     raw_erase_cb_list_item_t *p_item;
+ 459              		.loc 1 206 1 is_stmt 0
+ 460 0010 AA84     		mv	s1,a0
+ 461 0012 3E84     		mv	s0,a5
+ 462              	.L39:
+ 463              		.loc 1 210 11 is_stmt 1
+ 464 0014 0DE7     		bne	a4,zero,.L41
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         p_item = (raw_erase_cb_list_item_t *)elt;
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         if (p_item->callback == callback)
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             return 0;
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         elt = list_next(elt);
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     p_item = (raw_erase_cb_list_item_t *)sys_malloc(sizeof(raw_erase_cb_list_item_t));
+ 465              		.loc 1 219 5
+ 466              		.loc 1 219 42 is_stmt 0
+ 467 0016 2145     		li	a0,8
+ 468              	.LVL46:
+ 469 0018 97000000 		call	sys_malloc
+ 469      E7800000 
+ 470              	.LVL47:
+ 471 0020 AA85     		mv	a1,a0
+ 472              	.LVL48:
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (p_item == NULL)
+ 473              		.loc 1 220 5 is_stmt 1
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 474              		.loc 1 221 16 is_stmt 0
+ 475 0022 7D55     		li	a0,-1
+ 476              	.LVL49:
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (p_item == NULL)
+ 477              		.loc 1 220 8
+ 478 0024 89C9     		beq	a1,zero,.L38
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     p_item->callback = callback;
+ 479              		.loc 1 223 5 is_stmt 1
+ 480              		.loc 1 223 22 is_stmt 0
+ 481 0026 C4C1     		sw	s1,4(a1)
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     list_push_back(&raw_erase_cb_list, &(p_item->hdr));
+ 482              		.loc 1 225 5 is_stmt 1
+ 483 0028 13050400 		addi	a0,s0,%lo(.LANCHOR0)
+ 484 002c 97000000 		call	list_push_back
+ 484      E7800000 
+ 485              	.LVL50:
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     return 0;
+ 486              		.loc 1 227 5
+ 487              	.L42:
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 488              		.loc 1 214 20 is_stmt 0
+ 489 0034 0145     		li	a0,0
+ 490              	.L38:
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 491              		.loc 1 228 1
+ 492 0036 17030000 		tail	__riscv_restore_2
+ 492      67000300 
+ 493              		.cfi_remember_state
+ 494              		.cfi_restore 9
+ 495              		.cfi_restore 8
+ 496              		.cfi_restore 1
+ 497              		.cfi_def_cfa_offset 0
+ 498              	.LVL51:
+ 499              	.L41:
+ 500              		.cfi_restore_state
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 501              		.loc 1 211 9 is_stmt 1
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             return 0;
+ 502              		.loc 1 213 9
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             return 0;
+ 503              		.loc 1 213 12 is_stmt 0
+ 504 003e 5C43     		lw	a5,4(a4)
+ 505 0040 E38A97FE 		beq	a5,s1,.L42
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 506              		.loc 1 216 9 is_stmt 1
+ 507              	.LVL52:
+ 508              	.LBB62:
+ 509              	.LBB63:
+ 510              		.loc 2 306 5
+ 511              		.loc 2 306 20 is_stmt 0
+ 512 0044 1843     		lw	a4,0(a4)
+ 513              	.LVL53:
+ 514 0046 F9B7     		j	.L39
+ 515              	.LBE63:
+ 516              	.LBE62:
+ 517              		.cfi_endproc
+ 518              	.LFE378:
+ 520              		.section	.text.raw_flash_erase_handler_unregister,"ax",@progbits
+ 521              		.align	1
+ 522              		.globl	raw_flash_erase_handler_unregister
+ 524              	raw_flash_erase_handler_unregister:
+ 525              	.LFB379:
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** void raw_flash_erase_handler_unregister(raw_flash_erase_handler_t callback)
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+ 526              		.loc 1 231 1 is_stmt 1
+ 527              		.cfi_startproc
+ 528              	.LVL54:
+ 529 0000 17030000 		call	t0,__riscv_save_5
+ 529      E7020300 
+ 530              		.cfi_offset 20, -24
+ 531              		.cfi_offset 19, -20
+ 532              		.cfi_offset 18, -16
+ 533              		.cfi_offset 9, -12
+ 534              		.cfi_offset 8, -8
+ 535              		.cfi_offset 1, -4
+ 536              		.cfi_def_cfa_offset 32
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     raw_erase_cb_list_item_t *p_item;
+ 537              		.loc 1 232 5
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     struct list_hdr *prev_elt = NULL;
+ 538              		.loc 1 233 5
+ 539              	.LVL55:
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     struct list_hdr *elt = list_pick(&raw_erase_cb_list);
+ 540              		.loc 1 234 5
+ 541              	.LBB64:
+ 542              	.LBB65:
+ 278:..\..\..\..\util\include/slist.h **** }
+ 543              		.loc 2 278 5
+ 278:..\..\..\..\util\include/slist.h **** }
+ 544              		.loc 2 278 16 is_stmt 0
+ 545 0008 B7040000 		lui	s1,%hi(.LANCHOR0)
+ 546 000c 03A40400 		lw	s0,%lo(.LANCHOR0)(s1)
+ 547              	.LVL56:
+ 548              	.LBE65:
+ 549              	.LBE64:
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     while (elt != NULL) {
+ 550              		.loc 1 236 5 is_stmt 1
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     raw_erase_cb_list_item_t *p_item;
+ 551              		.loc 1 231 1 is_stmt 0
+ 552 0010 AA89     		mv	s3,a0
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     struct list_hdr *elt = list_pick(&raw_erase_cb_list);
+ 553              		.loc 1 233 22
+ 554 0012 0149     		li	s2,0
+ 555 0014 138A0400 		addi	s4,s1,%lo(.LANCHOR0)
+ 556              	.LVL57:
+ 557              	.L46:
+ 558              		.loc 1 236 11 is_stmt 1
+ 559 0018 09E4     		bne	s0,zero,.L49
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         p_item = (raw_erase_cb_list_item_t *)elt;
+ 238:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         if (p_item->callback && p_item->callback == callback) {
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             list_remove(&raw_erase_cb_list, prev_elt, elt);
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             sys_mfree(p_item);
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         } else {
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             prev_elt = elt;
+ 244:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         }
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         elt = (prev_elt == NULL ? list_pick(&raw_erase_cb_list) : list_next(prev_elt));
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 247:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 248:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     return;
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 560              		.loc 1 249 1 is_stmt 0
+ 561 001a 17030000 		tail	__riscv_restore_5
+ 561      67000300 
+ 562              		.cfi_remember_state
+ 563              		.cfi_restore 20
+ 564              		.cfi_restore 19
+ 565              		.cfi_restore 18
+ 566              		.cfi_restore 9
+ 567              		.cfi_restore 8
+ 568              		.cfi_restore 1
+ 569              		.cfi_def_cfa_offset 0
+ 570              	.L49:
+ 571              		.cfi_restore_state
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         p_item = (raw_erase_cb_list_item_t *)elt;
+ 572              		.loc 1 237 9 is_stmt 1
+ 573              	.LVL58:
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             list_remove(&raw_erase_cb_list, prev_elt, elt);
+ 574              		.loc 1 239 9
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             list_remove(&raw_erase_cb_list, prev_elt, elt);
+ 575              		.loc 1 239 19 is_stmt 0
+ 576 0022 5C40     		lw	a5,4(s0)
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             list_remove(&raw_erase_cb_list, prev_elt, elt);
+ 577              		.loc 1 239 12
+ 578 0024 8DCB     		beq	a5,zero,.L47
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             list_remove(&raw_erase_cb_list, prev_elt, elt);
+ 579              		.loc 1 239 30 discriminator 1
+ 580 0026 63983703 		bne	a5,s3,.L47
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****             sys_mfree(p_item);
+ 581              		.loc 1 240 13 is_stmt 1
+ 582 002a 13850400 		addi	a0,s1,%lo(.LANCHOR0)
+ 583 002e 2286     		mv	a2,s0
+ 584 0030 CA85     		mv	a1,s2
+ 585 0032 97000000 		call	list_remove
+ 585      E7800000 
+ 586              	.LVL59:
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         } else {
+ 587              		.loc 1 241 13
+ 588 003a 2285     		mv	a0,s0
+ 589 003c 97000000 		call	sys_mfree
+ 589      E7800000 
+ 590              	.LVL60:
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 591              		.loc 1 245 9
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 592              		.loc 1 245 65 is_stmt 0
+ 593 0044 63180900 		bne	s2,zero,.L50
+ 594              	.LVL61:
+ 595              	.LBB66:
+ 596              	.LBB67:
+ 278:..\..\..\..\util\include/slist.h **** }
+ 597              		.loc 2 278 5 is_stmt 1
+ 278:..\..\..\..\util\include/slist.h **** }
+ 598              		.loc 2 278 16 is_stmt 0
+ 599 0048 83270A00 		lw	a5,0(s4)
+ 600              	.LVL62:
+ 601              	.LBE67:
+ 602              	.LBE66:
+ 603 004c 0144     		li	s0,0
+ 604              	.LVL63:
+ 605              	.L48:
+ 606 004e 2289     		mv	s2,s0
+ 607 0050 3E84     		mv	s0,a5
+ 608 0052 D9B7     		j	.L46
+ 609              	.LVL64:
+ 610              	.L50:
+ 611 0054 4A84     		mv	s0,s2
+ 612              	.LVL65:
+ 613              	.L47:
+ 614              	.LBB68:
+ 615              	.LBB69:
+ 616              		.loc 2 306 5 is_stmt 1
+ 617              		.loc 2 306 20 is_stmt 0
+ 618 0056 1C40     		lw	a5,0(s0)
+ 619              	.LVL66:
+ 620 0058 DDBF     		j	.L48
+ 621              	.LBE69:
+ 622              	.LBE68:
+ 623              		.cfi_endproc
+ 624              	.LFE379:
+ 626              		.section	.text.raw_flash_erase,"ax",@progbits
+ 627              		.align	1
+ 628              		.globl	raw_flash_erase
+ 630              	raw_flash_erase:
+ 631              	.LFB380:
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 251:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** /*!
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \brief      erase flash
+ 253:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  offset: flash offset
+ 254:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[in]  len: flash erase length
+ 255:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \param[out] none
+ 256:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     \retval     result of erase flash(0: erase ok, or -1: erase error)
+ 257:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** */
+ 258:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** int raw_flash_erase(uint32_t offset, int len)
+ 259:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** {
+ 632              		.loc 1 259 1 is_stmt 1
+ 633              		.cfi_startproc
+ 634              	.LVL67:
+ 635 0000 17030000 		call	t0,__riscv_save_1
+ 635      E7020300 
+ 636              		.cfi_offset 8, -8
+ 637              		.cfi_offset 1, -4
+ 638              		.cfi_def_cfa_offset 16
+ 260:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (!raw_flash_is_valid_offset(offset)
+ 639              		.loc 1 260 5
+ 640              	.LVL68:
+ 641              	.LBB70:
+ 642              	.LBB71:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 643              		.loc 1 82 5
+ 644              	.LBE71:
+ 645              	.LBE70:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 646              		.loc 1 71 5
+ 647              	.LBB75:
+ 648              	.LBB72:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 649              		.loc 1 82 8 is_stmt 0
+ 650 0008 37074000 		li	a4,4194304
+ 651              	.LBE72:
+ 652              	.LBE75:
+ 259:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (!raw_flash_is_valid_offset(offset)
+ 653              		.loc 1 259 1
+ 654 000c 4111     		addi	sp,sp,-16
+ 655              		.cfi_def_cfa_offset 32
+ 656              	.LBB76:
+ 657              	.LBB73:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 658              		.loc 1 82 8
+ 659 000e 6369E500 		bltu	a0,a4,.L56
+ 660              	.LVL69:
+ 661              	.L58:
+ 662              	.LBE73:
+ 663              	.LBE76:
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 262:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 664              		.loc 1 262 16
+ 665 0012 7D54     		li	s0,-1
+ 666              	.L55:
+ 263:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 264:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 265:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #ifdef CFG_BLE_SUPPORT
+ 266:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     raw_flash_erase_handler(RAW_FLASH_ERASE_BLE_PRE_HANDLE);
+ 267:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #endif
+ 268:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     if (rom_flash_erase(offset, len)) {
+ 270:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 271:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 272:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 273:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #ifdef CFG_BLE_SUPPORT
+ 274:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     raw_flash_erase_handler(RAW_FLASH_ERASE_BLE_AFTER_HANDLE);
+ 275:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #endif
+ 276:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** 
+ 277:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     return 0;
+ 278:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 667              		.loc 1 278 1
+ 668 0014 2285     		mv	a0,s0
+ 669 0016 4101     		addi	sp,sp,16
+ 670              		.cfi_remember_state
+ 671              		.cfi_def_cfa_offset 0
+ 672 0018 17030000 		tail	__riscv_restore_1
+ 672      67000300 
+ 673              		.cfi_restore 8
+ 674              		.cfi_restore 1
+ 675              		.cfi_def_cfa_offset -16
+ 676              	.LVL70:
+ 677              	.L56:
+ 678              		.cfi_restore_state
+ 679              	.LBB77:
+ 680              	.LBB74:
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 681              		.loc 1 83 9 is_stmt 1
+ 682              	.LBE74:
+ 683              	.LBE77:
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 684              		.loc 1 261 9 is_stmt 0
+ 685 0020 E359B0FE 		ble	a1,zero,.L58
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 686              		.loc 1 261 58 discriminator 1
+ 687 0024 B387A500 		add	a5,a1,a0
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         || len <= 0 || !raw_flash_is_valid_offset(offset + len - 1)) {
+ 688              		.loc 1 261 25 discriminator 1
+ 689 0028 FD17     		addi	a5,a5,-1
+ 690 002a 2A84     		mv	s0,a0
+ 691              	.LVL71:
+ 692              	.LBB78:
+ 693              	.LBB79:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 694              		.loc 1 82 5 is_stmt 1 discriminator 1
+ 695              	.LBE79:
+ 696              	.LBE78:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 697              		.loc 1 71 5 discriminator 1
+ 698              	.LBB82:
+ 699              	.LBB80:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return 1;
+ 700              		.loc 1 82 8 is_stmt 0 discriminator 1
+ 701 002c E3F3E7FE 		bgeu	a5,a4,.L58
+ 702              	.LVL72:
+ 703              	.LBE80:
+ 704              	.LBE82:
+ 266:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #endif
+ 705              		.loc 1 266 5
+ 706 0030 0145     		li	a0,0
+ 707 0032 2EC6     		sw	a1,12(sp)
+ 708              	.LBB83:
+ 709              	.LBB81:
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****     }
+ 710              		.loc 1 83 9 is_stmt 1
+ 711              	.LVL73:
+ 712              	.LBE81:
+ 713              	.LBE83:
+ 266:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #endif
+ 714              		.loc 1 266 5
+ 715 0034 97000000 		call	raw_flash_erase_handler
+ 715      E7800000 
+ 716              	.LVL74:
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 717              		.loc 1 269 5
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 718              		.loc 1 269 9 is_stmt 0
+ 719 003c B7070000 		lui	a5,%hi(p_rom_api)
+ 720 0040 83A70700 		lw	a5,%lo(p_rom_api)(a5)
+ 721 0044 B245     		lw	a1,12(sp)
+ 722 0046 2285     		mv	a0,s0
+ 723 0048 FC4F     		lw	a5,92(a5)
+ 724 004a 8297     		jalr	a5
+ 725              	.LVL75:
+ 726 004c 2A84     		mv	s0,a0
+ 727              	.LVL76:
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c ****         return -1;
+ 728              		.loc 1 269 8
+ 729 004e 71F1     		bne	a0,zero,.L58
+ 274:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** #endif
+ 730              		.loc 1 274 5 is_stmt 1
+ 731 0050 0545     		li	a0,1
+ 732 0052 97000000 		call	raw_flash_erase_handler
+ 732      E7800000 
+ 733              	.LVL77:
+ 277:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 734              		.loc 1 277 5
+ 277:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash\raw_flash_api.c **** }
+ 735              		.loc 1 277 12 is_stmt 0
+ 736 005a 6DBF     		j	.L55
+ 737              		.cfi_endproc
+ 738              	.LFE380:
+ 740              		.section	.sbss.raw_erase_cb_list,"aw",@nobits
+ 741              		.align	2
+ 742              		.set	.LANCHOR0,. + 0
+ 745              	raw_erase_cb_list:
+ 746 0000 00000000 		.zero	8
+ 746      00000000 
+ 747              		.text
+ 748              	.Letext0:
+ 749              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 750              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 751              		.file 5 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 752              		.file 6 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+ 753              		.file 7 "..\\..\\..\\..\\..\\ROM-EXPORT\\bootloader/rom_api.h"
+ 754              		.file 8 "..\\..\\..\\..\\rtos\\rtos_wrapper/wrapper_os.h"
+ 755              		.file 9 "..\\..\\..\\..\\plf\\GD32VW55x_standard_peripheral\\Include/gd32vw55x_fmc.h"
+ 756              		.file 10 "..\\..\\..\\..\\..\\ROM-EXPORT\\bootloader/rom_export.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 raw_flash_api.c
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:12     .text.raw_flash_erase_handler:0000000000000000 raw_flash_erase_handler
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:16     .text.raw_flash_erase_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:18     .text.raw_flash_erase_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:19     .text.raw_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:20     .text.raw_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:21     .text.raw_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:22     .text.raw_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:28     .text.raw_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:29     .text.raw_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:30     .text.raw_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:36     .text.raw_flash_erase_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:37     .text.raw_flash_erase_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:38     .text.raw_flash_erase_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:42     .text.raw_flash_erase_handler:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:44     .text.raw_flash_erase_handler:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:45     .text.raw_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:46     .text.raw_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:47     .text.raw_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:48     .text.raw_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:49     .text.raw_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:51     .text.raw_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:54     .text.raw_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:55     .text.raw_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:56     .text.raw_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:58     .text.raw_flash_erase_handler:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:60     .text.raw_flash_erase_handler:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:67     .text.raw_flash_erase_handler:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:68     .text.raw_flash_erase_handler:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:69     .text.raw_flash_erase_handler:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:74     .text.raw_flash_erase_handler:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:81     .text.raw_flash_init:0000000000000000 raw_flash_init
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:84     .text.raw_flash_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:85     .text.raw_flash_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:86     .text.raw_flash_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:90     .text.raw_flash_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:97     .text.raw_flash_total_size:0000000000000000 raw_flash_total_size
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:100    .text.raw_flash_total_size:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:101    .text.raw_flash_total_size:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:102    .text.raw_flash_total_size:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:103    .text.raw_flash_total_size:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:105    .text.raw_flash_total_size:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:112    .text.raw_flash_is_valid_offset:0000000000000000 raw_flash_is_valid_offset
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:115    .text.raw_flash_is_valid_offset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:117    .text.raw_flash_is_valid_offset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:118    .text.raw_flash_is_valid_offset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:119    .text.raw_flash_is_valid_offset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:120    .text.raw_flash_is_valid_offset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:124    .text.raw_flash_is_valid_offset:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:131    .text.raw_flash_is_valid_addr:0000000000000000 raw_flash_is_valid_addr
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:134    .text.raw_flash_is_valid_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:136    .text.raw_flash_is_valid_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:137    .text.raw_flash_is_valid_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:138    .text.raw_flash_is_valid_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:142    .text.raw_flash_is_valid_addr:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:146    .text.raw_flash_is_valid_addr:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:153    .text.raw_flash_nodec_config:0000000000000000 raw_flash_nodec_config
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:156    .text.raw_flash_nodec_config:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:158    .text.raw_flash_nodec_config:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:159    .text.raw_flash_nodec_config:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:160    .text.raw_flash_nodec_config:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:161    .text.raw_flash_nodec_config:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:162    .text.raw_flash_nodec_config:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:164    .text.raw_flash_nodec_config:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:165    .text.raw_flash_nodec_config:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:166    .text.raw_flash_nodec_config:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:168    .text.raw_flash_nodec_config:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:172    .text.raw_flash_nodec_config:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:175    .text.raw_flash_nodec_config:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:178    .text.raw_flash_nodec_config:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:182    .text.raw_flash_nodec_config:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:188    .text.raw_flash_nodec_config:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:191    .text.raw_flash_nodec_config:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:194    .text.raw_flash_nodec_config:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:195    .text.raw_flash_nodec_config:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:198    .text.raw_flash_nodec_config:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:199    .text.raw_flash_nodec_config:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:200    .text.raw_flash_nodec_config:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:201    .text.raw_flash_nodec_config:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:202    .text.raw_flash_nodec_config:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:209    .text.raw_flash_offset_mapping:0000000000000000 raw_flash_offset_mapping
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:212    .text.raw_flash_offset_mapping:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:214    .text.raw_flash_offset_mapping:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:215    .text.raw_flash_offset_mapping:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:216    .text.raw_flash_offset_mapping:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:217    .text.raw_flash_offset_mapping:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:219    .text.raw_flash_offset_mapping:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:220    .text.raw_flash_offset_mapping:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:221    .text.raw_flash_offset_mapping:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:223    .text.raw_flash_offset_mapping:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:227    .text.raw_flash_offset_mapping:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:230    .text.raw_flash_offset_mapping:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:233    .text.raw_flash_offset_mapping:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:238    .text.raw_flash_offset_mapping:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:242    .text.raw_flash_offset_mapping:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:245    .text.raw_flash_offset_mapping:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:248    .text.raw_flash_offset_mapping:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:249    .text.raw_flash_offset_mapping:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:252    .text.raw_flash_offset_mapping:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:253    .text.raw_flash_offset_mapping:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:254    .text.raw_flash_offset_mapping:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:255    .text.raw_flash_offset_mapping:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:262    .text.raw_flash_read:0000000000000000 raw_flash_read
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:265    .text.raw_flash_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:267    .text.raw_flash_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:270    .text.raw_flash_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:273    .text.raw_flash_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:276    .text.raw_flash_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:277    .text.raw_flash_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:281    .text.raw_flash_read:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:285    .text.raw_flash_read:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:290    .text.raw_flash_read:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:291    .text.raw_flash_read:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:293    .text.raw_flash_read:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:295    .text.raw_flash_read:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:302    .text.raw_flash_read:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:303    .text.raw_flash_read:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:304    .text.raw_flash_read:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:309    .text.raw_flash_read:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:313    .text.raw_flash_read:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:314    .text.raw_flash_read:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:315    .text.raw_flash_read:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:322    .text.raw_flash_read:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:323    .text.raw_flash_read:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:324    .text.raw_flash_read:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:330    .text.raw_flash_read:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:333    .text.raw_flash_read:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:335    .text.raw_flash_read:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:336    .text.raw_flash_read:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:342    .text.raw_flash_read:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:349    .text.raw_flash_write:0000000000000000 raw_flash_write
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:352    .text.raw_flash_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:354    .text.raw_flash_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:357    .text.raw_flash_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:360    .text.raw_flash_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:363    .text.raw_flash_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:364    .text.raw_flash_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:368    .text.raw_flash_write:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:372    .text.raw_flash_write:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:377    .text.raw_flash_write:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:378    .text.raw_flash_write:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:380    .text.raw_flash_write:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:382    .text.raw_flash_write:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:389    .text.raw_flash_write:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:390    .text.raw_flash_write:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:391    .text.raw_flash_write:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:396    .text.raw_flash_write:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:400    .text.raw_flash_write:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:401    .text.raw_flash_write:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:402    .text.raw_flash_write:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:409    .text.raw_flash_write:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:410    .text.raw_flash_write:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:411    .text.raw_flash_write:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:417    .text.raw_flash_write:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:420    .text.raw_flash_write:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:422    .text.raw_flash_write:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:423    .text.raw_flash_write:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:429    .text.raw_flash_write:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:436    .text.raw_flash_erase_handler_register:0000000000000000 raw_flash_erase_handler_register
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:439    .text.raw_flash_erase_handler_register:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:441    .text.raw_flash_erase_handler_register:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:442    .text.raw_flash_erase_handler_register:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:443    .text.raw_flash_erase_handler_register:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:444    .text.raw_flash_erase_handler_register:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:445    .text.raw_flash_erase_handler_register:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:447    .text.raw_flash_erase_handler_register:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:451    .text.raw_flash_erase_handler_register:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:452    .text.raw_flash_erase_handler_register:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:453    .text.raw_flash_erase_handler_register:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:459    .text.raw_flash_erase_handler_register:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:460    .text.raw_flash_erase_handler_register:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:464    .text.raw_flash_erase_handler_register:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:466    .text.raw_flash_erase_handler_register:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:467    .text.raw_flash_erase_handler_register:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:474    .text.raw_flash_erase_handler_register:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:475    .text.raw_flash_erase_handler_register:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:478    .text.raw_flash_erase_handler_register:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:480    .text.raw_flash_erase_handler_register:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:481    .text.raw_flash_erase_handler_register:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:483    .text.raw_flash_erase_handler_register:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:488    .text.raw_flash_erase_handler_register:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:489    .text.raw_flash_erase_handler_register:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:492    .text.raw_flash_erase_handler_register:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:493    .text.raw_flash_erase_handler_register:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:494    .text.raw_flash_erase_handler_register:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:495    .text.raw_flash_erase_handler_register:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:496    .text.raw_flash_erase_handler_register:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:497    .text.raw_flash_erase_handler_register:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:500    .text.raw_flash_erase_handler_register:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:502    .text.raw_flash_erase_handler_register:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:503    .text.raw_flash_erase_handler_register:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:504    .text.raw_flash_erase_handler_register:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:510    .text.raw_flash_erase_handler_register:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:511    .text.raw_flash_erase_handler_register:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:512    .text.raw_flash_erase_handler_register:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:517    .text.raw_flash_erase_handler_register:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:524    .text.raw_flash_erase_handler_unregister:0000000000000000 raw_flash_erase_handler_unregister
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:527    .text.raw_flash_erase_handler_unregister:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:529    .text.raw_flash_erase_handler_unregister:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:530    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:531    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:532    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:533    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:534    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:535    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:536    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:538    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:540    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:543    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:544    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:545    .text.raw_flash_erase_handler_unregister:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:551    .text.raw_flash_erase_handler_unregister:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:552    .text.raw_flash_erase_handler_unregister:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:554    .text.raw_flash_erase_handler_unregister:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:559    .text.raw_flash_erase_handler_unregister:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:561    .text.raw_flash_erase_handler_unregister:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:562    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:563    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:564    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:565    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:566    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:567    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:568    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:569    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:571    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:574    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:575    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:576    .text.raw_flash_erase_handler_unregister:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:578    .text.raw_flash_erase_handler_unregister:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:580    .text.raw_flash_erase_handler_unregister:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:582    .text.raw_flash_erase_handler_unregister:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:588    .text.raw_flash_erase_handler_unregister:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:592    .text.raw_flash_erase_handler_unregister:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:593    .text.raw_flash_erase_handler_unregister:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:598    .text.raw_flash_erase_handler_unregister:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:599    .text.raw_flash_erase_handler_unregister:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:617    .text.raw_flash_erase_handler_unregister:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:618    .text.raw_flash_erase_handler_unregister:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:623    .text.raw_flash_erase_handler_unregister:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:630    .text.raw_flash_erase:0000000000000000 raw_flash_erase
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:633    .text.raw_flash_erase:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:635    .text.raw_flash_erase:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:636    .text.raw_flash_erase:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:637    .text.raw_flash_erase:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:638    .text.raw_flash_erase:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:643    .text.raw_flash_erase:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:646    .text.raw_flash_erase:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:649    .text.raw_flash_erase:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:650    .text.raw_flash_erase:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:654    .text.raw_flash_erase:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:655    .text.raw_flash_erase:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:659    .text.raw_flash_erase:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:665    .text.raw_flash_erase:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:668    .text.raw_flash_erase:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:670    .text.raw_flash_erase:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:671    .text.raw_flash_erase:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:673    .text.raw_flash_erase:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:674    .text.raw_flash_erase:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:675    .text.raw_flash_erase:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:678    .text.raw_flash_erase:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:684    .text.raw_flash_erase:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:685    .text.raw_flash_erase:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:687    .text.raw_flash_erase:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:689    .text.raw_flash_erase:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:697    .text.raw_flash_erase:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:700    .text.raw_flash_erase:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:701    .text.raw_flash_erase:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:706    .text.raw_flash_erase:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:714    .text.raw_flash_erase:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:715    .text.raw_flash_erase:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:718    .text.raw_flash_erase:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:719    .text.raw_flash_erase:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:729    .text.raw_flash_erase:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:731    .text.raw_flash_erase:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:735    .text.raw_flash_erase:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:736    .text.raw_flash_erase:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:737    .text.raw_flash_erase:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:742    .sbss.raw_erase_cb_list:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:745    .sbss.raw_erase_cb_list:0000000000000000 raw_erase_cb_list
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:77     .text.raw_flash_erase_handler:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:93     .text.raw_flash_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:108    .text.raw_flash_total_size:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:127    .text.raw_flash_is_valid_offset:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:149    .text.raw_flash_is_valid_addr:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:205    .text.raw_flash_nodec_config:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:258    .text.raw_flash_offset_mapping:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:345    .text.raw_flash_read:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:432    .text.raw_flash_write:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:520    .text.raw_flash_erase_handler_register:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:626    .text.raw_flash_erase_handler_unregister:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:740    .text.raw_flash_erase:000000000000005c .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:50     .text.raw_flash_erase_handler:000000000000001c .L4
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:63     .text.raw_flash_erase_handler:0000000000000024 .L3
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:40     .text.raw_flash_erase_handler:0000000000000012 .L2
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:338    .text.raw_flash_read:0000000000000042 .L25
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:425    .text.raw_flash_write:0000000000000042 .L35
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:499    .text.raw_flash_erase_handler_register:000000000000003e .L41
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:490    .text.raw_flash_erase_handler_register:0000000000000036 .L38
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:487    .text.raw_flash_erase_handler_register:0000000000000034 .L42
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:462    .text.raw_flash_erase_handler_register:0000000000000014 .L39
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:570    .text.raw_flash_erase_handler_unregister:0000000000000022 .L49
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:613    .text.raw_flash_erase_handler_unregister:0000000000000056 .L47
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:610    .text.raw_flash_erase_handler_unregister:0000000000000054 .L50
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:557    .text.raw_flash_erase_handler_unregister:0000000000000018 .L46
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:605    .text.raw_flash_erase_handler_unregister:000000000000004e .L48
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:677    .text.raw_flash_erase:0000000000000020 .L56
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:661    .text.raw_flash_erase:0000000000000012 .L58
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:666    .text.raw_flash_erase:0000000000000014 .L55
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:2333   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3811   .debug_str:00000000000001e1 .LASF94
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3839   .debug_str:000000000000038c .LASF95
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3899   .debug_str:0000000000000589 .LASF96
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3667   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3745   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3891   .debug_str:000000000000055a .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3865   .debug_str:00000000000004b7 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3857   .debug_str:000000000000047c .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3833   .debug_str:000000000000035f .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3851   .debug_str:0000000000000456 .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3763   .debug_str:000000000000005d .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3877   .debug_str:0000000000000509 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3819   .debug_str:0000000000000309 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3773   .debug_str:00000000000000a1 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3901   .debug_str:0000000000000607 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3813   .debug_str:00000000000002da .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3859   .debug_str:0000000000000488 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3887   .debug_str:0000000000000550 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3795   .debug_str:0000000000000174 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3803   .debug_str:00000000000001b3 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3827   .debug_str:0000000000000335 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3941   .debug_str:000000000000075a .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3889   .debug_str:0000000000000555 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3945   .debug_str:000000000000076a .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3875   .debug_str:0000000000000504 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3783   .debug_str:00000000000000e8 .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3791   .debug_str:0000000000000149 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3895   .debug_str:0000000000000573 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3787   .debug_str:000000000000011b .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3755   .debug_str:0000000000000029 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3825   .debug_str:000000000000032e .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3759   .debug_str:000000000000003c .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3799   .debug_str:0000000000000196 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3769   .debug_str:0000000000000084 .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3939   .debug_str:000000000000074d .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3779   .debug_str:00000000000000c6 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3781   .debug_str:00000000000000d6 .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3931   .debug_str:0000000000000712 .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3847   .debug_str:000000000000043b .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3937   .debug_str:0000000000000740 .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3911   .debug_str:0000000000000653 .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3823   .debug_str:000000000000031e .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3905   .debug_str:000000000000062a .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3771   .debug_str:0000000000000092 .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3927   .debug_str:00000000000006f4 .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3789   .debug_str:0000000000000135 .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3775   .debug_str:00000000000000ac .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3861   .debug_str:000000000000049f .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3837   .debug_str:0000000000000378 .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3907   .debug_str:0000000000000639 .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3933   .debug_str:0000000000000721 .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3867   .debug_str:00000000000004c4 .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3935   .debug_str:0000000000000734 .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3805   .debug_str:00000000000001bc .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3903   .debug_str:0000000000000619 .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3767   .debug_str:0000000000000071 .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3869   .debug_str:00000000000004cf .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3749   .debug_str:0000000000000010 .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3815   .debug_str:00000000000002e8 .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3809   .debug_str:00000000000001d7 .LASF97
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3893   .debug_str:0000000000000561 .LASF57
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3925   .debug_str:00000000000006eb .LASF54
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3919   .debug_str:00000000000006b3 .LASF55
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3817   .debug_str:00000000000002f9 .LASF60
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:631    .text.raw_flash_erase:0000000000000000 .LFB380
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:738    .text.raw_flash_erase:000000000000005c .LFE380
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3879   .debug_str:000000000000051c .LASF56
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3119   .debug_loc:0000000000000000 .LLST34
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3148   .debug_loc:0000000000000045 .LLST35
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:641    .text.raw_flash_erase:0000000000000008 .LBB70
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3171   .debug_loc:000000000000007d .LLST36
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:692    .text.raw_flash_erase:000000000000002c .LBB78
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3178   .debug_loc:0000000000000090 .LLST37
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:716    .text.raw_flash_erase:000000000000003c .LVL74
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:725    .text.raw_flash_erase:000000000000004c .LVL75
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:733    .text.raw_flash_erase:000000000000005a .LVL77
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3913   .debug_str:0000000000000665 .LASF66
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:525    .text.raw_flash_erase_handler_unregister:0000000000000000 .LFB379
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:624    .text.raw_flash_erase_handler_unregister:000000000000005a .LFE379
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3185   .debug_loc:00000000000000a3 .LLST27
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3753   .debug_str:0000000000000022 .LASF58
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3196   .debug_loc:00000000000000c1 .LLST28
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3849   .debug_str:000000000000044d .LASF59
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3207   .debug_loc:00000000000000df .LLST29
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3227   .debug_loc:0000000000000114 .LLST30
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:541    .text.raw_flash_erase_handler_unregister:0000000000000008 .LBB64
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:549    .text.raw_flash_erase_handler_unregister:0000000000000010 .LBE64
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3238   .debug_loc:0000000000000132 .LLST31
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:595    .text.raw_flash_erase_handler_unregister:0000000000000048 .LBB66
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:602    .text.raw_flash_erase_handler_unregister:000000000000004c .LBE66
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3247   .debug_loc:000000000000014a .LLST32
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:614    .text.raw_flash_erase_handler_unregister:0000000000000056 .LBB68
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:622    .text.raw_flash_erase_handler_unregister:000000000000005a .LBE68
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3256   .debug_loc:0000000000000162 .LLST33
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:586    .text.raw_flash_erase_handler_unregister:000000000000003a .LVL59
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:590    .text.raw_flash_erase_handler_unregister:0000000000000044 .LVL60
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3917   .debug_str:0000000000000692 .LASF61
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:437    .text.raw_flash_erase_handler_register:0000000000000000 .LFB378
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:518    .text.raw_flash_erase_handler_register:0000000000000048 .LFE378
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3263   .debug_loc:0000000000000175 .LLST22
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3274   .debug_loc:0000000000000193 .LLST23
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3289   .debug_loc:00000000000001bc .LLST24
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:449    .text.raw_flash_erase_handler_register:0000000000000008 .LBB60
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:457    .text.raw_flash_erase_handler_register:0000000000000010 .LBE60
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3300   .debug_loc:00000000000001da .LLST25
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:508    .text.raw_flash_erase_handler_register:0000000000000044 .LBB62
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:516    .text.raw_flash_erase_handler_register:0000000000000048 .LBE62
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3309   .debug_loc:00000000000001f2 .LLST26
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:470    .text.raw_flash_erase_handler_register:0000000000000020 .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:485    .text.raw_flash_erase_handler_register:0000000000000034 .LVL50
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3761   .debug_str:0000000000000045 .LASF98
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:13     .text.raw_flash_erase_handler:0000000000000000 .LFB377
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:75     .text.raw_flash_erase_handler:0000000000000028 .LFE377
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3863   .debug_str:00000000000004b2 .LASF62
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3316   .debug_loc:0000000000000205 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3327   .debug_loc:0000000000000223 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:25     .text.raw_flash_erase_handler:0000000000000008 .LBB32
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:34     .text.raw_flash_erase_handler:0000000000000010 .LBE32
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3334   .debug_loc:0000000000000236 .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:65     .text.raw_flash_erase_handler:0000000000000024 .LBB34
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:73     .text.raw_flash_erase_handler:0000000000000028 .LBE34
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3343   .debug_loc:000000000000024e .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:62     .text.raw_flash_erase_handler:0000000000000024 .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3747   .debug_str:0000000000000000 .LASF63
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:350    .text.raw_flash_write:0000000000000000 .LFB376
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:430    .text.raw_flash_write:0000000000000046 .LFE376
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3350   .debug_loc:0000000000000261 .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3897   .debug_str:0000000000000584 .LASF64
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3375   .debug_loc:000000000000029b .LLST18
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3393   .debug_loc:00000000000002c7 .LLST19
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:355    .text.raw_flash_write:0000000000000000 .LBB48
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3411   .debug_loc:00000000000002f3 .LLST20
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:384    .text.raw_flash_write:0000000000000012 .LBB54
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3418   .debug_loc:0000000000000306 .LLST21
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:415    .text.raw_flash_write:0000000000000030 .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3873   .debug_str:00000000000004f5 .LASF65
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:263    .text.raw_flash_read:0000000000000000 .LFB375
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:343    .text.raw_flash_read:0000000000000046 .LFE375
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3432   .debug_loc:0000000000000320 .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3457   .debug_loc:000000000000035a .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3475   .debug_loc:0000000000000386 .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:268    .text.raw_flash_read:0000000000000000 .LBB36
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3493   .debug_loc:00000000000003b2 .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:297    .text.raw_flash_read:0000000000000012 .LBB42
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3500   .debug_loc:00000000000003c5 .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:328    .text.raw_flash_read:0000000000000030 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3843   .debug_str:0000000000000418 .LASF67
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:210    .text.raw_flash_offset_mapping:0000000000000000 .LFB374
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:256    .text.raw_flash_offset_mapping:0000000000000050 .LFE374
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3757   .debug_str:0000000000000033 .LASF68
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3514   .debug_loc:00000000000003df .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3885   .debug_str:0000000000000547 .LASF69
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3531   .debug_loc:000000000000040a .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3777   .debug_str:00000000000000bd .LASF70
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3548   .debug_loc:0000000000000435 .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:228    .text.raw_flash_offset_mapping:0000000000000018 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:231    .text.raw_flash_offset_mapping:0000000000000020 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:236    .text.raw_flash_offset_mapping:000000000000002c .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:240    .text.raw_flash_offset_mapping:0000000000000036 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:243    .text.raw_flash_offset_mapping:000000000000003e .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:246    .text.raw_flash_offset_mapping:0000000000000046 .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3921   .debug_str:00000000000006cc .LASF71
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:154    .text.raw_flash_nodec_config:0000000000000000 .LFB373
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:203    .text.raw_flash_nodec_config:0000000000000054 .LFE373
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3909   .debug_str:000000000000064c .LASF72
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3559   .debug_loc:0000000000000453 .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3943   .debug_str:000000000000075f .LASF73
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3570   .debug_loc:0000000000000471 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3831   .debug_str:0000000000000356 .LASF74
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3581   .debug_loc:000000000000048f .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:173    .text.raw_flash_nodec_config:0000000000000018 .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:176    .text.raw_flash_nodec_config:0000000000000020 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:180    .text.raw_flash_nodec_config:000000000000002c .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:186    .text.raw_flash_nodec_config:000000000000003a .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:189    .text.raw_flash_nodec_config:0000000000000042 .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:192    .text.raw_flash_nodec_config:000000000000004a .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3829   .debug_str:000000000000033e .LASF75
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:132    .text.raw_flash_is_valid_addr:0000000000000000 .LFB372
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:147    .text.raw_flash_is_valid_addr:0000000000000010 .LFE372
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3751   .debug_str:000000000000001d .LASF76
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3598   .debug_loc:00000000000004ba .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3797   .debug_str:000000000000017c .LASF78
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3871   .debug_str:00000000000004e0 .LASF99
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3835   .debug_str:0000000000000369 .LASF77
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:82     .text.raw_flash_init:0000000000000000 .LFB369
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:91     .text.raw_flash_init:0000000000000010 .LFE369
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:89     .text.raw_flash_init:0000000000000010 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3915   .debug_str:0000000000000688 .LASF79
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3793   .debug_str:000000000000016a .LASF80
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:98     .text.raw_flash_total_size:0000000000000000 .LFB370
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:106    .text.raw_flash_total_size:0000000000000006 .LFE370
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:113    .text.raw_flash_is_valid_offset:0000000000000000 .LFB371
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:125    .text.raw_flash_is_valid_offset:000000000000000a .LFE371
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3618   .debug_loc:00000000000004ec .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3821   .debug_str:0000000000000312 .LASF81
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3929   .debug_str:0000000000000708 .LASF82
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3881   .debug_str:0000000000000523 .LASF83
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3855   .debug_str:000000000000046d .LASF84
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3841   .debug_str:000000000000040d .LASF85
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3765   .debug_str:0000000000000067 .LASF86
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3883   .debug_str:000000000000052e .LASF87
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3801   .debug_str:000000000000019b .LASF88
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3923   .debug_str:00000000000006e3 .LASF89
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3853   .debug_str:0000000000000464 .LASF90
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3807   .debug_str:00000000000001c8 .LASF91
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3785   .debug_str:0000000000000107 .LASF92
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:3845   .debug_str:0000000000000431 .LASF93
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:634    .text.raw_flash_erase:0000000000000000 .LVL67
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:660    .text.raw_flash_erase:0000000000000012 .LVL69
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:676    .text.raw_flash_erase:0000000000000020 .LVL70
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:702    .text.raw_flash_erase:0000000000000030 .LVL72
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:727    .text.raw_flash_erase:000000000000004e .LVL76
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:640    .text.raw_flash_erase:0000000000000008 .LVL68
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:691    .text.raw_flash_erase:000000000000002c .LVL71
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:711    .text.raw_flash_erase:0000000000000034 .LVL73
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:528    .text.raw_flash_erase_handler_unregister:0000000000000000 .LVL54
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:556    .text.raw_flash_erase_handler_unregister:0000000000000018 .LVL57
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:573    .text.raw_flash_erase_handler_unregister:0000000000000022 .LVL58
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:604    .text.raw_flash_erase_handler_unregister:000000000000004e .LVL63
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:609    .text.raw_flash_erase_handler_unregister:0000000000000054 .LVL64
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:612    .text.raw_flash_erase_handler_unregister:0000000000000056 .LVL65
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:539    .text.raw_flash_erase_handler_unregister:0000000000000008 .LVL55
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:547    .text.raw_flash_erase_handler_unregister:0000000000000010 .LVL56
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:594    .text.raw_flash_erase_handler_unregister:0000000000000048 .LVL61
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:600    .text.raw_flash_erase_handler_unregister:000000000000004c .LVL62
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:619    .text.raw_flash_erase_handler_unregister:0000000000000058 .LVL66
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:440    .text.raw_flash_erase_handler_register:0000000000000000 .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:468    .text.raw_flash_erase_handler_register:0000000000000018 .LVL46
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:472    .text.raw_flash_erase_handler_register:0000000000000022 .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:476    .text.raw_flash_erase_handler_register:0000000000000024 .LVL49
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:498    .text.raw_flash_erase_handler_register:000000000000003e .LVL51
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:513    .text.raw_flash_erase_handler_register:0000000000000046 .LVL53
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:455    .text.raw_flash_erase_handler_register:0000000000000010 .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:448    .text.raw_flash_erase_handler_register:0000000000000008 .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:507    .text.raw_flash_erase_handler_register:0000000000000044 .LVL52
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:17     .text.raw_flash_erase_handler:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:39     .text.raw_flash_erase_handler:0000000000000012 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:53     .text.raw_flash_erase_handler:000000000000001c .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:70     .text.raw_flash_erase_handler:0000000000000026 .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:24     .text.raw_flash_erase_handler:0000000000000008 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:32     .text.raw_flash_erase_handler:0000000000000010 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:353    .text.raw_flash_write:0000000000000000 .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:424    .text.raw_flash_write:0000000000000042 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:427    .text.raw_flash_write:0000000000000044 .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:374    .text.raw_flash_write:000000000000000a .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:383    .text.raw_flash_write:0000000000000012 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:406    .text.raw_flash_write:0000000000000024 .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:266    .text.raw_flash_read:0000000000000000 .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:337    .text.raw_flash_read:0000000000000042 .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:340    .text.raw_flash_read:0000000000000044 .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:287    .text.raw_flash_read:000000000000000a .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:296    .text.raw_flash_read:0000000000000012 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:319    .text.raw_flash_read:0000000000000024 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:213    .text.raw_flash_offset_mapping:0000000000000000 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:250    .text.raw_flash_offset_mapping:0000000000000048 .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:157    .text.raw_flash_nodec_config:0000000000000000 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:196    .text.raw_flash_nodec_config:000000000000004c .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:135    .text.raw_flash_is_valid_addr:0000000000000000 .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:140    .text.raw_flash_is_valid_addr:0000000000000006 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:144    .text.raw_flash_is_valid_addr:000000000000000e .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:116    .text.raw_flash_is_valid_offset:0000000000000000 .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:122    .text.raw_flash_is_valid_offset:0000000000000008 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:758    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:272    .text.raw_flash_read:0000000000000000 .LBE36
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:274    .text.raw_flash_read:0000000000000000 .LBB40
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:279    .text.raw_flash_read:0000000000000004 .LBE40
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:282    .text.raw_flash_read:0000000000000006 .LBB41
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:289    .text.raw_flash_read:000000000000000a .LBE41
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:301    .text.raw_flash_read:0000000000000012 .LBE42
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:306    .text.raw_flash_read:0000000000000018 .LBB46
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:311    .text.raw_flash_read:000000000000001c .LBE46
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:316    .text.raw_flash_read:0000000000000024 .LBB47
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:321    .text.raw_flash_read:0000000000000024 .LBE47
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:359    .text.raw_flash_write:0000000000000000 .LBE48
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:361    .text.raw_flash_write:0000000000000000 .LBB52
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:366    .text.raw_flash_write:0000000000000004 .LBE52
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:369    .text.raw_flash_write:0000000000000006 .LBB53
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:376    .text.raw_flash_write:000000000000000a .LBE53
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:388    .text.raw_flash_write:0000000000000012 .LBE54
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:393    .text.raw_flash_write:0000000000000018 .LBB58
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:398    .text.raw_flash_write:000000000000001c .LBE58
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:403    .text.raw_flash_write:0000000000000024 .LBB59
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:408    .text.raw_flash_write:0000000000000024 .LBE59
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:645    .text.raw_flash_erase:0000000000000008 .LBE70
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:647    .text.raw_flash_erase:0000000000000008 .LBB75
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:652    .text.raw_flash_erase:000000000000000c .LBE75
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:656    .text.raw_flash_erase:000000000000000e .LBB76
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:663    .text.raw_flash_erase:0000000000000012 .LBE76
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:679    .text.raw_flash_erase:0000000000000020 .LBB77
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:683    .text.raw_flash_erase:0000000000000020 .LBE77
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:696    .text.raw_flash_erase:000000000000002c .LBE78
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:698    .text.raw_flash_erase:000000000000002c .LBB82
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:704    .text.raw_flash_erase:0000000000000030 .LBE82
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:708    .text.raw_flash_erase:0000000000000034 .LBB83
+C:\Users\stapi\AppData\Local\Temp\ccmapeIB.s:713    .text.raw_flash_erase:0000000000000034 .LBE83
+
+UNDEFINED SYMBOLS
+__riscv_save_2
+__riscv_restore_2
+list_init
+fmc_unlock
+ob_unlock
+fmc_flag_clear
+fmc_no_rtdec_config
+ob_lock
+fmc_lock
+__riscv_save_1
+fmc_offset_region_config
+fmc_offset_value_config
+__riscv_restore_1
+__riscv_save_0
+p_rom_api
+__riscv_restore_0
+sys_malloc
+list_push_back
+__riscv_save_5
+__riscv_restore_5
+list_remove
+sys_mfree

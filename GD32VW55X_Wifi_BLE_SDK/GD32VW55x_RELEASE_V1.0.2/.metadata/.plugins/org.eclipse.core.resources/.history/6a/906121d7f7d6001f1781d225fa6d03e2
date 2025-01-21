@@ -1,0 +1,150 @@
+/*!
+    \file    main.c
+    \brief   Main loop of GD32VW55x SDK.
+
+    \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+ */
+
+/*
+    Copyright (c) 2023, GigaDevice Semiconductor Inc.
+
+    Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this
+       list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions and the following disclaimer in the documentation
+       and/or other materials provided with the distribution.
+    3. Neither the name of the copyright holder nor the names of its contributors
+       may be used to endorse or promote products derived from this software without
+       specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGE.
+ */
+
+#include <stdint.h>
+#include "wifi_export.h"
+#include "gd32vw55x_platform.h"
+#include "uart.h"
+#include "ble_init.h"
+#include "gd32vw55x.h"
+#include "wrapper_os.h"
+#include "cmd_shell.h"
+#include "atcmd.h"
+#include "util.h"
+#include "wlan_config.h"
+#include "wifi_init.h"
+#include "user_setting.h"
+#include "version.h"
+#include "_build_date.h"
+
+#include "wifi_management.h"  // Include Wi-Fi management header
+
+#ifdef CONFIG_FATFS_SUPPORT
+#include "fatfs.h"
+#endif
+#include "ble_app_config.h"
+#include "app_cmd.h"
+
+
+/**
+ ****************************************************************************************
+ * @brief Main entry point.
+ *
+ * This function is called right after the booting process has completed.
+ ****************************************************************************************
+ */
+
+#include <stdint.h>
+#include "wifi_export.h"
+#include "gd32vw55x_platform.h"
+#include "uart.h"
+#include "ble_init.h"
+#include "cmd_shell.h"
+#include "mqtt_cmd.h"
+#include "wrapper_os.h"
+
+// Define Wi-Fi credentials
+#define WIFI_SSID "Your_SSID"
+#define WIFI_PASSWORD "Your_Password"
+
+extern mqtt_client_t *mqtt_client;
+
+
+extern ip_addr_t sever_ip_addr;
+extern uint16_t port;
+
+sever_ip_addr.addr = PP_HTONL(LWIP_MAKEU32(192, 168, 1, 100)); // Broker IP
+port = 1883; // Broker Port
+
+
+
+int main(void) {
+    // Initialize platform and debug
+    platform_init();
+    dbg_print(NOTICE, "Starting BLE and MQTT example...\n");
+
+    // Initialize BLE
+    dbg_print(NOTICE, "Initializing BLE...\n");
+    // BLE initialization
+    dbg_print(NOTICE, "Initializing BLE...\n");
+    ble_init(true); // No need to check return value
+    ble_task_ready(); // Notify BLE is ready
+    dbg_print(NOTICE, "BLE initialized successfully.\n");
+
+
+    // Initialize Wi-Fi
+    dbg_print(NOTICE, "Initializing Wi-Fi...\n");
+    if (wifi_init() != 0) {
+        dbg_print(ERR, "Wi-Fi initialization failed!\n");
+        return -1;
+    }
+    dbg_print(NOTICE, "Connecting to Wi-Fi SSID: %s\n", WIFI_SSID);
+    if (wifi_management_connect(WIFI_SSID, WIFI_PASSWORD, true) != 0) {
+        dbg_print(ERR, "Wi-Fi connection failed!\n");
+        return -1;
+    }
+    dbg_print(NOTICE, "Wi-Fi connected successfully.\n");
+
+    // Initialize MQTT
+    dbg_print(NOTICE, "Initializing MQTT...\n");
+    if (mqtt_client == NULL) {
+        mqtt_client = mqtt_client_new();
+        if (mqtt_client == NULL) {
+            dbg_print(ERR, "Failed to create MQTT client.\n");
+            return -1;
+        }
+    }
+
+    // Configure and connect to MQTT broker
+    char *broker_ip = "192.168.1.100"; // Replace with actual broker IP
+    uint16_t broker_port = 1883;       // Replace with actual broker port
+    if (mqtt_connect_to_server() != 0) {
+        dbg_print(ERR, "Failed to connect to MQTT broker.\n");
+        return -1;
+    }
+    dbg_print(NOTICE, "MQTT connected successfully.\n");
+
+    // Start the OS scheduler
+    dbg_print(NOTICE, "Starting OS scheduler...\n");
+    sys_os_start();
+
+    // Main loop (optional, add further processing here)
+    while (1) {
+        // Application logic
+    }
+
+    return 0;
+}
+
+

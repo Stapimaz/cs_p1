@@ -1,0 +1,568 @@
+   1              	# 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK
+   1              	/*!
+   0              	
+   0              	
+   0              	
+   2              	    \file    start.S
+   3              	    \brief   startup functions for GD32VW55x SDK.
+   4              	
+   5              	    \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6              	*/
+   7              	
+   8              	/*
+   9              	    Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10              	
+  11              	    Redistribution and use in source and binary forms, with or without modification,
+  12              	are permitted provided that the following conditions are met:
+  13              	
+  14              	    1. Redistributions of source code must retain the above copyright notice, this
+  15              	       list of conditions and the following disclaimer.
+  16              	    2. Redistributions in binary form must reproduce the above copyright notice,
+  17              	       this list of conditions and the following disclaimer in the documentation
+  18              	       and/or other materials provided with the distribution.
+  19              	    3. Neither the name of the copyright holder nor the names of its contributors
+  20              	       may be used to endorse or promote products derived from this software without
+  21              	       specific prior written permission.
+  22              	
+  23              	    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24              	AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25              	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26              	IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27              	INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28              	NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29              	PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30              	WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31              	ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32              	OF SUCH DAMAGE.
+  33              	*/
+  34              	
+  35              	#include "riscv_encoding.h"
+   1              	/*
+   2              	 * Copyright (c) 2019 Nuclei Limited. All rights reserved.
+   3              	 *
+   4              	 * SPDX-License-Identifier: Apache-2.0
+   5              	 *
+   6              	 * Licensed under the Apache License, Version 2.0 (the License); you may
+   7              	 * not use this file except in compliance with the License.
+   8              	 * You may obtain a copy of the License at
+   9              	 *
+  10              	 * www.apache.org/licenses/LICENSE-2.0
+  11              	 *
+  12              	 * Unless required by applicable law or agreed to in writing, software
+  13              	 * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  14              	 * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15              	 * See the License for the specific language governing permissions and
+  16              	 * limitations under the License.
+  17              	 */
+  18              	#ifndef __RISCV_ENCODING_H__
+  19              	#define __RISCV_ENCODING_H__
+  20              	
+  21              	#include "riscv_bits.h"
+   1              	/*
+  22              	#ifdef __cplusplus
+  36              	
+  37              	    .section .init
+  38              	    .weak     eclic_msip_handler                # Software interrupt
+  39              	    .weak     eclic_mtip_handler                # CPU Timer interrupt
+  40              	    .weak     WWDGT_IRQHandler                  # Window Watchdog Timer interrupt
+  41              	    .weak     LVD_IRQHandler                    # LVD through EXTI Line detect
+  42              	    .weak     TAMPER_STAMP_IRQHandler           # Tamper and TimeStamp through EXTI Line detect
+  43              	    .weak     RTC_WKUP_IRQHandler               # RTC Wakeup through EXTI Line
+  44              	    .weak     FMC_IRQHandler                    # FMC
+  45              	    .weak     RCU_IRQHandler                    # RCU
+  46              	    .weak     EXTI0_IRQHandler                  # EXTI Line 0
+  47              	    .weak     EXTI1_IRQHandler                  # EXTI Line 1
+  48              	    .weak     EXTI2_IRQHandler                  # EXTI Line 2
+  49              	    .weak     EXTI3_IRQHandler                  # EXTI Line 3
+  50              	    .weak     EXTI4_IRQHandler                  # EXTI Line 4
+  51              	    .weak     DMA_Channel0_IRQHandler           # DMA Channel0
+  52              	    .weak     DMA_Channel1_IRQHandler           # DMA Channel1
+  53              	    .weak     DMA_Channel2_IRQHandler           # DMA Channel2
+  54              	    .weak     DMA_Channel3_IRQHandler           # DMA Channel3
+  55              	    .weak     DMA_Channel4_IRQHandler           # DMA Channel4
+  56              	    .weak     DMA_Channel5_IRQHandler           # DMA Channel5
+  57              	    .weak     DMA_Channel6_IRQHandler           # DMA Channel6
+  58              	    .weak     DMA_Channel7_IRQHandler           # DMA Channel7
+  59              	    .weak     ADC_IRQHandler                    # ADC
+  60              	    .weak     EXTI5_9_IRQHandler                # EXTI5 to EXTI9
+  61              	    .weak     TIMER0_BRK_IRQHandler             # TIMER0 Break
+  62              	    .weak     TIMER0_UP_IRQHandler              # TIMER0 Update
+  63              	    .weak     TIMER0_CMT_IRQHandler             # TIMER0 Commutation
+  64              	    .weak     TIMER0_Channel_IRQHandler         # TIMER0 Channel Capture Compare
+  65              	    .weak     TIMER1_IRQHandler                 # TIMER1
+  66              	    .weak     TIMER2_IRQHandler                 # TIMER2
+  67              	    .weak     I2C0_EV_IRQHandler                # I2C0 Event
+  68              	    .weak     I2C0_ER_IRQHandler                # I2C0 Error
+  69              	    .weak     I2C1_EV_IRQHandler                # I2C1 Event
+  70              	    .weak     I2C1_ER_IRQHandler                # I2C1 Error
+  71              	    .weak     SPI_IRQHandler                    # SPI
+  72              	    .weak     USART0_IRQHandler                 # USART0
+  73              	    .weak     UART1_IRQHandler                  # UART1
+  74              	    .weak     UART2_IRQHandler                  # UART2
+  75              	    .weak     EXTI10_15_IRQHandler              # EXTI10 to EXTI15
+  76              	    .weak     RTC_Alarm_IRQHandler              # RTC Alarm
+  77              	    .weak     TIMER15_IRQHandler                # TIMER15
+  78              	    .weak     TIMER16_IRQHandler                # TIMER16
+  79              	    .weak     I2C0_WKUP_IRQHandler              # I2C0 Wakeup
+  80              	    .weak     USART0_WKUP_IRQHandler            # USART0 Wakeup
+  81              	    .weak     TIMER5_IRQHandler                 # TIMER5
+  82              	    .weak     WIFI_PROT_IRQHandler              # WIFI Protocol trigger interrupt
+  83              	    .weak     WIFI_INTGEN_IRQHandler            # WIFI Intgen interrupt
+  84              	    .weak     WIFI_TX_IRQHandler                # WIFI Tx interrupt
+  85              	    .weak     WIFI_RX_IRQHandler                # WIFI Rx interrupt
+  86              	    .weak     LA_IRQHandler                     # LA interrupt
+  87              	    .weak     WIFI_WKUP_IRQHandler              # WIFI wakeup interrupt
+  88              	    .weak     BLE_WKUP_IRQHandler               # BLE wakeup interrupt
+  89              	    .weak     PLATFORM_WAKE_IRQHandler          # Platform wake interrupt
+  90              	    .weak     ISO_BT_STAMP0_IRQHandler          # ISO Bluetooth TimeStamp interrupt0
+  91              	    .weak     ISO_BT_STAMP1_IRQHandler          # ISO Bluetooth TimeStamp interrupt1
+  92              	    .weak     ISO_BT_STAMP2_IRQHandler          # ISO Bluetooth TimeStamp interrupt2
+  93              	    .weak     ISO_BT_STAMP3_IRQHandler          # ISO Bluetooth TimeStamp interrupt3
+  94              	    .weak     ISO_BT_STAMP4_IRQHandler          # ISO Bluetooth TimeStamp interrupt4
+  95              	    .weak     ISO_BT_STAMP5_IRQHandler          # ISO Bluetooth TimeStamp interrupt5
+  96              	    .weak     ISO_BT_STAMP6_IRQHandler          # ISO Bluetooth TimeStamp interrupt6
+  97              	    .weak     ISO_BT_STAMP7_IRQHandler          # ISO Bluetooth TimeStamp interrupt7
+  98              	    .weak     BLE_POWER_STATUS_IRQHandler       # BLE power status interrupt
+  99              	    .weak     CAU_IRQHandler                    # CAU
+ 100              	    .weak     HAU_TRNG_IRQHandler               # HAU and TRNG
+ 101              	    .weak     WIFI_INT_IRQHandler               # WIFI interrupt
+ 102              	    .weak     BLE_SW_TRIG_IRQHandler            # SW triggered interrupt
+ 103              	    .weak     BLE_FINE_TIMER_TARGET_IRQHandler  # Fine Timer Target interrupt
+ 104              	    .weak     BLE_STAMP_TARGET1_IRQHandler      # Timestamp Target 1 interrupt
+ 105              	    .weak     BLE_STAMP_TARGET2_IRQHandler      # Timestamp Target 2 interrupt
+ 106              	    .weak     BLE_STAMP_TARGET3_IRQHandler      # Timestamp Target 3 interrupt
+ 107              	    .weak     BLE_ENCRYPTION_ENGINE_IRQHandler  # Encryption engine Interrupt
+ 108              	    .weak     BLE_SLEEP_MODE_IRQHandler         # Sleep Mode Interrupt
+ 109              	    .weak     BLE_HALF_SLOT_IRQHandler          # Half Slot interrupt
+ 110              	    .weak     BLE_FIFO_ACTIVITY_IRQHandler      # FIFO Activity interrupt
+ 111              	    .weak     BLE_ERROR_IRQHandler              # Error Interrupt
+ 112              	    .weak     BLE_FREQ_SELECT_IRQHandler        # Frequency Selection Interrupt
+ 113              	    .weak     EFUSE_IRQHandler                  # EFUSE
+ 114              	    .weak     QSPI_IRQHandler                   # QUADSPI
+ 115              	    .weak     PKCAU_IRQHandler                  # PKCAU
+ 116              	
+ 117              	vector_base:
+ 118 0000 C1AA     	    j _start                                    /* 0: Reserved, Jump to _start when reset for vecto
+ 119 0002 0100     	    .align LOG_REGBYTES                         /*    Need to align 4 byte for RV32, 8 Byte for RV6
+ 120 0004 00000000 	    .word     0
+ 121 0008 00000000 	    .word     0
+ 122 000c 00000000 	    .word     eclic_msip_handler                # Software interrupt
+ 123 0010 00000000 	    .word     0                                 # Reserved
+ 124 0014 00000000 	    .word     0
+ 125 0018 00000000 	    .word     0
+ 126 001c 00000000 	    .word     eclic_mtip_handler                # CPU Timer interrupt
+ 127 0020 00000000 	    .word     0                                 # Reserved
+ 128 0024 00000000 	    .word     0                                 # Reserved
+ 129 0028 00000000 	    .word     0                                 # Reserved
+ 130 002c 00000000 	    .word     0                                 # Reserved
+ 131 0030 00000000 	    .word     0                                 # Reserved
+ 132 0034 00000000 	    .word     0                                 # Reserved
+ 133 0038 00000000 	    .word     0                                 # Reserved
+ 134 003c 00000000 	    .word     0                                 # Reserved
+ 135 0040 00000000 	    .word     0                                 # Reserved
+ 136 0044 00000000 	    .word     0                                 # Reserved
+ 137 0048 00000000 	    .word     0                                 # Reserved
+ 138 004c 00000000 	    .word     WWDGT_IRQHandler                  # Window Watchdog Timer
+ 139 0050 00000000 	    .word     LVD_IRQHandler                    # LVD through EXTI Line detect
+ 140 0054 00000000 	    .word     TAMPER_STAMP_IRQHandler           # Tamper and TimeStamp through EXTI Line detect
+ 141 0058 00000000 	    .word     RTC_WKUP_IRQHandler               # RTC Wakeup through EXTI Line
+ 142 005c 00000000 	    .word     FMC_IRQHandler                    # FMC
+ 143 0060 00000000 	    .word     RCU_IRQHandler                    # RCU
+ 144 0064 00000000 	    .word     EXTI0_IRQHandler                  # EXTI Line 0
+ 145 0068 00000000 	    .word     EXTI1_IRQHandler                  # EXTI Line 1
+ 146 006c 00000000 	    .word     EXTI2_IRQHandler                  # EXTI Line 2
+ 147 0070 00000000 	    .word     EXTI3_IRQHandler                  # EXTI Line 3
+ 148 0074 00000000 	    .word     EXTI4_IRQHandler                  # EXTI Line 4
+ 149 0078 00000000 	    .word     DMA_Channel0_IRQHandler           # DMA Channel0
+ 150 007c 00000000 	    .word     DMA_Channel1_IRQHandler           # DMA Channel1
+ 151 0080 00000000 	    .word     DMA_Channel2_IRQHandler           # DMA Channel2
+ 152 0084 00000000 	    .word     DMA_Channel3_IRQHandler           # DMA Channel3
+ 153 0088 00000000 	    .word     DMA_Channel4_IRQHandler           # DMA Channel4
+ 154 008c 00000000 	    .word     DMA_Channel5_IRQHandler           # DMA Channel5
+ 155 0090 00000000 	    .word     DMA_Channel6_IRQHandler           # DMA Channel6
+ 156 0094 00000000 	    .word     DMA_Channel7_IRQHandler           # DMA Channel7
+ 157 0098 00000000 	    .word     ADC_IRQHandler                    # ADC
+ 158 009c 00000000 	    .word     0                                 # Reserved
+ 159 00a0 00000000 	    .word     0                                 # Reserved
+ 160 00a4 00000000 	    .word     0                                 # Reserved
+ 161 00a8 00000000 	    .word     EXTI5_9_IRQHandler                # EXTI5 to EXTI9
+ 162 00ac 00000000 	    .word     TIMER0_BRK_IRQHandler             # TIMER0 Break
+ 163 00b0 00000000 	    .word     TIMER0_UP_IRQHandler              # TIMER0 Update
+ 164 00b4 00000000 	    .word     TIMER0_CMT_IRQHandler             # TIMER0 Commutation
+ 165 00b8 00000000 	    .word     TIMER0_Channel_IRQHandler         # TIMER0 Channel Capture Compare
+ 166 00bc 00000000 	    .word     TIMER1_IRQHandler                 # TIMER1
+ 167 00c0 00000000 	    .word     TIMER2_IRQHandler                 # TIMER2
+ 168 00c4 00000000 	    .word     0                                 # Reserved
+ 169 00c8 00000000 	    .word     I2C0_EV_IRQHandler                # I2C0 Event
+ 170 00cc 00000000 	    .word     I2C0_ER_IRQHandler                # I2C0 Error
+ 171 00d0 00000000 	    .word     I2C1_EV_IRQHandler                # I2C1 Event
+ 172 00d4 00000000 	    .word     I2C1_ER_IRQHandler                # I2C1 Error
+ 173 00d8 00000000 	    .word     SPI_IRQHandler                    # SPI
+ 174 00dc 00000000 	    .word     0                                 # Reserved
+ 175 00e0 00000000 	    .word     USART0_IRQHandler                 # USART0
+ 176 00e4 00000000 	    .word     UART1_IRQHandler                  # UART1
+ 177 00e8 00000000 	    .word     UART2_IRQHandler                  # UART2
+ 178 00ec 00000000 	    .word     EXTI10_15_IRQHandler              # EXTI10 to EXTI15
+ 179 00f0 00000000 	    .word     RTC_Alarm_IRQHandler              # RTC Alarm
+ 180 00f4 00000000 	    .word     0                                 # Reserved
+ 181 00f8 00000000 	    .word     0                                 # Reserved
+ 182 00fc 00000000 	    .word     TIMER15_IRQHandler                # TIMER15
+ 183 0100 00000000 	    .word     TIMER16_IRQHandler                # TIMER16
+ 184 0104 00000000 	    .word     0                                 # Reserved
+ 185 0108 00000000 	    .word     0                                 # Reserved
+ 186 010c 00000000 	    .word     0                                 # Reserved
+ 187 0110 00000000 	    .word     0                                 # Reserved
+ 188 0114 00000000 	    .word     0                                 # Reserved
+ 189 0118 00000000 	    .word     I2C0_WKUP_IRQHandler              # I2C0 Wakeup
+ 190 011c 00000000 	    .word     USART0_WKUP_IRQHandler            # USART0 Wakeup
+ 191 0120 00000000 	    .word     0                                 # Reserved
+ 192 0124 00000000 	    .word     TIMER5_IRQHandler                 # TIMER5
+ 193 0128 00000000 	    .word     WIFI_PROT_IRQHandler              # WIFI Protocol trigger
+ 194 012c 00000000 	    .word     WIFI_INTGEN_IRQHandler            # WIFI Intgen
+ 195 0130 00000000 	    .word     WIFI_TX_IRQHandler                # WIFI Tx
+ 196 0134 00000000 	    .word     WIFI_RX_IRQHandler                # WIFI Rx
+ 197 0138 00000000 	    .word     0                                 # Reserved
+ 198 013c 00000000 	    .word     0                                 # Reserved
+ 199 0140 00000000 	    .word     0                                 # Reserved
+ 200 0144 00000000 	    .word     0                                 # Reserved
+ 201 0148 00000000 	    .word     0                                 # Reserved
+ 202 014c 00000000 	    .word     LA_IRQHandler                     # LA interrupt
+ 203 0150 00000000 	    .word     WIFI_WKUP_IRQHandler              # WIFI wakeup interrupt
+ 204 0154 00000000 	    .word     BLE_WKUP_IRQHandler               # BLE wakeup interrupt
+ 205 0158 00000000 	    .word     PLATFORM_WAKE_IRQHandler          # Platform wake
+ 206 015c 00000000 	    .word     ISO_BT_STAMP0_IRQHandler          # ISO Bluetooth TimeStamp interrupt0
+ 207 0160 00000000 	    .word     ISO_BT_STAMP1_IRQHandler          # ISO Bluetooth TimeStamp interrupt1
+ 208 0164 00000000 	    .word     ISO_BT_STAMP2_IRQHandler          # ISO Bluetooth TimeStamp interrupt2
+ 209 0168 00000000 	    .word     ISO_BT_STAMP3_IRQHandler          # ISO Bluetooth TimeStamp interrupt3
+ 210 016c 00000000 	    .word     ISO_BT_STAMP4_IRQHandler          # ISO Bluetooth TimeStamp interrupt4
+ 211 0170 00000000 	    .word     ISO_BT_STAMP5_IRQHandler          # ISO Bluetooth TimeStamp interrupt5
+ 212 0174 00000000 	    .word     ISO_BT_STAMP6_IRQHandler          # ISO Bluetooth TimeStamp interrupt6
+ 213 0178 00000000 	    .word     ISO_BT_STAMP7_IRQHandler          # ISO Bluetooth TimeStamp interrupt7
+ 214 017c 00000000 	    .word     BLE_POWER_STATUS_IRQHandler       # BLE power status interrupt
+ 215 0180 00000000 	    .word     0                                 # Reserved
+ 216 0184 00000000 	    .word     0                                 # Reserved
+ 217 0188 00000000 	    .word     CAU_IRQHandler                    # CAU
+ 218 018c 00000000 	    .word     HAU_TRNG_IRQHandler               # HAU and TRNG
+ 219 0190 00000000 	    .word     0                                 # Reserved
+ 220 0194 00000000 	    .word     WIFI_INT_IRQHandler               # WIFI interrupt
+ 221 0198 00000000 	    .word     BLE_SW_TRIG_IRQHandler            # SW triggered interrupt
+ 222 019c 00000000 	    .word     BLE_FINE_TIMER_TARGET_IRQHandler  # Fine Timer Target interrupt
+ 223 01a0 00000000 	    .word     BLE_STAMP_TARGET1_IRQHandler      # Timestamp Target 1 interrupt
+ 224 01a4 00000000 	    .word     BLE_STAMP_TARGET2_IRQHandler      # Timestamp Target 2 interrupt
+ 225 01a8 00000000 	    .word     BLE_STAMP_TARGET3_IRQHandler      # Timestamp Target 3 interrupt
+ 226 01ac 00000000 	    .word     BLE_ENCRYPTION_ENGINE_IRQHandler  # Encryption engine Interrupt
+ 227 01b0 00000000 	    .word     BLE_SLEEP_MODE_IRQHandler         # Sleep Mode interrupt
+ 228 01b4 00000000 	    .word     BLE_HALF_SLOT_IRQHandler          # Half Slot interrupt
+ 229 01b8 00000000 	    .word     BLE_FIFO_ACTIVITY_IRQHandler      # FIFO Activity interrupt
+ 230 01bc 00000000 	    .word     BLE_ERROR_IRQHandler              # Error interrupt
+ 231 01c0 00000000 	    .word     BLE_FREQ_SELECT_IRQHandler        # Frequency Selection iterrupt
+ 232 01c4 00000000 	    .word     EFUSE_IRQHandler                  # EFUSE
+ 233 01c8 00000000 	    .word     QSPI_IRQHandler                   # QUADSPI
+ 234 01cc 00000000 	    .word     PKCAU_IRQHandler                  # PKCAU
+ 235              	    .globl _start
+ 237              	
+ 238              	_start:
+ 239              	
+ 240              	    /* Disable Global Interrupt */
+ 241 01d0 73700430 	    csrc CSR_MSTATUS, MSTATUS_MIE
+ 242              	    /* Initialize GP and Stack Pointer SP */
+ 243              	.option push
+ 244              	.option norelax
+ 245 01d4 97010000 	    la gp, __global_pointer$
+ 245      93810100 
+ 246              	.option pop
+ 247 01dc 17010000 	    la sp, _sp
+ 247      13010100 
+ 248              	
+ 249              	    /* Set the the NMI base to share with mtvec by setting CSR_MMISC_CTL */
+ 250 01e4 93020020 	    li t0, MMISC_CTL_NMI_CAUSE_FFF
+ 251 01e8 73A0027D 	    csrs CSR_MMISC_CTL, t0
+ 252              	    /* Intial the mtvt*/
+ 253 01ec 97020000 	    la t0, vector_base
+ 253      93820200 
+ 254 01f4 73907230 	    csrw CSR_MTVT, t0
+ 255              	
+ 256              	    /* Intial the mtvt2 and enable it*/
+ 257 01f8 97020000 	    la t0, irq_entry
+ 257      93820200 
+ 258 0200 7390C27E 	    csrw CSR_MTVT2, t0
+ 259 0204 73E0C07E 	    csrs CSR_MTVT2, 0x1
+ 260              	
+ 261              	    /* Intial the CSR MTVEC for the Trap and NMI base addr*/
+ 262 0208 97020000 	    la t0, exc_entry
+ 262      93820200 
+ 263 0210 73905230 	    csrw CSR_MTVEC, t0
+ 264              	
+ 265              	    /* Set the interrupt processing mode to ECLIC mode */
+ 266 0214 9302F003 	    li t0, 0x3f
+ 267 0218 73B05230 	    csrc CSR_MTVEC, t0
+ 268 021c 73E05130 	    csrs CSR_MTVEC, 0x3
+ 269              	    /* ===== Startup Stage 2 ===== */
+ 270              	#ifdef __riscv_flen
+ 271              	    /* Enable FPU */
+ 272 0220 9962     	    li t0, MSTATUS_FS
+ 273 0222 73A00230 	    csrs mstatus, t0
+ 274 0226 73103000 	    csrw fcsr, x0
+ 275              	#endif
+ 276              	
+ 277              	    /* Enable mcycle and minstret counter */
+ 278 022a 73F00232 	    csrci CSR_MCOUNTINHIBIT, 0x5
+ 279              	
+ 280              	    /* ===== Startup Stage 3 ===== */
+ 281              	    /* Load code to sram */
+ 282 022e 17050000 	    la a0, _sicode
+ 282      13050500 
+ 283 0236 97050000 	    la a1, _scode
+ 283      93850500 
+ 284 023e 17060000 	    la a2, _ecode
+ 284      13060600 
+ 285 0246 63FAC500 	    bgeu a1, a2, 2f
+ 286              	1:
+ 287 024a 83220500 	    lw t0, (a0)
+ 288 024e 23A05500 	    sw t0, (a1)
+ 289 0252 1105     	    addi a0, a0, 4
+ 290 0254 9105     	    addi a1, a1, 4
+ 291 0256 E3EAC5FE 	    bltu a1, a2, 1b
+ 292              	
+ 293              	2:
+ 294              	    /* Load data section */
+ 295 025a 17050000 	    la a0, _data_lma
+ 295      13050500 
+ 296 0262 97050000 	    la a1, _data
+ 296      93850500 
+ 297 026a 17060000 	    la a2, _edata
+ 297      13060600 
+ 298 0272 63FAC500 	    bgeu a1, a2, 2f
+ 299              	1:
+ 300 0276 83220500 	    lw t0, (a0)
+ 301 027a 23A05500 	    sw t0, (a1)
+ 302 027e 1105     	    addi a0, a0, 4
+ 303 0280 9105     	    addi a1, a1, 4
+ 304 0282 E3EAC5FE 	    bltu a1, a2, 1b
+ 305              	2:
+ 306              	    /* Clear bss section */
+ 307 0286 17050000 	    la a0, __bss_start
+ 307      13050500 
+ 308 028e 97050000 	    la a1, _end
+ 308      93850500 
+ 309 0296 6377B500 	    bgeu a0, a1, 2f
+ 310              	1:
+ 311 029a 23200500 	    sw zero, (a0)
+ 312 029e 1105     	    addi a0, a0, 4
+ 313 02a0 E36DB5FE 	    bltu a0, a1, 1b
+ 314              	2:
+ 315              	
+ 316              	    /*
+ 317              	     * Call vendor defined SystemInit to
+ 318              	     * initialize the micro-controller system
+ 319              	     */
+ 320 02a4 97000000 	    call SystemInit
+ 320      E7800000 
+ 321              	
+ 322              	    /* Call global constructors */
+ 323 02ac 17050000 	    la a0, __libc_fini_array
+ 323      13050500 
+ 324 02b4 97000000 	    call atexit
+ 324      E7800000 
+ 325              	    /* Call C/C++ constructor start up code */
+ 326 02bc 97000000 	    call __libc_init_array
+ 326      E7800000 
+ 327              	
+ 328              	    /* do pre-init steps before main */
+ 329 02c4 97000000 	    call _premain_init
+ 329      E7800000 
+ 330              	    /* ===== Call Main Function  ===== */
+ 331              	    /* argc = argv = 0 */
+ 332 02cc 0145     	    li a0, 0
+ 333 02ce 8145     	    li a1, 0
+ 334 02d0 97000000 	    call main
+ 334      E7800000 
+ 335              	    /* do post-main steps after main */
+ 336 02d8 97000000 	    call _postmain_fini
+ 336      E7800000 
+ 337              	
+ 338              	1:
+ 339 02e0 01A00000 	    j 1b
+DEFINED SYMBOLS
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:117    .init:0000000000000000 vector_base
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:238    .init:00000000000001d0 _start
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:118    .init:0000000000000000 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:241    .init:00000000000001d0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:245    .init:00000000000001d4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:247    .init:00000000000001dc .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:250    .init:00000000000001e4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:251    .init:00000000000001e8 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:253    .init:00000000000001ec .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:254    .init:00000000000001f4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:257    .init:00000000000001f8 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:258    .init:0000000000000200 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:259    .init:0000000000000204 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:262    .init:0000000000000208 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:263    .init:0000000000000210 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:266    .init:0000000000000214 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:267    .init:0000000000000218 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:268    .init:000000000000021c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:272    .init:0000000000000220 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:273    .init:0000000000000222 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:274    .init:0000000000000226 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:278    .init:000000000000022a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:282    .init:000000000000022e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:283    .init:0000000000000236 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:284    .init:000000000000023e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:285    .init:0000000000000246 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:287    .init:000000000000024a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:288    .init:000000000000024e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:289    .init:0000000000000252 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:290    .init:0000000000000254 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:291    .init:0000000000000256 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:295    .init:000000000000025a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:296    .init:0000000000000262 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:297    .init:000000000000026a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:298    .init:0000000000000272 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:300    .init:0000000000000276 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:301    .init:000000000000027a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:302    .init:000000000000027e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:303    .init:0000000000000280 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:304    .init:0000000000000282 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:307    .init:0000000000000286 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:308    .init:000000000000028e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:309    .init:0000000000000296 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:311    .init:000000000000029a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:312    .init:000000000000029e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:313    .init:00000000000002a0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:320    .init:00000000000002a4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:323    .init:00000000000002ac .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:324    .init:00000000000002b4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:326    .init:00000000000002bc .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:329    .init:00000000000002c4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:332    .init:00000000000002cc .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:333    .init:00000000000002ce .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:334    .init:00000000000002d0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:336    .init:00000000000002d8 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:339    .init:00000000000002e0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:339    .init:00000000000002e2 .L0 
+                            .init:0000000000000000 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:339    .init:00000000000002e2 .L0 
+                       .debug_str:0000000000000000 .L0 
+                       .debug_str:0000000000000075 .L0 
+                       .debug_str:00000000000000f3 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:245    .init:00000000000001d4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:247    .init:00000000000001dc .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:253    .init:00000000000001ec .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:257    .init:00000000000001f8 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:262    .init:0000000000000208 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:282    .init:000000000000022e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:283    .init:0000000000000236 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:284    .init:000000000000023e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:295    .init:000000000000025a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:296    .init:0000000000000262 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:297    .init:000000000000026a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:307    .init:0000000000000286 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:308    .init:000000000000028e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:323    .init:00000000000002ac .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:293    .init:000000000000025a .L21
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:286    .init:000000000000024a .L11
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:305    .init:0000000000000286 .L22
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:299    .init:0000000000000276 .L12
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:314    .init:00000000000002a4 .L23
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:310    .init:000000000000029a .L13
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/start.S:338    .init:00000000000002e0 .L14
+
+UNDEFINED SYMBOLS
+eclic_msip_handler
+eclic_mtip_handler
+WWDGT_IRQHandler
+LVD_IRQHandler
+TAMPER_STAMP_IRQHandler
+RTC_WKUP_IRQHandler
+FMC_IRQHandler
+RCU_IRQHandler
+EXTI0_IRQHandler
+EXTI1_IRQHandler
+EXTI2_IRQHandler
+EXTI3_IRQHandler
+EXTI4_IRQHandler
+DMA_Channel0_IRQHandler
+DMA_Channel1_IRQHandler
+DMA_Channel2_IRQHandler
+DMA_Channel3_IRQHandler
+DMA_Channel4_IRQHandler
+DMA_Channel5_IRQHandler
+DMA_Channel6_IRQHandler
+DMA_Channel7_IRQHandler
+ADC_IRQHandler
+EXTI5_9_IRQHandler
+TIMER0_BRK_IRQHandler
+TIMER0_UP_IRQHandler
+TIMER0_CMT_IRQHandler
+TIMER0_Channel_IRQHandler
+TIMER1_IRQHandler
+TIMER2_IRQHandler
+I2C0_EV_IRQHandler
+I2C0_ER_IRQHandler
+I2C1_EV_IRQHandler
+I2C1_ER_IRQHandler
+SPI_IRQHandler
+USART0_IRQHandler
+UART1_IRQHandler
+UART2_IRQHandler
+EXTI10_15_IRQHandler
+RTC_Alarm_IRQHandler
+TIMER15_IRQHandler
+TIMER16_IRQHandler
+I2C0_WKUP_IRQHandler
+USART0_WKUP_IRQHandler
+TIMER5_IRQHandler
+WIFI_PROT_IRQHandler
+WIFI_INTGEN_IRQHandler
+WIFI_TX_IRQHandler
+WIFI_RX_IRQHandler
+LA_IRQHandler
+WIFI_WKUP_IRQHandler
+BLE_WKUP_IRQHandler
+PLATFORM_WAKE_IRQHandler
+ISO_BT_STAMP0_IRQHandler
+ISO_BT_STAMP1_IRQHandler
+ISO_BT_STAMP2_IRQHandler
+ISO_BT_STAMP3_IRQHandler
+ISO_BT_STAMP4_IRQHandler
+ISO_BT_STAMP5_IRQHandler
+ISO_BT_STAMP6_IRQHandler
+ISO_BT_STAMP7_IRQHandler
+BLE_POWER_STATUS_IRQHandler
+CAU_IRQHandler
+HAU_TRNG_IRQHandler
+WIFI_INT_IRQHandler
+BLE_SW_TRIG_IRQHandler
+BLE_FINE_TIMER_TARGET_IRQHandler
+BLE_STAMP_TARGET1_IRQHandler
+BLE_STAMP_TARGET2_IRQHandler
+BLE_STAMP_TARGET3_IRQHandler
+BLE_ENCRYPTION_ENGINE_IRQHandler
+BLE_SLEEP_MODE_IRQHandler
+BLE_HALF_SLOT_IRQHandler
+BLE_FIFO_ACTIVITY_IRQHandler
+BLE_ERROR_IRQHandler
+BLE_FREQ_SELECT_IRQHandler
+EFUSE_IRQHandler
+QSPI_IRQHandler
+PKCAU_IRQHandler
+__global_pointer$
+_sp
+irq_entry
+exc_entry
+_sicode
+_scode
+_ecode
+_data_lma
+_data
+_edata
+__bss_start
+_end
+SystemInit
+__libc_fini_array
+atexit
+__libc_init_array
+_premain_init
+main
+_postmain_fini

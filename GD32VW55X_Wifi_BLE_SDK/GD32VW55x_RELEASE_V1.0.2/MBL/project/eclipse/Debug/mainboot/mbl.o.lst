@@ -1,0 +1,1751 @@
+   1              		.file	"mbl.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text._write,"ax",@progbits
+  10              		.align	1
+  11              		.globl	_write
+  13              	_write:
+  14              	.LFB375:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** /*!
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \file    mbl.c
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \brief   Main boot loader for GD32VW55x SDK
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** */
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** /*
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     Redistribution and use in source and binary forms, with or without modification,
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** are permitted provided that the following conditions are met:
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****        list of conditions and the following disclaimer.
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****        this list of conditions and the following disclaimer in the documentation
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****        and/or other materials provided with the distribution.
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****        may be used to endorse or promote products derived from this software without
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****        specific prior written permission.
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** OF SUCH DAMAGE.
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** */
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #include "platform_def.h"
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #include "mbl_includes.h"
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #include "mbedtls/entropy_poll.h"
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #include "rom_export_mbedtls.h"
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #include "rom_flash.h"
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #include "init_rom.h"
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #include <stdio.h>
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** // #define CONFIG_BYPASS_MBL
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #if CONFIG_BOARD == PLATFORM_BOARD_32VW55X_EVAL
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #define LOG_UART        UART1
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #else
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #define LOG_UART        UART2
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #endif
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** static uint8_t alloc_buf[MBL_BUF_SIZE];
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** struct rom_api_t *p_rom_api = (struct rom_api_t *)ROM_API_ARRAY_BASE;
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #if (RE_MBL_OFFSET == 0)
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** uint32_t compat_prefix[0x400] = {
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     0x0000106F, 0xFFFFFFFF, 0x47443332, 0x00000000, 0x00001000, 0x00008000, 0xFFFFFFFF, 0xFFFFFFFF,
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****  };
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #endif
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #if defined(__GNUC__)
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** int _write(int fd, char *str, int len)
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** {
+  16              		.loc 1 62 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  19 0000 17030000 		call	t0,__riscv_save_4
+  19      E7020300 
+  20              		.cfi_offset 19, -20
+  21              		.cfi_offset 18, -16
+  22              		.cfi_offset 9, -12
+  23              		.cfi_offset 8, -8
+  24              		.cfi_offset 1, -4
+  25              		.cfi_def_cfa_offset 32
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     (void)fd;
+  26              		.loc 1 63 5
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     int32_t i = 0;
+  27              		.loc 1 64 5
+  28              	.LVL1:
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Send string and return the number of characters written */
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     while (i != len) {
+  29              		.loc 1 67 5
+  30              		.loc 1 67 11
+  31 0008 39CE     		beq	a2,zero,.L6
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         while(RESET == usart_flag_get(LOG_UART, USART_FLAG_TBE));
+  32              		.loc 1 68 24 is_stmt 0
+  33 000a 37440040 		li	s0,1073758208
+  34 000e 3289     		mv	s2,a2
+  35 0010 AE89     		mv	s3,a1
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     int32_t i = 0;
+  36              		.loc 1 64 13
+  37 0012 8144     		li	s1,0
+  38              		.loc 1 68 24
+  39 0014 13040440 		addi	s0,s0,1024
+  40              	.LVL2:
+  41              	.L3:
+  42              		.loc 1 68 65 is_stmt 1 discriminator 1
+  43              		.loc 1 68 14 discriminator 1
+  44              		.loc 1 68 24 is_stmt 0 discriminator 1
+  45 0018 93057070 		li	a1,1799
+  46 001c 2285     		mv	a0,s0
+  47 001e 97000000 		call	usart_flag_get
+  47      E7800000 
+  48              	.LVL3:
+  49              		.loc 1 68 14 discriminator 1
+  50 0026 6DD9     		beq	a0,zero,.L3
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         usart_data_transmit(LOG_UART, *str);
+  51              		.loc 1 69 9 is_stmt 1
+  52              		.loc 1 69 39 is_stmt 0
+  53 0028 B3879900 		add	a5,s3,s1
+  54              		.loc 1 69 9
+  55 002c 2285     		mv	a0,s0
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         str++;
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         i++;
+  56              		.loc 1 71 10
+  57 002e 8504     		addi	s1,s1,1
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         usart_data_transmit(LOG_UART, *str);
+  58              		.loc 1 69 9
+  59 0030 83850700 		lb	a1,0(a5)
+  60 0034 B3C50508 		zext.h	a1,a1
+  61 0038 97000000 		call	usart_data_transmit
+  61      E7800000 
+  62              	.LVL4:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         str++;
+  63              		.loc 1 70 9 is_stmt 1
+  64              		.loc 1 71 9
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         while(RESET == usart_flag_get(LOG_UART, USART_FLAG_TBE));
+  65              		.loc 1 67 11
+  66 0040 E31C99FC 		bne	s2,s1,.L3
+  67              	.LVL5:
+  68              	.L2:
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     while(RESET == usart_flag_get(LOG_UART, USART_FLAG_TC));
+  69              		.loc 1 74 20 is_stmt 0
+  70 0044 37440040 		li	s0,1073758208
+  71 0048 13040440 		addi	s0,s0,1024
+  72              	.L5:
+  73              		.loc 1 74 60 is_stmt 1 discriminator 1
+  74              		.loc 1 74 10 discriminator 1
+  75              		.loc 1 74 20 is_stmt 0 discriminator 1
+  76 004c 93056070 		li	a1,1798
+  77 0050 2285     		mv	a0,s0
+  78 0052 97000000 		call	usart_flag_get
+  78      E7800000 
+  79              	.LVL6:
+  80              		.loc 1 74 10 discriminator 1
+  81 005a 6DD9     		beq	a0,zero,.L5
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     return i;
+  82              		.loc 1 76 5 is_stmt 1
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** }
+  83              		.loc 1 77 1 is_stmt 0
+  84 005c 2685     		mv	a0,s1
+  85 005e 17030000 		tail	__riscv_restore_4
+  85      67000300 
+  86              		.cfi_remember_state
+  87              		.cfi_restore 19
+  88              		.cfi_restore 18
+  89              		.cfi_restore 9
+  90              		.cfi_restore 8
+  91              		.cfi_restore 1
+  92              		.cfi_def_cfa_offset 0
+  93              	.LVL7:
+  94              	.L6:
+  95              		.cfi_restore_state
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  96              		.loc 1 64 13
+  97 0066 8144     		li	s1,0
+  98 0068 F1BF     		j	.L2
+  99              		.cfi_endproc
+ 100              	.LFE375:
+ 102              		.section	.text.log_uart_idle_wait,"ax",@progbits
+ 103              		.align	1
+ 104              		.globl	log_uart_idle_wait
+ 106              	log_uart_idle_wait:
+ 107              	.LFB377:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #endif
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** /*!
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \brief      initialize usart
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[in]  none
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[out] none
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \retval     none
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** */
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** static void log_uart_init(void)
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** {
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     uint32_t usart_periph = LOG_UART;
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (usart_periph == UART2) {
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_UART2);
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_GPIOA);
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_af_set(GPIOA, GPIO_AF_10, GPIO_PIN_6);  // UART2 TX
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_af_set(GPIOA, GPIO_AF_8, GPIO_PIN_7);   // UART2 RX
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO_PIN_6);
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_output_options_set(GPIOA, GPIO_OTYPE_PP, GPIO_OSPEED_25MHZ, GPIO_PIN_6);
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO_PIN_7);
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_output_options_set(GPIOA, GPIO_OTYPE_PP, GPIO_OSPEED_25MHZ, GPIO_PIN_7);
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else if (usart_periph == UART1) {
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_GPIOA);
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_GPIOB);
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_UART1);
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_af_set(GPIOB, GPIO_AF_7, GPIO_PIN_15);  // UART1 TX
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_af_set(GPIOA, GPIO_AF_3, GPIO_PIN_8);   // UART1 RX
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO_PIN_8);
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_output_options_set(GPIOA, GPIO_OTYPE_PP, GPIO_OSPEED_25MHZ, GPIO_PIN_8);
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_mode_set(GPIOB, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO_PIN_15);
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_output_options_set(GPIOB, GPIO_OTYPE_PP, GPIO_OSPEED_25MHZ, GPIO_PIN_15);
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else if (usart_periph == USART0) {
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_USART0);
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_GPIOA);
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_GPIOB);
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_af_set(GPIOA, GPIO_AF_2, GPIO_PIN_8);   // UART0 TX
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_af_set(GPIOB, GPIO_AF_8, GPIO_PIN_15);  // UART0 RX
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO_PIN_8);
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_output_options_set(GPIOA, GPIO_OTYPE_PP, GPIO_OSPEED_25MHZ, GPIO_PIN_8);
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_mode_set(GPIOB, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO_PIN_15);
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_output_options_set(GPIOB, GPIO_OTYPE_PP, GPIO_OSPEED_25MHZ, GPIO_PIN_15);
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else {
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         return;
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_deinit(usart_periph);
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_baudrate_set(usart_periph, 115200U);
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_receive_config(usart_periph, USART_RECEIVE_ENABLE);
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_transmit_config(usart_periph, USART_TRANSMIT_ENABLE);
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_interrupt_enable(usart_periph, USART_INT_RBNE);
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_enable(usart_periph);
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** }
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** /*!
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \brief      wait usart transmit complete
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[in]  none
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[out] none
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \retval     none
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** */
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** void log_uart_idle_wait(void)
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** {
+ 108              		.loc 1 139 1 is_stmt 1
+ 109              		.cfi_startproc
+ 110 0000 17030000 		call	t0,__riscv_save_1
+ 110      E7020300 
+ 111              		.cfi_offset 8, -8
+ 112              		.cfi_offset 1, -4
+ 113              		.cfi_def_cfa_offset 16
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     while (RESET == usart_flag_get(LOG_UART, USART_FLAG_TC));
+ 114              		.loc 1 140 5
+ 115              		.loc 1 140 21 is_stmt 0
+ 116 0008 37440040 		li	s0,1073758208
+ 117 000c 13040440 		addi	s0,s0,1024
+ 118              	.L15:
+ 119              		.loc 1 140 61 is_stmt 1 discriminator 1
+ 120              		.loc 1 140 11 discriminator 1
+ 121              		.loc 1 140 21 is_stmt 0 discriminator 1
+ 122 0010 93056070 		li	a1,1798
+ 123 0014 2285     		mv	a0,s0
+ 124 0016 97000000 		call	usart_flag_get
+ 124      E7800000 
+ 125              	.LVL8:
+ 126              		.loc 1 140 11 discriminator 1
+ 127 001e 6DD9     		beq	a0,zero,.L15
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** }
+ 128              		.loc 1 141 1
+ 129 0020 17030000 		tail	__riscv_restore_1
+ 129      67000300 
+ 130              		.cfi_restore 8
+ 131              		.cfi_restore 1
+ 132              		.cfi_def_cfa_offset 0
+ 133              		.cfi_endproc
+ 134              	.LFE377:
+ 136              		.section	.text.flash_offset_mapping,"ax",@progbits
+ 137              		.align	1
+ 138              		.globl	flash_offset_mapping
+ 140              	flash_offset_mapping:
+ 141              	.LFB378:
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** /*!
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \brief      mapping flash offset
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[in]  none
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[out] none
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \retval     none
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** */
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** void flash_offset_mapping(void)
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** {
+ 142              		.loc 1 150 1 is_stmt 1
+ 143              		.cfi_startproc
+ 144 0000 17030000 		call	t0,__riscv_save_0
+ 144      E7020300 
+ 145              		.cfi_offset 1, -4
+ 146              		.cfi_def_cfa_offset 16
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     fmc_unlock();
+ 147              		.loc 1 151 5
+ 148 0008 97000000 		call	fmc_unlock
+ 148      E7800000 
+ 149              	.LVL9:
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     ob_unlock();
+ 150              		.loc 1 152 5
+ 151 0010 97000000 		call	ob_unlock
+ 151      E7800000 
+ 152              	.LVL10:
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     fmc_offset_region_config(RE_IMG_0_OFFSET >> 12, (RE_IMG_1_OFFSET >> 12) - 1);
+ 153              		.loc 1 153 5
+ 154 0018 9305F01D 		li	a1,479
+ 155 001c 2945     		li	a0,10
+ 156 001e 97000000 		call	fmc_offset_region_config
+ 156      E7800000 
+ 157              	.LVL11:
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     fmc_offset_value_config((RE_IMG_1_OFFSET - RE_IMG_0_OFFSET) >> 12);
+ 158              		.loc 1 154 5
+ 159 0026 1305601D 		li	a0,470
+ 160 002a 97000000 		call	fmc_offset_value_config
+ 160      E7800000 
+ 161              	.LVL12:
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     ob_lock();
+ 162              		.loc 1 155 5
+ 163 0032 97000000 		call	ob_lock
+ 163      E7800000 
+ 164              	.LVL13:
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     fmc_lock();
+ 165              		.loc 1 156 5
+ 166 003a 97000000 		call	fmc_lock
+ 166      E7800000 
+ 167              	.LVL14:
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** }
+ 168              		.loc 1 157 1 is_stmt 0
+ 169 0042 17030000 		tail	__riscv_restore_0
+ 169      67000300 
+ 170              		.cfi_restore 1
+ 171              		.cfi_def_cfa_offset 0
+ 172              		.cfi_endproc
+ 173              	.LFE378:
+ 175              		.section	.text.reloc_iv,"ax",@progbits
+ 176              		.align	1
+ 177              		.globl	reloc_iv
+ 179              	reloc_iv:
+ 180              	.LFB380:
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** /*!
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \brief      deinitialize mbedtls
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[in]  none
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[out] none
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \retval     none
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** */
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** static void mbedtls_deinit(void)
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** {
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     mbedtls_platform_set_calloc_free(NULL, NULL);
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     mbedtls_platform_set_snprintf(NULL);
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     mbedtls_platform_set_printf(NULL);
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** }
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** /*!
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \brief      jump to main image
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[in]  to_nsec: decide jujmp to non-secure or secure
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[in]  msp: main stack pointer
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[in]  reset: reset handler
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[out] none
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \retval     none
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** */
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** void reloc_iv(const uint32_t *address)
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** {
+ 181              		.loc 1 181 1 is_stmt 1
+ 182              		.cfi_startproc
+ 183              	.LVL15:
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     __asm volatile("csrw mtvec, %0":: "r"(address + 1));
+ 184              		.loc 1 182 5
+ 185              		.loc 1 182 51 is_stmt 0
+ 186 0000 1105     		addi	a0,a0,4
+ 187              	.LVL16:
+ 188              		.loc 1 182 5
+ 189              	 #APP
+ 190              	# 182 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MB
+ 183              	}
+ 191              		csrw mtvec, a0
+ 192              	# 0 "" 2
+ 193              		.loc 1 183 1
+ 194              	 #NO_APP
+ 195 0006 8280     		ret
+ 196              		.cfi_endproc
+ 197              	.LFE380:
+ 199              		.section	.rodata.main.str1.4,"aMS",@progbits,1
+ 200              		.align	2
+ 201              	.LC0:
+ 202 0000 4D424C3A 		.string	"MBL: First print.\r\n"
+ 202      20466972 
+ 202      73742070 
+ 202      72696E74 
+ 202      2E0D0A00 
+ 203              		.align	2
+ 204              	.LC1:
+ 205 0014 4E6F2069 		.string	"No image to boot (ret = %d).\r\n"
+ 205      6D616765 
+ 205      20746F20 
+ 205      626F6F74 
+ 205      20287265 
+ 206 0033 00       		.align	2
+ 207              	.LC2:
+ 208 0034 4D424C3A 		.string	"MBL: Boot from Image %d.\r\n"
+ 208      20426F6F 
+ 208      74206672 
+ 208      6F6D2049 
+ 208      6D616765 
+ 209 004f 00       		.align	2
+ 210              	.LC3:
+ 211 0050 56616C69 		.string	"Validate Image %d failed (ret = %d).\r\n"
+ 211      64617465 
+ 211      20496D61 
+ 211      67652025 
+ 211      64206661 
+ 212 0077 00       		.align	2
+ 213              	.LC4:
+ 214 0078 4D424C3A 		.string	"MBL: Validate Image %d OK.\r\n"
+ 214      2056616C 
+ 214      69646174 
+ 214      6520496D 
+ 214      61676520 
+ 215 0095 000000   		.align	2
+ 216              	.LC5:
+ 217 0098 4D424C3A 		.string	"MBL: Jump to Main Image (0x%08x).\r\n"
+ 217      204A756D 
+ 217      7020746F 
+ 217      204D6169 
+ 217      6E20496D 
+ 218              		.section	.text.startup.main,"ax",@progbits
+ 219              		.align	1
+ 220              		.globl	main
+ 222              	main:
+ 223              	.LFB382:
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** static void jump_to_main_image(uint32_t start_addr)
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** {
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #if 1
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* workaround for long jump */
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     __asm volatile("la    a2, reloc_iv;" \
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****                  "jalr  a2" ::: "a2");
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #else
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     reloc_iv(app_offset);
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #endif
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     __asm volatile("jr %0":: "r"((uint8_t *)(start_addr)));
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** }
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** /*!
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \brief      main function
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[in]  none
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \param[out] none
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     \retval     none
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** */
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** int main(void)
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** {
+ 224              		.loc 1 204 1 is_stmt 1
+ 225              		.cfi_startproc
+ 226 0000 17030000 		call	t0,__riscv_save_2
+ 226      E7020300 
+ 227              		.cfi_offset 9, -12
+ 228              		.cfi_offset 8, -8
+ 229              		.cfi_offset 1, -4
+ 230              		.cfi_def_cfa_offset 16
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     uint32_t start_addr;
+ 231              		.loc 1 205 5
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** #ifndef CONFIG_BYPASS_MBL
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     struct ibl_state_t ibl_state;
+ 232              		.loc 1 207 5
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     uint32_t boot_idx = 0, image_offset = 0;
+ 233              		.loc 1 208 5
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     uint32_t start_addr;
+ 234              		.loc 1 204 1 is_stmt 0
+ 235 0008 7171     		addi	sp,sp,-176
+ 236              		.cfi_def_cfa_offset 192
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     int secure_boot = 1;
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     uint8_t val;
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     int ret;
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Read Initial boot state from shared SRAM */
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     memcpy(&ibl_state, (void *)IBL_SHARED_DATA_START, sizeof(struct ibl_state_t));
+ 237              		.loc 1 214 5
+ 238 000a B7060020 		li	a3,536870912
+ 239 000e 93870620 		addi	a5,a3,512
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     int secure_boot = 1;
+ 240              		.loc 1 208 14
+ 241 0012 02C4     		sw	zero,8(sp)
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     int secure_boot = 1;
+ 242              		.loc 1 208 28
+ 243 0014 02C6     		sw	zero,12(sp)
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     int secure_boot = 1;
+ 244              		.loc 1 209 5 is_stmt 1
+ 245              	.LVL17:
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     int ret;
+ 246              		.loc 1 210 5
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 247              		.loc 1 211 5
+ 248              		.loc 1 214 5
+ 249 0016 1808     		addi	a4,sp,16
+ 250 0018 9386062A 		addi	a3,a3,672
+ 251              	.L23:
+ 252 001c 03A80700 		lw	a6,0(a5)
+ 253 0020 C843     		lw	a0,4(a5)
+ 254 0022 8C47     		lw	a1,8(a5)
+ 255 0024 D047     		lw	a2,12(a5)
+ 256 0026 23200701 		sw	a6,0(a4)
+ 257 002a 48C3     		sw	a0,4(a4)
+ 258 002c 0CC7     		sw	a1,8(a4)
+ 259 002e 50C7     		sw	a2,12(a4)
+ 260 0030 C107     		addi	a5,a5,16
+ 261 0032 4107     		addi	a4,a4,16
+ 262 0034 E394D7FE 		bne	a5,a3,.L23
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (ibl_state.magic != IBL_STATE_MAGIC_CODE) { /* Not boot from ROM */
+ 263              		.loc 1 215 5
+ 264              		.loc 1 215 8 is_stmt 0
+ 265 0038 4247     		lw	a4,16(sp)
+ 266 003a B7C7CEBA 		li	a5,-1160855552
+ 267 003e 9387E70D 		addi	a5,a5,222
+ 268 0042 631FF71E 		bne	a4,a5,.L24
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         secure_boot = 0;
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         memset((void *)IBL_DATA_START, 0, IBL_DATA_SIZE);
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         memset(&ibl_state, 0, sizeof(struct ibl_state_t));
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Initialize ROM symbols */
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     rom_symbol_init();
+ 269              		.loc 1 222 5 is_stmt 1
+ 270 0046 97000000 		call	rom_symbol_init
+ 270      E7800000 
+ 271              	.LVL18:
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Used for image x validation */
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     mbedtls_memory_buffer_alloc_init(alloc_buf, sizeof(alloc_buf));
+ 272              		.loc 1 225 5
+ 273 004e 37050000 		lui	a0,%hi(alloc_buf)
+ 274 0052 8D65     		li	a1,12288
+ 275 0054 13050500 		addi	a0,a0,%lo(alloc_buf)
+ 276 0058 37040000 		lui	s0,%hi(.LANCHOR0)
+ 277 005c 97000000 		call	mbedtls_memory_buffer_alloc_init
+ 277      E7800000 
+ 278              	.LVL19:
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Not boot from ROM */
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (secure_boot == 0) {
+ 279              		.loc 1 228 5
+ 280 0064 13040400 		addi	s0,s0,%lo(.LANCHOR0)
+ 281              	.LVL20:
+ 282              	.L25:
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_PKCAU);
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_CAU);
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_HAU);
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_sys_status_check();
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_log_uart_set(LOG_UART);
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         ret = rom_sys_status_get(SYS_TRACE_LEVEL, LEN_SYS_TRACE_LEVEL, &val);
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         if (ret == SYS_STATUS_OK) {
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****             rom_sys_set_trace_level(val);
+ 238:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         } else {
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****             rom_sys_set_trace_level(ROM_INFO);
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         }
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         mbedtls_platform_set_hardware_poll(rom_hardware_poll);
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 244:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         /* Others */
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         mbedtls_ecp_curve_val_init();
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 247:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 248:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Reinitialize uart since system clock source changed from IRC16M to HXTAL40M */
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     log_uart_init();
+ 283              		.loc 1 249 5
+ 284              	.LBB10:
+ 285              	.LBB11:
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 286              		.loc 1 88 5
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_UART2);
+ 287              		.loc 1 90 5
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_GPIOA);
+ 288              		.loc 1 99 12
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_GPIOB);
+ 289              		.loc 1 100 9
+ 290 0068 8564     		li	s1,4096
+ 291 006a 138504C0 		addi	a0,s1,-1024
+ 292 006e 97000000 		call	rcu_periph_clock_enable
+ 292      E7800000 
+ 293              	.LVL21:
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_UART1);
+ 294              		.loc 1 101 9
+ 295 0076 138514C0 		addi	a0,s1,-1023
+ 296 007a 97000000 		call	rcu_periph_clock_enable
+ 296      E7800000 
+ 297              	.LVL22:
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_af_set(GPIOB, GPIO_AF_7, GPIO_PIN_15);  // UART1 TX
+ 298              		.loc 1 102 9
+ 299 0082 13851401 		addi	a0,s1,17
+ 300 0086 97000000 		call	rcu_periph_clock_enable
+ 300      E7800000 
+ 301              	.LVL23:
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_af_set(GPIOA, GPIO_AF_3, GPIO_PIN_8);   // UART1 RX
+ 302              		.loc 1 103 9
+ 303 008e B7040240 		li	s1,1073872896
+ 304 0092 13850440 		addi	a0,s1,1024
+ 305 0096 2166     		li	a2,32768
+ 306 0098 9D45     		li	a1,7
+ 307 009a 97000000 		call	gpio_af_set
+ 307      E7800000 
+ 308              	.LVL24:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO_PIN_8);
+ 309              		.loc 1 104 9
+ 310 00a2 13060010 		li	a2,256
+ 311 00a6 8D45     		li	a1,3
+ 312 00a8 37050240 		li	a0,1073872896
+ 313 00ac 97000000 		call	gpio_af_set
+ 313      E7800000 
+ 314              	.LVL25:
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_output_options_set(GPIOA, GPIO_OTYPE_PP, GPIO_OSPEED_25MHZ, GPIO_PIN_8);
+ 315              		.loc 1 105 9
+ 316 00b4 93060010 		li	a3,256
+ 317 00b8 0146     		li	a2,0
+ 318 00ba 8945     		li	a1,2
+ 319 00bc 37050240 		li	a0,1073872896
+ 320 00c0 97000000 		call	gpio_mode_set
+ 320      E7800000 
+ 321              	.LVL26:
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_mode_set(GPIOB, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO_PIN_15);
+ 322              		.loc 1 106 9
+ 323 00c8 93060010 		li	a3,256
+ 324 00cc 0946     		li	a2,2
+ 325 00ce 8145     		li	a1,0
+ 326 00d0 37050240 		li	a0,1073872896
+ 327 00d4 97000000 		call	gpio_output_options_set
+ 327      E7800000 
+ 328              	.LVL27:
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         gpio_output_options_set(GPIOB, GPIO_OTYPE_PP, GPIO_OSPEED_25MHZ, GPIO_PIN_15);
+ 329              		.loc 1 107 9
+ 330 00dc 13850440 		addi	a0,s1,1024
+ 331 00e0 A166     		li	a3,32768
+ 332 00e2 0146     		li	a2,0
+ 333 00e4 8945     		li	a1,2
+ 334 00e6 97000000 		call	gpio_mode_set
+ 334      E7800000 
+ 335              	.LVL28:
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else if (usart_periph == USART0) {
+ 336              		.loc 1 108 9
+ 337 00ee A166     		li	a3,32768
+ 338 00f0 0946     		li	a2,2
+ 339 00f2 8145     		li	a1,0
+ 340 00f4 13850440 		addi	a0,s1,1024
+ 341 00f8 97000000 		call	gpio_output_options_set
+ 341      E7800000 
+ 342              	.LVL29:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_baudrate_set(usart_periph, 115200U);
+ 343              		.loc 1 123 5
+ 344 0100 B7440040 		li	s1,1073758208
+ 345 0104 13850440 		addi	a0,s1,1024
+ 346 0108 97000000 		call	usart_deinit
+ 346      E7800000 
+ 347              	.LVL30:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_receive_config(usart_periph, USART_RECEIVE_ENABLE);
+ 348              		.loc 1 124 5
+ 349 0110 F165     		li	a1,114688
+ 350 0112 93850520 		addi	a1,a1,512
+ 351 0116 13850440 		addi	a0,s1,1024
+ 352 011a 97000000 		call	usart_baudrate_set
+ 352      E7800000 
+ 353              	.LVL31:
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_transmit_config(usart_periph, USART_TRANSMIT_ENABLE);
+ 354              		.loc 1 125 5
+ 355 0122 9145     		li	a1,4
+ 356 0124 13850440 		addi	a0,s1,1024
+ 357 0128 97000000 		call	usart_receive_config
+ 357      E7800000 
+ 358              	.LVL32:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     usart_interrupt_enable(usart_periph, USART_INT_RBNE);
+ 359              		.loc 1 126 5
+ 360 0130 A145     		li	a1,8
+ 361 0132 13850440 		addi	a0,s1,1024
+ 362 0136 97000000 		call	usart_transmit_config
+ 362      E7800000 
+ 363              	.LVL33:
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 364              		.loc 1 127 5
+ 365 013e 9545     		li	a1,5
+ 366 0140 13850440 		addi	a0,s1,1024
+ 367 0144 97000000 		call	usart_interrupt_enable
+ 367      E7800000 
+ 368              	.LVL34:
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** }
+ 369              		.loc 1 129 5
+ 370 014c 13850440 		addi	a0,s1,1024
+ 371 0150 97000000 		call	usart_enable
+ 371      E7800000 
+ 372              	.LVL35:
+ 373              	.LBE11:
+ 374              	.LBE10:
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 251:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     rom_trace_ex(ROM_ALWAYS, "MBL: First print.\r\n");
+ 375              		.loc 1 251 5
+ 376 0158 1C40     		lw	a5,0(s0)
+ 377 015a B7050000 		lui	a1,%hi(.LC0)
+ 378 015e 93850500 		addi	a1,a1,%lo(.LC0)
+ 379 0162 DC43     		lw	a5,4(a5)
+ 380 0164 0545     		li	a0,1
+ 381 0166 8297     		jalr	a5
+ 382              	.LVL36:
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 253:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Find the correct image to boot, Image 0 or Image 1 */
+ 254:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     ret = boot_image_find(&boot_idx, &image_offset);
+ 383              		.loc 1 254 5
+ 384              		.loc 1 254 11 is_stmt 0
+ 385 0168 6C00     		addi	a1,sp,12
+ 386 016a 2800     		addi	a0,sp,8
+ 387 016c 97000000 		call	boot_image_find
+ 387      E7800000 
+ 388              	.LVL37:
+ 255:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (ret < 0) {
+ 389              		.loc 1 255 5 is_stmt 1
+ 256:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_trace_ex(ROM_ERR, "No image to boot (ret = %d).\r\n", ret);
+ 390              		.loc 1 256 9 is_stmt 0
+ 391 0174 1C40     		lw	a5,0(s0)
+ 255:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (ret < 0) {
+ 392              		.loc 1 255 8
+ 393 0176 634C0516 		blt	a0,zero,.L38
+ 257:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         goto BootFailed;
+ 258:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else {
+ 259:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_trace_ex(ROM_ALWAYS, "MBL: Boot from Image %d.\r\n", boot_idx);
+ 394              		.loc 1 259 9 is_stmt 1
+ 395 017a DC43     		lw	a5,4(a5)
+ 396 017c 2246     		lw	a2,8(sp)
+ 397 017e B7050000 		lui	a1,%hi(.LC2)
+ 398 0182 93850500 		addi	a1,a1,%lo(.LC2)
+ 399 0186 0545     		li	a0,1
+ 400              	.LVL38:
+ 401 0188 8297     		jalr	a5
+ 402              	.LVL39:
+ 260:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 262:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* If boot from Image 1, config offset mapping */
+ 263:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (boot_idx == IMAGE_1) {
+ 403              		.loc 1 263 5
+ 404              		.loc 1 263 8 is_stmt 0
+ 405 018a 2247     		lw	a4,8(sp)
+ 406 018c 8547     		li	a5,1
+ 407 018e 6300F71A 		beq	a4,a5,.L39
+ 408              	.L30:
+ 264:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         flash_offset_mapping();
+ 265:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 266:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 267:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Use HAU DMA to accelerate digest calculation */
+ 268:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     rcu_periph_clock_enable(RCU_DMA);
+ 409              		.loc 1 268 5 is_stmt 1
+ 410 0192 0565     		li	a0,4096
+ 411 0194 130555C1 		addi	a0,a0,-1003
+ 412 0198 97000000 		call	rcu_periph_clock_enable
+ 412      E7800000 
+ 413              	.LVL40:
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     rom_digest_haudma_en(1);
+ 414              		.loc 1 269 5
+ 415 01a0 1C40     		lw	a5,0(s0)
+ 416 01a2 0545     		li	a0,1
+ 417 01a4 BC5B     		lw	a5,112(a5)
+ 418 01a6 8297     		jalr	a5
+ 419              	.LVL41:
+ 270:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 271:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Verify Image */
+ 272:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     ret = image_x_validate((image_offset - sizeof(struct image_header)), ibl_state.rotpk_hash, ibl_
+ 420              		.loc 1 272 5
+ 421              		.loc 1 272 11 is_stmt 0
+ 422 01a8 3245     		lw	a0,12(sp)
+ 423 01aa 03460102 		lbu	a2,32(sp)
+ 424 01ae 4C10     		addi	a1,sp,36
+ 425 01b0 0115     		addi	a0,a0,-32
+ 426 01b2 97000000 		call	image_x_validate
+ 426      E7800000 
+ 427              	.LVL42:
+ 273:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (ret < 0) {
+ 428              		.loc 1 273 5 is_stmt 1
+ 274:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_trace_ex(ROM_ERR, "Validate Image %d failed (ret = %d).\r\n", boot_idx, ret);
+ 429              		.loc 1 274 9 is_stmt 0
+ 430 01ba 1C40     		lw	a5,0(s0)
+ 431 01bc 2246     		lw	a2,8(sp)
+ 432 01be DC43     		lw	a5,4(a5)
+ 273:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (ret < 0) {
+ 433              		.loc 1 273 8
+ 434 01c0 63440514 		blt	a0,zero,.L40
+ 275:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_sys_set_img_flag(boot_idx, IMG_FLAG_VERIFY_MASK, IMG_FLAG_VERIFY_FAIL);
+ 276:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         goto BootFailed;
+ 277:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else {
+ 278:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_trace_ex(ROM_ALWAYS, "MBL: Validate Image %d OK.\r\n", boot_idx);
+ 435              		.loc 1 278 9 is_stmt 1
+ 436 01c4 B7050000 		lui	a1,%hi(.LC4)
+ 437 01c8 93850500 		addi	a1,a1,%lo(.LC4)
+ 438 01cc 0545     		li	a0,1
+ 439              	.LVL43:
+ 440 01ce 8297     		jalr	a5
+ 441              	.LVL44:
+ 279:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 280:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 281:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Update Image status and Running Image flag */
+ 282:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     rom_sys_set_img_flag(boot_idx, IMG_FLAG_VERIFY_MASK, IMG_FLAG_VERIFY_OK);
+ 442              		.loc 1 282 5
+ 443 01d0 1C40     		lw	a5,0(s0)
+ 444 01d2 03458100 		lbu	a0,8(sp)
+ 445 01d6 0946     		li	a2,2
+ 446 01d8 BC43     		lw	a5,64(a5)
+ 447 01da 9945     		li	a1,6
+ 283:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     rom_sys_set_running_img(boot_idx);
+ 284:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 285:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     mbedtls_deinit();
+ 286:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 287:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     start_addr = FLASH_BASE + image_offset;
+ 448              		.loc 1 287 16 is_stmt 0
+ 449 01dc B7040008 		li	s1,134217728
+ 282:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     rom_sys_set_running_img(boot_idx);
+ 450              		.loc 1 282 5
+ 451 01e0 8297     		jalr	a5
+ 452              	.LVL45:
+ 283:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     rom_sys_set_running_img(boot_idx);
+ 453              		.loc 1 283 5 is_stmt 1
+ 454 01e2 1C40     		lw	a5,0(s0)
+ 455 01e4 03458100 		lbu	a0,8(sp)
+ 456 01e8 BC47     		lw	a5,72(a5)
+ 457 01ea 8297     		jalr	a5
+ 458              	.LVL46:
+ 285:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 459              		.loc 1 285 5
+ 460              	.LBB12:
+ 461              	.LBB13:
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     mbedtls_platform_set_snprintf(NULL);
+ 462              		.loc 1 167 5
+ 463 01ec 8145     		li	a1,0
+ 464 01ee 0145     		li	a0,0
+ 465 01f0 97000000 		call	mbedtls_platform_set_calloc_free
+ 465      E7800000 
+ 466              	.LVL47:
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     mbedtls_platform_set_printf(NULL);
+ 467              		.loc 1 168 5
+ 468 01f8 0145     		li	a0,0
+ 469 01fa 97000000 		call	mbedtls_platform_set_snprintf
+ 469      E7800000 
+ 470              	.LVL48:
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** }
+ 471              		.loc 1 169 5
+ 472 0202 0145     		li	a0,0
+ 473 0204 97000000 		call	mbedtls_platform_set_printf
+ 473      E7800000 
+ 474              	.LVL49:
+ 475              	.LBE13:
+ 476              	.LBE12:
+ 477              		.loc 1 287 5
+ 478              		.loc 1 287 16 is_stmt 0
+ 479 020c B246     		lw	a3,12(sp)
+ 288:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (boot_idx == IMAGE_1) {
+ 480              		.loc 1 288 8
+ 481 020e 2247     		lw	a4,8(sp)
+ 482 0210 8547     		li	a5,1
+ 287:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     if (boot_idx == IMAGE_1) {
+ 483              		.loc 1 287 16
+ 484 0212 B694     		add	s1,s1,a3
+ 485              	.LVL50:
+ 486              		.loc 1 288 5 is_stmt 1
+ 487              		.loc 1 288 8 is_stmt 0
+ 488 0214 6306F70E 		beq	a4,a5,.L41
+ 289:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_trace_ex(ROM_ALWAYS, "MBL: Jump to Main Image (0x%08x).\r\n", FLASH_BASE + RE_IMG_1_OFF
+ 290:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else {
+ 291:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_trace_ex(ROM_ALWAYS, "MBL: Jump to Main Image (0x%08x).\r\n", start_addr);
+ 489              		.loc 1 291 9 is_stmt 1
+ 490 0218 1C40     		lw	a5,0(s0)
+ 491 021a 2686     		mv	a2,s1
+ 492              	.L37:
+ 493 021c DC43     		lw	a5,4(a5)
+ 494 021e B7050000 		lui	a1,%hi(.LC5)
+ 495 0222 93850500 		addi	a1,a1,%lo(.LC5)
+ 496 0226 0545     		li	a0,1
+ 497 0228 8297     		jalr	a5
+ 498              	.LVL51:
+ 292:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 293:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     log_uart_idle_wait();
+ 499              		.loc 1 293 5
+ 500 022a 97000000 		call	log_uart_idle_wait
+ 500      E7800000 
+ 501              	.LVL52:
+ 294:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 295:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     /* Jump to main image */
+ 296:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     jump_to_main_image(start_addr);
+ 502              		.loc 1 296 5
+ 503              	.LBB14:
+ 504              	.LBB15:
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****                  "jalr  a2" ::: "a2");
+ 505              		.loc 1 189 5
+ 506              	 #APP
+ 507              	# 189 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MB
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** }
+ 508              		la    a2, reloc_iv;jalr  a2
+ 509              	# 0 "" 2
+ 510              		.loc 1 194 5
+ 511              	# 194 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MB
+ 512              		jr s1
+ 513              	# 0 "" 2
+ 514              	.L29:
+ 515              	.LVL53:
+ 516              	 #NO_APP
+ 517              	.L35:
+ 518              	.LBE15:
+ 519              	.LBE14:
+ 297:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 298:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** BootFailed:
+ 299:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     while(1);
+ 520              		.loc 1 299 5 discriminator 1
+ 521              		.loc 1 299 13 discriminator 1
+ 522              		.loc 1 299 10 discriminator 1
+ 523              		.loc 1 299 5 discriminator 1
+ 524              		.loc 1 299 13 discriminator 1
+ 525              		.loc 1 299 10 discriminator 1
+ 526 023e 01A0     		j	.L35
+ 527              	.LVL54:
+ 528              	.L24:
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         memset((void *)IBL_DATA_START, 0, IBL_DATA_SIZE);
+ 529              		.loc 1 216 9
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         memset(&ibl_state, 0, sizeof(struct ibl_state_t));
+ 530              		.loc 1 217 9
+ 531 0240 13060020 		li	a2,512
+ 532 0244 8145     		li	a1,0
+ 533 0246 37050020 		li	a0,536870912
+ 534 024a 97000000 		call	memset
+ 534      E7800000 
+ 535              	.LVL55:
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 536              		.loc 1 218 9
+ 537 0252 1306000A 		li	a2,160
+ 538 0256 8145     		li	a1,0
+ 539 0258 0808     		addi	a0,sp,16
+ 540 025a 97000000 		call	memset
+ 540      E7800000 
+ 541              	.LVL56:
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 542              		.loc 1 222 5
+ 543 0262 97000000 		call	rom_symbol_init
+ 543      E7800000 
+ 544              	.LVL57:
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 545              		.loc 1 225 5
+ 546 026a 37050000 		lui	a0,%hi(alloc_buf)
+ 547 026e 8D65     		li	a1,12288
+ 548 0270 13050500 		addi	a0,a0,%lo(alloc_buf)
+ 549 0274 97000000 		call	mbedtls_memory_buffer_alloc_init
+ 549      E7800000 
+ 550              	.LVL58:
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_PKCAU);
+ 551              		.loc 1 228 5
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_CAU);
+ 552              		.loc 1 229 9
+ 553 027c 0564     		li	s0,4096
+ 554 027e 130534D0 		addi	a0,s0,-765
+ 555 0282 97000000 		call	rcu_periph_clock_enable
+ 555      E7800000 
+ 556              	.LVL59:
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rcu_periph_clock_enable(RCU_HAU);
+ 557              		.loc 1 230 9
+ 558 028a 130544D0 		addi	a0,s0,-764
+ 559 028e 97000000 		call	rcu_periph_clock_enable
+ 559      E7800000 
+ 560              	.LVL60:
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 561              		.loc 1 231 9
+ 562 0296 130554D0 		addi	a0,s0,-763
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_log_uart_set(LOG_UART);
+ 563              		.loc 1 233 9 is_stmt 0
+ 564 029a 37040000 		lui	s0,%hi(.LANCHOR0)
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 565              		.loc 1 231 9
+ 566 029e 97000000 		call	rcu_periph_clock_enable
+ 566      E7800000 
+ 567              	.LVL61:
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_log_uart_set(LOG_UART);
+ 568              		.loc 1 233 9 is_stmt 1
+ 569 02a6 13040400 		addi	s0,s0,%lo(.LANCHOR0)
+ 570 02aa 1C40     		lw	a5,0(s0)
+ 571 02ac BC57     		lw	a5,104(a5)
+ 572 02ae 8297     		jalr	a5
+ 573              	.LVL62:
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         ret = rom_sys_status_get(SYS_TRACE_LEVEL, LEN_SYS_TRACE_LEVEL, &val);
+ 574              		.loc 1 234 9
+ 575 02b0 1C40     		lw	a5,0(s0)
+ 576 02b2 37450040 		li	a0,1073758208
+ 577 02b6 13050540 		addi	a0,a0,1024
+ 578 02ba FC57     		lw	a5,108(a5)
+ 579 02bc 8297     		jalr	a5
+ 580              	.LVL63:
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         if (ret == SYS_STATUS_OK) {
+ 581              		.loc 1 235 9
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         if (ret == SYS_STATUS_OK) {
+ 582              		.loc 1 235 15 is_stmt 0
+ 583 02be 1C40     		lw	a5,0(s0)
+ 584 02c0 13067100 		addi	a2,sp,7
+ 585 02c4 8545     		li	a1,1
+ 586 02c6 DC5B     		lw	a5,52(a5)
+ 587 02c8 0945     		li	a0,2
+ 588 02ca 8297     		jalr	a5
+ 589              	.LVL64:
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****             rom_sys_set_trace_level(val);
+ 590              		.loc 1 236 9 is_stmt 1
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         } else {
+ 591              		.loc 1 237 13 is_stmt 0
+ 592 02cc 1C40     		lw	a5,0(s0)
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****             rom_sys_set_trace_level(val);
+ 593              		.loc 1 236 12
+ 594 02ce 21ED     		bne	a0,zero,.L26
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         } else {
+ 595              		.loc 1 237 13 is_stmt 1
+ 596 02d0 03457100 		lbu	a0,7(sp)
+ 597              	.LVL65:
+ 598 02d4 9C5F     		lw	a5,56(a5)
+ 599 02d6 8297     		jalr	a5
+ 600              	.LVL66:
+ 601              	.L27:
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c **** 
+ 602              		.loc 1 242 9
+ 603 02d8 1C40     		lw	a5,0(s0)
+ 604 02da C847     		lw	a0,12(a5)
+ 605 02dc 97000000 		call	mbedtls_platform_set_hardware_poll
+ 605      E7800000 
+ 606              	.LVL67:
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 607              		.loc 1 245 9
+ 608 02e4 97000000 		call	mbedtls_ecp_curve_val_init
+ 608      E7800000 
+ 609              	.LVL68:
+ 610 02ec B5BB     		j	.L25
+ 611              	.LVL69:
+ 612              	.L38:
+ 256:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         goto BootFailed;
+ 613              		.loc 1 256 9
+ 614 02ee DC43     		lw	a5,4(a5)
+ 615 02f0 B7050000 		lui	a1,%hi(.LC1)
+ 616 02f4 2A86     		mv	a2,a0
+ 617 02f6 93850500 		addi	a1,a1,%lo(.LC1)
+ 618 02fa 0945     		li	a0,2
+ 619              	.LVL70:
+ 620 02fc 8297     		jalr	a5
+ 621              	.LVL71:
+ 257:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else {
+ 622              		.loc 1 257 9
+ 623 02fe 81B7     		j	.L35
+ 624              	.LVL72:
+ 625              	.L41:
+ 289:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else {
+ 626              		.loc 1 289 9
+ 627 0300 1C40     		lw	a5,0(s0)
+ 628 0302 37061E08 		li	a2,136183808
+ 629 0306 19BF     		j	.L37
+ 630              	.LVL73:
+ 631              	.L40:
+ 274:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         rom_sys_set_img_flag(boot_idx, IMG_FLAG_VERIFY_MASK, IMG_FLAG_VERIFY_FAIL);
+ 632              		.loc 1 274 9
+ 633 0308 B7050000 		lui	a1,%hi(.LC3)
+ 634 030c AA86     		mv	a3,a0
+ 635 030e 93850500 		addi	a1,a1,%lo(.LC3)
+ 636 0312 0945     		li	a0,2
+ 637              	.LVL74:
+ 638 0314 8297     		jalr	a5
+ 639              	.LVL75:
+ 275:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         goto BootFailed;
+ 640              		.loc 1 275 9
+ 641 0316 1C40     		lw	a5,0(s0)
+ 642 0318 03458100 		lbu	a0,8(sp)
+ 643 031c 1146     		li	a2,4
+ 644 031e BC43     		lw	a5,64(a5)
+ 645 0320 9945     		li	a1,6
+ 646 0322 8297     		jalr	a5
+ 647              	.LVL76:
+ 276:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     } else {
+ 648              		.loc 1 276 9
+ 649 0324 29BF     		j	.L35
+ 650              	.LVL77:
+ 651              	.L26:
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****         }
+ 652              		.loc 1 239 13
+ 653 0326 9C5F     		lw	a5,56(a5)
+ 654 0328 1145     		li	a0,4
+ 655              	.LVL78:
+ 656 032a 8297     		jalr	a5
+ 657              	.LVL79:
+ 658 032c 75B7     		j	.L27
+ 659              	.LVL80:
+ 660              	.L39:
+ 264:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c ****     }
+ 661              		.loc 1 264 9
+ 662 032e 97000000 		call	flash_offset_mapping
+ 662      E7800000 
+ 663              	.LVL81:
+ 664 0336 B1BD     		j	.L30
+ 665              		.cfi_endproc
+ 666              	.LFE382:
+ 668              		.globl	compat_prefix
+ 669              		.globl	p_rom_api
+ 670              		.section	.bss.alloc_buf,"aw",@nobits
+ 671              		.align	2
+ 674              	alloc_buf:
+ 675 0000 00000000 		.zero	12288
+ 675      00000000 
+ 675      00000000 
+ 675      00000000 
+ 675      00000000 
+ 676              		.section	.data.compat_prefix,"aw"
+ 677              		.align	2
+ 680              	compat_prefix:
+ 681 0000 6F100000 		.word	4207
+ 682 0004 FFFFFFFF 		.word	-1
+ 683 0008 32334447 		.word	1195651890
+ 684 000c 00000000 		.word	0
+ 685 0010 00100000 		.word	4096
+ 686 0014 00800000 		.word	32768
+ 687 0018 FFFFFFFF 		.word	-1
+ 688 001c FFFFFFFF 		.word	-1
+ 689 0020 FFFFFFFF 		.word	-1
+ 690 0024 FFFFFFFF 		.word	-1
+ 691 0028 FFFFFFFF 		.word	-1
+ 692 002c FFFFFFFF 		.word	-1
+ 693 0030 FFFFFFFF 		.word	-1
+ 694 0034 FFFFFFFF 		.word	-1
+ 695 0038 FFFFFFFF 		.word	-1
+ 696 003c FFFFFFFF 		.word	-1
+ 697 0040 00000000 		.zero	4032
+ 697      00000000 
+ 697      00000000 
+ 697      00000000 
+ 697      00000000 
+ 698              		.section	.sdata.p_rom_api,"aw"
+ 699              		.align	2
+ 700              		.set	.LANCHOR0,. + 0
+ 703              	p_rom_api:
+ 704 0000 00E0F40B 		.word	200597504
+ 705              		.text
+ 706              	.Letext0:
+ 707              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 708              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 709              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 710              		.file 5 "../../../../MSDK/plf/riscv/gd32vw55x/gd32vw55x.h"
+ 711              		.file 6 "../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_rcu.h"
+ 712              		.file 7 "../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_usart.h"
+ 713              		.file 8 "../../../../ROM-EXPORT/bootloader/rom_sys.h"
+ 714              		.file 9 "../../../../ROM-EXPORT/bootloader/rom_ibl_state.h"
+ 715              		.file 10 "../../../../ROM-EXPORT/bootloader/rom_api.h"
+ 716              		.file 11 "../../../../ROM-EXPORT/bootloader/rom_export.h"
+ 717              		.file 12 "../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_gpio.h"
+ 718              		.file 13 "../../../../ROM-EXPORT/mbedtls-2.17.0-rom/include/mbedtls/platform.h"
+ 719              		.file 14 "../../../../MSDK/plf/src/init_rom.h"
+ 720              		.file 15 "../../../../ROM-EXPORT/mbedtls-2.17.0-rom/include/mbedtls/memory_buffer_alloc.h"
+ 721              		.file 16 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 722              		.file 17 "../../../../ROM-EXPORT/mbedtls-2.17.0-rom/include/mbedtls/entropy_poll.h"
+ 723              		.file 18 "../../../../ROM-EXPORT/mbedtls-2.17.0-rom/include/mbedtls/ecp.h"
+ 724              		.file 19 "../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_fmc.h"
+ 725              		.file 20 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mbl.c
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:13     .text._write:0000000000000000 _write
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:17     .text._write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:19     .text._write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:20     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:21     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:22     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:23     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:24     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:25     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:27     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:29     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:30     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:31     .text._write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:33     .text._write:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:37     .text._write:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:39     .text._write:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:43     .text._write:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:44     .text._write:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:45     .text._write:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:50     .text._write:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:52     .text._write:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:53     .text._write:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:55     .text._write:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:57     .text._write:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:59     .text._write:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:64     .text._write:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:65     .text._write:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:66     .text._write:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:70     .text._write:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:74     .text._write:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:75     .text._write:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:76     .text._write:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:81     .text._write:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:83     .text._write:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:84     .text._write:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:86     .text._write:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:87     .text._write:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:88     .text._write:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:89     .text._write:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:90     .text._write:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:91     .text._write:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:92     .text._write:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:95     .text._write:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:97     .text._write:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:99     .text._write:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:106    .text.log_uart_idle_wait:0000000000000000 log_uart_idle_wait
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:109    .text.log_uart_idle_wait:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:110    .text.log_uart_idle_wait:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:111    .text.log_uart_idle_wait:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:112    .text.log_uart_idle_wait:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:113    .text.log_uart_idle_wait:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:115    .text.log_uart_idle_wait:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:116    .text.log_uart_idle_wait:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:120    .text.log_uart_idle_wait:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:121    .text.log_uart_idle_wait:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:122    .text.log_uart_idle_wait:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:127    .text.log_uart_idle_wait:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:129    .text.log_uart_idle_wait:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:130    .text.log_uart_idle_wait:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:131    .text.log_uart_idle_wait:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:132    .text.log_uart_idle_wait:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:133    .text.log_uart_idle_wait:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:140    .text.flash_offset_mapping:0000000000000000 flash_offset_mapping
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:143    .text.flash_offset_mapping:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:144    .text.flash_offset_mapping:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:145    .text.flash_offset_mapping:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:146    .text.flash_offset_mapping:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:148    .text.flash_offset_mapping:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:151    .text.flash_offset_mapping:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:154    .text.flash_offset_mapping:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:159    .text.flash_offset_mapping:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:163    .text.flash_offset_mapping:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:166    .text.flash_offset_mapping:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:169    .text.flash_offset_mapping:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:170    .text.flash_offset_mapping:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:171    .text.flash_offset_mapping:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:172    .text.flash_offset_mapping:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:179    .text.reloc_iv:0000000000000000 reloc_iv
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:182    .text.reloc_iv:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:184    .text.reloc_iv:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:185    .text.reloc_iv:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:186    .text.reloc_iv:0000000000000000 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c:182    .text.reloc_iv:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:195    .text.reloc_iv:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:196    .text.reloc_iv:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:222    .text.startup.main:0000000000000000 main
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:225    .text.startup.main:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:226    .text.startup.main:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:227    .text.startup.main:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:228    .text.startup.main:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:229    .text.startup.main:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:230    .text.startup.main:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:232    .text.startup.main:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:233    .text.startup.main:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:234    .text.startup.main:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:235    .text.startup.main:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:236    .text.startup.main:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:238    .text.startup.main:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:241    .text.startup.main:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:243    .text.startup.main:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:246    .text.startup.main:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:247    .text.startup.main:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:248    .text.startup.main:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:249    .text.startup.main:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:264    .text.startup.main:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:265    .text.startup.main:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:270    .text.startup.main:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:674    .bss.alloc_buf:0000000000000000 alloc_buf
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:273    .text.startup.main:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:280    .text.startup.main:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:286    .text.startup.main:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:287    .text.startup.main:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:288    .text.startup.main:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:289    .text.startup.main:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:290    .text.startup.main:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:295    .text.startup.main:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:299    .text.startup.main:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:303    .text.startup.main:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:310    .text.startup.main:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:316    .text.startup.main:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:323    .text.startup.main:00000000000000c8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:330    .text.startup.main:00000000000000dc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:337    .text.startup.main:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:344    .text.startup.main:0000000000000100 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:349    .text.startup.main:0000000000000110 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:355    .text.startup.main:0000000000000122 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:360    .text.startup.main:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:365    .text.startup.main:000000000000013e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:370    .text.startup.main:000000000000014c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:376    .text.startup.main:0000000000000158 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:384    .text.startup.main:0000000000000168 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:385    .text.startup.main:0000000000000168 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:390    .text.startup.main:0000000000000174 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:391    .text.startup.main:0000000000000174 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:393    .text.startup.main:0000000000000176 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:395    .text.startup.main:000000000000017a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:404    .text.startup.main:000000000000018a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:405    .text.startup.main:000000000000018a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:410    .text.startup.main:0000000000000192 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:415    .text.startup.main:00000000000001a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:421    .text.startup.main:00000000000001a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:422    .text.startup.main:00000000000001a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:429    .text.startup.main:00000000000001ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:430    .text.startup.main:00000000000001ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:434    .text.startup.main:00000000000001c0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:436    .text.startup.main:00000000000001c4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:443    .text.startup.main:00000000000001d0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:449    .text.startup.main:00000000000001dc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:451    .text.startup.main:00000000000001e0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:454    .text.startup.main:00000000000001e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:462    .text.startup.main:00000000000001ec .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:463    .text.startup.main:00000000000001ec .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:468    .text.startup.main:00000000000001f8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:472    .text.startup.main:0000000000000202 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:478    .text.startup.main:000000000000020c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:479    .text.startup.main:000000000000020c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:481    .text.startup.main:000000000000020e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:484    .text.startup.main:0000000000000212 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:487    .text.startup.main:0000000000000214 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:488    .text.startup.main:0000000000000214 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:490    .text.startup.main:0000000000000218 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:500    .text.startup.main:000000000000022a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:505    .text.startup.main:0000000000000232 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c:189    .text.startup.main:0000000000000232 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c:194    .text.startup.main:000000000000023c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:521    .text.startup.main:000000000000023e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:522    .text.startup.main:000000000000023e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:523    .text.startup.main:000000000000023e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:524    .text.startup.main:000000000000023e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:525    .text.startup.main:000000000000023e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:526    .text.startup.main:000000000000023e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:530    .text.startup.main:0000000000000240 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:531    .text.startup.main:0000000000000240 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:537    .text.startup.main:0000000000000252 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:543    .text.startup.main:0000000000000262 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:546    .text.startup.main:000000000000026a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:552    .text.startup.main:000000000000027c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:553    .text.startup.main:000000000000027c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:558    .text.startup.main:000000000000028a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:562    .text.startup.main:0000000000000296 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:564    .text.startup.main:000000000000029a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:566    .text.startup.main:000000000000029e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:569    .text.startup.main:00000000000002a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:575    .text.startup.main:00000000000002b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:582    .text.startup.main:00000000000002be .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:583    .text.startup.main:00000000000002be .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:591    .text.startup.main:00000000000002cc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:592    .text.startup.main:00000000000002cc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:594    .text.startup.main:00000000000002ce .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:596    .text.startup.main:00000000000002d0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:603    .text.startup.main:00000000000002d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:608    .text.startup.main:00000000000002e4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:614    .text.startup.main:00000000000002ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:623    .text.startup.main:00000000000002fe .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:627    .text.startup.main:0000000000000300 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:633    .text.startup.main:0000000000000308 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:641    .text.startup.main:0000000000000316 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:649    .text.startup.main:0000000000000324 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:653    .text.startup.main:0000000000000326 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:662    .text.startup.main:000000000000032e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:665    .text.startup.main:0000000000000338 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:680    .data.compat_prefix:0000000000000000 compat_prefix
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:703    .sdata.p_rom_api:0000000000000000 p_rom_api
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:700    .sdata.p_rom_api:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:102    .text._write:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:136    .text.log_uart_idle_wait:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:175    .text.flash_offset_mapping:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:199    .text.reloc_iv:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:670    .text.startup.main:0000000000000338 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:94     .text._write:0000000000000066 .L6
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:41     .text._write:0000000000000018 .L3
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:72     .text._write:000000000000004c .L5
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:68     .text._write:0000000000000044 .L2
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:118    .text.log_uart_idle_wait:0000000000000010 .L15
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:201    .rodata.main.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:207    .rodata.main.str1.4:0000000000000034 .LC2
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:213    .rodata.main.str1.4:0000000000000078 .LC4
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:216    .rodata.main.str1.4:0000000000000098 .LC5
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot\mbl.c:189    .text.startup.main:0000000000000232 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:204    .rodata.main.str1.4:0000000000000014 .LC1
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:210    .rodata.main.str1.4:0000000000000050 .LC3
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:251    .text.startup.main:000000000000001c .L23
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:528    .text.startup.main:0000000000000240 .L24
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:612    .text.startup.main:00000000000002ee .L38
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:660    .text.startup.main:000000000000032e .L39
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:631    .text.startup.main:0000000000000308 .L40
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:625    .text.startup.main:0000000000000300 .L41
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:517    .text.startup.main:000000000000023e .L35
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:651    .text.startup.main:0000000000000326 .L26
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:282    .text.startup.main:0000000000000068 .L25
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:492    .text.startup.main:000000000000021c .L37
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:601    .text.startup.main:00000000000002d8 .L27
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:408    .text.startup.main:0000000000000192 .L30
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:2999   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4312   .debug_str:0000000000000ab5 .LASF200
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4112   .debug_str:000000000000050e .LASF201
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4090   .debug_str:000000000000041c .LASF202
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3918   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3932   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4002   .debug_str:000000000000018a .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3956   .debug_str:000000000000007d .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4198   .debug_str:00000000000007c1 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4210   .debug_str:0000000000000809 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4088   .debug_str:0000000000000409 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4108   .debug_str:00000000000004f4 .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3968   .debug_str:00000000000000d1 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4280   .debug_str:00000000000009ed .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4254   .debug_str:0000000000000925 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4000   .debug_str:000000000000017c .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4032   .debug_str:0000000000000267 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4064   .debug_str:000000000000037f .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3948   .debug_str:0000000000000051 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4258   .debug_str:0000000000000942 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4278   .debug_str:00000000000009e5 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4196   .debug_str:00000000000007b9 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4246   .debug_str:00000000000008fd .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4184   .debug_str:0000000000000773 .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4070   .debug_str:00000000000003ae .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4072   .debug_str:00000000000003b8 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4074   .debug_str:00000000000003c2 .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4286   .debug_str:0000000000000a14 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4118   .debug_str:000000000000058d .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4022   .debug_str:0000000000000222 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3990   .debug_str:000000000000014a .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3992   .debug_str:0000000000000154 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3994   .debug_str:000000000000015e .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3996   .debug_str:0000000000000168 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4342   .debug_str:0000000000000c74 .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4024   .debug_str:000000000000022e .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3998   .debug_str:0000000000000172 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4298   .debug_str:0000000000000a5e .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3980   .debug_str:000000000000011a .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4034   .debug_str:000000000000027e .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4204   .debug_str:00000000000007eb .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4178   .debug_str:0000000000000752 .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4180   .debug_str:000000000000075d .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4182   .debug_str:0000000000000768 .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4284   .debug_str:0000000000000a0a .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3984   .debug_str:000000000000012c .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3974   .debug_str:00000000000000f5 .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4152   .debug_str:0000000000000699 .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4248   .debug_str:0000000000000906 .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4250   .debug_str:000000000000090f .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4300   .debug_str:0000000000000a66 .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4082   .debug_str:00000000000003ee .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4176   .debug_str:0000000000000747 .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3976   .debug_str:00000000000000ff .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3986   .debug_str:0000000000000134 .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4218   .debug_str:0000000000000835 .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4240   .debug_str:00000000000008d3 .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4236   .debug_str:00000000000008bb .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4238   .debug_str:00000000000008c7 .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4106   .debug_str:00000000000004ed .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4014   .debug_str:00000000000001d6 .LASF54
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4098   .debug_str:00000000000004b5 .LASF55
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4104   .debug_str:00000000000004df .LASF56
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4168   .debug_str:000000000000070d .LASF57
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4190   .debug_str:0000000000000796 .LASF58
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4324   .debug_str:0000000000000bf0 .LASF59
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4334   .debug_str:0000000000000c3f .LASF60
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4272   .debug_str:00000000000009b7 .LASF61
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4142   .debug_str:0000000000000639 .LASF62
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4316   .debug_str:0000000000000bba .LASF63
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4228   .debug_str:000000000000087d .LASF64
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4310   .debug_str:0000000000000aa6 .LASF65
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4100   .debug_str:00000000000004c4 .LASF66
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4260   .debug_str:0000000000000947 .LASF67
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4194   .debug_str:00000000000007a9 .LASF68
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3938   .debug_str:0000000000000012 .LASF69
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4166   .debug_str:00000000000006fc .LASF70
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4110   .debug_str:00000000000004fe .LASF71
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4338   .debug_str:0000000000000c5b .LASF72
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4220   .debug_str:000000000000083d .LASF73
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4130   .debug_str:00000000000005dd .LASF74
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3954   .debug_str:000000000000006b .LASF75
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4080   .debug_str:00000000000003df .LASF76
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4058   .debug_str:0000000000000346 .LASF77
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4164   .debug_str:00000000000006ef .LASF78
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3966   .debug_str:00000000000000c4 .LASF79
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3958   .debug_str:0000000000000087 .LASF80
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4162   .debug_str:00000000000006e0 .LASF81
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4268   .debug_str:0000000000000998 .LASF82
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4136   .debug_str:0000000000000609 .LASF83
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4242   .debug_str:00000000000008de .LASF84
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4302   .debug_str:0000000000000a6e .LASF85
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4028   .debug_str:0000000000000246 .LASF86
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4336   .debug_str:0000000000000c4e .LASF87
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4038   .debug_str:000000000000028c .LASF88
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4186   .debug_str:0000000000000779 .LASF89
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4216   .debug_str:0000000000000827 .LASF90
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3960   .debug_str:0000000000000094 .LASF91
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4160   .debug_str:00000000000006d0 .LASF92
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4282   .debug_str:00000000000009f8 .LASF93
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4124   .debug_str:00000000000005ad .LASF94
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4006   .debug_str:00000000000001a5 .LASF95
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4096   .debug_str:00000000000004a1 .LASF96
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4144   .debug_str:0000000000000647 .LASF97
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4148   .debug_str:000000000000066b .LASF98
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4222   .debug_str:000000000000084d .LASF99
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4212   .debug_str:0000000000000813 .LASF100
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3936   .debug_str:0000000000000007 .LASF101
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4154   .debug_str:00000000000006a4 .LASF102
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3942   .debug_str:0000000000000029 .LASF103
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4318   .debug_str:0000000000000bc9 .LASF104
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4320   .debug_str:0000000000000bd6 .LASF105
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4322   .debug_str:0000000000000be3 .LASF106
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4330   .debug_str:0000000000000c17 .LASF107
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4020   .debug_str:0000000000000211 .LASF108
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4208   .debug_str:00000000000007ff .LASF113
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3964   .debug_str:00000000000000bf .LASF109
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4120   .debug_str:0000000000000596 .LASF110
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4288   .debug_str:0000000000000a1c .LASF111
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4094   .debug_str:000000000000049a .LASF112
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4234   .debug_str:00000000000008b0 .LASF114
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4290   .debug_str:0000000000000a26 .LASF115
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3940   .debug_str:0000000000000022 .LASF116
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4008   .debug_str:00000000000001b5 .LASF117
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3952   .debug_str:000000000000005f .LASF118
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4214   .debug_str:0000000000000821 .LASF119
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4114   .debug_str:000000000000057b .LASF120
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4012   .debug_str:00000000000001ca .LASF121
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4328   .debug_str:0000000000000c0f .LASF122
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4054   .debug_str:0000000000000329 .LASF123
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4256   .debug_str:0000000000000937 .LASF124
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3950   .debug_str:0000000000000058 .LASF125
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4062   .debug_str:0000000000000376 .LASF126
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4092   .debug_str:0000000000000490 .LASF127
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3934   .debug_str:0000000000000000 .LASF128
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4078   .debug_str:00000000000003d6 .LASF129
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4192   .debug_str:00000000000007a4 .LASF130
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3972   .debug_str:00000000000000e7 .LASF131
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4252   .debug_str:0000000000000918 .LASF132
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4146   .debug_str:000000000000065b .LASF133
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4050   .debug_str:000000000000030a .LASF134
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4122   .debug_str:000000000000059e .LASF135
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4292   .debug_str:0000000000000a2d .LASF136
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4156   .debug_str:00000000000006af .LASF137
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4266   .debug_str:0000000000000986 .LASF138
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4244   .debug_str:00000000000008ed .LASF139
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4004   .debug_str:0000000000000196 .LASF140
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4188   .debug_str:0000000000000787 .LASF141
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4230   .debug_str:000000000000088d .LASF142
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4044   .debug_str:00000000000002be .LASF143
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3944   .debug_str:0000000000000036 .LASF144
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4276   .debug_str:00000000000009d2 .LASF145
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4158   .debug_str:00000000000006bc .LASF146
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4040   .debug_str:000000000000029a .LASF147
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4132   .debug_str:00000000000005ee .LASF148
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4086   .debug_str:00000000000003fe .LASF149
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4348   .debug_str:0000000000000c9b .LASF150
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4346   .debug_str:0000000000000c8f .LASF151
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4042   .debug_str:00000000000002ad .LASF152
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4030   .debug_str:0000000000000254 .LASF153
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4326   .debug_str:0000000000000bfe .LASF154
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3970   .debug_str:00000000000000da .LASF155
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4128   .debug_str:00000000000005cc .LASF156
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4308   .debug_str:0000000000000a9c .LASF157
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3982   .debug_str:0000000000000122 .LASF159
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3988   .debug_str:000000000000013c .LASF158
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4036   .debug_str:0000000000000287 .LASF170
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:223    .text.startup.main:0000000000000000 .LFB382
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:666    .text.startup.main:0000000000000338 .LFE382
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4206   .debug_str:00000000000007f4 .LASF160
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3724   .debug_loc:0000000000000000 .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4076   .debug_str:00000000000003cc .LASF161
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4340   .debug_str:0000000000000c6b .LASF162
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4174   .debug_str:000000000000073a .LASF163
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4102   .debug_str:00000000000004d3 .LASF164
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3735   .debug_loc:000000000000001e .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3753   .debug_loc:000000000000004a .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4138   .debug_str:0000000000000616 .LASF203
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:514    .text.startup.main:000000000000023e .L29
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:284    .text.startup.main:0000000000000068 .LBB10
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:374    .text.startup.main:0000000000000158 .LBE10
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3788   .debug_loc:00000000000000aa .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:293    .text.startup.main:0000000000000076 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:297    .text.startup.main:0000000000000082 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:301    .text.startup.main:000000000000008e .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:308    .text.startup.main:00000000000000a2 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:314    .text.startup.main:00000000000000b4 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:321    .text.startup.main:00000000000000c8 .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:328    .text.startup.main:00000000000000dc .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:335    .text.startup.main:00000000000000ee .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:342    .text.startup.main:0000000000000100 .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:347    .text.startup.main:0000000000000110 .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:353    .text.startup.main:0000000000000122 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:358    .text.startup.main:0000000000000130 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:363    .text.startup.main:000000000000013e .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:368    .text.startup.main:000000000000014c .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:372    .text.startup.main:0000000000000158 .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:460    .text.startup.main:00000000000001ec .LBB12
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:476    .text.startup.main:000000000000020c .LBE12
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:466    .text.startup.main:00000000000001f8 .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:470    .text.startup.main:0000000000000202 .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:474    .text.startup.main:000000000000020c .LVL49
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:503    .text.startup.main:0000000000000232 .LBB14
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:519    .text.startup.main:000000000000023e .LBE14
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3809   .debug_loc:00000000000000e2 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:271    .text.startup.main:000000000000004e .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:278    .text.startup.main:0000000000000064 .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:382    .text.startup.main:0000000000000168 .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:388    .text.startup.main:0000000000000174 .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:402    .text.startup.main:000000000000018a .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:413    .text.startup.main:00000000000001a0 .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:419    .text.startup.main:00000000000001a8 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:427    .text.startup.main:00000000000001ba .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:441    .text.startup.main:00000000000001d0 .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:452    .text.startup.main:00000000000001e2 .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:498    .text.startup.main:000000000000022a .LVL51
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:501    .text.startup.main:0000000000000232 .LVL52
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:535    .text.startup.main:0000000000000252 .LVL55
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:541    .text.startup.main:0000000000000262 .LVL56
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:544    .text.startup.main:000000000000026a .LVL57
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:550    .text.startup.main:000000000000027c .LVL58
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:556    .text.startup.main:000000000000028a .LVL59
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:560    .text.startup.main:0000000000000296 .LVL60
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:567    .text.startup.main:00000000000002a6 .LVL61
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:580    .text.startup.main:00000000000002be .LVL63
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:589    .text.startup.main:00000000000002cc .LVL64
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:606    .text.startup.main:00000000000002e4 .LVL67
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:609    .text.startup.main:00000000000002ec .LVL68
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:621    .text.startup.main:00000000000002fe .LVL71
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:639    .text.startup.main:0000000000000316 .LVL75
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:647    .text.startup.main:0000000000000324 .LVL76
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:657    .text.startup.main:000000000000032c .LVL79
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:663    .text.startup.main:0000000000000336 .LVL81
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4068   .debug_str:000000000000039b .LASF168
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4172   .debug_str:0000000000000731 .LASF165
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:180    .text.reloc_iv:0000000000000000 .LFB380
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:197    .text.reloc_iv:0000000000000008 .LFE380
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4134   .debug_str:0000000000000601 .LASF172
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3816   .debug_loc:00000000000000f5 .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4232   .debug_str:00000000000008a1 .LASF204
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4170   .debug_str:000000000000071c .LASF166
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:141    .text.flash_offset_mapping:0000000000000000 .LFB378
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:173    .text.flash_offset_mapping:000000000000004a .LFE378
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:149    .text.flash_offset_mapping:0000000000000010 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:152    .text.flash_offset_mapping:0000000000000018 .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:157    .text.flash_offset_mapping:0000000000000026 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:161    .text.flash_offset_mapping:0000000000000032 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:164    .text.flash_offset_mapping:000000000000003a .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:167    .text.flash_offset_mapping:0000000000000042 .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4344   .debug_str:0000000000000c7c .LASF167
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:107    .text.log_uart_idle_wait:0000000000000000 .LFB377
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:134    .text.log_uart_idle_wait:0000000000000028 .LFE377
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:125    .text.log_uart_idle_wait:000000000000001e .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4200   .debug_str:00000000000007cf .LASF169
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4274   .debug_str:00000000000009c5 .LASF205
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4116   .debug_str:0000000000000586 .LASF171
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:14     .text._write:0000000000000000 .LFB375
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:100    .text._write:000000000000006a .LFE375
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3829   .debug_loc:0000000000000115 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3847   .debug_loc:0000000000000141 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3858   .debug_loc:000000000000015f .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3880   .debug_loc:0000000000000196 .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:48     .text._write:0000000000000026 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:62     .text._write:0000000000000040 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:79     .text._write:000000000000005a .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4140   .debug_str:0000000000000621 .LASF173
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4294   .debug_str:0000000000000a3f .LASF174
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4202   .debug_str:00000000000007dd .LASF175
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4304   .debug_str:0000000000000a7d .LASF176
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4052   .debug_str:000000000000031c .LASF177
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4296   .debug_str:0000000000000a4b .LASF178
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4056   .debug_str:0000000000000331 .LASF179
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4262   .debug_str:0000000000000955 .LASF180
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4046   .debug_str:00000000000002d2 .LASF181
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4126   .debug_str:00000000000005bf .LASF182
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4048   .debug_str:00000000000002e9 .LASF183
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4314   .debug_str:0000000000000b9c .LASF184
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4332   .debug_str:0000000000000c23 .LASF185
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4026   .debug_str:0000000000000236 .LASF186
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4060   .debug_str:0000000000000355 .LASF187
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4010   .debug_str:00000000000001ba .LASF188
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4270   .debug_str:00000000000009a6 .LASF189
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4306   .debug_str:0000000000000a95 .LASF206
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3978   .debug_str:0000000000000109 .LASF207
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4018   .debug_str:00000000000001ee .LASF190
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4264   .debug_str:000000000000096b .LASF191
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4224   .debug_str:000000000000085e .LASF192
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3946   .debug_str:0000000000000047 .LASF193
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:3962   .debug_str:00000000000000a6 .LASF194
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4150   .debug_str:0000000000000681 .LASF195
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4084   .debug_str:00000000000003f6 .LASF196
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4016   .debug_str:00000000000001e5 .LASF197
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4066   .debug_str:000000000000038c .LASF198
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:4226   .debug_str:0000000000000869 .LASF199
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:485    .text.startup.main:0000000000000214 .LVL50
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:515    .text.startup.main:000000000000023e .LVL53
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:624    .text.startup.main:0000000000000300 .LVL72
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:630    .text.startup.main:0000000000000308 .LVL73
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:245    .text.startup.main:0000000000000016 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:281    .text.startup.main:0000000000000068 .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:527    .text.startup.main:0000000000000240 .LVL54
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:611    .text.startup.main:00000000000002ee .LVL69
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:650    .text.startup.main:0000000000000326 .LVL77
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:659    .text.startup.main:000000000000032e .LVL80
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:400    .text.startup.main:0000000000000188 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:439    .text.startup.main:00000000000001ce .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:597    .text.startup.main:00000000000002d4 .LVL65
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:619    .text.startup.main:00000000000002fc .LVL70
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:637    .text.startup.main:0000000000000314 .LVL74
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:655    .text.startup.main:000000000000032a .LVL78
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:183    .text.reloc_iv:0000000000000000 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:187    .text.reloc_iv:0000000000000002 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:18     .text._write:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:40     .text._write:0000000000000018 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:93     .text._write:0000000000000066 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:67     .text._write:0000000000000044 .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:28     .text._write:0000000000000008 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccBVu0EI.s:727    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+__riscv_save_4
+usart_flag_get
+usart_data_transmit
+__riscv_restore_4
+__riscv_save_1
+__riscv_restore_1
+__riscv_save_0
+fmc_unlock
+ob_unlock
+fmc_offset_region_config
+fmc_offset_value_config
+ob_lock
+fmc_lock
+__riscv_restore_0
+__riscv_save_2
+rom_symbol_init
+mbedtls_memory_buffer_alloc_init
+rcu_periph_clock_enable
+gpio_af_set
+gpio_mode_set
+gpio_output_options_set
+usart_deinit
+usart_baudrate_set
+usart_receive_config
+usart_transmit_config
+usart_interrupt_enable
+usart_enable
+boot_image_find
+image_x_validate
+mbedtls_platform_set_calloc_free
+mbedtls_platform_set_snprintf
+mbedtls_platform_set_printf
+memset
+mbedtls_platform_set_hardware_poll
+mbedtls_ecp_curve_val_init

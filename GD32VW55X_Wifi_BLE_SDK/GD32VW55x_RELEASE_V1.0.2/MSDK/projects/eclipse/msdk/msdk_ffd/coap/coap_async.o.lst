@@ -1,0 +1,2257 @@
+   1              		.file	"coap_async.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.coap_free_async_sub,"ax",@progbits
+  10              		.align	1
+  12              	coap_free_async_sub:
+  13              	.LFB36:
+  14              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** /* coap_async.c -- state management for asynchronous messages
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  *
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  * Copyright (C) 2010,2011,2021-2023 Olaf Bergmann <bergmann@tzi.org>
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  *
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  * SPDX-License-Identifier: BSD-2-Clause
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  *
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  * This file is part of the CoAP library libcoap. Please see
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  * README for terms of use.
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  */
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** /**
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  * @file coap_async.c
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  * @brief State handling for asynchronous messages
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****  */
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #include "coap3/coap_internal.h"
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #if COAP_ASYNC_SUPPORT
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #include <stdio.h>
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** /* utlist-style macros for searching pairs in linked lists */
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #define SEARCH_PAIR(head,out,field1,val1,field2,val2,field3,val3)   \
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   SEARCH_PAIR3(head,out,field1,val1,field2,val2,field3,val3,next)
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #define SEARCH_PAIR3(head,out,field1,val1,field2,val2,field3,val3,next) \
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   do {                                                                  \
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     LL_FOREACH2(head,out,next) {                                        \
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       if ((out)->field1 == (val1) && (out)->field2 == (val2) &&         \
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****           ((val2) == 0 || memcmp((out)->field3, (val3), (val2)) == 0)) break; \
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     }                                                                   \
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   } while(0)
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** int
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_async_is_supported(void) {
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   return 1;
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_async_t *
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_register_async(coap_session_t *session,
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                     const coap_pdu_t *request, coap_tick_t delay) {
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *s;
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   size_t len;
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   const uint8_t *data;
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (!COAP_PDU_IS_REQUEST(request))
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   SEARCH_PAIR(session->context->async_state, s,
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               pdu->actual_token.length, request->actual_token.length,
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               pdu->actual_token.s, request->actual_token.s);
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (s != NULL) {
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     size_t i;
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     char outbuf[2*8 + 1];
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     size_t outbuflen;
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     outbuf[0] = '\000';
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     for (i = 0; i < request->actual_token.length; i++) {
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       /* Output maybe truncated */
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       outbuflen = strlen(outbuf);
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       snprintf(&outbuf[outbuflen], sizeof(outbuf)-outbuflen,
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                "%02x", request->token[i]);
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     }
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_debug("asynchronous state for token '%s' already registered\n", outbuf);
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   /* store information for handling the asynchronous task */
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   s = (coap_async_t *)coap_malloc_type(COAP_STRING, sizeof(coap_async_t));
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (!s) {
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_crit("coap_register_async: insufficient memory\n");
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   memset(s, 0, sizeof(coap_async_t));
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   LL_PREPEND(session->context->async_state, s);
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   /* Note that this generates a new MID */
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   s->pdu = coap_pdu_duplicate(request, session, request->actual_token.length,
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                               request->actual_token.s, NULL);
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (s->pdu == NULL) {
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_free_async(session, s);
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_crit("coap_register_async: insufficient memory\n");
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (coap_get_data(request, &len, &data)) {
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_add_data(s->pdu, len, data);
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   s->session = coap_session_reference(session);
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_set_delay(s, delay);
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   return s;
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** void
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_async_trigger(coap_async_t *async) {
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   assert(async != NULL);
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_ticks(&async->delay);
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_log_debug("   %s: Async request triggered\n",
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                  coap_session_str(async->session));
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #ifdef COAP_EPOLL_SUPPORT
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_update_epoll_timer(async->session->context, 0);
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #endif /* COAP_EPOLL_SUPPORT */
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** void
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_async_set_delay(coap_async_t *async, coap_tick_t delay) {
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_tick_t now;
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   assert(async != NULL);
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_ticks(&now);
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (delay) {
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     async->delay = now + delay;
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #ifdef COAP_EPOLL_SUPPORT
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_update_epoll_timer(async->session->context, delay);
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #endif /* COAP_EPOLL_SUPPORT */
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_debug("   %s: Async request delayed for %u.%03u secs\n",
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    coap_session_str(async->session),
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    (unsigned int)(delay / COAP_TICKS_PER_SECOND),
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    (unsigned int)((delay % COAP_TICKS_PER_SECOND) *
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                                   1000 / COAP_TICKS_PER_SECOND));
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   } else {
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     async->delay = 0;
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_debug("   %s: Async request indefinately delayed\n",
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    coap_session_str(async->session));
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_async_t *
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_find_async(coap_session_t *session, coap_bin_const_t token) {
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *tmp;
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   SEARCH_PAIR(session->context->async_state, tmp,
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               pdu->actual_token.length, token.length,
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               pdu->actual_token.s, token.s);
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   return tmp;
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** static void
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_free_async_sub(coap_context_t *context, coap_async_t *s) {
+  15              		.loc 1 148 63
+  16              		.cfi_startproc
+  17              	.LVL0:
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (s) {
+  18              		.loc 1 149 3
+  19              		.loc 1 149 6 is_stmt 0
+  20 0000 B9C9     		beq	a1,zero,.L24
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (s) {
+  21              		.loc 1 148 63
+  22 0002 17030000 		call	t0,__riscv_save_1
+  22      E7020300 
+  23              		.cfi_offset 8, -8
+  24              		.cfi_offset 1, -4
+  25              		.cfi_def_cfa_offset 16
+  26              	.LBB2:
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     LL_DELETE(context->async_state,s);
+  27              		.loc 1 150 5
+  28 000a 5C4D     		lw	a5,28(a0)
+  29 000c 2E84     		mv	s0,a1
+  30              	.LBE2:
+  31              		.loc 1 150 5 is_stmt 1
+  32              	.LBB3:
+  33              		.loc 1 150 5
+  34              		.loc 1 150 5
+  35 000e 639CB702 		bne	a5,a1,.L3
+  36              		.loc 1 150 5 discriminator 1
+  37 0012 9C41     		lw	a5,0(a1)
+  38 0014 5CCD     		sw	a5,28(a0)
+  39              	.L4:
+  40              	.LBE3:
+  41              		.loc 1 150 5 discriminator 12
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     if (s->session) {
+  42              		.loc 1 151 5 discriminator 12
+  43              		.loc 1 151 10 is_stmt 0 discriminator 12
+  44 0016 0844     		lw	a0,8(s0)
+  45              	.LVL1:
+  46              		.loc 1 151 8 discriminator 12
+  47 0018 09C5     		beq	a0,zero,.L6
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       coap_session_release(s->session);
+  48              		.loc 1 152 7 is_stmt 1
+  49 001a 97000000 		call	coap_session_release
+  49      E7800000 
+  50              	.LVL2:
+  51              	.L6:
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     }
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     if (s->pdu) {
+  52              		.loc 1 154 5
+  53              		.loc 1 154 10 is_stmt 0
+  54 0022 4844     		lw	a0,12(s0)
+  55              		.loc 1 154 8
+  56 0024 19C5     		beq	a0,zero,.L7
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       coap_delete_pdu(s->pdu);
+  57              		.loc 1 155 7 is_stmt 1
+  58 0026 97000000 		call	coap_delete_pdu
+  58      E7800000 
+  59              	.LVL3:
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       s->pdu = NULL;
+  60              		.loc 1 156 7
+  61              		.loc 1 156 14 is_stmt 0
+  62 002e 23260400 		sw	zero,12(s0)
+  63              	.L7:
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     }
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_free_type(COAP_STRING, s);
+  64              		.loc 1 158 5 is_stmt 1
+  65 0032 A285     		mv	a1,s0
+  66 0034 0145     		li	a0,0
+  67 0036 97000000 		call	coap_free_type
+  67      E7800000 
+  68              	.LVL4:
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+  69              		.loc 1 160 1 is_stmt 0
+  70 003e 17030000 		tail	__riscv_restore_1
+  70      67000300 
+  71              		.cfi_remember_state
+  72              		.cfi_restore 8
+  73              		.cfi_restore 1
+  74              		.cfi_def_cfa_offset 0
+  75              	.LVL5:
+  76              	.L3:
+  77              		.cfi_restore_state
+  78              	.LBB4:
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     if (s->session) {
+  79              		.loc 1 150 5 is_stmt 1 discriminator 4
+  80 0046 3E87     		mv	a4,a5
+  81 0048 9C43     		lw	a5,0(a5)
+  82              	.LVL6:
+  83 004a F1D7     		beq	a5,zero,.L4
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     if (s->session) {
+  84              		.loc 1 150 5 is_stmt 0 discriminator 6
+  85 004c E39D87FE 		bne	a5,s0,.L3
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     if (s->session) {
+  86              		.loc 1 150 5 is_stmt 1
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     if (s->session) {
+  87              		.loc 1 150 5
+  88 0050 1C40     		lw	a5,0(s0)
+  89 0052 1CC3     		sw	a5,0(a4)
+  90 0054 C9B7     		j	.L4
+  91              	.LVL7:
+  92              	.L24:
+  93              		.cfi_def_cfa_offset 0
+  94              		.cfi_restore 1
+  95              		.cfi_restore 8
+  96 0056 8280     		ret
+  97              	.LBE4:
+  98              		.cfi_endproc
+  99              	.LFE36:
+ 101              		.section	.text.coap_async_is_supported,"ax",@progbits
+ 102              		.align	1
+ 103              		.globl	coap_async_is_supported
+ 105              	coap_async_is_supported:
+ 106              	.LFB31:
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   return 1;
+ 107              		.loc 1 34 31
+ 108              		.cfi_startproc
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 109              		.loc 1 35 3
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 110              		.loc 1 36 1 is_stmt 0
+ 111 0000 0545     		li	a0,1
+ 112 0002 8280     		ret
+ 113              		.cfi_endproc
+ 114              	.LFE31:
+ 116              		.section	.rodata.coap_async_trigger.str1.4,"aMS",@progbits,1
+ 117              		.align	2
+ 118              	.LC0:
+ 119 0000 6173796E 		.string	"async != NULL"
+ 119      6320213D 
+ 119      204E554C 
+ 119      4C00
+ 120 000e 0000     		.align	2
+ 121              	.LC1:
+ 122 0010 433A2F55 		.string	"C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+ 122      73657273 
+ 122      2F737461 
+ 122      70692F4F 
+ 122      6E654472 
+ 123 0093 00       		.align	2
+ 124              	.LC2:
+ 125 0094 20202025 		.string	"   %s: Async request triggered\n"
+ 125      733A2041 
+ 125      73796E63 
+ 125      20726571 
+ 125      75657374 
+ 126              		.section	.text.coap_async_trigger,"ax",@progbits
+ 127              		.align	1
+ 128              		.globl	coap_async_trigger
+ 130              	coap_async_trigger:
+ 131              	.LFB33:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   assert(async != NULL);
+ 132              		.loc 1 100 41 is_stmt 1
+ 133              		.cfi_startproc
+ 134              	.LVL8:
+ 135 0000 17030000 		call	t0,__riscv_save_1
+ 135      E7020300 
+ 136              		.cfi_offset 8, -8
+ 137              		.cfi_offset 1, -4
+ 138              		.cfi_def_cfa_offset 16
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_ticks(&async->delay);
+ 139              		.loc 1 101 3
+ 140 0008 1DE1     		bne	a0,zero,.L29
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_ticks(&async->delay);
+ 141              		.loc 1 101 3 is_stmt 0 discriminator 1
+ 142 000a B7060000 		lui	a3,%hi(.LC0)
+ 143 000e 37060000 		lui	a2,%hi(.LANCHOR0)
+ 144 0012 37050000 		lui	a0,%hi(.LC1)
+ 145              	.LVL9:
+ 146 0016 93860600 		addi	a3,a3,%lo(.LC0)
+ 147 001a 13060600 		addi	a2,a2,%lo(.LANCHOR0)
+ 148 001e 93055006 		li	a1,101
+ 149 0022 13050500 		addi	a0,a0,%lo(.LC1)
+ 150 0026 97000000 		call	__assert_func
+ 150      E7800000 
+ 151              	.LVL10:
+ 152              	.L29:
+ 153 002e 2A84     		mv	s0,a0
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 154              		.loc 1 102 3 is_stmt 1
+ 155              	.LVL11:
+ 156              	.LBB7:
+ 157              	.LBB8:
+ 158              		.file 2 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_time.h"
+   1:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** /*
+   2:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * coap_time.h -- Clock Handling
+   3:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  *
+   4:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * Copyright (C) 2010-2023 Olaf Bergmann <bergmann@tzi.org>
+   5:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  *
+   6:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * SPDX-License-Identifier: BSD-2-Clause
+   7:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  *
+   8:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * This file is part of the CoAP library libcoap. Please see README for terms
+   9:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * of use.
+  10:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  */
+  11:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** 
+  12:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** /**
+  13:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * @file coap_time.h
+  14:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * @brief Clock Handling
+  15:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  */
+  16:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** 
+  17:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** #ifndef COAP_TIME_H_
+  18:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** #define COAP_TIME_H_
+  19:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** 
+  20:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** /**
+  21:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * @ingroup application_api
+  22:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * @defgroup clock Clock Handling
+  23:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * API for internal clock assess
+  24:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  * @{
+  25:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****  */
+  26:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** 
+  27:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** #if defined(WITH_LWIP)
+  28:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** 
+  29:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** #include <stdint.h>
+  30:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** #include <lwip/sys.h>
+  31:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** 
+  32:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** /* lwIP provides ms in sys_now */
+  33:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** #define COAP_TICKS_PER_SECOND 1000
+  34:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** 
+  35:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** typedef uint32_t coap_tick_t;
+  36:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** typedef uint32_t coap_time_t;
+  37:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** typedef int32_t coap_tick_diff_t;
+  38:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** 
+  39:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** COAP_STATIC_INLINE void
+  40:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h **** coap_ticks_impl(coap_tick_t *t) {
+  41:..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_time.h ****   *t = sys_now();
+ 159              		.loc 2 41 3
+ 160              		.loc 2 41 8 is_stmt 0
+ 161 0030 97000000 		call	sys_now
+ 161      E7800000 
+ 162              	.LVL12:
+ 163              		.loc 2 41 6
+ 164 0038 48C0     		sw	a0,4(s0)
+ 165              	.LVL13:
+ 166              	.LBE8:
+ 167              	.LBE7:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                  coap_session_str(async->session));
+ 168              		.loc 1 104 3 is_stmt 1
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                  coap_session_str(async->session));
+ 169              		.loc 1 104 3
+ 170 003a 97000000 		call	coap_get_log_level
+ 170      E7800000 
+ 171              	.LVL14:
+ 172 0042 9947     		li	a5,6
+ 173 0044 63D1A702 		ble	a0,a5,.L28
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                  coap_session_str(async->session));
+ 174              		.loc 1 104 3 discriminator 1
+ 175 0048 0844     		lw	a0,8(s0)
+ 176 004a 97000000 		call	coap_session_str
+ 176      E7800000 
+ 177              	.LVL15:
+ 178 0052 B7050000 		lui	a1,%hi(.LC2)
+ 179 0056 2A86     		mv	a2,a0
+ 180 0058 93850500 		addi	a1,a1,%lo(.LC2)
+ 181 005c 1D45     		li	a0,7
+ 182 005e 97000000 		call	coap_log_impl
+ 182      E7800000 
+ 183              	.LVL16:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                  coap_session_str(async->session));
+ 184              		.loc 1 104 3 discriminator 1
+ 185              	.L28:
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 186              		.loc 1 109 1 is_stmt 0
+ 187 0066 17030000 		tail	__riscv_restore_1
+ 187      67000300 
+ 188              		.cfi_restore 8
+ 189              		.cfi_restore 1
+ 190              		.cfi_def_cfa_offset 0
+ 191              		.cfi_endproc
+ 192              	.LFE33:
+ 194              		.section	.rodata.coap_async_set_delay.str1.4,"aMS",@progbits,1
+ 195              		.align	2
+ 196              	.LC3:
+ 197 0000 20202025 		.string	"   %s: Async request delayed for %u.%03u secs\n"
+ 197      733A2041 
+ 197      73796E63 
+ 197      20726571 
+ 197      75657374 
+ 198 002f 00       		.align	2
+ 199              	.LC4:
+ 200 0030 20202025 		.string	"   %s: Async request indefinately delayed\n"
+ 200      733A2041 
+ 200      73796E63 
+ 200      20726571 
+ 200      75657374 
+ 201              		.section	.text.coap_async_set_delay,"ax",@progbits
+ 202              		.align	1
+ 203              		.globl	coap_async_set_delay
+ 205              	coap_async_set_delay:
+ 206              	.LFB34:
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_tick_t now;
+ 207              		.loc 1 113 62 is_stmt 1
+ 208              		.cfi_startproc
+ 209              	.LVL17:
+ 210 0000 17030000 		call	t0,__riscv_save_2
+ 210      E7020300 
+ 211              		.cfi_offset 9, -12
+ 212              		.cfi_offset 8, -8
+ 213              		.cfi_offset 1, -4
+ 214              		.cfi_def_cfa_offset 16
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 215              		.loc 1 114 3
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_ticks(&now);
+ 216              		.loc 1 116 3
+ 217 0008 1DE1     		bne	a0,zero,.L33
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_ticks(&now);
+ 218              		.loc 1 116 3 is_stmt 0 discriminator 1
+ 219 000a B7060000 		lui	a3,%hi(.LC0)
+ 220 000e 37060000 		lui	a2,%hi(.LANCHOR1)
+ 221 0012 37050000 		lui	a0,%hi(.LC1)
+ 222              	.LVL18:
+ 223 0016 93860600 		addi	a3,a3,%lo(.LC0)
+ 224 001a 13060600 		addi	a2,a2,%lo(.LANCHOR1)
+ 225 001e 93054007 		li	a1,116
+ 226              	.LVL19:
+ 227 0022 13050500 		addi	a0,a0,%lo(.LC1)
+ 228 0026 97000000 		call	__assert_func
+ 228      E7800000 
+ 229              	.LVL20:
+ 230              	.L33:
+ 231 002e AE84     		mv	s1,a1
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 232              		.loc 1 117 3 is_stmt 1
+ 233              	.LVL21:
+ 234              	.LBB11:
+ 235              	.LBB12:
+ 236              		.loc 2 41 3
+ 237 0030 2A84     		mv	s0,a0
+ 238              		.loc 2 41 8 is_stmt 0
+ 239 0032 97000000 		call	sys_now
+ 239      E7800000 
+ 240              	.LVL22:
+ 241              	.LBE12:
+ 242              	.LBE11:
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     async->delay = now + delay;
+ 243              		.loc 1 119 3 is_stmt 1
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     async->delay = now + delay;
+ 244              		.loc 1 119 6 is_stmt 0
+ 245 003a B9C4     		beq	s1,zero,.L34
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #ifdef COAP_EPOLL_SUPPORT
+ 246              		.loc 1 120 5 is_stmt 1
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #ifdef COAP_EPOLL_SUPPORT
+ 247              		.loc 1 120 24 is_stmt 0
+ 248 003c 2695     		add	a0,s1,a0
+ 249              	.LVL23:
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** #ifdef COAP_EPOLL_SUPPORT
+ 250              		.loc 1 120 18
+ 251 003e 48C0     		sw	a0,4(s0)
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    coap_session_str(async->session),
+ 252              		.loc 1 124 5 is_stmt 1
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    coap_session_str(async->session),
+ 253              		.loc 1 124 5
+ 254 0040 97000000 		call	coap_get_log_level
+ 254      E7800000 
+ 255              	.LVL24:
+ 256 0048 9947     		li	a5,6
+ 257 004a 63DBA702 		ble	a0,a5,.L32
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    coap_session_str(async->session),
+ 258              		.loc 1 124 5 discriminator 1
+ 259 004e 0844     		lw	a0,8(s0)
+ 260 0050 97000000 		call	coap_session_str
+ 260      E7800000 
+ 261              	.LVL25:
+ 262 0058 9306803E 		li	a3,1000
+ 263 005c 33F7D402 		remu	a4,s1,a3
+ 264 0060 B7050000 		lui	a1,%hi(.LC3)
+ 265 0064 2A86     		mv	a2,a0
+ 266 0066 93850500 		addi	a1,a1,%lo(.LC3)
+ 267 006a 1D45     		li	a0,7
+ 268 006c 3307D702 		mul	a4,a4,a3
+ 269 0070 3357D702 		divu	a4,a4,a3
+ 270 0074 B3D6D402 		divu	a3,s1,a3
+ 271 0078 97000000 		call	coap_log_impl
+ 271      E7800000 
+ 272              	.LVL26:
+ 273              	.L32:
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 274              		.loc 1 134 1 is_stmt 0
+ 275 0080 17030000 		tail	__riscv_restore_2
+ 275      67000300 
+ 276              		.cfi_remember_state
+ 277              		.cfi_restore 9
+ 278              		.cfi_restore 8
+ 279              		.cfi_restore 1
+ 280              		.cfi_def_cfa_offset 0
+ 281              	.LVL27:
+ 282              	.L34:
+ 283              		.cfi_restore_state
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_debug("   %s: Async request indefinately delayed\n",
+ 284              		.loc 1 130 5 is_stmt 1
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_debug("   %s: Async request indefinately delayed\n",
+ 285              		.loc 1 130 18 is_stmt 0
+ 286 0088 23220400 		sw	zero,4(s0)
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    coap_session_str(async->session));
+ 287              		.loc 1 131 5 is_stmt 1
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    coap_session_str(async->session));
+ 288              		.loc 1 131 5
+ 289 008c 97000000 		call	coap_get_log_level
+ 289      E7800000 
+ 290              	.LVL28:
+ 291 0094 9947     		li	a5,6
+ 292 0096 E3D5A7FE 		ble	a0,a5,.L32
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    coap_session_str(async->session));
+ 293              		.loc 1 131 5 discriminator 1
+ 294 009a 0844     		lw	a0,8(s0)
+ 295 009c 97000000 		call	coap_session_str
+ 295      E7800000 
+ 296              	.LVL29:
+ 297 00a4 B7050000 		lui	a1,%hi(.LC4)
+ 298 00a8 2A86     		mv	a2,a0
+ 299 00aa 93850500 		addi	a1,a1,%lo(.LC4)
+ 300 00ae 1D45     		li	a0,7
+ 301 00b0 97000000 		call	coap_log_impl
+ 301      E7800000 
+ 302              	.LVL30:
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                    coap_session_str(async->session));
+ 303              		.loc 1 131 5 discriminator 1
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 304              		.loc 1 134 1 is_stmt 0 discriminator 1
+ 305 00b8 E1B7     		j	.L32
+ 306              		.cfi_endproc
+ 307              	.LFE34:
+ 309              		.section	.text.coap_find_async,"ax",@progbits
+ 310              		.align	1
+ 311              		.globl	coap_find_async
+ 313              	coap_find_async:
+ 314              	.LFB35:
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *tmp;
+ 315              		.loc 1 137 66 is_stmt 1
+ 316              		.cfi_startproc
+ 317              	.LVL31:
+ 318 0000 17030000 		call	t0,__riscv_save_4
+ 318      E7020300 
+ 319              		.cfi_offset 19, -20
+ 320              		.cfi_offset 18, -16
+ 321              		.cfi_offset 9, -12
+ 322              		.cfi_offset 8, -8
+ 323              		.cfi_offset 1, -4
+ 324              		.cfi_def_cfa_offset 32
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 325              		.loc 1 140 3 is_stmt 0
+ 326 0008 8327C50A 		lw	a5,172(a0)
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *tmp;
+ 327              		.loc 1 137 66
+ 328 000c 4111     		addi	sp,sp,-16
+ 329              		.cfi_def_cfa_offset 48
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *tmp;
+ 330              		.loc 1 137 66
+ 331 000e 2A89     		mv	s2,a0
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 332              		.loc 1 140 3
+ 333 0010 C04F     		lw	s0,28(a5)
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *tmp;
+ 334              		.loc 1 137 66
+ 335 0012 2EC4     		sw	a1,8(sp)
+ 336 0014 32C6     		sw	a2,12(sp)
+ 337 0016 AE84     		mv	s1,a1
+ 338              	.LVL32:
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 339              		.loc 1 138 3 is_stmt 1
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 340              		.loc 1 140 3
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 341              		.loc 1 140 3
+ 342 0018 B289     		mv	s3,a2
+ 343              	.LVL33:
+ 344              	.L40:
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 345              		.loc 1 140 3 discriminator 10
+ 346 001a 19E4     		bne	s0,zero,.L43
+ 347              	.L39:
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 348              		.loc 1 145 1 is_stmt 0
+ 349 001c 2285     		mv	a0,s0
+ 350 001e 4101     		addi	sp,sp,16
+ 351              		.cfi_remember_state
+ 352              		.cfi_def_cfa_offset 0
+ 353 0020 17030000 		tail	__riscv_restore_4
+ 353      67000300 
+ 354              		.cfi_restore 19
+ 355              		.cfi_restore 18
+ 356              		.cfi_restore 9
+ 357              		.cfi_restore 8
+ 358              		.cfi_restore 1
+ 359              		.cfi_def_cfa_offset -32
+ 360              	.L43:
+ 361              		.cfi_restore_state
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 362              		.loc 1 140 3 is_stmt 1 discriminator 11
+ 363 0028 1C44     		lw	a5,8(s0)
+ 364 002a 639F2701 		bne	a5,s2,.L41
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 365              		.loc 1 140 3 is_stmt 0 discriminator 2
+ 366 002e 5C44     		lw	a5,12(s0)
+ 367 0030 984F     		lw	a4,24(a5)
+ 368 0032 631B9700 		bne	a4,s1,.L41
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 369              		.loc 1 140 3 discriminator 4
+ 370 0036 FDD0     		beq	s1,zero,.L39
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 371              		.loc 1 140 3 discriminator 7
+ 372 0038 C84F     		lw	a0,28(a5)
+ 373 003a 2686     		mv	a2,s1
+ 374 003c CE85     		mv	a1,s3
+ 375 003e 97000000 		call	memcmp
+ 375      E7800000 
+ 376              	.LVL34:
+ 377 0046 79D9     		beq	a0,zero,.L39
+ 378              	.L41:
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 379              		.loc 1 140 3 is_stmt 1 discriminator 9
+ 380 0048 0040     		lw	s0,0(s0)
+ 381              	.LVL35:
+ 382 004a C1BF     		j	.L40
+ 383              		.cfi_endproc
+ 384              	.LFE35:
+ 386              		.section	.text.coap_free_async,"ax",@progbits
+ 387              		.align	1
+ 388              		.globl	coap_free_async
+ 390              	coap_free_async:
+ 391              	.LFB37:
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** void
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_free_async(coap_session_t *session, coap_async_t *s) {
+ 392              		.loc 1 163 59
+ 393              		.cfi_startproc
+ 394              	.LVL36:
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_free_async_sub(session->context, s);
+ 395              		.loc 1 164 3
+ 396 0000 0325C50A 		lw	a0,172(a0)
+ 397              	.LVL37:
+ 398 0004 17030000 		tail	coap_free_async_sub
+ 398      67000300 
+ 399              	.LVL38:
+ 400              		.cfi_endproc
+ 401              	.LFE37:
+ 403              		.section	.rodata.coap_register_async.str1.4,"aMS",@progbits,1
+ 404              		.align	2
+ 405              	.LC5:
+ 406 0000 25303278 		.string	"%02x"
+ 406      00
+ 407 0005 000000   		.align	2
+ 408              	.LC6:
+ 409 0008 6173796E 		.string	"asynchronous state for token '%s' already registered\n"
+ 409      6368726F 
+ 409      6E6F7573 
+ 409      20737461 
+ 409      74652066 
+ 410 003e 0000     		.align	2
+ 411              	.LC7:
+ 412 0040 636F6170 		.string	"coap_register_async: insufficient memory\n"
+ 412      5F726567 
+ 412      69737465 
+ 412      725F6173 
+ 412      796E633A 
+ 413              		.section	.text.coap_register_async,"ax",@progbits
+ 414              		.align	1
+ 415              		.globl	coap_register_async
+ 417              	coap_register_async:
+ 418              	.LFB32:
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *s;
+ 419              		.loc 1 40 67
+ 420              		.cfi_startproc
+ 421              	.LVL39:
+ 422 0000 17030000 		call	t0,__riscv_save_5
+ 422      E7020300 
+ 423              		.cfi_offset 20, -24
+ 424              		.cfi_offset 19, -20
+ 425              		.cfi_offset 18, -16
+ 426              		.cfi_offset 9, -12
+ 427              		.cfi_offset 8, -8
+ 428              		.cfi_offset 1, -4
+ 429              		.cfi_def_cfa_offset 32
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   size_t len;
+ 430              		.loc 1 41 3
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   const uint8_t *data;
+ 431              		.loc 1 42 3
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 432              		.loc 1 43 3
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 433              		.loc 1 45 3
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 434              		.loc 1 45 7 is_stmt 0
+ 435 0008 DC41     		lw	a5,4(a1)
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 436              		.loc 1 45 6
+ 437 000a 7947     		li	a4,30
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *s;
+ 438              		.loc 1 40 67
+ 439 000c 0111     		addi	sp,sp,-32
+ 440              		.cfi_def_cfa_offset 64
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 441              		.loc 1 45 7
+ 442 000e FD17     		addi	a5,a5,-1
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 443              		.loc 1 45 6
+ 444 0010 6379F700 		bleu	a5,a4,.L54
+ 445              	.LVL40:
+ 446              	.L62:
+ 447              	.LBB13:
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 448              		.loc 1 65 5 is_stmt 1 discriminator 3
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+ 449              		.loc 1 66 5 discriminator 3
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+ 450              		.loc 1 66 12 is_stmt 0 discriminator 3
+ 451 0014 0149     		li	s2,0
+ 452              	.L53:
+ 453              	.LBE13:
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 454              		.loc 1 97 1
+ 455 0016 4A85     		mv	a0,s2
+ 456 0018 0561     		addi	sp,sp,32
+ 457              		.cfi_remember_state
+ 458              		.cfi_def_cfa_offset 0
+ 459 001a 17030000 		tail	__riscv_restore_5
+ 459      67000300 
+ 460              		.cfi_restore 20
+ 461              		.cfi_restore 19
+ 462              		.cfi_restore 18
+ 463              		.cfi_restore 9
+ 464              		.cfi_restore 8
+ 465              		.cfi_restore 1
+ 466              		.cfi_def_cfa_offset -32
+ 467              	.LVL41:
+ 468              	.L54:
+ 469              		.cfi_restore_state
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 470              		.loc 1 48 3
+ 471 0022 8327C50A 		lw	a5,172(a0)
+ 472 0026 AA89     		mv	s3,a0
+ 473 0028 2E84     		mv	s0,a1
+ 474 002a 03A9C701 		lw	s2,28(a5)
+ 475 002e 328A     		mv	s4,a2
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 476              		.loc 1 48 3 is_stmt 1
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 477              		.loc 1 48 3
+ 478              	.LVL42:
+ 479              	.L56:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 480              		.loc 1 48 3 discriminator 10
+ 481 0030 63170906 		bne	s2,zero,.L59
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 482              		.loc 1 48 3
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     size_t i;
+ 483              		.loc 1 53 3
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (!s) {
+ 484              		.loc 1 70 3
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   if (!s) {
+ 485              		.loc 1 70 23 is_stmt 0
+ 486 0034 D145     		li	a1,20
+ 487 0036 0145     		li	a0,0
+ 488 0038 97000000 		call	coap_malloc_type
+ 488      E7800000 
+ 489              	.LVL43:
+ 490 0040 AA84     		mv	s1,a0
+ 491              	.LVL44:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_crit("coap_register_async: insufficient memory\n");
+ 492              		.loc 1 71 3 is_stmt 1
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_crit("coap_register_async: insufficient memory\n");
+ 493              		.loc 1 71 6 is_stmt 0
+ 494 0042 0DCD     		beq	a0,zero,.L67
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   LL_PREPEND(session->context->async_state, s);
+ 495              		.loc 1 76 3 is_stmt 1
+ 496 0044 5146     		li	a2,20
+ 497 0046 8145     		li	a1,0
+ 498 0048 97000000 		call	memset
+ 498      E7800000 
+ 499              	.LVL45:
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 500              		.loc 1 77 3
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 501              		.loc 1 77 3
+ 502 0050 83A7C90A 		lw	a5,172(s3)
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                               request->actual_token.s, NULL);
+ 503              		.loc 1 80 12 is_stmt 0
+ 504 0054 544C     		lw	a3,28(s0)
+ 505 0056 104C     		lw	a2,24(s0)
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 506              		.loc 1 77 3
+ 507 0058 D84F     		lw	a4,28(a5)
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                               request->actual_token.s, NULL);
+ 508              		.loc 1 80 12
+ 509 005a CE85     		mv	a1,s3
+ 510 005c 2285     		mv	a0,s0
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 511              		.loc 1 77 3
+ 512 005e 98C0     		sw	a4,0(s1)
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 513              		.loc 1 77 3 is_stmt 1
+ 514 0060 C4CF     		sw	s1,28(a5)
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 515              		.loc 1 77 3
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                               request->actual_token.s, NULL);
+ 516              		.loc 1 80 3
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                               request->actual_token.s, NULL);
+ 517              		.loc 1 80 12 is_stmt 0
+ 518 0062 0147     		li	a4,0
+ 519 0064 97000000 		call	coap_pdu_duplicate
+ 519      E7800000 
+ 520              	.LVL46:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                               request->actual_token.s, NULL);
+ 521              		.loc 1 80 10
+ 522 006c C8C4     		sw	a0,12(s1)
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_free_async(session, s);
+ 523              		.loc 1 82 3 is_stmt 1
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_free_async(session, s);
+ 524              		.loc 1 82 6 is_stmt 0
+ 525 006e 55E5     		bne	a0,zero,.L64
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_log_crit("coap_register_async: insufficient memory\n");
+ 526              		.loc 1 83 5 is_stmt 1
+ 527 0070 A685     		mv	a1,s1
+ 528 0072 4E85     		mv	a0,s3
+ 529 0074 97000000 		call	coap_free_async
+ 529      E7800000 
+ 530              	.LVL47:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 531              		.loc 1 84 5
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 532              		.loc 1 84 5
+ 533              	.L67:
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 534              		.loc 1 72 5
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 535              		.loc 1 72 5
+ 536 007c 97000000 		call	coap_get_log_level
+ 536      E7800000 
+ 537              	.LVL48:
+ 538 0084 8547     		li	a5,1
+ 539 0086 E3D7A7F8 		ble	a0,a5,.L62
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 540              		.loc 1 72 5 discriminator 1
+ 541 008a B7050000 		lui	a1,%hi(.LC7)
+ 542 008e 93850500 		addi	a1,a1,%lo(.LC7)
+ 543 0092 0945     		li	a0,2
+ 544 0094 97000000 		call	coap_log_impl
+ 544      E7800000 
+ 545              	.LVL49:
+ 546 009c ADBF     		j	.L53
+ 547              	.LVL50:
+ 548              	.L59:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 549              		.loc 1 48 3 discriminator 11
+ 550 009e 83278900 		lw	a5,8(s2)
+ 551 00a2 63903703 		bne	a5,s3,.L57
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 552              		.loc 1 48 3 is_stmt 0 discriminator 2
+ 553 00a6 8327C900 		lw	a5,12(s2)
+ 554 00aa 184C     		lw	a4,24(s0)
+ 555 00ac 904F     		lw	a2,24(a5)
+ 556 00ae 631AE600 		bne	a2,a4,.L57
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 557              		.loc 1 48 3 discriminator 4
+ 558 00b2 4DC2     		beq	a2,zero,.L58
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 559              		.loc 1 48 3 discriminator 7
+ 560 00b4 4C4C     		lw	a1,28(s0)
+ 561 00b6 C84F     		lw	a0,28(a5)
+ 562 00b8 97000000 		call	memcmp
+ 562      E7800000 
+ 563              	.LVL51:
+ 564 00c0 51C9     		beq	a0,zero,.L58
+ 565              	.L57:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 566              		.loc 1 48 3 is_stmt 1 discriminator 9
+ 567 00c2 03290900 		lw	s2,0(s2)
+ 568              	.LVL52:
+ 569 00c6 ADB7     		j	.L56
+ 570              	.LVL53:
+ 571              	.L61:
+ 572              	.LBB14:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       snprintf(&outbuf[outbuflen], sizeof(outbuf)-outbuflen,
+ 573              		.loc 1 61 7 discriminator 3
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       snprintf(&outbuf[outbuflen], sizeof(outbuf)-outbuflen,
+ 574              		.loc 1 61 19 is_stmt 0 discriminator 3
+ 575 00c8 6800     		addi	a0,sp,12
+ 576 00ca 97000000 		call	strlen
+ 576      E7800000 
+ 577              	.LVL54:
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                "%02x", request->token[i]);
+ 578              		.loc 1 62 7 is_stmt 1 discriminator 3
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     }
+ 579              		.loc 1 63 38 is_stmt 0 discriminator 3
+ 580 00d2 5C54     		lw	a5,44(s0)
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                "%02x", request->token[i]);
+ 581              		.loc 1 62 7 discriminator 3
+ 582 00d4 B385A940 		sub	a1,s3,a0
+ 583 00d8 13060900 		addi	a2,s2,%lo(.LC5)
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     }
+ 584              		.loc 1 63 38 discriminator 3
+ 585 00dc A697     		add	a5,a5,s1
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                "%02x", request->token[i]);
+ 586              		.loc 1 62 7 discriminator 3
+ 587 00de 83C60700 		lbu	a3,0(a5)
+ 588 00e2 7C00     		addi	a5,sp,12
+ 589 00e4 3E95     		add	a0,a5,a0
+ 590              	.LVL55:
+ 591 00e6 97000000 		call	snprintf
+ 591      E7800000 
+ 592              	.LVL56:
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       /* Output maybe truncated */
+ 593              		.loc 1 59 51 is_stmt 1 discriminator 3
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       /* Output maybe truncated */
+ 594              		.loc 1 59 52 is_stmt 0 discriminator 3
+ 595 00ee 8504     		addi	s1,s1,1
+ 596              	.LVL57:
+ 597              	.L69:
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       /* Output maybe truncated */
+ 598              		.loc 1 59 17 is_stmt 1 discriminator 1
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       /* Output maybe truncated */
+ 599              		.loc 1 59 5 is_stmt 0 discriminator 1
+ 600 00f0 1C4C     		lw	a5,24(s0)
+ 601 00f2 E3EBF4FC 		bgtu	a5,s1,.L61
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 602              		.loc 1 65 5 is_stmt 1
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 603              		.loc 1 65 5
+ 604 00f6 97000000 		call	coap_get_log_level
+ 604      E7800000 
+ 605              	.LVL58:
+ 606 00fe 9947     		li	a5,6
+ 607 0100 E3DAA7F0 		ble	a0,a5,.L62
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     return NULL;
+ 608              		.loc 1 65 5 discriminator 1
+ 609 0104 B7050000 		lui	a1,%hi(.LC6)
+ 610 0108 7000     		addi	a2,sp,12
+ 611 010a 93850500 		addi	a1,a1,%lo(.LC6)
+ 612 010e 1D45     		li	a0,7
+ 613 0110 97000000 		call	coap_log_impl
+ 613      E7800000 
+ 614              	.LVL59:
+ 615 0118 F5BD     		j	.L62
+ 616              	.LVL60:
+ 617              	.L64:
+ 618              	.LBE14:
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_add_data(s->pdu, len, data);
+ 619              		.loc 1 88 3
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_add_data(s->pdu, len, data);
+ 620              		.loc 1 88 7 is_stmt 0
+ 621 011a 7000     		addi	a2,sp,12
+ 622 011c 2C00     		addi	a1,sp,8
+ 623 011e 2285     		mv	a0,s0
+ 624 0120 97000000 		call	coap_get_data
+ 624      E7800000 
+ 625              	.LVL61:
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_add_data(s->pdu, len, data);
+ 626              		.loc 1 88 6
+ 627 0128 01C9     		beq	a0,zero,.L66
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+ 628              		.loc 1 89 5 is_stmt 1
+ 629 012a 3246     		lw	a2,12(sp)
+ 630 012c A245     		lw	a1,8(sp)
+ 631 012e C844     		lw	a0,12(s1)
+ 632 0130 97000000 		call	coap_add_data
+ 632      E7800000 
+ 633              	.LVL62:
+ 634              	.L66:
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 635              		.loc 1 92 3
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 636              		.loc 1 92 16 is_stmt 0
+ 637 0138 4E85     		mv	a0,s3
+ 638 013a 97000000 		call	coap_session_reference
+ 638      E7800000 
+ 639              	.LVL63:
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 640              		.loc 1 92 14
+ 641 0142 88C4     		sw	a0,8(s1)
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 642              		.loc 1 94 3 is_stmt 1
+ 643 0144 D285     		mv	a1,s4
+ 644 0146 2685     		mv	a0,s1
+ 645 0148 97000000 		call	coap_async_set_delay
+ 645      E7800000 
+ 646              	.LVL64:
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 647              		.loc 1 96 3
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 648              		.loc 1 96 10 is_stmt 0
+ 649 0150 2689     		mv	s2,s1
+ 650 0152 D1B5     		j	.L53
+ 651              	.LVL65:
+ 652              	.L58:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****               session, session,
+ 653              		.loc 1 48 3 is_stmt 1
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     size_t i;
+ 654              		.loc 1 53 3
+ 655              	.LBB15:
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     char outbuf[2*8 + 1];
+ 656              		.loc 1 54 5
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     size_t outbuflen;
+ 657              		.loc 1 55 5
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 658              		.loc 1 56 5
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     for (i = 0; i < request->actual_token.length; i++) {
+ 659              		.loc 1 58 5
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     for (i = 0; i < request->actual_token.length; i++) {
+ 660              		.loc 1 58 15 is_stmt 0
+ 661 0154 23060100 		sb	zero,12(sp)
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       /* Output maybe truncated */
+ 662              		.loc 1 59 5 is_stmt 1
+ 663              	.LVL66:
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       /* Output maybe truncated */
+ 664              		.loc 1 59 12 is_stmt 0
+ 665 0158 8144     		li	s1,0
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****                "%02x", request->token[i]);
+ 666              		.loc 1 62 7
+ 667 015a C549     		li	s3,17
+ 668              	.LVL67:
+ 669 015c 37090000 		lui	s2,%hi(.LC5)
+ 670              	.LVL68:
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****       /* Output maybe truncated */
+ 671              		.loc 1 59 5
+ 672 0160 41BF     		j	.L69
+ 673              	.LBE15:
+ 674              		.cfi_endproc
+ 675              	.LFE32:
+ 677              		.section	.text.coap_delete_all_async,"ax",@progbits
+ 678              		.align	1
+ 679              		.globl	coap_delete_all_async
+ 681              	coap_delete_all_async:
+ 682              	.LFB38:
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** void
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_delete_all_async(coap_context_t *context) {
+ 683              		.loc 1 168 48 is_stmt 1
+ 684              		.cfi_startproc
+ 685              	.LVL69:
+ 686 0000 17030000 		call	t0,__riscv_save_2
+ 686      E7020300 
+ 687              		.cfi_offset 9, -12
+ 688              		.cfi_offset 8, -8
+ 689              		.cfi_offset 1, -4
+ 690              		.cfi_def_cfa_offset 16
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *astate, *tmp;
+ 691              		.loc 1 169 3
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   LL_FOREACH_SAFE(context->async_state, astate, tmp) {
+ 692              		.loc 1 171 3
+ 693 0008 4C4D     		lw	a1,28(a0)
+ 694              	.LVL70:
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   coap_async_t *astate, *tmp;
+ 695              		.loc 1 168 48 is_stmt 0
+ 696 000a 2A84     		mv	s0,a0
+ 697              	.LVL71:
+ 698              	.L85:
+ 699              		.loc 1 171 3 is_stmt 1 discriminator 1
+ 700 000c 89C9     		beq	a1,zero,.L84
+ 701              		.loc 1 171 3 is_stmt 0 discriminator 3
+ 702 000e 8441     		lw	s1,0(a1)
+ 703              	.LVL72:
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_free_async_sub(context, astate);
+ 704              		.loc 1 172 5 is_stmt 1 discriminator 3
+ 705 0010 2285     		mv	a0,s0
+ 706 0012 97000000 		call	coap_free_async_sub
+ 706      E7800000 
+ 707              	.LVL73:
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****     coap_free_async_sub(context, astate);
+ 708              		.loc 1 171 3 discriminator 3
+ 709 001a A685     		mv	a1,s1
+ 710 001c C5BF     		j	.L85
+ 711              	.LVL74:
+ 712              	.L84:
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   }
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   context->async_state = NULL;
+ 713              		.loc 1 174 3
+ 714              		.loc 1 174 24 is_stmt 0
+ 715 001e 232E0400 		sw	zero,28(s0)
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 716              		.loc 1 175 1
+ 717 0022 17030000 		tail	__riscv_restore_2
+ 717      67000300 
+ 718              		.cfi_restore 9
+ 719              		.cfi_restore 8
+ 720              		.cfi_restore 1
+ 721              		.cfi_def_cfa_offset 0
+ 722              		.cfi_endproc
+ 723              	.LFE38:
+ 725              		.section	.text.coap_async_set_app_data,"ax",@progbits
+ 726              		.align	1
+ 727              		.globl	coap_async_set_app_data
+ 729              	coap_async_set_app_data:
+ 730              	.LFB39:
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** void
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_async_set_app_data(coap_async_t *async, void *app_data) {
+ 731              		.loc 1 178 62 is_stmt 1
+ 732              		.cfi_startproc
+ 733              	.LVL75:
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   async->appdata = app_data;
+ 734              		.loc 1 179 3
+ 735              		.loc 1 179 18 is_stmt 0
+ 736 0000 0CC9     		sw	a1,16(a0)
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 737              		.loc 1 180 1
+ 738 0002 8280     		ret
+ 739              		.cfi_endproc
+ 740              	.LFE39:
+ 742              		.section	.text.coap_async_get_app_data,"ax",@progbits
+ 743              		.align	1
+ 744              		.globl	coap_async_get_app_data
+ 746              	coap_async_get_app_data:
+ 747              	.LFB40:
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** 
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** void *
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** coap_async_get_app_data(const coap_async_t *async) {
+ 748              		.loc 1 183 52 is_stmt 1
+ 749              		.cfi_startproc
+ 750              	.LVL76:
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c ****   return async->appdata;
+ 751              		.loc 1 184 3
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_async.c **** }
+ 752              		.loc 1 185 1 is_stmt 0
+ 753 0000 0849     		lw	a0,16(a0)
+ 754              	.LVL77:
+ 755 0002 8280     		ret
+ 756              		.cfi_endproc
+ 757              	.LFE40:
+ 759              		.section	.rodata.__func__.0,"a"
+ 760              		.align	2
+ 761              		.set	.LANCHOR1,. + 0
+ 764              	__func__.0:
+ 765 0000 636F6170 		.string	"coap_async_set_delay"
+ 765      5F617379 
+ 765      6E635F73 
+ 765      65745F64 
+ 765      656C6179 
+ 766              		.section	.rodata.__func__.1,"a"
+ 767              		.align	2
+ 768              		.set	.LANCHOR0,. + 0
+ 771              	__func__.1:
+ 772 0000 636F6170 		.string	"coap_async_trigger"
+ 772      5F617379 
+ 772      6E635F74 
+ 772      72696767 
+ 772      657200
+ 773              		.text
+ 774              	.Letext0:
+ 775              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 776              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 777              		.file 5 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 778              		.file 6 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 779              		.file 7 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 780              		.file 8 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/arch.h"
+ 781              		.file 9 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_forward_decls.h"
+ 782              		.file 10 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_address.h"
+ 783              		.file 11 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_async_internal.h"
+ 784              		.file 12 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_block_internal.h"
+ 785              		.file 13 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_cache_internal.h"
+ 786              		.file 14 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_io_internal.h"
+ 787              		.file 15 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_net_internal.h"
+ 788              		.file 16 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_pdu_internal.h"
+ 789              		.file 17 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_resource_internal.h"
+ 790              		.file 18 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_session_internal.h"
+ 791              		.file 19 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_subscribe_internal.h"
+ 792              		.file 20 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_option.h"
+ 793              		.file 21 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_str.h"
+ 794              		.file 22 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/pbuf.h"
+ 795              		.file 23 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_pdu.h"
+ 796              		.file 24 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/ip4_addr.h"
+ 797              		.file 25 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/ip_addr.h"
+ 798              		.file 26 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/sockets.h"
+ 799              		.file 27 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_io.h"
+ 800              		.file 28 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_dtls.h"
+ 801              		.file 29 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_event.h"
+ 802              		.file 30 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_session.h"
+ 803              		.file 31 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_debug.h"
+ 804              		.file 32 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_net.h"
+ 805              		.file 33 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_block.h"
+ 806              		.file 34 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_cache.h"
+ 807              		.file 35 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_mem.h"
+ 808              		.file 36 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_resource.h"
+ 809              		.file 37 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_subscribe.h"
+ 810              		.file 38 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_uthash_internal.h"
+ 811              		.file 39 "..\\..\\..\\..\\lwip\\libcoap-4.3.4\\include/coap3/coap_layers_internal.h"
+ 812              		.file 40 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nuc
+ 813              		.file 41 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/sys.h"
+ 814              		.file 42 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nuc
+ 815              		.file 43 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nuc
+ 816              		.file 44 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 coap_async.c
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:12     .text.coap_free_async_sub:0000000000000000 coap_free_async_sub
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:16     .text.coap_free_async_sub:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:18     .text.coap_free_async_sub:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:19     .text.coap_free_async_sub:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:20     .text.coap_free_async_sub:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:22     .text.coap_free_async_sub:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:23     .text.coap_free_async_sub:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:24     .text.coap_free_async_sub:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:25     .text.coap_free_async_sub:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:28     .text.coap_free_async_sub:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:33     .text.coap_free_async_sub:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:34     .text.coap_free_async_sub:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:35     .text.coap_free_async_sub:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:37     .text.coap_free_async_sub:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:42     .text.coap_free_async_sub:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:43     .text.coap_free_async_sub:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:44     .text.coap_free_async_sub:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:47     .text.coap_free_async_sub:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:49     .text.coap_free_async_sub:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:53     .text.coap_free_async_sub:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:54     .text.coap_free_async_sub:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:56     .text.coap_free_async_sub:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:58     .text.coap_free_async_sub:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:61     .text.coap_free_async_sub:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:62     .text.coap_free_async_sub:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:65     .text.coap_free_async_sub:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:70     .text.coap_free_async_sub:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:71     .text.coap_free_async_sub:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:72     .text.coap_free_async_sub:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:73     .text.coap_free_async_sub:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:74     .text.coap_free_async_sub:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:77     .text.coap_free_async_sub:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:80     .text.coap_free_async_sub:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:85     .text.coap_free_async_sub:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:87     .text.coap_free_async_sub:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:88     .text.coap_free_async_sub:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:93     .text.coap_free_async_sub:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:94     .text.coap_free_async_sub:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:95     .text.coap_free_async_sub:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:98     .text.coap_free_async_sub:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:105    .text.coap_async_is_supported:0000000000000000 coap_async_is_supported
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:108    .text.coap_async_is_supported:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:109    .text.coap_async_is_supported:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:110    .text.coap_async_is_supported:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:111    .text.coap_async_is_supported:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:113    .text.coap_async_is_supported:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:130    .text.coap_async_trigger:0000000000000000 coap_async_trigger
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:133    .text.coap_async_trigger:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:135    .text.coap_async_trigger:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:136    .text.coap_async_trigger:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:137    .text.coap_async_trigger:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:138    .text.coap_async_trigger:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:140    .text.coap_async_trigger:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:142    .text.coap_async_trigger:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:159    .text.coap_async_trigger:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:160    .text.coap_async_trigger:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:161    .text.coap_async_trigger:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:164    .text.coap_async_trigger:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:169    .text.coap_async_trigger:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:170    .text.coap_async_trigger:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:175    .text.coap_async_trigger:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:186    .text.coap_async_trigger:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:187    .text.coap_async_trigger:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:188    .text.coap_async_trigger:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:189    .text.coap_async_trigger:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:190    .text.coap_async_trigger:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:191    .text.coap_async_trigger:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:205    .text.coap_async_set_delay:0000000000000000 coap_async_set_delay
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:208    .text.coap_async_set_delay:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:210    .text.coap_async_set_delay:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:211    .text.coap_async_set_delay:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:212    .text.coap_async_set_delay:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:213    .text.coap_async_set_delay:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:214    .text.coap_async_set_delay:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:216    .text.coap_async_set_delay:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:217    .text.coap_async_set_delay:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:219    .text.coap_async_set_delay:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:236    .text.coap_async_set_delay:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:237    .text.coap_async_set_delay:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:239    .text.coap_async_set_delay:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:244    .text.coap_async_set_delay:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:245    .text.coap_async_set_delay:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:247    .text.coap_async_set_delay:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:248    .text.coap_async_set_delay:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:251    .text.coap_async_set_delay:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:253    .text.coap_async_set_delay:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:254    .text.coap_async_set_delay:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:259    .text.coap_async_set_delay:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:275    .text.coap_async_set_delay:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:276    .text.coap_async_set_delay:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:277    .text.coap_async_set_delay:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:278    .text.coap_async_set_delay:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:279    .text.coap_async_set_delay:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:280    .text.coap_async_set_delay:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:283    .text.coap_async_set_delay:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:285    .text.coap_async_set_delay:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:286    .text.coap_async_set_delay:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:288    .text.coap_async_set_delay:000000000000008c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:289    .text.coap_async_set_delay:000000000000008c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:294    .text.coap_async_set_delay:000000000000009a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:304    .text.coap_async_set_delay:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:305    .text.coap_async_set_delay:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:306    .text.coap_async_set_delay:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:313    .text.coap_find_async:0000000000000000 coap_find_async
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:316    .text.coap_find_async:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:318    .text.coap_find_async:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:319    .text.coap_find_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:320    .text.coap_find_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:321    .text.coap_find_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:322    .text.coap_find_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:323    .text.coap_find_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:324    .text.coap_find_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:326    .text.coap_find_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:328    .text.coap_find_async:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:329    .text.coap_find_async:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:331    .text.coap_find_async:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:333    .text.coap_find_async:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:335    .text.coap_find_async:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:340    .text.coap_find_async:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:341    .text.coap_find_async:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:342    .text.coap_find_async:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:346    .text.coap_find_async:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:349    .text.coap_find_async:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:351    .text.coap_find_async:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:352    .text.coap_find_async:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:354    .text.coap_find_async:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:355    .text.coap_find_async:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:356    .text.coap_find_async:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:357    .text.coap_find_async:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:358    .text.coap_find_async:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:359    .text.coap_find_async:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:361    .text.coap_find_async:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:363    .text.coap_find_async:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:366    .text.coap_find_async:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:370    .text.coap_find_async:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:372    .text.coap_find_async:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:380    .text.coap_find_async:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:383    .text.coap_find_async:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:390    .text.coap_free_async:0000000000000000 coap_free_async
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:393    .text.coap_free_async:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:395    .text.coap_free_async:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:396    .text.coap_free_async:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:400    .text.coap_free_async:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:417    .text.coap_register_async:0000000000000000 coap_register_async
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:420    .text.coap_register_async:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:422    .text.coap_register_async:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:423    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:424    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:425    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:426    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:427    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:428    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:429    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:431    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:432    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:433    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:434    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:435    .text.coap_register_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:437    .text.coap_register_async:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:439    .text.coap_register_async:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:440    .text.coap_register_async:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:442    .text.coap_register_async:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:444    .text.coap_register_async:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:449    .text.coap_register_async:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:450    .text.coap_register_async:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:451    .text.coap_register_async:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:455    .text.coap_register_async:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:457    .text.coap_register_async:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:458    .text.coap_register_async:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:460    .text.coap_register_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:461    .text.coap_register_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:462    .text.coap_register_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:463    .text.coap_register_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:464    .text.coap_register_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:465    .text.coap_register_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:466    .text.coap_register_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:469    .text.coap_register_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:471    .text.coap_register_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:477    .text.coap_register_async:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:480    .text.coap_register_async:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:481    .text.coap_register_async:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:483    .text.coap_register_async:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:484    .text.coap_register_async:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:485    .text.coap_register_async:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:486    .text.coap_register_async:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:493    .text.coap_register_async:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:494    .text.coap_register_async:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:496    .text.coap_register_async:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:501    .text.coap_register_async:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:502    .text.coap_register_async:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:504    .text.coap_register_async:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:507    .text.coap_register_async:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:509    .text.coap_register_async:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:512    .text.coap_register_async:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:514    .text.coap_register_async:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:516    .text.coap_register_async:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:517    .text.coap_register_async:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:518    .text.coap_register_async:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:522    .text.coap_register_async:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:524    .text.coap_register_async:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:525    .text.coap_register_async:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:527    .text.coap_register_async:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:532    .text.coap_register_async:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:534    .text.coap_register_async:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:535    .text.coap_register_async:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:536    .text.coap_register_async:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:541    .text.coap_register_async:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:550    .text.coap_register_async:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:553    .text.coap_register_async:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:558    .text.coap_register_async:00000000000000b2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:560    .text.coap_register_async:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:567    .text.coap_register_async:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:574    .text.coap_register_async:00000000000000c8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:575    .text.coap_register_async:00000000000000c8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:579    .text.coap_register_async:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:580    .text.coap_register_async:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:582    .text.coap_register_async:00000000000000d4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:585    .text.coap_register_async:00000000000000dc .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:587    .text.coap_register_async:00000000000000de .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:594    .text.coap_register_async:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:595    .text.coap_register_async:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:599    .text.coap_register_async:00000000000000f0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:600    .text.coap_register_async:00000000000000f0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:603    .text.coap_register_async:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:604    .text.coap_register_async:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:609    .text.coap_register_async:0000000000000104 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:620    .text.coap_register_async:000000000000011a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:621    .text.coap_register_async:000000000000011a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:627    .text.coap_register_async:0000000000000128 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:629    .text.coap_register_async:000000000000012a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:636    .text.coap_register_async:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:637    .text.coap_register_async:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:641    .text.coap_register_async:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:643    .text.coap_register_async:0000000000000144 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:648    .text.coap_register_async:0000000000000150 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:649    .text.coap_register_async:0000000000000150 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:654    .text.coap_register_async:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:656    .text.coap_register_async:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:657    .text.coap_register_async:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:658    .text.coap_register_async:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:659    .text.coap_register_async:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:660    .text.coap_register_async:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:661    .text.coap_register_async:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:664    .text.coap_register_async:0000000000000158 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:665    .text.coap_register_async:0000000000000158 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:667    .text.coap_register_async:000000000000015a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:672    .text.coap_register_async:0000000000000160 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:674    .text.coap_register_async:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:681    .text.coap_delete_all_async:0000000000000000 coap_delete_all_async
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:684    .text.coap_delete_all_async:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:686    .text.coap_delete_all_async:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:687    .text.coap_delete_all_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:688    .text.coap_delete_all_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:689    .text.coap_delete_all_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:690    .text.coap_delete_all_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:692    .text.coap_delete_all_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:693    .text.coap_delete_all_async:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:696    .text.coap_delete_all_async:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:700    .text.coap_delete_all_async:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:702    .text.coap_delete_all_async:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:705    .text.coap_delete_all_async:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:709    .text.coap_delete_all_async:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:714    .text.coap_delete_all_async:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:715    .text.coap_delete_all_async:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:717    .text.coap_delete_all_async:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:718    .text.coap_delete_all_async:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:719    .text.coap_delete_all_async:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:720    .text.coap_delete_all_async:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:721    .text.coap_delete_all_async:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:722    .text.coap_delete_all_async:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:729    .text.coap_async_set_app_data:0000000000000000 coap_async_set_app_data
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:732    .text.coap_async_set_app_data:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:734    .text.coap_async_set_app_data:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:735    .text.coap_async_set_app_data:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:736    .text.coap_async_set_app_data:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:738    .text.coap_async_set_app_data:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:739    .text.coap_async_set_app_data:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:746    .text.coap_async_get_app_data:0000000000000000 coap_async_get_app_data
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:749    .text.coap_async_get_app_data:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:751    .text.coap_async_get_app_data:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:752    .text.coap_async_get_app_data:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:753    .text.coap_async_get_app_data:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:756    .text.coap_async_get_app_data:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:761    .rodata.__func__.0:0000000000000000 .LANCHOR1
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:764    .rodata.__func__.0:0000000000000000 __func__.0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:768    .rodata.__func__.1:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:771    .rodata.__func__.1:0000000000000000 __func__.1
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:101    .text.coap_free_async_sub:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:116    .text.coap_async_is_supported:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:194    .text.coap_async_trigger:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:309    .text.coap_async_set_delay:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:386    .text.coap_find_async:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:403    .text.coap_free_async:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:677    .text.coap_register_async:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:725    .text.coap_delete_all_async:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:742    .text.coap_async_set_app_data:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:759    .text.coap_async_get_app_data:0000000000000004 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:92     .text.coap_free_async_sub:0000000000000056 .L24
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:76     .text.coap_free_async_sub:0000000000000046 .L3
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:51     .text.coap_free_async_sub:0000000000000022 .L6
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:63     .text.coap_free_async_sub:0000000000000032 .L7
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:39     .text.coap_free_async_sub:0000000000000016 .L4
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:118    .rodata.coap_async_trigger.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:121    .rodata.coap_async_trigger.str1.4:0000000000000010 .LC1
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:124    .rodata.coap_async_trigger.str1.4:0000000000000094 .LC2
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:152    .text.coap_async_trigger:000000000000002e .L29
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:185    .text.coap_async_trigger:0000000000000066 .L28
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:196    .rodata.coap_async_set_delay.str1.4:0000000000000000 .LC3
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:199    .rodata.coap_async_set_delay.str1.4:0000000000000030 .LC4
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:230    .text.coap_async_set_delay:000000000000002e .L33
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:282    .text.coap_async_set_delay:0000000000000088 .L34
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:273    .text.coap_async_set_delay:0000000000000080 .L32
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:360    .text.coap_find_async:0000000000000028 .L43
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:378    .text.coap_find_async:0000000000000048 .L41
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:347    .text.coap_find_async:000000000000001c .L39
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:344    .text.coap_find_async:000000000000001a .L40
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:411    .rodata.coap_register_async.str1.4:0000000000000040 .LC7
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:405    .rodata.coap_register_async.str1.4:0000000000000000 .LC5
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:408    .rodata.coap_register_async.str1.4:0000000000000008 .LC6
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:468    .text.coap_register_async:0000000000000022 .L54
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:548    .text.coap_register_async:000000000000009e .L59
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:533    .text.coap_register_async:000000000000007c .L67
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:617    .text.coap_register_async:000000000000011a .L64
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:446    .text.coap_register_async:0000000000000014 .L62
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:452    .text.coap_register_async:0000000000000016 .L53
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:565    .text.coap_register_async:00000000000000c2 .L57
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:652    .text.coap_register_async:0000000000000154 .L58
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:479    .text.coap_register_async:0000000000000030 .L56
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:571    .text.coap_register_async:00000000000000c8 .L61
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:634    .text.coap_register_async:0000000000000138 .L66
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:597    .text.coap_register_async:00000000000000f0 .L69
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:712    .text.coap_delete_all_async:000000000000001e .L84
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:698    .text.coap_delete_all_async:000000000000000c .L85
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:6050   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7791   .debug_str:0000000000000ceb .LASF510
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7687   .debug_str:000000000000094f .LASF511
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7943   .debug_str:00000000000012d7 .LASF512
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7311   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7351   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7935   .debug_str:00000000000012a1 .LASF0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7575   .debug_str:000000000000064e .LASF1
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7501   .debug_str:00000000000003f2 .LASF4
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7597   .debug_str:00000000000006dc .LASF2
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8181   .debug_str:0000000000001aab .LASF3
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7663   .debug_str:00000000000008c7 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8317   .debug_str:0000000000001f02 .LASF6
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7523   .debug_str:00000000000004b1 .LASF7
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7867   .debug_str:000000000000104d .LASF8
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7773   .debug_str:0000000000000c66 .LASF9
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7869   .debug_str:0000000000001058 .LASF10
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7769   .debug_str:0000000000000c51 .LASF11
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8061   .debug_str:0000000000001705 .LASF12
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7577   .debug_str:000000000000065a .LASF13
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8067   .debug_str:0000000000001728 .LASF14
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8279   .debug_str:0000000000001de3 .LASF15
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8191   .debug_str:0000000000001b0e .LASF16
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7365   .debug_str:0000000000000044 .LASF17
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7683   .debug_str:000000000000093b .LASF18
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7363   .debug_str:000000000000003b .LASF19
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7635   .debug_str:0000000000000816 .LASF20
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7491   .debug_str:000000000000038e .LASF21
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8329   .debug_str:0000000000001f68 .LASF22
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7947   .debug_str:0000000000001362 .LASF23
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8123   .debug_str:00000000000018ba .LASF24
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8217   .debug_str:0000000000001bd0 .LASF25
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8165   .debug_str:0000000000001a17 .LASF26
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7929   .debug_str:0000000000001281 .LASF27
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8147   .debug_str:000000000000199d .LASF28
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8367   .debug_str:00000000000020b9 .LASF29
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7487   .debug_str:000000000000037f .LASF30
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7807   .debug_str:0000000000000e72 .LASF31
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7753   .debug_str:0000000000000bed .LASF32
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7567   .debug_str:00000000000005f4 .LASF33
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7733   .debug_str:0000000000000b48 .LASF34
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7805   .debug_str:0000000000000e6b .LASF35
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7371   .debug_str:0000000000000065 .LASF36
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8369   .debug_str:00000000000020be .LASF37
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8065   .debug_str:0000000000001721 .LASF38
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7973   .debug_str:000000000000142f .LASF39
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7913   .debug_str:00000000000011fa .LASF40
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7991   .debug_str:00000000000014b7 .LASF41
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7603   .debug_str:0000000000000717 .LASF42
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7849   .debug_str:0000000000000fca .LASF43
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7531   .debug_str:00000000000004e6 .LASF44
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8277   .debug_str:0000000000001ddb .LASF45
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7961   .debug_str:00000000000013c9 .LASF46
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7399   .debug_str:0000000000000114 .LASF47
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7879   .debug_str:00000000000010b3 .LASF48
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7839   .debug_str:0000000000000f6b .LASF49
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8245   .debug_str:0000000000001ccf .LASF50
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8035   .debug_str:000000000000164e .LASF51
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8063   .debug_str:000000000000171c .LASF52
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7591   .debug_str:00000000000006b3 .LASF53
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7579   .debug_str:0000000000000662 .LASF54
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8085   .debug_str:000000000000179d .LASF55
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7975   .debug_str:0000000000001436 .LASF56
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7831   .debug_str:0000000000000f2f .LASF57
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7391   .debug_str:00000000000000dd .LASF58
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7483   .debug_str:000000000000036f .LASF59
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8043   .debug_str:0000000000001685 .LASF60
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7725   .debug_str:0000000000000b18 .LASF61
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7411   .debug_str:0000000000000176 .LASF62
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7467   .debug_str:000000000000031f .LASF63
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7655   .debug_str:0000000000000891 .LASF64
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7527   .debug_str:00000000000004c7 .LASF65
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7433   .debug_str:000000000000021f .LASF66
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8135   .debug_str:0000000000001919 .LASF67
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8059   .debug_str:00000000000016f9 .LASF68
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7953   .debug_str:000000000000138a .LASF69
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7369   .debug_str:0000000000000057 .LASF70
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7705   .debug_str:0000000000000a63 .LASF71
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8233   .debug_str:0000000000001c6e .LASF72
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7671   .debug_str:00000000000008fd .LASF73
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7667   .debug_str:00000000000008e2 .LASF74
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8077   .debug_str:0000000000001761 .LASF75
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7645   .debug_str:000000000000085a .LASF76
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8247   .debug_str:0000000000001cd8 .LASF77
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8225   .debug_str:0000000000001c24 .LASF78
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7489   .debug_str:0000000000000385 .LASF79
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8221   .debug_str:0000000000001c08 .LASF80
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8081   .debug_str:000000000000177a .LASF81
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7673   .debug_str:0000000000000906 .LASF82
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8071   .debug_str:0000000000001738 .LASF83
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8091   .debug_str:00000000000017d7 .LASF84
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7971   .debug_str:0000000000001429 .LASF85
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8079   .debug_str:000000000000176b .LASF86
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7735   .debug_str:0000000000000b51 .LASF87
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7851   .debug_str:0000000000000fd3 .LASF88
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7493   .debug_str:0000000000000396 .LASF89
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7419   .debug_str:00000000000001bd .LASF90
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8353   .debug_str:0000000000002035 .LASF91
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8289   .debug_str:0000000000001e18 .LASF92
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8201   .debug_str:0000000000001b56 .LASF93
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7809   .debug_str:0000000000000e7a .LASF94
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7425   .debug_str:00000000000001ec .LASF95
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8223   .debug_str:0000000000001c19 .LASF96
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8375   .debug_str:00000000000020df .LASF97
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8381   .debug_str:0000000000002104 .LASF98
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8045   .debug_str:000000000000168f .LASF99
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7767   .debug_str:0000000000000c44 .LASF100
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7945   .debug_str:0000000000001355 .LASF101
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7475   .debug_str:0000000000000341 .LASF102
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8121   .debug_str:00000000000018ac .LASF103
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8273   .debug_str:0000000000001db0 .LASF104
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7985   .debug_str:000000000000148f .LASF105
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7951   .debug_str:0000000000001378 .LASF106
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7841   .debug_str:0000000000000f77 .LASF107
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7875   .debug_str:0000000000001083 .LASF108
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8373   .debug_str:00000000000020ce .LASF109
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8255   .debug_str:0000000000001d11 .LASF110
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7455   .debug_str:00000000000002bc .LASF111
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8175   .debug_str:0000000000001a60 .LASF112
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7815   .debug_str:0000000000000eab .LASF113
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8307   .debug_str:0000000000001eb3 .LASF114
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7435   .debug_str:000000000000022e .LASF115
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8231   .debug_str:0000000000001c61 .LASF116
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8241   .debug_str:0000000000001cb9 .LASF117
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7691   .debug_str:00000000000009e4 .LASF118
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8019   .debug_str:000000000000159d .LASF119
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8041   .debug_str:0000000000001670 .LASF120
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8159   .debug_str:00000000000019f7 .LASF121
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8385   .debug_str:000000000000212f .LASF122
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8009   .debug_str:000000000000155f .LASF123
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7503   .debug_str:00000000000003fc .LASF124
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7821   .debug_str:0000000000000ed2 .LASF125
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7729   .debug_str:0000000000000b32 .LASF126
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7755   .debug_str:0000000000000bf5 .LASF127
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7465   .debug_str:000000000000030f .LASF128
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8143   .debug_str:0000000000001965 .LASF129
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7855   .debug_str:0000000000000fe6 .LASF130
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7585   .debug_str:0000000000000686 .LASF131
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7565   .debug_str:00000000000005e7 .LASF132
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7845   .debug_str:0000000000000f9c .LASF133
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7509   .debug_str:0000000000000436 .LASF134
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7923   .debug_str:0000000000001253 .LASF135
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7677   .debug_str:0000000000000913 .LASF136
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7471   .debug_str:0000000000000334 .LASF137
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8119   .debug_str:00000000000018a7 .LASF138
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8167   .debug_str:0000000000001a1c .LASF139
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7451   .debug_str:00000000000002ad .LASF140
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7979   .debug_str:0000000000001465 .LASF141
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7757   .debug_str:0000000000000c01 .LASF142
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8311   .debug_str:0000000000001ed6 .LASF143
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8263   .debug_str:0000000000001d5a .LASF144
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7431   .debug_str:0000000000000214 .LASF145
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7377   .debug_str:0000000000000087 .LASF146
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7609   .debug_str:000000000000074e .LASF147
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8303   .debug_str:0000000000001e9d .LASF148
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7647   .debug_str:0000000000000863 .LASF149
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7439   .debug_str:0000000000000253 .LASF150
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8363   .debug_str:00000000000020a4 .LASF151
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7941   .debug_str:00000000000012cc .LASF152
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7933   .debug_str:0000000000001299 .LASF153
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8197   .debug_str:0000000000001b2e .LASF154
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8161   .debug_str:0000000000001a0a .LASF155
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7629   .debug_str:00000000000007dd .LASF156
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7817   .debug_str:0000000000000ebb .LASF157
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8349   .debug_str:0000000000002020 .LASF158
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7987   .debug_str:00000000000014a1 .LASF159
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7653   .debug_str:0000000000000886 .LASF160
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7505   .debug_str:0000000000000405 .LASF161
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7379   .debug_str:0000000000000091 .LASF162
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8185   .debug_str:0000000000001ada .LASF163
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7623   .debug_str:00000000000007b4 .LASF164
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7459   .debug_str:00000000000002dd .LASF165
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7443   .debug_str:0000000000000268 .LASF166
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7583   .debug_str:000000000000067e .LASF167
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8101   .debug_str:0000000000001825 .LASF168
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7899   .debug_str:0000000000001179 .LASF169
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7375   .debug_str:000000000000007d .LASF170
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7709   .debug_str:0000000000000a87 .LASF171
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7521   .debug_str:00000000000004aa .LASF172
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7955   .debug_str:000000000000138f .LASF173
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7395   .debug_str:00000000000000f8 .LASF174
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8291   .debug_str:0000000000001e24 .LASF175
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7765   .debug_str:0000000000000c38 .LASF176
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7519   .debug_str:00000000000004a5 .LASF177
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7539   .debug_str:0000000000000520 .LASF178
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8389   .debug_str:000000000000214b .LASF179
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7453   .debug_str:00000000000002b6 .LASF180
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8093   .debug_str:00000000000017e2 .LASF181
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8261   .debug_str:0000000000001d4e .LASF182
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7625   .debug_str:00000000000007bc .LASF183
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8205   .debug_str:0000000000001b83 .LASF184
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7613   .debug_str:0000000000000773 .LASF185
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7967   .debug_str:000000000000140d .LASF186
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7747   .debug_str:0000000000000bbc .LASF187
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8011   .debug_str:0000000000001567 .LASF188
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8321   .debug_str:0000000000001f32 .LASF189
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8207   .debug_str:0000000000001b8d .LASF190
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8117   .debug_str:000000000000189f .LASF191
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8215   .debug_str:0000000000001bc8 .LASF192
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7631   .debug_str:00000000000007e3 .LASF193
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7407   .debug_str:0000000000000161 .LASF194
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8213   .debug_str:0000000000001bbb .LASF195
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7593   .debug_str:00000000000006c2 .LASF196
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8327   .debug_str:0000000000001f5d .LASF197
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7739   .debug_str:0000000000000b6f .LASF198
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8283   .debug_str:0000000000001df5 .LASF199
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7495   .debug_str:00000000000003a7 .LASF200
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8285   .debug_str:0000000000001dff .LASF201
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7895   .debug_str:0000000000001157 .LASF202
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7719   .debug_str:0000000000000ad5 .LASF203
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7473   .debug_str:0000000000000339 .LASF204
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8033   .debug_str:0000000000001645 .LASF205
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8155   .debug_str:00000000000019d3 .LASF206
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7759   .debug_str:0000000000000c09 .LASF207
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8153   .debug_str:00000000000019c4 .LASF208
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8069   .debug_str:0000000000001731 .LASF209
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7699   .debug_str:0000000000000a2b .LASF210
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8313   .debug_str:0000000000001ee5 .LASF211
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7891   .debug_str:0000000000001120 .LASF212
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8125   .debug_str:00000000000018c0 .LASF213
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7861   .debug_str:000000000000101d .LASF214
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7969   .debug_str:0000000000001414 .LASF215
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8099   .debug_str:0000000000001810 .LASF216
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8105   .debug_str:0000000000001857 .LASF217
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7617   .debug_str:0000000000000788 .LASF218
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7795   .debug_str:0000000000000df2 .LASF219
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8335   .debug_str:0000000000001f93 .LASF220
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7789   .debug_str:0000000000000cd9 .LASF221
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7949   .debug_str:0000000000001368 .LASF222
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7469   .debug_str:000000000000032b .LASF223
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7357   .debug_str:0000000000000020 .LASF224
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7871   .debug_str:0000000000001066 .LASF225
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7557   .debug_str:00000000000005a7 .LASF226
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8149   .debug_str:00000000000019aa .LASF227
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7885   .debug_str:00000000000010f4 .LASF228
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8113   .debug_str:0000000000001889 .LASF229
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7783   .debug_str:0000000000000cc5 .LASF230
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7581   .debug_str:000000000000066c .LASF231
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7905   .debug_str:00000000000011b8 .LASF232
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8003   .debug_str:0000000000001534 .LASF233
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8343   .debug_str:0000000000001fec .LASF234
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7423   .debug_str:00000000000001de .LASF235
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7993   .debug_str:00000000000014c1 .LASF236
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8187   .debug_str:0000000000001ae7 .LASF237
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7829   .debug_str:0000000000000f1e .LASF238
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7835   .debug_str:0000000000000f4c .LASF239
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8007   .debug_str:0000000000001557 .LASF240
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7793   .debug_str:0000000000000de4 .LASF241
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8051   .debug_str:00000000000016bf .LASF242
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8305   .debug_str:0000000000001ea3 .LASF247
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8169   .debug_str:0000000000001a29 .LASF243
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7389   .debug_str:00000000000000cc .LASF244
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7981   .debug_str:000000000000146e .LASF245
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7937   .debug_str:00000000000012ae .LASF246
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8253   .debug_str:0000000000001d06 .LASF248
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8151   .debug_str:00000000000019b7 .LASF249
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8037   .debug_str:000000000000165a .LASF250
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7779   .debug_str:0000000000000ca6 .LASF251
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8087   .debug_str:00000000000017a5 .LASF252
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7561   .debug_str:00000000000005c4 .LASF253
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7857   .debug_str:0000000000000ff9 .LASF254
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8115   .debug_str:0000000000001891 .LASF255
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7681   .debug_str:000000000000092c .LASF256
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7353   .debug_str:0000000000000000 .LASF257
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7355   .debug_str:0000000000000010 .LASF258
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8107   .debug_str:0000000000001863 .LASF259
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8339   .debug_str:0000000000001fc3 .LASF260
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7515   .debug_str:0000000000000470 .LASF261
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7661   .debug_str:00000000000008b1 .LASF262
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8049   .debug_str:00000000000016a6 .LASF263
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7823   .debug_str:0000000000000edc .LASF264
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8259   .debug_str:0000000000001d36 .LASF265
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8005   .debug_str:000000000000153e .LASF266
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8275   .debug_str:0000000000001dc0 .LASF267
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7957   .debug_str:0000000000001395 .LASF268
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7921   .debug_str:000000000000123a .LASF269
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7707   .debug_str:0000000000000a6c .LASF270
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7915   .debug_str:0000000000001207 .LASF271
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8023   .debug_str:00000000000015c0 .LASF272
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8345   .debug_str:0000000000001ff7 .LASF273
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7925   .debug_str:000000000000125b .LASF274
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8337   .debug_str:0000000000001fa5 .LASF275
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8129   .debug_str:00000000000018dc .LASF276
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7877   .debug_str:0000000000001096 .LASF277
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7743   .debug_str:0000000000000b8d .LASF278
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8089   .debug_str:00000000000017b5 .LASF279
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7601   .debug_str:00000000000006f9 .LASF280
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8199   .debug_str:0000000000001b3a .LASF281
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8145   .debug_str:0000000000001976 .LASF282
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7995   .debug_str:00000000000014d2 .LASF283
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7499   .debug_str:00000000000003c4 .LASF284
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7903   .debug_str:0000000000001197 .LASF285
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8027   .debug_str:00000000000015ec .LASF286
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7977   .debug_str:0000000000001443 .LASF287
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7799   .debug_str:0000000000000e13 .LASF288
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8137   .debug_str:0000000000001922 .LASF289
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7507   .debug_str:000000000000040f .LASF290
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7405   .debug_str:000000000000013e .LASF291
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8361   .debug_str:000000000000207a .LASF292
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8183   .debug_str:0000000000001ab5 .LASF293
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8257   .debug_str:0000000000001d1e .LASF294
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8235   .debug_str:0000000000001c77 .LASF295
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7445   .debug_str:0000000000000274 .LASF296
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7573   .debug_str:0000000000000632 .LASF297
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7427   .debug_str:00000000000001f5 .LASF298
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7543   .debug_str:000000000000053e .LASF299
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7887   .debug_str:0000000000001108 .LASF300
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8015   .debug_str:0000000000001581 .LASF301
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7589   .debug_str:00000000000006ac .LASF302
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7909   .debug_str:00000000000011dc .LASF303
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8239   .debug_str:0000000000001ca5 .LASF304
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8017   .debug_str:000000000000158b .LASF305
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7479   .debug_str:000000000000035f .LASF306
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7587   .debug_str:0000000000000691 .LASF307
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7827   .debug_str:0000000000000f04 .LASF308
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7715   .debug_str:0000000000000ab6 .LASF309
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7865   .debug_str:0000000000001038 .LASF310
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7693   .debug_str:00000000000009f9 .LASF311
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7381   .debug_str:000000000000009c .LASF312
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8301   .debug_str:0000000000001e82 .LASF313
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8383   .debug_str:0000000000002115 .LASF314
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7457   .debug_str:00000000000002c9 .LASF315
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7555   .debug_str:0000000000000594 .LASF316
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7547   .debug_str:0000000000000555 .LASF317
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7367   .debug_str:000000000000004b .LASF318
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8377   .debug_str:00000000000020e9 .LASF319
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7761   .debug_str:0000000000000c1b .LASF320
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8271   .debug_str:0000000000001d98 .LASF321
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7717   .debug_str:0000000000000ac4 .LASF322
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8109   .debug_str:0000000000001873 .LASF323
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8365   .debug_str:00000000000020b0 .LASF324
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7513   .debug_str:000000000000045a .LASF325
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7797   .debug_str:0000000000000e02 .LASF326
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8371   .debug_str:00000000000020c3 .LASF327
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8281   .debug_str:0000000000001dec .LASF328
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8031   .debug_str:000000000000162f .LASF329
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7785   .debug_str:0000000000000cce .LASF330
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8055   .debug_str:00000000000016d4 .LASF331
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8319   .debug_str:0000000000001f15 .LASF332
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8193   .debug_str:0000000000001b17 .LASF333
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8267   .debug_str:0000000000001d76 .LASF334
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7393   .debug_str:00000000000000e7 .LASF335
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7643   .debug_str:0000000000000843 .LASF336
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8287   .debug_str:0000000000001e06 .LASF337
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7417   .debug_str:00000000000001a6 .LASF338
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7883   .debug_str:00000000000010da .LASF339
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7611   .debug_str:0000000000000757 .LASF340
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8299   .debug_str:0000000000001e6c .LASF341
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7571   .debug_str:0000000000000619 .LASF342
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7911   .debug_str:00000000000011e4 .LASF343
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8357   .debug_str:0000000000002055 .LASF344
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7605   .debug_str:0000000000000725 .LASF345
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7803   .debug_str:0000000000000e51 .LASF346
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8249   .debug_str:0000000000001ce5 .LASF347
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7703   .debug_str:0000000000000a4a .LASF348
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7801   .debug_str:0000000000000e36 .LASF349
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7517   .debug_str:0000000000000487 .LASF350
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8177   .debug_str:0000000000001a70 .LASF351
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7397   .debug_str:00000000000000fe .LASF352
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8227   .debug_str:0000000000001c31 .LASF353
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7633   .debug_str:00000000000007f1 .LASF354
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8029   .debug_str:0000000000001611 .LASF355
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7963   .debug_str:00000000000013d8 .LASF356
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8171   .debug_str:0000000000001a3a .LASF357
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8103   .debug_str:0000000000001836 .LASF358
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7775   .debug_str:0000000000000c78 .LASF359
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7403   .debug_str:0000000000000124 .LASF360
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8297   .debug_str:0000000000001e54 .LASF361
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7859   .debug_str:0000000000001008 .LASF362
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8021   .debug_str:00000000000015a3 .LASF363
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8057   .debug_str:00000000000016ec .LASF364
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7529   .debug_str:00000000000004d1 .LASF365
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7461   .debug_str:00000000000002e7 .LASF366
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7889   .debug_str:0000000000001113 .LASF367
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7665   .debug_str:00000000000008d2 .LASF368
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7763   .debug_str:0000000000000c24 .LASF369
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8209   .debug_str:0000000000001b98 .LASF370
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7959   .debug_str:00000000000013b0 .LASF371
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8189   .debug_str:0000000000001af5 .LASF372
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7873   .debug_str:000000000000106b .LASF373
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7641   .debug_str:000000000000082e .LASF374
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7881   .debug_str:00000000000010c2 .LASF375
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7721   .debug_str:0000000000000ae2 .LASF376
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8179   .debug_str:0000000000001a8e .LASF377
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7627   .debug_str:00000000000007c6 .LASF378
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7907   .debug_str:00000000000011bd .LASF379
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7701   .debug_str:0000000000000a3b .LASF380
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7833   .debug_str:0000000000000f3d .LASF381
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7679   .debug_str:000000000000091e .LASF382
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8387   .debug_str:000000000000213e .LASF383
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7657   .debug_str:000000000000089c .LASF384
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7745   .debug_str:0000000000000bac .LASF385
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7965   .debug_str:00000000000013ff .LASF386
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8331   .debug_str:0000000000001f6d .LASF387
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7983   .debug_str:000000000000147f .LASF388
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7697   .debug_str:0000000000000a18 .LASF389
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7551   .debug_str:000000000000056f .LASF390
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7413   .debug_str:0000000000000184 .LASF391
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7813   .debug_str:0000000000000e9a .LASF392
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8133   .debug_str:0000000000001901 .LASF393
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8139   .debug_str:0000000000001941 .LASF394
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7563   .debug_str:00000000000005d3 .LASF395
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7711   .debug_str:0000000000000a98 .LASF396
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7847   .debug_str:0000000000000fab .LASF397
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8001   .debug_str:000000000000151a .LASF398
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7893   .debug_str:0000000000001133 .LASF399
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7637   .debug_str:000000000000081b .LASF400
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7541   .debug_str:000000000000052a .LASF401
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7553   .debug_str:000000000000057f .LASF402
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8211   .debug_str:0000000000001baf .LASF403
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7771   .debug_str:0000000000000c5c .LASF404
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7621   .debug_str:00000000000007a7 .LASF405
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7421   .debug_str:00000000000001d0 .LASF406
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8293   .debug_str:0000000000001e34 .LASF407
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7373   .debug_str:0000000000000070 .LASF408
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8053   .debug_str:00000000000016c6 .LASF409
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7449   .debug_str:000000000000029b .LASF410
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7651   .debug_str:0000000000000874 .LASF411
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7615   .debug_str:000000000000077b .LASF412
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7939   .debug_str:00000000000012bf .LASF413
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7415   .debug_str:0000000000000197 .LASF414
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7477   .debug_str:000000000000034e .LASF415
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8097   .debug_str:0000000000001803 .LASF416
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8325   .debug_str:0000000000001f50 .LASF417
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7525   .debug_str:00000000000004ba .LASF418
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7919   .debug_str:000000000000122a .LASF419
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7537   .debug_str:000000000000050e .LASF420
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7741   .debug_str:0000000000000b7b .LASF421
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8323   .debug_str:0000000000001f40 .LASF422
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8141   .debug_str:0000000000001955 .LASF423
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7997   .debug_str:00000000000014f7 .LASF424
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8355   .debug_str:0000000000002046 .LASF425
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8351   .debug_str:0000000000002026 .LASF426
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8315   .debug_str:0000000000001ef2 .LASF427
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7713   .debug_str:0000000000000aac .LASF428
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7569   .debug_str:0000000000000603 .LASF429
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8219   .debug_str:0000000000001bdf .LASF430
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8237   .debug_str:0000000000001c90 .LASF431
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8333   .debug_str:0000000000001f7c .LASF432
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7511   .debug_str:000000000000043f .LASF433
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8203   .debug_str:0000000000001b69 .LASF434
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7751   .debug_str:0000000000000bd5 .LASF435
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7731   .debug_str:0000000000000b3a .LASF436
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8039   .debug_str:000000000000166a .LASF437
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7549   .debug_str:0000000000000561 .LASF438
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7383   .debug_str:00000000000000b3 .LASF439
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7787   .debug_str:0000000000000cd3 .LASF440
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8195   .debug_str:0000000000001b28 .LASF441
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7695   .debug_str:0000000000000a0e .LASF442
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7825   .debug_str:0000000000000ef4 .LASF443
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7481   .debug_str:0000000000000365 .LASF444
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7927   .debug_str:000000000000127b .LASF445
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8025   .debug_str:00000000000015dc .LASF446
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8013   .debug_str:000000000000157b .LASF447
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7599   .debug_str:00000000000006ea .LASF448
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7901   .debug_str:0000000000001189 .LASF449
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8265   .debug_str:0000000000001d67 .LASF450
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7361   .debug_str:0000000000000033 .LASF451
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7649   .debug_str:0000000000000868 .LASF452
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7777   .debug_str:0000000000000c97 .LASF453
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8379   .debug_str:00000000000020ff .LASF454
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8173   .debug_str:0000000000001a58 .LASF455
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8163   .debug_str:0000000000001a0f .LASF456
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7535   .debug_str:0000000000000507 .LASF457
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7485   .debug_str:0000000000000379 .LASF458
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7437   .debug_str:0000000000000245 .LASF459
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7917   .debug_str:0000000000001222 .LASF460
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7607   .debug_str:0000000000000742 .LASF461
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8127   .debug_str:00000000000018cb .LASF462
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8243   .debug_str:0000000000001cc5 .LASF463
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7387   .debug_str:00000000000000c7 .LASF464
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7999   .debug_str:0000000000001507 .LASF465
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7385   .debug_str:00000000000000b8 .LASF466
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7447   .debug_str:000000000000028d .LASF467
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7441   .debug_str:000000000000025f .LASF468
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8347   .debug_str:0000000000002016 .LASF469
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7689   .debug_str:00000000000009d2 .LASF470
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8341   .debug_str:0000000000001fd9 .LASF471
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8295   .debug_str:0000000000001e3d .LASF472
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8229   .debug_str:0000000000001c4e .LASF473
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7989   .debug_str:00000000000014b0 .LASF474
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8131   .debug_str:00000000000018f9 .LASF475
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8269   .debug_str:0000000000001d8c .LASF476
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8073   .debug_str:0000000000001741 .LASF477
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7897   .debug_str:0000000000001167 .LASF478
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7669   .debug_str:00000000000008f5 .LASF513
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8157   .debug_str:00000000000019df .LASF485
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:747    .text.coap_async_get_app_data:0000000000000000 .LFB40
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:757    .text.coap_async_get_app_data:0000000000000004 .LFE40
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8047   .debug_str:00000000000016a0 .LASF479
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:6929   .debug_loc:0000000000000000 .LLST21
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8075   .debug_str:0000000000001749 .LASF480
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:730    .text.coap_async_set_app_data:0000000000000000 .LFB39
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:740    .text.coap_async_set_app_data:0000000000000004 .LFE39
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7811   .debug_str:0000000000000e84 .LASF481
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:682    .text.coap_delete_all_async:0000000000000000 .LFB38
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:723    .text.coap_delete_all_async:000000000000002a .LFE38
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:6943   .debug_loc:0000000000000021 .LLST18
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7659   .debug_str:00000000000008aa .LASF482
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:6954   .debug_loc:000000000000003f .LLST19
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:6969   .debug_loc:0000000000000068 .LLST20
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:707    .text.coap_delete_all_async:000000000000001a .LVL73
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7737   .debug_str:0000000000000b5f .LASF483
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:391    .text.coap_free_async:0000000000000000 .LFB37
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:401    .text.coap_free_async:000000000000000c .LFE37
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:6976   .debug_loc:000000000000007b .LLST10
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:6990   .debug_loc:000000000000009c .LLST11
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:399    .text.coap_free_async:000000000000000c .LVL38
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7533   .debug_str:00000000000004f3 .LASF514
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:13     .text.coap_free_async_sub:0000000000000000 .LFB36
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:99     .text.coap_free_async_sub:0000000000000058 .LFE36
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7004   .debug_loc:00000000000000bd .LLST0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7022   .debug_loc:00000000000000e9 .LLST1
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7429   .debug_str:000000000000020f .LASF484
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7037   .debug_loc:0000000000000112 .LLST2
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:50     .text.coap_free_async_sub:0000000000000022 .LVL2
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:59     .text.coap_free_async_sub:000000000000002e .LVL3
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:68     .text.coap_free_async_sub:000000000000003e .LVL4
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7559   .debug_str:00000000000005b4 .LASF486
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:314    .text.coap_find_async:0000000000000000 .LFB35
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:384    .text.coap_find_async:000000000000004c .LFE35
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7048   .debug_loc:0000000000000130 .LLST9
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:376    .text.coap_find_async:0000000000000046 .LVL34
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7463   .debug_str:00000000000002fa .LASF487
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:206    .text.coap_async_set_delay:0000000000000000 .LFB34
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:307    .text.coap_async_set_delay:00000000000000ba .LFE34
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7059   .debug_loc:000000000000014e .LLST5
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7081   .debug_loc:0000000000000185 .LLST6
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7103   .debug_loc:00000000000001bc .LLST7
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7409   .debug_str:000000000000016d .LASF489
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:234    .text.coap_async_set_delay:0000000000000030 .LBB11
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:242    .text.coap_async_set_delay:000000000000003a .LBE11
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7114   .debug_loc:00000000000001da .LLST8
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:240    .text.coap_async_set_delay:000000000000003a .LVL22
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:229    .text.coap_async_set_delay:000000000000002e .LVL20
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:255    .text.coap_async_set_delay:0000000000000048 .LVL24
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:261    .text.coap_async_set_delay:0000000000000058 .LVL25
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:272    .text.coap_async_set_delay:0000000000000080 .LVL26
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:290    .text.coap_async_set_delay:0000000000000094 .LVL28
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:296    .text.coap_async_set_delay:00000000000000a4 .LVL29
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:302    .text.coap_async_set_delay:00000000000000b8 .LVL30
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7863   .debug_str:0000000000001025 .LASF488
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:131    .text.coap_async_trigger:0000000000000000 .LFB33
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:192    .text.coap_async_trigger:000000000000006e .LFE33
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7123   .debug_loc:00000000000001f2 .LLST3
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:156    .text.coap_async_trigger:0000000000000030 .LBB7
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:167    .text.coap_async_trigger:000000000000003a .LBE7
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7145   .debug_loc:0000000000000229 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:162    .text.coap_async_trigger:0000000000000038 .LVL12
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:151    .text.coap_async_trigger:000000000000002e .LVL10
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:171    .text.coap_async_trigger:0000000000000042 .LVL14
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:177    .text.coap_async_trigger:0000000000000052 .LVL15
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:183    .text.coap_async_trigger:0000000000000066 .LVL16
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8095   .debug_str:00000000000017ef .LASF490
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:418    .text.coap_register_async:0000000000000000 .LFB32
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:675    .text.coap_register_async:0000000000000162 .LFE32
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7154   .debug_loc:000000000000023e .LLST12
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7401   .debug_str:000000000000011c .LASF491
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7194   .debug_loc:000000000000029c .LLST13
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7216   .debug_loc:00000000000002d3 .LLST14
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7238   .debug_loc:000000000000030a .LLST15
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7261   .debug_loc:0000000000000349 .LLST16
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7819   .debug_str:0000000000000ecb .LASF492
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7685   .debug_str:0000000000000945 .LASF493
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7273   .debug_loc:0000000000000368 .LLST17
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:577    .text.coap_register_async:00000000000000d2 .LVL54
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:592    .text.coap_register_async:00000000000000ee .LVL56
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:605    .text.coap_register_async:00000000000000fe .LVL58
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:614    .text.coap_register_async:0000000000000118 .LVL59
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:489    .text.coap_register_async:0000000000000040 .LVL43
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:499    .text.coap_register_async:0000000000000050 .LVL45
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:520    .text.coap_register_async:000000000000006c .LVL46
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:530    .text.coap_register_async:000000000000007c .LVL47
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:537    .text.coap_register_async:0000000000000084 .LVL48
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:545    .text.coap_register_async:000000000000009c .LVL49
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:563    .text.coap_register_async:00000000000000c0 .LVL51
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:625    .text.coap_register_async:0000000000000128 .LVL61
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:633    .text.coap_register_async:0000000000000138 .LVL62
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:639    .text.coap_register_async:0000000000000142 .LVL63
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:646    .text.coap_register_async:0000000000000150 .LVL64
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7723   .debug_str:0000000000000b00 .LASF515
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:106    .text.coap_async_is_supported:0000000000000000 .LFB31
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:114    .text.coap_async_is_supported:0000000000000004 .LFE31
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7781   .debug_str:0000000000000cb5 .LASF516
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8083   .debug_str:0000000000001788 .LASF494
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7727   .debug_str:0000000000000b22 .LASF495
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8359   .debug_str:000000000000206b .LASF496
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7675   .debug_str:000000000000090c .LASF497
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7359   .debug_str:000000000000002b .LASF498
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7749   .debug_str:0000000000000bc7 .LASF499
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7497   .debug_str:00000000000003b1 .LASF500
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7619   .debug_str:0000000000000796 .LASF501
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8111   .debug_str:000000000000187b .LASF502
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8251   .debug_str:0000000000001cff .LASF503
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7853   .debug_str:0000000000000fdd .LASF504
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:8309   .debug_str:0000000000001ec5 .LASF505
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7639   .debug_str:0000000000000827 .LASF517
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7843   .debug_str:0000000000000f8b .LASF518
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7931   .debug_str:0000000000001286 .LASF506
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7595   .debug_str:00000000000006ce .LASF507
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7545   .debug_str:0000000000000547 .LASF508
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:7837   .debug_str:0000000000000f54 .LASF509
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:750    .text.coap_async_get_app_data:0000000000000000 .LVL76
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:754    .text.coap_async_get_app_data:0000000000000002 .LVL77
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:685    .text.coap_delete_all_async:0000000000000000 .LVL69
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:697    .text.coap_delete_all_async:000000000000000c .LVL71
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:694    .text.coap_delete_all_async:000000000000000a .LVL70
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:711    .text.coap_delete_all_async:000000000000001e .LVL74
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:703    .text.coap_delete_all_async:0000000000000010 .LVL72
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:394    .text.coap_free_async:0000000000000000 .LVL36
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:397    .text.coap_free_async:0000000000000004 .LVL37
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:17     .text.coap_free_async_sub:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:45     .text.coap_free_async_sub:0000000000000018 .LVL1
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:75     .text.coap_free_async_sub:0000000000000046 .LVL5
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:91     .text.coap_free_async_sub:0000000000000056 .LVL7
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:82     .text.coap_free_async_sub:000000000000004a .LVL6
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:317    .text.coap_find_async:0000000000000000 .LVL31
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:343    .text.coap_find_async:000000000000001a .LVL33
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:209    .text.coap_async_set_delay:0000000000000000 .LVL17
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:222    .text.coap_async_set_delay:0000000000000016 .LVL18
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:226    .text.coap_async_set_delay:0000000000000022 .LVL19
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:249    .text.coap_async_set_delay:000000000000003e .LVL23
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:281    .text.coap_async_set_delay:0000000000000088 .LVL27
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:233    .text.coap_async_set_delay:0000000000000030 .LVL21
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:818    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:134    .text.coap_async_trigger:0000000000000000 .LVL8
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:145    .text.coap_async_trigger:0000000000000016 .LVL9
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:155    .text.coap_async_trigger:0000000000000030 .LVL11
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:165    .text.coap_async_trigger:000000000000003a .LVL13
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:421    .text.coap_register_async:0000000000000000 .LVL39
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:445    .text.coap_register_async:0000000000000014 .LVL40
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:467    .text.coap_register_async:0000000000000022 .LVL41
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:478    .text.coap_register_async:0000000000000030 .LVL42
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:570    .text.coap_register_async:00000000000000c8 .LVL53
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:616    .text.coap_register_async:000000000000011a .LVL60
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:668    .text.coap_register_async:000000000000015c .LVL67
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:491    .text.coap_register_async:0000000000000042 .LVL44
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:547    .text.coap_register_async:000000000000009e .LVL50
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:651    .text.coap_register_async:0000000000000154 .LVL65
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:670    .text.coap_register_async:0000000000000160 .LVL68
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:663    .text.coap_register_async:0000000000000158 .LVL66
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:590    .text.coap_register_async:00000000000000e6 .LVL55
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:26     .text.coap_free_async_sub:000000000000000a .LBB2
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:30     .text.coap_free_async_sub:000000000000000e .LBE2
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:32     .text.coap_free_async_sub:000000000000000e .LBB3
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:40     .text.coap_free_async_sub:0000000000000016 .LBE3
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:78     .text.coap_free_async_sub:0000000000000046 .LBB4
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:97     .text.coap_free_async_sub:0000000000000058 .LBE4
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:447    .text.coap_register_async:0000000000000014 .LBB13
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:453    .text.coap_register_async:0000000000000016 .LBE13
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:572    .text.coap_register_async:00000000000000c8 .LBB14
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:618    .text.coap_register_async:000000000000011a .LBE14
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:655    .text.coap_register_async:0000000000000154 .LBB15
+C:\Users\stapi\AppData\Local\Temp\cc66JC1Q.s:673    .text.coap_register_async:0000000000000162 .LBE15
+
+UNDEFINED SYMBOLS
+__riscv_save_1
+coap_session_release
+coap_delete_pdu
+coap_free_type
+__riscv_restore_1
+__assert_func
+sys_now
+coap_get_log_level
+coap_session_str
+coap_log_impl
+__riscv_save_2
+__riscv_restore_2
+__riscv_save_4
+__riscv_restore_4
+memcmp
+__riscv_save_5
+__riscv_restore_5
+coap_malloc_type
+memset
+coap_pdu_duplicate
+strlen
+snprintf
+coap_get_data
+coap_add_data
+coap_session_reference

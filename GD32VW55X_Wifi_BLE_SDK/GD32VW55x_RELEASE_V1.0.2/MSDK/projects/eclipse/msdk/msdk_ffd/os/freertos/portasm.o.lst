@@ -1,0 +1,478 @@
+   1              	# 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK
+   1              	
+   0              	
+   0              	
+   0              	
+   2              	/*
+   3              	 * FreeRTOS Kernel V10.3.1
+   4              	 * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+   5              	 *
+   6              	 * Permission is hereby granted, free of charge, to any person obtaining a copy of
+   7              	 * this software and associated documentation files (the "Software"), to deal in
+   8              	 * the Software without restriction, including without limitation the rights to
+   9              	 * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+  10              	 * the Software, and to permit persons to whom the Software is furnished to do so,
+  11              	 * subject to the following conditions:
+  12              	 *
+  13              	 * The above copyright notice and this permission notice shall be included in all
+  14              	 * copies or substantial portions of the Software.
+  15              	 *
+  16              	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  17              	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+  18              	 * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+  19              	 * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  20              	 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  21              	 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  22              	 *
+  23              	 * http://www.FreeRTOS.org
+  24              	 * http://aws.amazon.com/freertos
+  25              	 *
+  26              	 * 1 tab == 4 spaces!
+  27              	 */
+  28              	
+  29              	#include "riscv_encoding.h"
+   1              	/*
+   2              	 * Copyright (c) 2019 Nuclei Limited. All rights reserved.
+   3              	 *
+   4              	 * SPDX-License-Identifier: Apache-2.0
+   5              	 *
+   6              	 * Licensed under the Apache License, Version 2.0 (the License); you may
+   7              	 * not use this file except in compliance with the License.
+   8              	 * You may obtain a copy of the License at
+   9              	 *
+  10              	 * www.apache.org/licenses/LICENSE-2.0
+  11              	 *
+  12              	 * Unless required by applicable law or agreed to in writing, software
+  13              	 * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  14              	 * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15              	 * See the License for the specific language governing permissions and
+  16              	 * limitations under the License.
+  17              	 */
+  18              	#ifndef __RISCV_ENCODING_H__
+  19              	#define __RISCV_ENCODING_H__
+  20              	
+  21              	#include "riscv_bits.h"
+   1              	/*
+  22              	#ifdef __cplusplus
+  30              	
+  31              	#ifndef __riscv_32e
+  32              	#define portRegNum          30
+  33              	#else
+  34              	#define portRegNum          14
+  35              	#endif
+  36              	
+  37              	#define portCONTEXT_SIZE    ( portRegNum * REGBYTES )
+  38              	
+  39              	.section    .text.entry
+  40 0000 01001300 	.align 8
+  40      00001300 
+  40      00001300 
+  40      00001300 
+  40      00001300 
+  41              	
+  42              	.extern xPortTaskSwitch
+  43              	.extern pxCurrentTCB
+  44              	.global prvPortStartFirstTask
+  45              	
+  46              	/* Start the first task.  This also clears the bit that indicates the FPU is
+  47              	    in use in case the FPU was used before the scheduler was started - which
+  48              	    would otherwise result in the unnecessary leaving of space in the stack
+  49              	    for lazy saving of FPU registers. */
+  50 00fe 01001300 	.align 3
+  50      0000
+  51              	prvPortStartFirstTask:
+  52              	    /* Setup Interrupt Stack using
+  53              	       The stack that was used by main()
+  54              	       before the scheduler is started is
+  55              	       no longer required after the scheduler is started.
+  56              	       Interrupt stack pointer is stored in CSR_MSCRATCH */
+  57 0104 97020000 	    la t0, _sp
+  57      93820200 
+  58 010c 73900234 	    csrw CSR_MSCRATCH, t0
+  59 0110 17010000 	    LOAD sp, pxCurrentTCB           /* Load pxCurrentTCB. */
+  59      03210100 
+  60 0118 0241     	    LOAD sp, 0x0(sp)                /* Read sp from first TCB member */
+  61              	
+  62              	#ifdef __riscv_flen
+  63 011a 0961     	    addi sp, sp, 32 * FPREGBYTES    /* f0-f31 */
+  64 011c 8242     	    LOAD t0, 0 * REGBYTES(sp)
+  65 011e 73903200 	    csrw CSR_FCSR, t0
+  66 0122 1101     	    addi sp, sp, 1  * REGBYTES      /* FCSR */
+  67              	#endif
+  68              	
+  69              	    /* Pop PC from stack and set MEPC */
+  70 0124 8242     	    LOAD t0,  0  * REGBYTES(sp)
+  71 0126 73901234 	    csrw CSR_MEPC, t0
+  72              	    /* Pop mstatus from stack and set it */
+  73 012a D652     	    LOAD t0,  (portRegNum - 1)  * REGBYTES(sp)
+  74 012c 73900230 	    csrw CSR_MSTATUS, t0
+  75              	    /* Interrupt still disable here */
+  76              	    /* Restore Registers from Stack */
+  77 0130 9240     	    LOAD x1,  1  * REGBYTES(sp)    /* RA */
+  78 0132 7245     	    LOAD x10, 7  * REGBYTES(sp)
+  79 0134 13018107 	    addi sp, sp, portCONTEXT_SIZE
+  80              	
+  81 0138 73002030 	    mret
+  82              	
+  83 013c 0100     	.align 2
+  84              	.global eclic_msip_handler
+  85              	eclic_msip_handler:
+  86 013e 130181F8 	    addi sp, sp, -portCONTEXT_SIZE
+  87 0142 06C2     	    STORE x1,  1  * REGBYTES(sp)    /* RA */
+  88 0144 16C4     	    STORE x5,  2  * REGBYTES(sp)
+  89 0146 1AC6     	    STORE x6,  3  * REGBYTES(sp)
+  90 0148 1EC8     	    STORE x7,  4  * REGBYTES(sp)
+  91 014a 22CA     	    STORE x8,  5  * REGBYTES(sp)
+  92 014c 26CC     	    STORE x9,  6  * REGBYTES(sp)
+  93 014e 2ACE     	    STORE x10, 7  * REGBYTES(sp)
+  94 0150 2ED0     	    STORE x11, 8  * REGBYTES(sp)
+  95 0152 32D2     	    STORE x12, 9  * REGBYTES(sp)
+  96 0154 36D4     	    STORE x13, 10 * REGBYTES(sp)
+  97 0156 3AD6     	    STORE x14, 11 * REGBYTES(sp)
+  98 0158 3ED8     	    STORE x15, 12 * REGBYTES(sp)
+  99              	#ifndef __riscv_32e
+ 100 015a 42DA     	    STORE x16, 13 * REGBYTES(sp)
+ 101 015c 46DC     	    STORE x17, 14 * REGBYTES(sp)
+ 102 015e 4ADE     	    STORE x18, 15 * REGBYTES(sp)
+ 103 0160 CEC0     	    STORE x19, 16 * REGBYTES(sp)
+ 104 0162 D2C2     	    STORE x20, 17 * REGBYTES(sp)
+ 105 0164 D6C4     	    STORE x21, 18 * REGBYTES(sp)
+ 106 0166 DAC6     	    STORE x22, 19 * REGBYTES(sp)
+ 107 0168 DEC8     	    STORE x23, 20 * REGBYTES(sp)
+ 108 016a E2CA     	    STORE x24, 21 * REGBYTES(sp)
+ 109 016c E6CC     	    STORE x25, 22 * REGBYTES(sp)
+ 110 016e EACE     	    STORE x26, 23 * REGBYTES(sp)
+ 111 0170 EED0     	    STORE x27, 24 * REGBYTES(sp)
+ 112 0172 F2D2     	    STORE x28, 25 * REGBYTES(sp)
+ 113 0174 F6D4     	    STORE x29, 26 * REGBYTES(sp)
+ 114 0176 FAD6     	    STORE x30, 27 * REGBYTES(sp)
+ 115 0178 FED8     	    STORE x31, 28 * REGBYTES(sp)
+ 116              	#endif
+ 117              	    /* Push mstatus to stack */
+ 118 017a F3220030 	    csrr t0, CSR_MSTATUS
+ 119 017e 96DA     	    STORE t0,  (portRegNum - 1)  * REGBYTES(sp)
+ 120              	
+ 121              	    /* Push additional registers */
+ 122              	
+ 123 0180 F3221034 	    csrr t0, CSR_MEPC
+ 124 0184 16C0     	    STORE t0, 0(sp)
+ 125              	
+ 126              	#ifdef __riscv_flen
+ 127              	    /* Save fp registers */
+ 128 0186 7111     	    addi  sp, sp, -1 * REGBYTES
+ 129 0188 F3223000 	    csrr  t0, CSR_FCSR
+ 130 018c 16C0     	    STORE t0, 0 * REGBYTES(sp)
+ 131              	
+ 132 018e 1971     	    addi  sp, sp, -32 * FPREGBYTES
+ 133 0190 02E0     	    FPSTORE f0,  0  * FPREGBYTES(sp)
+ 134 0192 06E2     	    FPSTORE f1,  1  * FPREGBYTES(sp)
+ 135 0194 0AE4     	    FPSTORE f2,  2  * FPREGBYTES(sp)
+ 136 0196 0EE6     	    FPSTORE f3,  3  * FPREGBYTES(sp)
+ 137 0198 12E8     	    FPSTORE f4,  4  * FPREGBYTES(sp)
+ 138 019a 16EA     	    FPSTORE f5,  5  * FPREGBYTES(sp)
+ 139 019c 1AEC     	    FPSTORE f6,  6  * FPREGBYTES(sp)
+ 140 019e 1EEE     	    FPSTORE f7,  7  * FPREGBYTES(sp)
+ 141 01a0 22F0     	    FPSTORE f8,  8  * FPREGBYTES(sp)
+ 142 01a2 26F2     	    FPSTORE f9,  9  * FPREGBYTES(sp)
+ 143 01a4 2AF4     	    FPSTORE f10, 10 * FPREGBYTES(sp)
+ 144 01a6 2EF6     	    FPSTORE f11, 11 * FPREGBYTES(sp)
+ 145 01a8 32F8     	    FPSTORE f12, 12 * FPREGBYTES(sp)
+ 146 01aa 36FA     	    FPSTORE f13, 13 * FPREGBYTES(sp)
+ 147 01ac 3AFC     	    FPSTORE f14, 14 * FPREGBYTES(sp)
+ 148 01ae 3EFE     	    FPSTORE f15, 15 * FPREGBYTES(sp)
+ 149 01b0 C2E0     	    FPSTORE f16, 16 * FPREGBYTES(sp)
+ 150 01b2 C6E2     	    FPSTORE f17, 17 * FPREGBYTES(sp)
+ 151 01b4 CAE4     	    FPSTORE f18, 18 * FPREGBYTES(sp)
+ 152 01b6 CEE6     	    FPSTORE f19, 19 * FPREGBYTES(sp)
+ 153 01b8 D2E8     	    FPSTORE f20, 20 * FPREGBYTES(sp)
+ 154 01ba D6EA     	    FPSTORE f21, 21 * FPREGBYTES(sp)
+ 155 01bc DAEC     	    FPSTORE f22, 22 * FPREGBYTES(sp)
+ 156 01be DEEE     	    FPSTORE f23, 23 * FPREGBYTES(sp)
+ 157 01c0 E2F0     	    FPSTORE f24, 24 * FPREGBYTES(sp)
+ 158 01c2 E6F2     	    FPSTORE f25, 25 * FPREGBYTES(sp)
+ 159 01c4 EAF4     	    FPSTORE f26, 26 * FPREGBYTES(sp)
+ 160 01c6 EEF6     	    FPSTORE f27, 27 * FPREGBYTES(sp)
+ 161 01c8 F2F8     	    FPSTORE f28, 28 * FPREGBYTES(sp)
+ 162 01ca F6FA     	    FPSTORE f29, 29 * FPREGBYTES(sp)
+ 163 01cc FAFC     	    FPSTORE f30, 30 * FPREGBYTES(sp)
+ 164 01ce FEFE     	    FPSTORE f31, 31 * FPREGBYTES(sp)
+ 165              	#endif
+ 166              	
+ 167              	    /* Store sp to task stack */
+ 168 01d0 97020000 	    LOAD t0, pxCurrentTCB
+ 168      83A20200 
+ 169 01d8 23A02200 	    STORE sp, 0(t0)
+ 170              	
+ 171 01dc 97000000 	    call xPortTaskSwitch
+ 171      E7800000 
+ 172              	
+ 173              	    /* Switch task context */
+ 174 01e4 97020000 	    LOAD t0, pxCurrentTCB           /* Load pxCurrentTCB. */
+ 174      83A20200 
+ 175 01ec 03A10200 	    LOAD sp, 0x0(t0)                /* Read sp from first TCB member */
+ 176              	
+ 177              	#ifdef __riscv_flen
+ 178              	    /* Restore fp registers */
+ 179 01f0 0260     	    FPLOAD f0,  0  * FPREGBYTES(sp)
+ 180 01f2 9260     	    FPLOAD f1,  1  * FPREGBYTES(sp)
+ 181 01f4 2261     	    FPLOAD f2,  2  * FPREGBYTES(sp)
+ 182 01f6 B261     	    FPLOAD f3,  3  * FPREGBYTES(sp)
+ 183 01f8 4262     	    FPLOAD f4,  4  * FPREGBYTES(sp)
+ 184 01fa D262     	    FPLOAD f5,  5  * FPREGBYTES(sp)
+ 185 01fc 6263     	    FPLOAD f6,  6  * FPREGBYTES(sp)
+ 186 01fe F263     	    FPLOAD f7,  7  * FPREGBYTES(sp)
+ 187 0200 0274     	    FPLOAD f8,  8  * FPREGBYTES(sp)
+ 188 0202 9274     	    FPLOAD f9,  9  * FPREGBYTES(sp)
+ 189 0204 2275     	    FPLOAD f10, 10 * FPREGBYTES(sp)
+ 190 0206 B275     	    FPLOAD f11, 11 * FPREGBYTES(sp)
+ 191 0208 4276     	    FPLOAD f12, 12 * FPREGBYTES(sp)
+ 192 020a D276     	    FPLOAD f13, 13 * FPREGBYTES(sp)
+ 193 020c 6277     	    FPLOAD f14, 14 * FPREGBYTES(sp)
+ 194 020e F277     	    FPLOAD f15, 15 * FPREGBYTES(sp)
+ 195 0210 0668     	    FPLOAD f16, 16 * FPREGBYTES(sp)
+ 196 0212 9668     	    FPLOAD f17, 17 * FPREGBYTES(sp)
+ 197 0214 2669     	    FPLOAD f18, 18 * FPREGBYTES(sp)
+ 198 0216 B669     	    FPLOAD f19, 19 * FPREGBYTES(sp)
+ 199 0218 466A     	    FPLOAD f20, 20 * FPREGBYTES(sp)
+ 200 021a D66A     	    FPLOAD f21, 21 * FPREGBYTES(sp)
+ 201 021c 666B     	    FPLOAD f22, 22 * FPREGBYTES(sp)
+ 202 021e F66B     	    FPLOAD f23, 23 * FPREGBYTES(sp)
+ 203 0220 067C     	    FPLOAD f24, 24 * FPREGBYTES(sp)
+ 204 0222 967C     	    FPLOAD f25, 25 * FPREGBYTES(sp)
+ 205 0224 267D     	    FPLOAD f26, 26 * FPREGBYTES(sp)
+ 206 0226 B67D     	    FPLOAD f27, 27 * FPREGBYTES(sp)
+ 207 0228 467E     	    FPLOAD f28, 28 * FPREGBYTES(sp)
+ 208 022a D67E     	    FPLOAD f29, 29 * FPREGBYTES(sp)
+ 209 022c 667F     	    FPLOAD f30, 30 * FPREGBYTES(sp)
+ 210 022e F67F     	    FPLOAD f31, 31 * FPREGBYTES(sp)
+ 211 0230 0961     	    addi sp, sp, 32 * FPREGBYTES
+ 212              	
+ 213 0232 8242     	    LOAD t0, 0 * REGBYTES(sp)
+ 214 0234 73903200 	    csrw CSR_FCSR, t0
+ 215 0238 1101     	    addi sp, sp, 1 * REGBYTES
+ 216              	#endif
+ 217              	
+ 218              	    /* Pop PC from stack and set MEPC */
+ 219 023a 8242     	    LOAD t0,  0  * REGBYTES(sp)
+ 220 023c 73901234 	    csrw CSR_MEPC, t0
+ 221              	    /* Pop additional registers */
+ 222              	
+ 223              	    /* Pop mstatus from stack and set it */
+ 224 0240 D652     	    LOAD t0,  (portRegNum - 1)  * REGBYTES(sp)
+ 225 0242 73900230 	    csrw CSR_MSTATUS, t0
+ 226              	    /* Interrupt still disable here */
+ 227              	    /* Restore Registers from Stack */
+ 228 0246 9240     	    LOAD x1,  1  * REGBYTES(sp)    /* RA */
+ 229 0248 A242     	    LOAD x5,  2  * REGBYTES(sp)
+ 230 024a 3243     	    LOAD x6,  3  * REGBYTES(sp)
+ 231 024c C243     	    LOAD x7,  4  * REGBYTES(sp)
+ 232 024e 5244     	    LOAD x8,  5  * REGBYTES(sp)
+ 233 0250 E244     	    LOAD x9,  6  * REGBYTES(sp)
+ 234 0252 7245     	    LOAD x10, 7  * REGBYTES(sp)
+ 235 0254 8255     	    LOAD x11, 8  * REGBYTES(sp)
+ 236 0256 1256     	    LOAD x12, 9  * REGBYTES(sp)
+ 237 0258 A256     	    LOAD x13, 10 * REGBYTES(sp)
+ 238 025a 3257     	    LOAD x14, 11 * REGBYTES(sp)
+ 239 025c C257     	    LOAD x15, 12 * REGBYTES(sp)
+ 240              	#ifndef __riscv_32e
+ 241 025e 5258     	    LOAD x16, 13 * REGBYTES(sp)
+ 242 0260 E258     	    LOAD x17, 14 * REGBYTES(sp)
+ 243 0262 7259     	    LOAD x18, 15 * REGBYTES(sp)
+ 244 0264 8649     	    LOAD x19, 16 * REGBYTES(sp)
+ 245 0266 164A     	    LOAD x20, 17 * REGBYTES(sp)
+ 246 0268 A64A     	    LOAD x21, 18 * REGBYTES(sp)
+ 247 026a 364B     	    LOAD x22, 19 * REGBYTES(sp)
+ 248 026c C64B     	    LOAD x23, 20 * REGBYTES(sp)
+ 249 026e 564C     	    LOAD x24, 21 * REGBYTES(sp)
+ 250 0270 E64C     	    LOAD x25, 22 * REGBYTES(sp)
+ 251 0272 764D     	    LOAD x26, 23 * REGBYTES(sp)
+ 252 0274 865D     	    LOAD x27, 24 * REGBYTES(sp)
+ 253 0276 165E     	    LOAD x28, 25 * REGBYTES(sp)
+ 254 0278 A65E     	    LOAD x29, 26 * REGBYTES(sp)
+ 255 027a 365F     	    LOAD x30, 27 * REGBYTES(sp)
+ 256 027c C65F     	    LOAD x31, 28 * REGBYTES(sp)
+ 257              	#endif
+ 258 027e 13018107 	    addi sp, sp, portCONTEXT_SIZE
+ 259 0282 73002030 	    mret
+ 259      00000000 
+ 259      00000000 
+ 259      00000000 
+ 259      00000000 
+DEFINED SYMBOLS
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:51     .text.entry:0000000000000104 prvPortStartFirstTask
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:57     .text.entry:0000000000000104 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:58     .text.entry:000000000000010c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:59     .text.entry:0000000000000110 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:60     .text.entry:0000000000000118 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:63     .text.entry:000000000000011a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:64     .text.entry:000000000000011c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:65     .text.entry:000000000000011e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:66     .text.entry:0000000000000122 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:70     .text.entry:0000000000000124 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:71     .text.entry:0000000000000126 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:73     .text.entry:000000000000012a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:74     .text.entry:000000000000012c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:77     .text.entry:0000000000000130 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:78     .text.entry:0000000000000132 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:79     .text.entry:0000000000000134 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:81     .text.entry:0000000000000138 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:85     .text.entry:000000000000013e eclic_msip_handler
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:86     .text.entry:000000000000013e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:87     .text.entry:0000000000000142 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:88     .text.entry:0000000000000144 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:89     .text.entry:0000000000000146 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:90     .text.entry:0000000000000148 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:91     .text.entry:000000000000014a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:92     .text.entry:000000000000014c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:93     .text.entry:000000000000014e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:94     .text.entry:0000000000000150 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:95     .text.entry:0000000000000152 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:96     .text.entry:0000000000000154 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:97     .text.entry:0000000000000156 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:98     .text.entry:0000000000000158 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:100    .text.entry:000000000000015a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:101    .text.entry:000000000000015c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:102    .text.entry:000000000000015e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:103    .text.entry:0000000000000160 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:104    .text.entry:0000000000000162 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:105    .text.entry:0000000000000164 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:106    .text.entry:0000000000000166 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:107    .text.entry:0000000000000168 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:108    .text.entry:000000000000016a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:109    .text.entry:000000000000016c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:110    .text.entry:000000000000016e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:111    .text.entry:0000000000000170 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:112    .text.entry:0000000000000172 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:113    .text.entry:0000000000000174 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:114    .text.entry:0000000000000176 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:115    .text.entry:0000000000000178 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:118    .text.entry:000000000000017a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:119    .text.entry:000000000000017e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:123    .text.entry:0000000000000180 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:124    .text.entry:0000000000000184 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:128    .text.entry:0000000000000186 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:129    .text.entry:0000000000000188 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:130    .text.entry:000000000000018c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:132    .text.entry:000000000000018e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:133    .text.entry:0000000000000190 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:134    .text.entry:0000000000000192 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:135    .text.entry:0000000000000194 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:136    .text.entry:0000000000000196 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:137    .text.entry:0000000000000198 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:138    .text.entry:000000000000019a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:139    .text.entry:000000000000019c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:140    .text.entry:000000000000019e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:141    .text.entry:00000000000001a0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:142    .text.entry:00000000000001a2 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:143    .text.entry:00000000000001a4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:144    .text.entry:00000000000001a6 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:145    .text.entry:00000000000001a8 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:146    .text.entry:00000000000001aa .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:147    .text.entry:00000000000001ac .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:148    .text.entry:00000000000001ae .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:149    .text.entry:00000000000001b0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:150    .text.entry:00000000000001b2 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:151    .text.entry:00000000000001b4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:152    .text.entry:00000000000001b6 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:153    .text.entry:00000000000001b8 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:154    .text.entry:00000000000001ba .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:155    .text.entry:00000000000001bc .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:156    .text.entry:00000000000001be .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:157    .text.entry:00000000000001c0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:158    .text.entry:00000000000001c2 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:159    .text.entry:00000000000001c4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:160    .text.entry:00000000000001c6 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:161    .text.entry:00000000000001c8 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:162    .text.entry:00000000000001ca .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:163    .text.entry:00000000000001cc .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:164    .text.entry:00000000000001ce .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:168    .text.entry:00000000000001d0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:169    .text.entry:00000000000001d8 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:171    .text.entry:00000000000001dc .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:174    .text.entry:00000000000001e4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:175    .text.entry:00000000000001ec .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:179    .text.entry:00000000000001f0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:180    .text.entry:00000000000001f2 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:181    .text.entry:00000000000001f4 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:182    .text.entry:00000000000001f6 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:183    .text.entry:00000000000001f8 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:184    .text.entry:00000000000001fa .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:185    .text.entry:00000000000001fc .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:186    .text.entry:00000000000001fe .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:187    .text.entry:0000000000000200 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:188    .text.entry:0000000000000202 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:189    .text.entry:0000000000000204 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:190    .text.entry:0000000000000206 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:191    .text.entry:0000000000000208 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:192    .text.entry:000000000000020a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:193    .text.entry:000000000000020c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:194    .text.entry:000000000000020e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:195    .text.entry:0000000000000210 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:196    .text.entry:0000000000000212 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:197    .text.entry:0000000000000214 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:198    .text.entry:0000000000000216 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:199    .text.entry:0000000000000218 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:200    .text.entry:000000000000021a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:201    .text.entry:000000000000021c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:202    .text.entry:000000000000021e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:203    .text.entry:0000000000000220 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:204    .text.entry:0000000000000222 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:205    .text.entry:0000000000000224 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:206    .text.entry:0000000000000226 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:207    .text.entry:0000000000000228 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:208    .text.entry:000000000000022a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:209    .text.entry:000000000000022c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:210    .text.entry:000000000000022e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:211    .text.entry:0000000000000230 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:213    .text.entry:0000000000000232 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:214    .text.entry:0000000000000234 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:215    .text.entry:0000000000000238 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:219    .text.entry:000000000000023a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:220    .text.entry:000000000000023c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:224    .text.entry:0000000000000240 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:225    .text.entry:0000000000000242 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:228    .text.entry:0000000000000246 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:229    .text.entry:0000000000000248 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:230    .text.entry:000000000000024a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:231    .text.entry:000000000000024c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:232    .text.entry:000000000000024e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:233    .text.entry:0000000000000250 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:234    .text.entry:0000000000000252 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:235    .text.entry:0000000000000254 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:236    .text.entry:0000000000000256 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:237    .text.entry:0000000000000258 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:238    .text.entry:000000000000025a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:239    .text.entry:000000000000025c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:241    .text.entry:000000000000025e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:242    .text.entry:0000000000000260 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:243    .text.entry:0000000000000262 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:244    .text.entry:0000000000000264 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:245    .text.entry:0000000000000266 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:246    .text.entry:0000000000000268 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:247    .text.entry:000000000000026a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:248    .text.entry:000000000000026c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:249    .text.entry:000000000000026e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:250    .text.entry:0000000000000270 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:251    .text.entry:0000000000000272 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:252    .text.entry:0000000000000274 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:253    .text.entry:0000000000000276 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:254    .text.entry:0000000000000278 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:255    .text.entry:000000000000027a .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:256    .text.entry:000000000000027c .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:258    .text.entry:000000000000027e .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:259    .text.entry:0000000000000282 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:259    .text.entry:0000000000000286 .L0 
+                      .text.entry:0000000000000000 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:259    .text.entry:0000000000000286 .L0 
+                       .debug_str:0000000000000000 .L0 
+                       .debug_str:000000000000008f .L0 
+                       .debug_str:000000000000010d .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:57     .text.entry:0000000000000104 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:59     .text.entry:0000000000000110 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:168    .text.entry:00000000000001d0 .L0 
+C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/riscv32/portasm.S:174    .text.entry:00000000000001e4 .L0 
+
+UNDEFINED SYMBOLS
+_sp
+pxCurrentTCB
+xPortTaskSwitch

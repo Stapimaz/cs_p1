@@ -1,0 +1,2015 @@
+   1              		.file	"ble_init.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.ble_flash_erase_handler,"ax",@progbits
+  10              		.align	1
+  11              		.globl	ble_flash_erase_handler
+  13              	ble_flash_erase_handler:
+  14              	.LFB7:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \file    ble_init.c
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief   Implementation of the BLE initialization.
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     Redistribution and use in source and binary forms, with or without modification,
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** are permitted provided that the following conditions are met:
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****        list of conditions and the following disclaimer.
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****        this list of conditions and the following disclaimer in the documentation
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****        and/or other materials provided with the distribution.
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****        may be used to endorse or promote products derived from this software without
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****        specific prior written permission.
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** OF SUCH DAMAGE.
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include <stdbool.h>
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_cfg.h"
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_app_config.h"
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_profile_config.h"
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_init.h"
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_export.h"
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_adapter.h"
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_adv.h"
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_scan.h"
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_conn.h"
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_l2cap_coc.h"
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_sec.h"
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_adapter_mgr.h"
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_storage.h"
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "wrapper_os.h"
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_gatts.h"
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_GATT_CLIENT_SUPPORT)
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_gattc.h"
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_GATTC_CO_ITF_SUPPORT)
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "ble_gattc_co.h"
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_cmd.h"
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_adv_mgr.h"
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_scan_mgr.h"
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_list_mgr.h"
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_sec_mgr.h"
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_dev_mgr.h"
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_conn_mgr.h"
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_per_sync_mgr.h"
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_iso_mgr.h"
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_l2cap.h"
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_http_proxy_server.h"
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_http_proxy_client.h"
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_prox_rpt.h"
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_prox_monitor.h"
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_diss.h"
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_bass.h"
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_cscss.h"
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_blue_courier_link.h"
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_datatrans_srv.h"
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "raw_flash_api.h"
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "gd32vw55x_platform.h"
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "dbg_print.h"
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #ifdef CFG_VIRTUAL_HCI_MODE
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #include "app_virtual_hci.h"
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #ifdef TUYAOS_SUPPORT
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #ifdef CFG_VIRTUAL_HCI_MODE
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** extern void tkl_virtual_hci_init(void);
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #else
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** extern void tuya_adp_init(uint8_t role);
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #ifdef CFG_COEX
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** typedef void (*coex_ble_evt_notify)(uint32_t evt_start, uint32_t evt_window, uint32_t iso_evt);
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** extern void ble_coex_evt_notify_register(coex_ble_evt_notify func);
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** extern void coex_ble_event_notify(uint32_t event_start, uint32_t event_window, uint32_t iso_event);
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /* Definitions of the different BLE task priorities */
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** enum
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     BLE_STACK_TASK_PRIORITY = OS_TASK_PRIORITY(2),      /*!< Priority of the BLE stack task */
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     BLE_APP_TASK_PRIORITY   = OS_TASK_PRIORITY(1),      /*!< Priority of the BLE APP task */
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** };
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /* Definitions of the different BLE task stack size requirements */
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** enum
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     BLE_STACK_TASK_STACK_SIZE = 768,        /*!< BLE stack task stack size */
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     BLE_APP_TASK_STACK_SIZE   = 512,        /*!< BLE APP task stack size */
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** };
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /* BLE sleep mode when flash erase need to execute */
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** uint8_t flash_erase_sleep_mode = 0;
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /* Semaphore signaled when all BLE tasks are ready */
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** static os_sema_t ble_ready_sem;
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Function to notify other modules that BLE is in ready state
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** void ble_task_ready(void)
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     sys_sema_up(&ble_ready_sem);
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Function for other modules to wait BLE into ready state
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     int: 0 if successfully enter wait state, otherwise -1
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** int ble_wait_ready(void)
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     if (ble_ready_sem == NULL)
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return -1;
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     if (sys_sema_down(&ble_ready_sem, 0))
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return -1;
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     // always re-signal the semaphore in case it is called by several tasks.
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     sys_sema_up(&ble_ready_sem);
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     return 0;
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Function to handle before/after flash erase execute
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  type: erase handle type
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** void ble_flash_erase_handler(raw_erase_type_t type)
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+  16              		.loc 1 158 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  19 0000 17030000 		call	t0,__riscv_save_0
+  19      E7020300 
+  20              		.cfi_offset 1, -4
+  21              		.cfi_def_cfa_offset 16
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     if (type == RAW_FLASH_ERASE_BLE_PRE_HANDLE) {
+  22              		.loc 1 159 5
+  23              		.loc 1 159 8 is_stmt 0
+  24 0008 0DED     		bne	a0,zero,.L2
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         flash_erase_sleep_mode = ble_sleep_mode_get();
+  25              		.loc 1 160 9 is_stmt 1
+  26              		.loc 1 160 34 is_stmt 0
+  27 000a 97000000 		call	ble_sleep_mode_get
+  27      E7800000 
+  28              	.LVL1:
+  29              		.loc 1 160 32
+  30 0012 B7070000 		lui	a5,%hi(.LANCHOR0)
+  31 0016 2380A700 		sb	a0,%lo(.LANCHOR0)(a5)
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         if (flash_erase_sleep_mode != 0) {
+  32              		.loc 1 161 9 is_stmt 1
+  33              		.loc 1 161 12 is_stmt 0
+  34 001a 05C1     		beq	a0,zero,.L1
+  35              	.LVL2:
+  36              	.LBB4:
+  37              	.LBB5:
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****             ble_sleep_mode_set(0);
+  38              		.loc 1 162 13 is_stmt 1
+  39 001c 0145     		li	a0,0
+  40 001e 97000000 		call	ble_sleep_mode_set
+  40      E7800000 
+  41              	.LVL3:
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****             ble_stack_task_resume(false);
+  42              		.loc 1 163 13
+  43 0026 0145     		li	a0,0
+  44 0028 97000000 		call	ble_stack_task_resume
+  44      E7800000 
+  45              	.LVL4:
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****             // wait ble pmu on, timeout 10ms
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****             ble_wait_pmu_on(10);
+  46              		.loc 1 165 13
+  47 0030 2945     		li	a0,10
+  48 0032 97000000 		call	ble_wait_pmu_on
+  48      E7800000 
+  49              	.LVL5:
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         }
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     } else if (type == RAW_FLASH_ERASE_BLE_AFTER_HANDLE) {
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         if (flash_erase_sleep_mode != 0) {
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****             ble_sleep_mode_set(flash_erase_sleep_mode);
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         }
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     }
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     return;
+  50              		.loc 1 173 5
+  51              	.L1:
+  52              	.LBE5:
+  53              	.LBE4:
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+  54              		.loc 1 174 1 is_stmt 0
+  55 003a 17030000 		tail	__riscv_restore_0
+  55      67000300 
+  56              		.cfi_remember_state
+  57              		.cfi_restore 1
+  58              		.cfi_def_cfa_offset 0
+  59              	.LVL6:
+  60              	.L2:
+  61              		.cfi_restore_state
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         if (flash_erase_sleep_mode != 0) {
+  62              		.loc 1 167 12 is_stmt 1
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         if (flash_erase_sleep_mode != 0) {
+  63              		.loc 1 167 15 is_stmt 0
+  64 0042 8547     		li	a5,1
+  65 0044 E31BF5FE 		bne	a0,a5,.L1
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****             ble_sleep_mode_set(flash_erase_sleep_mode);
+  66              		.loc 1 168 9 is_stmt 1
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****             ble_sleep_mode_set(flash_erase_sleep_mode);
+  67              		.loc 1 168 36 is_stmt 0
+  68 0048 B7070000 		lui	a5,%hi(.LANCHOR0)
+  69 004c 03C50700 		lbu	a0,%lo(.LANCHOR0)(a5)
+  70              	.LVL7:
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****             ble_sleep_mode_set(flash_erase_sleep_mode);
+  71              		.loc 1 168 12
+  72 0050 6DD5     		beq	a0,zero,.L1
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         }
+  73              		.loc 1 169 13 is_stmt 1
+  74 0052 97000000 		call	ble_sleep_mode_set
+  74      E7800000 
+  75              	.LVL8:
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+  76              		.loc 1 173 5
+  77 005a C5B7     		j	.L1
+  78              		.cfi_endproc
+  79              	.LFE7:
+  81              		.section	.text.ble_task_ready,"ax",@progbits
+  82              		.align	1
+  83              		.globl	ble_task_ready
+  85              	ble_task_ready:
+  86              	.LFB5:
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     sys_sema_up(&ble_ready_sem);
+  87              		.loc 1 128 1
+  88              		.cfi_startproc
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+  89              		.loc 1 129 5
+  90 0000 37050000 		lui	a0,%hi(.LANCHOR1)
+  91 0004 13050500 		addi	a0,a0,%lo(.LANCHOR1)
+  92 0008 17030000 		tail	sys_sema_up
+  92      67000300 
+  93              	.LVL9:
+  94              		.cfi_endproc
+  95              	.LFE5:
+  97              		.section	.text.ble_wait_ready,"ax",@progbits
+  98              		.align	1
+  99              		.globl	ble_wait_ready
+ 101              	ble_wait_ready:
+ 102              	.LFB6:
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     if (ble_ready_sem == NULL)
+ 103              		.loc 1 139 1
+ 104              		.cfi_startproc
+ 105 0000 17030000 		call	t0,__riscv_save_2
+ 105      E7020300 
+ 106              		.cfi_offset 9, -12
+ 107              		.cfi_offset 8, -8
+ 108              		.cfi_offset 1, -4
+ 109              		.cfi_def_cfa_offset 16
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return -1;
+ 110              		.loc 1 140 5
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return -1;
+ 111              		.loc 1 140 23 is_stmt 0
+ 112 0008 B7040000 		lui	s1,%hi(.LANCHOR1)
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return -1;
+ 113              		.loc 1 140 8
+ 114 000c 83A70400 		lw	a5,%lo(.LANCHOR1)(s1)
+ 115 0010 99E7     		bne	a5,zero,.L13
+ 116              	.L15:
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 117              		.loc 1 141 16
+ 118 0012 7D54     		li	s0,-1
+ 119              	.L12:
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 120              		.loc 1 149 1
+ 121 0014 2285     		mv	a0,s0
+ 122 0016 17030000 		tail	__riscv_restore_2
+ 122      67000300 
+ 123              		.cfi_remember_state
+ 124              		.cfi_restore 9
+ 125              		.cfi_restore 8
+ 126              		.cfi_restore 1
+ 127              		.cfi_def_cfa_offset 0
+ 128              	.L13:
+ 129              		.cfi_restore_state
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return -1;
+ 130              		.loc 1 143 5 is_stmt 1
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return -1;
+ 131              		.loc 1 143 9 is_stmt 0
+ 132 001e 8145     		li	a1,0
+ 133 0020 13850400 		addi	a0,s1,%lo(.LANCHOR1)
+ 134 0024 97000000 		call	sys_sema_down
+ 134      E7800000 
+ 135              	.LVL10:
+ 136 002c 2A84     		mv	s0,a0
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return -1;
+ 137              		.loc 1 143 8
+ 138 002e 75F1     		bne	a0,zero,.L15
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     return 0;
+ 139              		.loc 1 147 5 is_stmt 1
+ 140 0030 13850400 		addi	a0,s1,%lo(.LANCHOR1)
+ 141 0034 97000000 		call	sys_sema_up
+ 141      E7800000 
+ 142              	.LVL11:
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 143              		.loc 1 148 5
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 144              		.loc 1 148 12 is_stmt 0
+ 145 003c E1BF     		j	.L12
+ 146              		.cfi_endproc
+ 147              	.LFE6:
+ 149              		.section	.rodata.ble_module_init.str1.4,"aMS",@progbits,1
+ 150              		.align	2
+ 151              	.LC1:
+ 152 0000 61646170 		.string	"adapter init fail! check and restart again or reload image if necessary\r\n"
+ 152      74657220 
+ 152      696E6974 
+ 152      20666169 
+ 152      6C212063 
+ 153              		.section	.text.ble_module_init,"ax",@progbits
+ 154              		.align	1
+ 155              		.globl	ble_module_init
+ 157              	ble_module_init:
+ 158              	.LFB10:
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Init BLE stack task and BLE APP task
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** static void ble_task_init(void)
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_stack_task_init(BLE_STACK_TASK_STACK_SIZE, BLE_STACK_TASK_PRIORITY);
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_SUPPORT)
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_task_init(BLE_APP_TASK_STACK_SIZE, BLE_APP_TASK_PRIORITY);
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     sys_sema_init_ext(&ble_ready_sem, 1, 0);
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Deinit BLE stack task and BLE APP task
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** static void ble_task_deinit(void)
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     sys_sema_free(&ble_ready_sem);
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_stack_task_deinit();
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_SUPPORT)
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_task_deinit();
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_SUPPORT)
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Init BLE component modules needed
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** void ble_module_init(void)
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 159              		.loc 1 218 1 is_stmt 1
+ 160              		.cfi_startproc
+ 161 0000 17030000 		call	t0,__riscv_save_0
+ 161      E7020300 
+ 162              		.cfi_offset 1, -4
+ 163              		.cfi_def_cfa_offset 16
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_storage_init();
+ 164              		.loc 1 219 5
+ 165 0008 97000000 		call	ble_storage_init
+ 165      E7800000 
+ 166              	.LVL12:
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     if (ble_adp_init() != BLE_ERR_NO_ERROR) {
+ 167              		.loc 1 221 5
+ 168              		.loc 1 221 9 is_stmt 0
+ 169 0010 97000000 		call	ble_adp_init
+ 169      E7800000 
+ 170              	.LVL13:
+ 171              		.loc 1 221 8
+ 172 0018 05C5     		beq	a0,zero,.L18
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         dbg_print(NOTICE, "adapter init fail! check and restart again or reload image if necessary\
+ 173              		.loc 1 222 9 is_stmt 1
+ 174              		.loc 1 222 9
+ 175 001a B7070000 		lui	a5,%hi(global_debug_level)
+ 176 001e 03C70700 		lbu	a4,%lo(global_debug_level)(a5)
+ 177 0022 8947     		li	a5,2
+ 178 0024 63FAE700 		bleu	a4,a5,.L17
+ 179              		.loc 1 222 9 discriminator 1
+ 180 0028 37050000 		lui	a0,%hi(.LC1)
+ 181 002c 13050500 		addi	a0,a0,%lo(.LC1)
+ 182 0030 97000000 		call	co_printf
+ 182      E7800000 
+ 183              	.LVL14:
+ 184              	.L17:
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return;
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     }
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_BROADCASTER | BLE_CFG_ROLE_PERIPHERAL))
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_adv_init();
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_OBSERVER | BLE_CFG_ROLE_CENTRAL))
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_scan_init(BLE_GAP_LOCAL_ADDR_STATIC);
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_PERIPHERAL | BLE_CFG_ROLE_CENTRAL))
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_sec_init();
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_l2cap_init();
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_conn_init();
+ 238:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_PERIPHERAL | BLE_CFG_ROLE_CENTRAL))
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_gatts_init();
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_GATT_CLIENT_SUPPORT)
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_gattc_init();
+ 244:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_GATTC_CO_ITF_SUPPORT)
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_gattc_co_init();
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 247:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 248:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 185              		.loc 1 250 1 is_stmt 0
+ 186 0038 17030000 		tail	__riscv_restore_0
+ 186      67000300 
+ 187              		.cfi_remember_state
+ 188              		.cfi_restore 1
+ 189              		.cfi_def_cfa_offset 0
+ 190              	.L18:
+ 191              		.cfi_restore_state
+ 192              	.LBB8:
+ 193              	.LBB9:
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 194              		.loc 1 227 5 is_stmt 1
+ 195 0040 97000000 		call	ble_adv_init
+ 195      E7800000 
+ 196              	.LVL15:
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 197              		.loc 1 231 5
+ 198 0048 0145     		li	a0,0
+ 199 004a 97000000 		call	ble_scan_init
+ 199      E7800000 
+ 200              	.LVL16:
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_l2cap_init();
+ 201              		.loc 1 235 5
+ 202 0052 97000000 		call	ble_sec_init
+ 202      E7800000 
+ 203              	.LVL17:
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_conn_init();
+ 204              		.loc 1 236 5
+ 205 005a 97000000 		call	ble_l2cap_init
+ 205      E7800000 
+ 206              	.LVL18:
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 207              		.loc 1 237 5
+ 208 0062 97000000 		call	ble_conn_init
+ 208      E7800000 
+ 209              	.LVL19:
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_GATT_CLIENT_SUPPORT)
+ 210              		.loc 1 241 5
+ 211 006a 97000000 		call	ble_gatts_init
+ 211      E7800000 
+ 212              	.LVL20:
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_GATTC_CO_ITF_SUPPORT)
+ 213              		.loc 1 243 5
+ 214 0072 97000000 		call	ble_gattc_init
+ 214      E7800000 
+ 215              	.LVL21:
+ 216 007a 7DBF     		j	.L17
+ 217              	.LBE9:
+ 218              	.LBE8:
+ 219              		.cfi_endproc
+ 220              	.LFE10:
+ 222              		.section	.text.ble_profile_init,"ax",@progbits
+ 223              		.align	1
+ 224              		.globl	ble_profile_init
+ 226              	ble_profile_init:
+ 227              	.LFB11:
+ 251:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 253:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Init BLE profiles needed
+ 254:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 255:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 256:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 257:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 258:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** void ble_profile_init(void)
+ 259:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 228              		.loc 1 259 1
+ 229              		.cfi_startproc
+ 230 0000 17030000 		call	t0,__riscv_save_0
+ 230      E7020300 
+ 231              		.cfi_offset 1, -4
+ 232              		.cfi_def_cfa_offset 16
+ 260:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_DIS_SERVER
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_diss_init();
+ 233              		.loc 1 261 5
+ 234 0008 97000000 		call	ble_app_diss_init
+ 234      E7800000 
+ 235              	.LVL22:
+ 262:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 263:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 264:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_SAMPLE_SERVER
+ 265:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_sample_srv_init();
+ 266:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 267:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 268:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_SAMPLE_CLIENT
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_sample_cli_init();
+ 270:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 271:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 272:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_HPS_SERVER
+ 273:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_hpss_init();
+ 274:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 275:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 276:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_HPS_CLIENT
+ 277:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_hpsc_init();
+ 278:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 279:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 280:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_PROX_SERVER
+ 281:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_prox_rpt_init();
+ 282:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 283:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 284:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_PROX_CLIENT
+ 285:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_proxm_init();
+ 286:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 287:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 288:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_THROUGHPUT_SERVER
+ 289:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_throughput_srv_init();
+ 290:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 291:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 292:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_THROUGHPUT_CLIENT
+ 293:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_throughput_cli_init();
+ 294:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 295:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 296:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_BAS_SERVER
+ 297:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_bass_init();
+ 298:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 299:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 300:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_CSCS_SERVER
+ 301:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_cscss_init();
+ 302:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 303:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 304:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_BLUE_COURIER_SERVER
+ 305:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_blue_courier_init();
+ 236              		.loc 1 305 5
+ 237 0010 97000000 		call	app_blue_courier_init
+ 237      E7800000 
+ 238              	.LVL23:
+ 306:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 307:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 239              		.loc 1 307 1 is_stmt 0
+ 240 0018 17030000 		tail	__riscv_restore_0
+ 240      67000300 
+ 241              		.cfi_restore 1
+ 242              		.cfi_def_cfa_offset 0
+ 243              		.cfi_endproc
+ 244              	.LFE11:
+ 246              		.section	.text.ble_profile_deinit,"ax",@progbits
+ 247              		.align	1
+ 248              		.globl	ble_profile_deinit
+ 250              	ble_profile_deinit:
+ 251              	.LFB12:
+ 308:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 309:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 310:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Deinit BLE profiles
+ 311:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 312:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 313:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 314:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 315:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** void ble_profile_deinit(void)
+ 316:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 252              		.loc 1 316 1 is_stmt 1
+ 253              		.cfi_startproc
+ 254 0000 17030000 		call	t0,__riscv_save_0
+ 254      E7020300 
+ 255              		.cfi_offset 1, -4
+ 256              		.cfi_def_cfa_offset 16
+ 317:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_DIS_SERVER
+ 318:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_diss_deinit();
+ 257              		.loc 1 318 5
+ 258 0008 97000000 		call	ble_app_diss_deinit
+ 258      E7800000 
+ 259              	.LVL24:
+ 319:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 320:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 321:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_SAMPLE_SERVER
+ 322:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_sample_srv_deinit();
+ 323:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 324:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 325:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_SAMPLE_CLIENT
+ 326:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_sample_cli_deinit();
+ 327:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 328:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 329:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_THROUGHPUT_SERVER
+ 330:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_throughput_srv_deinit();
+ 331:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 332:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 333:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_THROUGHPUT_CLIENT
+ 334:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_throughput_cli_deinit();
+ 335:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 336:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 337:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_BAS_SERVER
+ 338:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_bass_deinit();
+ 339:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 340:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 341:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_CSCS_SERVER
+ 342:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_cscss_deinit();
+ 343:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 344:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 345:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if BLE_PROFILE_BLUE_COURIER_SERVER
+ 346:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_blue_courier_deinit();
+ 260              		.loc 1 346 5
+ 261 0010 97000000 		call	app_blue_courier_deinit
+ 261      E7800000 
+ 262              	.LVL25:
+ 347:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 348:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 263              		.loc 1 348 1 is_stmt 0
+ 264 0018 17030000 		tail	__riscv_restore_0
+ 264      67000300 
+ 265              		.cfi_restore 1
+ 266              		.cfi_def_cfa_offset 0
+ 267              		.cfi_endproc
+ 268              	.LFE12:
+ 270              		.section	.text.ble_app_init,"ax",@progbits
+ 271              		.align	1
+ 272              		.globl	ble_app_init
+ 274              	ble_app_init:
+ 275              	.LFB13:
+ 349:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 350:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 351:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Init BLE application modules needed
+ 352:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 353:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 354:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 355:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 356:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** void ble_app_init(void)
+ 357:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 276              		.loc 1 357 1 is_stmt 1
+ 277              		.cfi_startproc
+ 278 0000 17030000 		call	t0,__riscv_save_0
+ 278      E7020300 
+ 279              		.cfi_offset 1, -4
+ 280              		.cfi_def_cfa_offset 16
+ 358:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_adapter_init();
+ 281              		.loc 1 358 5
+ 282 0008 97000000 		call	app_adapter_init
+ 282      E7800000 
+ 283              	.LVL26:
+ 359:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 360:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_BROADCASTER | BLE_CFG_ROLE_PERIPHERAL))
+ 361:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_adv_mgr_init();
+ 284              		.loc 1 361 5
+ 285 0010 97000000 		call	app_adv_mgr_init
+ 285      E7800000 
+ 286              	.LVL27:
+ 362:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 363:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 364:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_OBSERVER | BLE_CFG_ROLE_CENTRAL))
+ 365:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_scan_mgr_init();
+ 287              		.loc 1 365 5
+ 288 0018 97000000 		call	app_scan_mgr_init
+ 288      E7800000 
+ 289              	.LVL28:
+ 366:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 367:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 368:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_l2cap_mgr_init();
+ 290              		.loc 1 368 5
+ 291 0020 97000000 		call	app_l2cap_mgr_init
+ 291      E7800000 
+ 292              	.LVL29:
+ 369:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 370:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_dm_init();
+ 293              		.loc 1 370 5
+ 294 0028 97000000 		call	app_dm_init
+ 294      E7800000 
+ 295              	.LVL30:
+ 371:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 372:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_PERIPHERAL | BLE_CFG_ROLE_CENTRAL))
+ 373:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_conn_mgr_init();
+ 296              		.loc 1 373 5
+ 297 0030 97000000 		call	app_conn_mgr_init
+ 297      E7800000 
+ 298              	.LVL31:
+ 374:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_sec_mgr_init();
+ 299              		.loc 1 374 5
+ 300 0038 97000000 		call	app_sec_mgr_init
+ 300      E7800000 
+ 301              	.LVL32:
+ 375:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 376:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 377:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_PER_ADV_SUPPORT)
+ 378:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_per_sync_mgr_init();
+ 302              		.loc 1 378 5
+ 303 0040 97000000 		call	app_per_sync_mgr_init
+ 303      E7800000 
+ 304              	.LVL33:
+ 379:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 380:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 381:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_list_mgr_init();
+ 305              		.loc 1 381 5
+ 306 0048 97000000 		call	app_list_mgr_init
+ 306      E7800000 
+ 307              	.LVL34:
+ 382:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 383:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_BIS_SUPPORT || BLE_APP_CIS_SUPPORT)
+ 384:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_iso_mgr_init();
+ 308              		.loc 1 384 5
+ 309 0050 97000000 		call	app_iso_mgr_init
+ 309      E7800000 
+ 310              	.LVL35:
+ 385:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif // (BLE_APP_BIS_SUPPORT || BLE_APP_CIS_SUPPORT)
+ 386:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 387:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_profile_init();
+ 311              		.loc 1 387 5
+ 312 0058 97000000 		call	ble_profile_init
+ 312      E7800000 
+ 313              	.LVL36:
+ 388:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 389:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if FEAT_SUPPORT_BLE_DATATRANS
+ 390:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_datatrans_srv_init();
+ 391:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 392:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 314              		.loc 1 392 1 is_stmt 0
+ 315 0060 17030000 		tail	__riscv_restore_0
+ 315      67000300 
+ 316              		.cfi_restore 1
+ 317              		.cfi_def_cfa_offset 0
+ 318              		.cfi_endproc
+ 319              	.LFE13:
+ 321              		.section	.text.ble_app_deinit,"ax",@progbits
+ 322              		.align	1
+ 323              		.globl	ble_app_deinit
+ 325              	ble_app_deinit:
+ 326              	.LFB14:
+ 393:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 394:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 395:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Deinit BLE application modules
+ 396:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 397:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 398:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 399:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 400:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** void ble_app_deinit(void)
+ 401:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 327              		.loc 1 401 1 is_stmt 1
+ 328              		.cfi_startproc
+ 329 0000 17030000 		call	t0,__riscv_save_0
+ 329      E7020300 
+ 330              		.cfi_offset 1, -4
+ 331              		.cfi_def_cfa_offset 16
+ 402:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_adapter_deinit();
+ 332              		.loc 1 402 5
+ 333 0008 97000000 		call	app_adapter_deinit
+ 333      E7800000 
+ 334              	.LVL37:
+ 403:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 404:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_BROADCASTER | BLE_CFG_ROLE_PERIPHERAL))
+ 405:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_adv_mgr_deinit();
+ 335              		.loc 1 405 5
+ 336 0010 97000000 		call	app_adv_mgr_deinit
+ 336      E7800000 
+ 337              	.LVL38:
+ 406:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 407:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 408:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_OBSERVER | BLE_CFG_ROLE_CENTRAL))
+ 409:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_scan_mgr_deinit();
+ 338              		.loc 1 409 5
+ 339 0018 97000000 		call	app_scan_mgr_deinit
+ 339      E7800000 
+ 340              	.LVL39:
+ 410:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 411:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 412:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_l2cap_mgr_deinit();
+ 341              		.loc 1 412 5
+ 342 0020 97000000 		call	app_l2cap_mgr_deinit
+ 342      E7800000 
+ 343              	.LVL40:
+ 413:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 414:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_dm_deinit();
+ 344              		.loc 1 414 5
+ 345 0028 97000000 		call	app_dm_deinit
+ 345      E7800000 
+ 346              	.LVL41:
+ 415:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 416:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_CFG_ROLE & (BLE_CFG_ROLE_PERIPHERAL | BLE_CFG_ROLE_CENTRAL))
+ 417:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_conn_mgr_deinit();
+ 347              		.loc 1 417 5
+ 348 0030 97000000 		call	app_conn_mgr_deinit
+ 348      E7800000 
+ 349              	.LVL42:
+ 418:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_sec_mgr_deinit();
+ 350              		.loc 1 418 5
+ 351 0038 97000000 		call	app_sec_mgr_deinit
+ 351      E7800000 
+ 352              	.LVL43:
+ 419:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 420:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 421:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_PER_ADV_SUPPORT)
+ 422:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_per_sync_mgr_deinit();
+ 353              		.loc 1 422 5
+ 354 0040 97000000 		call	app_per_sync_mgr_deinit
+ 354      E7800000 
+ 355              	.LVL44:
+ 423:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 424:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 425:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_list_mgr_deinit();
+ 356              		.loc 1 425 5
+ 357 0048 97000000 		call	app_list_mgr_deinit
+ 357      E7800000 
+ 358              	.LVL45:
+ 426:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 427:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_BIS_SUPPORT || BLE_APP_CIS_SUPPORT)
+ 428:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_iso_mgr_deinit();
+ 359              		.loc 1 428 5
+ 360 0050 97000000 		call	app_iso_mgr_deinit
+ 360      E7800000 
+ 361              	.LVL46:
+ 429:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif // (BLE_APP_BIS_SUPPORT || BLE_APP_CIS_SUPPORT)
+ 430:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 431:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_profile_deinit();
+ 362              		.loc 1 431 5
+ 363 0058 97000000 		call	ble_profile_deinit
+ 363      E7800000 
+ 364              	.LVL47:
+ 432:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 433:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if FEAT_SUPPORT_BLE_DATATRANS
+ 434:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_datatrans_srv_deinit();
+ 435:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 436:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 365              		.loc 1 436 1 is_stmt 0
+ 366 0060 17030000 		tail	__riscv_restore_0
+ 366      67000300 
+ 367              		.cfi_restore 1
+ 368              		.cfi_def_cfa_offset 0
+ 369              		.cfi_endproc
+ 370              	.LFE14:
+ 372              		.section	.rodata.ble_init.str1.4,"aMS",@progbits,1
+ 373              		.align	2
+ 374              	.LC2:
+ 375 0000 626C6520 		.string	"ble stack init fail status 0x%x"
+ 375      73746163 
+ 375      6B20696E 
+ 375      69742066 
+ 375      61696C20 
+ 376              		.section	.text.ble_init,"ax",@progbits
+ 377              		.align	1
+ 378              		.globl	ble_init
+ 380              	ble_init:
+ 381              	.LFB15:
+ 437:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 438:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif // (BLE_APP_SUPPORT)
+ 439:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 440:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 441:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Initialization of the BLE module
+ 442:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \details    This function allocates all the resources needed by the different BLE sub-modules
+ 443:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****                 This function initialize the command processing
+ 444:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****                 This function will use the wrapper_os API to create tasks, semaphores, etc
+ 445:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  all:  true to init all modules, false to only init BLE CLI if needed.
+ 446:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 447:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 448:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 449:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** void ble_init(bool all)
+ 450:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 382              		.loc 1 450 1 is_stmt 1
+ 383              		.cfi_startproc
+ 384              	.LVL48:
+ 385 0000 17030000 		call	t0,__riscv_save_1
+ 385      E7020300 
+ 386              		.cfi_offset 8, -8
+ 387              		.cfi_offset 1, -4
+ 388              		.cfi_def_cfa_offset 16
+ 451:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_status_t ret;
+ 389              		.loc 1 451 5
+ 452:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 453:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_os_api_t os_interface = {
+ 390              		.loc 1 453 5
+ 450:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_status_t ret;
+ 391              		.loc 1 450 1 is_stmt 0
+ 392 0008 5D71     		addi	sp,sp,-80
+ 393              		.cfi_def_cfa_offset 96
+ 394              		.loc 1 453 18
+ 395 000a B7050000 		lui	a1,%hi(.LANCHOR2)
+ 450:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_status_t ret;
+ 396              		.loc 1 450 1
+ 397 000e 2A84     		mv	s0,a0
+ 398              		.loc 1 453 18
+ 399 0010 13068004 		li	a2,72
+ 400 0014 93850500 		addi	a1,a1,%lo(.LANCHOR2)
+ 401 0018 2800     		addi	a0,sp,8
+ 402              	.LVL49:
+ 403 001a 97000000 		call	memcpy
+ 403      E7800000 
+ 404              	.LVL50:
+ 454:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_malloc = sys_malloc,
+ 455:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_calloc = sys_calloc,
+ 456:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_mfree = sys_mfree,
+ 457:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_memset = sys_memset,
+ 458:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_memcpy = sys_memcpy,
+ 459:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_memcmp = sys_memcmp,
+ 460:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_task_create = sys_task_create,
+ 461:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_task_init_notification = sys_task_init_notification,
+ 462:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_task_wait_notification = sys_task_wait_notification,
+ 463:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_task_notify = sys_task_notify,
+ 464:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_task_delete = sys_task_delete,
+ 465:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_ms_sleep = sys_ms_sleep,
+ 466:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_current_task_handle_get = sys_current_task_handle_get,
+ 467:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_queue_init = sys_queue_init,
+ 468:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_queue_free = sys_queue_free,
+ 469:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_queue_write = sys_queue_write,
+ 470:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_queue_read = sys_queue_read,
+ 471:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****       .os_random_bytes_get = sys_random_bytes_get,
+ 472:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     };
+ 473:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 474:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_CMD_SUPPORT && !defined(CFG_MATTER))
+ 475:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_cli_init();
+ 405              		.loc 1 475 5 is_stmt 1
+ 406 0022 97000000 		call	ble_cli_init
+ 406      E7800000 
+ 407              	.LVL51:
+ 476:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif  // (BLE_APP_CMD_SUPPORT && !defined(CFG_MATTER))
+ 477:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 478:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     if (all == false)
+ 408              		.loc 1 478 5
+ 409              		.loc 1 478 8 is_stmt 0
+ 410 002a 59CC     		beq	s0,zero,.L29
+ 479:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         return;
+ 480:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 481:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #ifndef TUYAOS_SUPPORT
+ 482:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_power_on();
+ 411              		.loc 1 482 5 is_stmt 1
+ 412 002c 97000000 		call	ble_power_on
+ 412      E7800000 
+ 413              	.LVL52:
+ 483:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 484:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #ifdef CFG_VIRTUAL_HCI_MODE
+ 485:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_virtual_hci_init();
+ 486:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 487:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 488:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ret = ble_stack_init(0, &os_interface);
+ 414              		.loc 1 488 5
+ 415              		.loc 1 488 11 is_stmt 0
+ 416 0034 2C00     		addi	a1,sp,8
+ 417 0036 0145     		li	a0,0
+ 418 0038 97000000 		call	ble_stack_init
+ 418      E7800000 
+ 419              	.LVL53:
+ 420 0040 AA85     		mv	a1,a0
+ 421              	.LVL54:
+ 489:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     if (ret != BLE_ERR_NO_ERROR) {
+ 422              		.loc 1 489 5 is_stmt 1
+ 423              		.loc 1 489 8 is_stmt 0
+ 424 0042 11CD     		beq	a0,zero,.L32
+ 490:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****         dbg_print(ERR, "ble stack init fail status 0x%x", ret);
+ 425              		.loc 1 490 9 is_stmt 1
+ 426              		.loc 1 490 9
+ 427 0044 B7070000 		lui	a5,%hi(global_debug_level)
+ 428 0048 83C70700 		lbu	a5,%lo(global_debug_level)(a5)
+ 429 004c 89CB     		beq	a5,zero,.L32
+ 430              		.loc 1 490 9 discriminator 1
+ 431 004e 37050000 		lui	a0,%hi(.LC2)
+ 432              	.LVL55:
+ 433 0052 13050500 		addi	a0,a0,%lo(.LC2)
+ 434 0056 97000000 		call	co_printf
+ 434      E7800000 
+ 435              	.LVL56:
+ 436              	.L32:
+ 437              		.loc 1 490 9 discriminator 3
+ 491:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     }
+ 492:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 493:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_task_init();
+ 438              		.loc 1 493 5 discriminator 3
+ 439              	.LBB12:
+ 440              	.LBB13:
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 441              		.loc 1 184 5 discriminator 3
+ 442 005e C945     		li	a1,18
+ 443 0060 13050030 		li	a0,768
+ 444 0064 97000000 		call	ble_stack_task_init
+ 444      E7800000 
+ 445              	.LVL57:
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 446              		.loc 1 187 5 discriminator 3
+ 447 006c C545     		li	a1,17
+ 448 006e 13050020 		li	a0,512
+ 449 0072 97000000 		call	ble_app_task_init
+ 449      E7800000 
+ 450              	.LVL58:
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 451              		.loc 1 190 5 discriminator 3
+ 452 007a 37050000 		lui	a0,%hi(.LANCHOR1)
+ 453 007e 0146     		li	a2,0
+ 454 0080 8545     		li	a1,1
+ 455 0082 13050500 		addi	a0,a0,%lo(.LANCHOR1)
+ 456 0086 97000000 		call	sys_sema_init_ext
+ 456      E7800000 
+ 457              	.LVL59:
+ 458              	.LBE13:
+ 459              	.LBE12:
+ 494:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 495:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #ifdef CFG_VIRTUAL_HCI_MODE
+ 496:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     app_virtual_hci_enable();
+ 497:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 498:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 499:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_SUPPORT)
+ 500:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_module_init();
+ 460              		.loc 1 500 5 discriminator 3
+ 461 008e 97000000 		call	ble_module_init
+ 461      E7800000 
+ 462              	.LVL60:
+ 501:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 502:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_init();
+ 463              		.loc 1 502 5 discriminator 3
+ 464 0096 97000000 		call	ble_app_init
+ 464      E7800000 
+ 465              	.LVL61:
+ 503:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif // (BLE_APP_SUPPORT)
+ 504:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 505:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     /* ble need to close deep sleep before flash erase */
+ 506:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     raw_flash_erase_handler_register(ble_flash_erase_handler);
+ 466              		.loc 1 506 5 discriminator 3
+ 467 009e 37050000 		lui	a0,%hi(ble_flash_erase_handler)
+ 468 00a2 13050500 		addi	a0,a0,%lo(ble_flash_erase_handler)
+ 469 00a6 97000000 		call	raw_flash_erase_handler_register
+ 469      E7800000 
+ 470              	.LVL62:
+ 507:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #else
+ 508:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #ifdef CFG_VIRTUAL_HCI_MODE
+ 509:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     tkl_virtual_hci_init();
+ 510:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #else
+ 511:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     // Workaround for tuya project
+ 512:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     // If Tuya change the workflow, this code can be removed
+ 513:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     tuya_adp_init(3);
+ 514:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 515:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 516:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 517:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #ifdef CFG_COEX
+ 518:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_coex_evt_notify_register(coex_ble_event_notify);
+ 471              		.loc 1 518 5 discriminator 3
+ 472 00ae 37050000 		lui	a0,%hi(coex_ble_event_notify)
+ 473 00b2 13050500 		addi	a0,a0,%lo(coex_ble_event_notify)
+ 474 00b6 97000000 		call	ble_coex_evt_notify_register
+ 474      E7800000 
+ 475              	.LVL63:
+ 519:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 520:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 521:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_work_status_set(BLE_WORK_STATUS_ENABLE);
+ 476              		.loc 1 521 5 discriminator 3
+ 477 00be 0145     		li	a0,0
+ 478 00c0 97000000 		call	ble_work_status_set
+ 478      E7800000 
+ 479              	.LVL64:
+ 480              	.L29:
+ 522:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 481              		.loc 1 522 1 is_stmt 0
+ 482 00c8 6161     		addi	sp,sp,80
+ 483              		.cfi_def_cfa_offset 0
+ 484 00ca 17030000 		tail	__riscv_restore_1
+ 484      67000300 
+ 485              		.cfi_restore 8
+ 486              		.cfi_restore 1
+ 487              		.cfi_def_cfa_offset -16
+ 488              		.cfi_endproc
+ 489              	.LFE15:
+ 491              		.section	.text.ble_deinit,"ax",@progbits
+ 492              		.align	1
+ 493              		.globl	ble_deinit
+ 495              	ble_deinit:
+ 496              	.LFB16:
+ 523:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 524:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** /*!
+ 525:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \brief      Deinitialization of the BLE module
+ 526:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[in]  none
+ 527:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \param[out] none
+ 528:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     \retval     none
+ 529:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** */
+ 530:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** void ble_deinit(void)
+ 531:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** {
+ 497              		.loc 1 531 1 is_stmt 1
+ 498              		.cfi_startproc
+ 499 0000 17030000 		call	t0,__riscv_save_0
+ 499      E7020300 
+ 500              		.cfi_offset 1, -4
+ 501              		.cfi_def_cfa_offset 16
+ 532:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     raw_flash_erase_handler_unregister(ble_flash_erase_handler);
+ 502              		.loc 1 532 5
+ 503 0008 37050000 		lui	a0,%hi(ble_flash_erase_handler)
+ 504 000c 13050500 		addi	a0,a0,%lo(ble_flash_erase_handler)
+ 505 0010 97000000 		call	raw_flash_erase_handler_unregister
+ 505      E7800000 
+ 506              	.LVL65:
+ 533:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 534:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #if (BLE_APP_SUPPORT)
+ 535:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_app_deinit();
+ 507              		.loc 1 535 5
+ 508 0018 97000000 		call	ble_app_deinit
+ 508      E7800000 
+ 509              	.LVL66:
+ 536:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif // (BLE_APP_SUPPORT)
+ 537:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 538:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_power_off();
+ 510              		.loc 1 538 5
+ 511 0020 97000000 		call	ble_power_off
+ 511      E7800000 
+ 512              	.LVL67:
+ 539:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 540:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c ****     ble_task_deinit();
+ 513              		.loc 1 540 5
+ 514              	.LBB16:
+ 515              	.LBB17:
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 516              		.loc 1 201 5
+ 517 0028 37050000 		lui	a0,%hi(.LANCHOR1)
+ 518 002c 13050500 		addi	a0,a0,%lo(.LANCHOR1)
+ 519 0030 97000000 		call	sys_sema_free
+ 519      E7800000 
+ 520              	.LVL68:
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** 
+ 521              		.loc 1 203 5
+ 522 0038 97000000 		call	ble_stack_task_deinit
+ 522      E7800000 
+ 523              	.LVL69:
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** #endif
+ 524              		.loc 1 206 5
+ 525 0040 97000000 		call	ble_app_task_deinit
+ 525      E7800000 
+ 526              	.LVL70:
+ 527              	.LBE17:
+ 528              	.LBE16:
+ 541:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\ble_init.c **** }
+ 529              		.loc 1 541 1 is_stmt 0
+ 530 0048 17030000 		tail	__riscv_restore_0
+ 530      67000300 
+ 531              		.cfi_restore 1
+ 532              		.cfi_def_cfa_offset 0
+ 533              		.cfi_endproc
+ 534              	.LFE16:
+ 536              		.globl	flash_erase_sleep_mode
+ 537              		.section	.rodata
+ 538              		.align	2
+ 539              		.set	.LANCHOR2,. + 0
+ 540              	.LC0:
+ 541 0000 00000000 		.word	sys_malloc
+ 542 0004 00000000 		.word	sys_calloc
+ 543 0008 00000000 		.word	sys_mfree
+ 544 000c 00000000 		.word	sys_memset
+ 545 0010 00000000 		.word	sys_memcpy
+ 546 0014 00000000 		.word	sys_memcmp
+ 547 0018 00000000 		.word	sys_task_create
+ 548 001c 00000000 		.word	sys_task_init_notification
+ 549 0020 00000000 		.word	sys_task_wait_notification
+ 550 0024 00000000 		.word	sys_task_notify
+ 551 0028 00000000 		.word	sys_task_delete
+ 552 002c 00000000 		.word	sys_ms_sleep
+ 553 0030 00000000 		.word	sys_current_task_handle_get
+ 554 0034 00000000 		.word	sys_queue_init
+ 555 0038 00000000 		.word	sys_queue_free
+ 556 003c 00000000 		.word	sys_queue_write
+ 557 0040 00000000 		.word	sys_queue_read
+ 558 0044 00000000 		.word	sys_random_bytes_get
+ 559              		.section	.sbss.ble_ready_sem,"aw",@nobits
+ 560              		.align	2
+ 561              		.set	.LANCHOR1,. + 0
+ 564              	ble_ready_sem:
+ 565 0000 00000000 		.zero	4
+ 566              		.section	.sbss.flash_erase_sleep_mode,"aw",@nobits
+ 567              		.set	.LANCHOR0,. + 0
+ 570              	flash_erase_sleep_mode:
+ 571 0000 00       		.zero	1
+ 572              		.text
+ 573              	.Letext0:
+ 574              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 575              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 576              		.file 4 "..\\..\\..\\..\\blesw\\src\\export/ble_error.h"
+ 577              		.file 5 "..\\..\\..\\..\\blesw\\src\\export/ble_gap.h"
+ 578              		.file 6 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 579              		.file 7 "..\\..\\..\\..\\blesw\\src\\export/ble_export.h"
+ 580              		.file 8 "..\\..\\..\\..\\rtos\\rtos_wrapper/wrapper_os.h"
+ 581              		.file 9 "..\\..\\..\\..\\plf\\src\\raw_flash/raw_flash_api.h"
+ 582              		.file 10 "..\\..\\..\\..\\util\\include/dbg_print.h"
+ 583              		.file 11 "..\\..\\..\\..\\plf\\src/gd32vw55x_platform.h"
+ 584              		.file 12 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 585              		.file 13 "..\\..\\..\\..\\util\\include/debug_print.h"
+ 586              		.file 14 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 587              		.file 15 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 588              		.file 16 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 589              		.file 17 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 590              		.file 18 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 591              		.file 19 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 592              		.file 20 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 593              		.file 21 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 594              		.file 22 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 595              		.file 23 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 596              		.file 24 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 597              		.file 25 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.
+ 598              		.file 26 "..\\..\\..\\..\\blesw\\src\\export/ble_adv.h"
+ 599              		.file 27 "..\\..\\..\\..\\blesw\\src\\export/ble_scan.h"
+ 600              		.file 28 "..\\..\\..\\..\\blesw\\src\\export/ble_sec.h"
+ 601              		.file 29 "..\\..\\..\\..\\blesw\\src\\export/ble_l2cap_coc.h"
+ 602              		.file 30 "..\\..\\..\\..\\blesw\\src\\export/ble_conn.h"
+ 603              		.file 31 "..\\..\\..\\..\\blesw\\src\\export/ble_gatts.h"
+ 604              		.file 32 "..\\..\\..\\..\\blesw\\src\\export/ble_gattc.h"
+ 605              		.file 33 "..\\..\\..\\..\\blesw\\src\\export/ble_storage.h"
+ 606              		.file 34 "..\\..\\..\\..\\blesw\\src\\export/ble_adapter.h"
+ 607              		.file 35 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ble_init.c
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:13     .text.ble_flash_erase_handler:0000000000000000 ble_flash_erase_handler
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:17     .text.ble_flash_erase_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:19     .text.ble_flash_erase_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:20     .text.ble_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:21     .text.ble_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:23     .text.ble_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:24     .text.ble_flash_erase_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:26     .text.ble_flash_erase_handler:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:27     .text.ble_flash_erase_handler:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:30     .text.ble_flash_erase_handler:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:33     .text.ble_flash_erase_handler:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:34     .text.ble_flash_erase_handler:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:39     .text.ble_flash_erase_handler:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:43     .text.ble_flash_erase_handler:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:47     .text.ble_flash_erase_handler:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:54     .text.ble_flash_erase_handler:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:55     .text.ble_flash_erase_handler:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:56     .text.ble_flash_erase_handler:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:57     .text.ble_flash_erase_handler:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:58     .text.ble_flash_erase_handler:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:61     .text.ble_flash_erase_handler:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:63     .text.ble_flash_erase_handler:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:64     .text.ble_flash_erase_handler:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:67     .text.ble_flash_erase_handler:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:68     .text.ble_flash_erase_handler:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:72     .text.ble_flash_erase_handler:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:74     .text.ble_flash_erase_handler:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:77     .text.ble_flash_erase_handler:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:78     .text.ble_flash_erase_handler:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:85     .text.ble_task_ready:0000000000000000 ble_task_ready
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:88     .text.ble_task_ready:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:89     .text.ble_task_ready:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:90     .text.ble_task_ready:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:94     .text.ble_task_ready:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:101    .text.ble_wait_ready:0000000000000000 ble_wait_ready
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:104    .text.ble_wait_ready:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:105    .text.ble_wait_ready:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:106    .text.ble_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:107    .text.ble_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:108    .text.ble_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:109    .text.ble_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:111    .text.ble_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:112    .text.ble_wait_ready:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:114    .text.ble_wait_ready:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:118    .text.ble_wait_ready:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:121    .text.ble_wait_ready:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:123    .text.ble_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:124    .text.ble_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:125    .text.ble_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:126    .text.ble_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:127    .text.ble_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:129    .text.ble_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:131    .text.ble_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:132    .text.ble_wait_ready:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:138    .text.ble_wait_ready:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:140    .text.ble_wait_ready:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:144    .text.ble_wait_ready:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:145    .text.ble_wait_ready:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:146    .text.ble_wait_ready:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:157    .text.ble_module_init:0000000000000000 ble_module_init
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:160    .text.ble_module_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:161    .text.ble_module_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:162    .text.ble_module_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:163    .text.ble_module_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:165    .text.ble_module_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:168    .text.ble_module_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:169    .text.ble_module_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:172    .text.ble_module_init:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:174    .text.ble_module_init:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:175    .text.ble_module_init:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:180    .text.ble_module_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:186    .text.ble_module_init:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:187    .text.ble_module_init:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:188    .text.ble_module_init:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:189    .text.ble_module_init:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:191    .text.ble_module_init:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:195    .text.ble_module_init:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:198    .text.ble_module_init:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:202    .text.ble_module_init:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:205    .text.ble_module_init:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:208    .text.ble_module_init:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:211    .text.ble_module_init:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:214    .text.ble_module_init:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:219    .text.ble_module_init:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:226    .text.ble_profile_init:0000000000000000 ble_profile_init
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:229    .text.ble_profile_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:230    .text.ble_profile_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:231    .text.ble_profile_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:232    .text.ble_profile_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:234    .text.ble_profile_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:237    .text.ble_profile_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:240    .text.ble_profile_init:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:241    .text.ble_profile_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:242    .text.ble_profile_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:243    .text.ble_profile_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:250    .text.ble_profile_deinit:0000000000000000 ble_profile_deinit
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:253    .text.ble_profile_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:254    .text.ble_profile_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:255    .text.ble_profile_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:256    .text.ble_profile_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:258    .text.ble_profile_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:261    .text.ble_profile_deinit:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:264    .text.ble_profile_deinit:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:265    .text.ble_profile_deinit:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:266    .text.ble_profile_deinit:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:267    .text.ble_profile_deinit:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:274    .text.ble_app_init:0000000000000000 ble_app_init
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:277    .text.ble_app_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:278    .text.ble_app_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:279    .text.ble_app_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:280    .text.ble_app_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:282    .text.ble_app_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:285    .text.ble_app_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:288    .text.ble_app_init:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:291    .text.ble_app_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:294    .text.ble_app_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:297    .text.ble_app_init:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:300    .text.ble_app_init:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:303    .text.ble_app_init:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:306    .text.ble_app_init:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:309    .text.ble_app_init:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:312    .text.ble_app_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:315    .text.ble_app_init:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:316    .text.ble_app_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:317    .text.ble_app_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:318    .text.ble_app_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:325    .text.ble_app_deinit:0000000000000000 ble_app_deinit
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:328    .text.ble_app_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:329    .text.ble_app_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:330    .text.ble_app_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:331    .text.ble_app_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:333    .text.ble_app_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:336    .text.ble_app_deinit:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:339    .text.ble_app_deinit:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:342    .text.ble_app_deinit:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:345    .text.ble_app_deinit:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:348    .text.ble_app_deinit:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:351    .text.ble_app_deinit:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:354    .text.ble_app_deinit:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:357    .text.ble_app_deinit:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:360    .text.ble_app_deinit:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:363    .text.ble_app_deinit:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:366    .text.ble_app_deinit:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:367    .text.ble_app_deinit:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:368    .text.ble_app_deinit:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:369    .text.ble_app_deinit:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:380    .text.ble_init:0000000000000000 ble_init
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:383    .text.ble_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:385    .text.ble_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:386    .text.ble_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:387    .text.ble_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:388    .text.ble_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:390    .text.ble_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:391    .text.ble_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:392    .text.ble_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:393    .text.ble_init:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:395    .text.ble_init:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:397    .text.ble_init:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:399    .text.ble_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:406    .text.ble_init:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:409    .text.ble_init:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:410    .text.ble_init:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:412    .text.ble_init:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:415    .text.ble_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:416    .text.ble_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:423    .text.ble_init:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:424    .text.ble_init:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:426    .text.ble_init:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:427    .text.ble_init:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:431    .text.ble_init:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:438    .text.ble_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:441    .text.ble_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:442    .text.ble_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:447    .text.ble_init:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:452    .text.ble_init:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:461    .text.ble_init:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:464    .text.ble_init:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:467    .text.ble_init:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:472    .text.ble_init:00000000000000ae .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:477    .text.ble_init:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:482    .text.ble_init:00000000000000c8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:483    .text.ble_init:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:485    .text.ble_init:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:486    .text.ble_init:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:487    .text.ble_init:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:488    .text.ble_init:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:495    .text.ble_deinit:0000000000000000 ble_deinit
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:498    .text.ble_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:499    .text.ble_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:500    .text.ble_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:501    .text.ble_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:503    .text.ble_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:508    .text.ble_deinit:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:511    .text.ble_deinit:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:516    .text.ble_deinit:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:517    .text.ble_deinit:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:522    .text.ble_deinit:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:525    .text.ble_deinit:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:530    .text.ble_deinit:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:531    .text.ble_deinit:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:532    .text.ble_deinit:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:533    .text.ble_deinit:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:570    .sbss.flash_erase_sleep_mode:0000000000000000 flash_erase_sleep_mode
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:539    .rodata:0000000000000000 .LANCHOR2
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:561    .sbss.ble_ready_sem:0000000000000000 .LANCHOR1
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:564    .sbss.ble_ready_sem:0000000000000000 ble_ready_sem
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:567    .sbss.flash_erase_sleep_mode:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:81     .text.ble_flash_erase_handler:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:97     .text.ble_task_ready:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:149    .text.ble_wait_ready:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:222    .text.ble_module_init:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:246    .text.ble_profile_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:270    .text.ble_profile_deinit:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:321    .text.ble_app_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:372    .text.ble_app_deinit:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:491    .text.ble_init:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:537    .text.ble_deinit:0000000000000050 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:60     .text.ble_flash_erase_handler:0000000000000042 .L2
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:51     .text.ble_flash_erase_handler:000000000000003a .L1
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:128    .text.ble_wait_ready:000000000000001e .L13
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:116    .text.ble_wait_ready:0000000000000012 .L15
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:119    .text.ble_wait_ready:0000000000000014 .L12
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:151    .rodata.ble_module_init.str1.4:0000000000000000 .LC1
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:190    .text.ble_module_init:0000000000000040 .L18
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:184    .text.ble_module_init:0000000000000038 .L17
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:374    .rodata.ble_init.str1.4:0000000000000000 .LC2
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:480    .text.ble_init:00000000000000c8 .L29
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:436    .text.ble_init:000000000000005e .L32
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:2758   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4219   .debug_str:0000000000001fa3 .LASF335
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3751   .debug_str:00000000000008ec .LASF336
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3861   .debug_str:0000000000000e61 .LASF337
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3537   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3561   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4183   .debug_str:0000000000001e27 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4067   .debug_str:00000000000018b7 .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4129   .debug_str:0000000000001b6c .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4013   .debug_str:0000000000001656 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3755   .debug_str:0000000000000965 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3611   .debug_str:0000000000000272 .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4025   .debug_str:00000000000016c9 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4135   .debug_str:0000000000001ba1 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4093   .debug_str:00000000000019c7 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3881   .debug_str:0000000000000fb8 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3705   .debug_str:00000000000006b6 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3605   .debug_str:000000000000024c .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3851   .debug_str:0000000000000de6 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4097   .debug_str:0000000000001a03 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3681   .debug_str:0000000000000566 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3839   .debug_str:0000000000000d43 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3581   .debug_str:0000000000000109 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3687   .debug_str:00000000000005aa .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4167   .debug_str:0000000000001d3a .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3899   .debug_str:00000000000010a8 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3929   .debug_str:000000000000122b .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3775   .debug_str:0000000000000a32 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3773   .debug_str:0000000000000a17 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3699   .debug_str:0000000000000673 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3749   .debug_str:00000000000008cd .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4055   .debug_str:000000000000181b .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3793   .debug_str:0000000000000b06 .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3709   .debug_str:00000000000006df .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4161   .debug_str:0000000000001ce6 .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3915   .debug_str:0000000000001171 .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3993   .debug_str:0000000000001548 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4021   .debug_str:00000000000016a3 .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4143   .debug_str:0000000000001c08 .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4005   .debug_str:00000000000015ee .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4235   .debug_str:0000000000002144 .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4003   .debug_str:00000000000015d0 .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4181   .debug_str:0000000000001e08 .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3697   .debug_str:0000000000000650 .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3827   .debug_str:0000000000000ca9 .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3925   .debug_str:00000000000011f4 .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4047   .debug_str:00000000000017af .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3847   .debug_str:0000000000000da9 .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3563   .debug_str:0000000000000000 .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4149   .debug_str:0000000000001c42 .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4153   .debug_str:0000000000001c7b .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3867   .debug_str:0000000000000ef6 .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3635   .debug_str:000000000000036d .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3909   .debug_str:0000000000001124 .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3639   .debug_str:00000000000003a8 .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3931   .debug_str:0000000000001245 .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4053   .debug_str:00000000000017ff .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4207   .debug_str:0000000000001f1a .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3671   .debug_str:00000000000004f7 .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4051   .debug_str:00000000000017df .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4233   .debug_str:000000000000212a .LASF54
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3911   .debug_str:0000000000001146 .LASF55
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3633   .debug_str:0000000000000350 .LASF56
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4197   .debug_str:0000000000001e9c .LASF57
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3999   .debug_str:0000000000001598 .LASF58
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4239   .debug_str:0000000000002176 .LASF59
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3947   .debug_str:00000000000012ff .LASF60
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4001   .debug_str:00000000000015b7 .LASF61
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3857   .debug_str:0000000000000e28 .LASF62
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3905   .debug_str:0000000000001100 .LASF63
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3743   .debug_str:000000000000086e .LASF64
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3589   .debug_str:000000000000016a .LASF65
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4213   .debug_str:0000000000001f5e .LASF66
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4069   .debug_str:00000000000018c1 .LASF67
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3811   .debug_str:0000000000000c12 .LASF68
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3765   .debug_str:00000000000009c7 .LASF69
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3723   .debug_str:000000000000079d .LASF70
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3801   .debug_str:0000000000000b79 .LASF71
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3973   .debug_str:000000000000142a .LASF72
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3693   .debug_str:0000000000000613 .LASF73
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4037   .debug_str:0000000000001742 .LASF74
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3653   .debug_str:0000000000000446 .LASF75
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3595   .debug_str:00000000000001c2 .LASF76
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4107   .debug_str:0000000000001a78 .LASF77
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4113   .debug_str:0000000000001ac8 .LASF78
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4009   .debug_str:000000000000162e .LASF79
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4045   .debug_str:0000000000001793 .LASF80
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4007   .debug_str:0000000000001609 .LASF81
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3601   .debug_str:0000000000000209 .LASF82
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3779   .debug_str:0000000000000a5e .LASF83
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4127   .debug_str:0000000000001b4c .LASF84
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3685   .debug_str:0000000000000589 .LASF85
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3893   .debug_str:0000000000001046 .LASF86
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3785   .debug_str:0000000000000aa9 .LASF87
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3935   .debug_str:0000000000001277 .LASF88
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3783   .debug_str:0000000000000a87 .LASF89
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3585   .debug_str:0000000000000132 .LASF90
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3859   .debug_str:0000000000000e3e .LASF91
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4243   .debug_str:00000000000021a5 .LASF92
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3745   .debug_str:0000000000000889 .LASF93
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3689   .debug_str:00000000000005c9 .LASF94
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3797   .debug_str:0000000000000b3c .LASF95
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4251   .debug_str:0000000000002212 .LASF96
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3643   .debug_str:00000000000003dc .LASF97
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3803   .debug_str:0000000000000b98 .LASF98
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4119   .debug_str:0000000000001afb .LASF99
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3835   .debug_str:0000000000000d03 .LASF100
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3733   .debug_str:000000000000080a .LASF101
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3923   .debug_str:00000000000011d1 .LASF102
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3731   .debug_str:00000000000007e8 .LASF103
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3955   .debug_str:000000000000136e .LASF104
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3837   .debug_str:0000000000000d20 .LASF105
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3869   .debug_str:0000000000000f12 .LASF106
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4095   .debug_str:00000000000019d9 .LASF107
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4169   .debug_str:0000000000001d5a .LASF108
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3735   .debug_str:000000000000082c .LASF109
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4029   .debug_str:00000000000016f6 .LASF110
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3853   .debug_str:0000000000000dee .LASF111
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3871   .debug_str:0000000000000f3c .LASF112
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3879   .debug_str:0000000000000fa0 .LASF113
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3829   .debug_str:0000000000000cbf .LASF114
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3579   .debug_str:00000000000000f7 .LASF115
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4131   .debug_str:0000000000001b7a .LASF116
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3883   .debug_str:0000000000000fc6 .LASF117
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3849   .debug_str:0000000000000dc3 .LASF118
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3717   .debug_str:0000000000000756 .LASF119
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3891   .debug_str:0000000000001020 .LASF120
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3683   .debug_str:000000000000056f .LASF121
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4081   .debug_str:000000000000193f .LASF122
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3985   .debug_str:00000000000014cc .LASF123
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4141   .debug_str:0000000000001bef .LASF124
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3757   .debug_str:0000000000000978 .LASF125
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3725   .debug_str:00000000000007ae .LASF126
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3711   .debug_str:00000000000006ff .LASF127
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3771   .debug_str:00000000000009fe .LASF128
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3927   .debug_str:0000000000001212 .LASF129
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3987   .debug_str:00000000000014e7 .LASF130
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3825   .debug_str:0000000000000c8c .LASF131
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4079   .debug_str:0000000000001926 .LASF132
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3975   .debug_str:0000000000001447 .LASF133
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4155   .debug_str:0000000000001c9c .LASF134
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4123   .debug_str:0000000000001b28 .LASF135
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3989   .debug_str:0000000000001506 .LASF136
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4089   .debug_str:0000000000001993 .LASF137
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3651   .debug_str:000000000000042e .LASF138
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3799   .debug_str:0000000000000b61 .LASF139
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3795   .debug_str:0000000000000b25 .LASF140
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3789   .debug_str:0000000000000ad3 .LASF141
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4189   .debug_str:0000000000001e5a .LASF142
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3823   .debug_str:0000000000000c70 .LASF143
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3941   .debug_str:00000000000012c1 .LASF144
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3939   .debug_str:00000000000012a7 .LASF145
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3855   .debug_str:0000000000000e0a .LASF146
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3841   .debug_str:0000000000000d54 .LASF147
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4179   .debug_str:0000000000001de3 .LASF148
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4177   .debug_str:0000000000001dbb .LASF149
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4019   .debug_str:000000000000167d .LASF150
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3575   .debug_str:00000000000000c8 .LASF151
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3659   .debug_str:000000000000047b .LASF152
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4137   .debug_str:0000000000001bac .LASF153
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3567   .debug_str:000000000000003b .LASF154
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3675   .debug_str:000000000000051f .LASF155
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3715   .debug_str:0000000000000734 .LASF156
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4199   .debug_str:0000000000001eb6 .LASF157
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3571   .debug_str:000000000000008a .LASF158
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3763   .debug_str:00000000000009ac .LASF159
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4105   .debug_str:0000000000001a52 .LASF160
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3833   .debug_str:0000000000000ce4 .LASF161
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3721   .debug_str:000000000000077c .LASF162
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3991   .debug_str:0000000000001527 .LASF163
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4099   .debug_str:0000000000001a0b .LASF164
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3903   .debug_str:00000000000010e3 .LASF165
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3979   .debug_str:000000000000147f .LASF166
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3901   .debug_str:00000000000010c0 .LASF167
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3619   .debug_str:00000000000002a2 .LASF168
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4101   .debug_str:0000000000001a28 .LASF169
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3573   .debug_str:00000000000000a9 .LASF170
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3629   .debug_str:0000000000000312 .LASF171
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3967   .debug_str:00000000000013ee .LASF172
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3593   .debug_str:00000000000001a5 .LASF173
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4165   .debug_str:0000000000001d20 .LASF174
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3895   .debug_str:0000000000001063 .LASF175
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3569   .debug_str:0000000000000064 .LASF176
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3623   .debug_str:00000000000002c4 .LASF177
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3949   .debug_str:0000000000001313 .LASF178
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4059   .debug_str:0000000000001853 .LASF179
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3565   .debug_str:000000000000001a .LASF180
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4139   .debug_str:0000000000001bcc .LASF181
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3897   .debug_str:000000000000108c .LASF182
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4203   .debug_str:0000000000001ede .LASF183
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4223   .debug_str:00000000000020c2 .LASF184
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4217   .debug_str:0000000000001f8a .LASF185
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3951   .debug_str:000000000000132b .LASF186
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3805   .debug_str:0000000000000bb8 .LASF187
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3641   .debug_str:00000000000003c1 .LASF188
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4157   .debug_str:0000000000001cb0 .LASF189
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4205   .debug_str:0000000000001f01 .LASF190
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4247   .debug_str:00000000000021de .LASF191
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4065   .debug_str:0000000000001896 .LASF192
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3809   .debug_str:0000000000000bf7 .LASF193
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3807   .debug_str:0000000000000bd5 .LASF194
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4027   .debug_str:00000000000016d2 .LASF195
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3953   .debug_str:000000000000134c .LASF196
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4083   .debug_str:0000000000001954 .LASF197
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4221   .debug_str:000000000000209c .LASF198
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3625   .debug_str:00000000000002e6 .LASF199
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4043   .debug_str:0000000000001780 .LASF200
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3695   .debug_str:000000000000063b .LASF201
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3963   .debug_str:00000000000013be .LASF202
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3713   .debug_str:000000000000071a .LASF203
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3961   .debug_str:00000000000013a8 .LASF204
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3767   .debug_str:00000000000009e2 .LASF205
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3791   .debug_str:0000000000000af1 .LASF206
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3813   .debug_str:0000000000000c2f .LASF207
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3739   .debug_str:000000000000084e .LASF208
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3995   .debug_str:000000000000155f .LASF212
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3747   .debug_str:00000000000008b3 .LASF209
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4073   .debug_str:00000000000018eb .LASF210
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3977   .debug_str:000000000000145c .LASF211
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3875   .debug_str:0000000000000f72 .LASF213
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3889   .debug_str:0000000000000fff .LASF214
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4151   .debug_str:0000000000001c5c .LASF215
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3591   .debug_str:0000000000000187 .LASF216
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3919   .debug_str:000000000000119e .LASF217
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3637   .debug_str:0000000000000389 .LASF218
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3661   .debug_str:0000000000000498 .LASF219
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4041   .debug_str:0000000000001769 .LASF220
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4087   .debug_str:000000000000197c .LASF221
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3647   .debug_str:0000000000000406 .LASF222
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4241   .debug_str:000000000000218b .LASF223
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3843   .debug_str:0000000000000d7a .LASF224
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4049   .debug_str:00000000000017c9 .LASF225
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3769   .debug_str:00000000000009f8 .LASF226
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3753   .debug_str:000000000000095e .LASF227
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3821   .debug_str:0000000000000c6b .LASF228
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3617   .debug_str:0000000000000298 .LASF229
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3943   .debug_str:00000000000012e6 .LASF230
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4121   .debug_str:0000000000001b1c .LASF231
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4201   .debug_str:0000000000001ed3 .LASF338
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3777   .debug_str:0000000000000a54 .LASF232
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3729   .debug_str:00000000000007de .LASF233
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3657   .debug_str:0000000000000472 .LASF234
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4011   .debug_str:000000000000164c .LASF235
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3759   .debug_str:0000000000000991 .LASF236
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4187   .debug_str:0000000000001e50 .LASF237
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4215   .debug_str:0000000000001f7b .LASF238
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3587   .debug_str:0000000000000150 .LASF239
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3877   .debug_str:0000000000000f86 .LASF240
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3907   .debug_str:0000000000001115 .LASF241
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3981   .debug_str:00000000000014a6 .LASF242
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4115   .debug_str:0000000000001ae2 .LASF243
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3965   .debug_str:00000000000013d3 .LASF244
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3957   .debug_str:000000000000138c .LASF245
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3665   .debug_str:00000000000004bb .LASF246
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3969   .debug_str:000000000000140e .LASF247
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4015   .debug_str:0000000000001660 .LASF248
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3607   .debug_str:0000000000000259 .LASF249
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4133   .debug_str:0000000000001b94 .LASF250
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3655   .debug_str:0000000000000460 .LASF251
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3817   .debug_str:0000000000000c4f .LASF252
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4057   .debug_str:000000000000183b .LASF253
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4075   .debug_str:0000000000001909 .LASF254
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3631   .debug_str:0000000000000331 .LASF255
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3603   .debug_str:000000000000022b .LASF256
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4103   .debug_str:0000000000001a41 .LASF257
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3609   .debug_str:000000000000026d .LASF258
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3787   .debug_str:0000000000000acb .LASF259
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3621   .debug_str:00000000000002bd .LASF260
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3737   .debug_str:0000000000000849 .LASF261
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4171   .debug_str:0000000000001d8e .LASF262
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3819   .debug_str:0000000000000c66 .LASF263
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4071   .debug_str:00000000000018d8 .LASF268
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3669   .debug_str:00000000000004df .LASF264
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3667   .debug_str:00000000000004c9 .LASF265
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3703   .debug_str:000000000000069c .LASF266
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3873   .debug_str:0000000000000f5a .LASF267
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3983   .debug_str:00000000000014b5 .LASF269
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3583   .debug_str:0000000000000124 .LASF272
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4031   .debug_str:0000000000001712 .LASF270
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:496    .text.ble_deinit:0000000000000000 .LFB16
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:534    .text.ble_deinit:0000000000000050 .LFE16
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:514    .text.ble_deinit:0000000000000028 .LBB16
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:528    .text.ble_deinit:0000000000000048 .LBE16
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:520    .text.ble_deinit:0000000000000038 .LVL68
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:523    .text.ble_deinit:0000000000000040 .LVL69
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:526    .text.ble_deinit:0000000000000048 .LVL70
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:506    .text.ble_deinit:0000000000000018 .LVL65
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:509    .text.ble_deinit:0000000000000020 .LVL66
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:512    .text.ble_deinit:0000000000000028 .LVL67
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3865   .debug_str:0000000000000eed .LASF271
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:381    .text.ble_init:0000000000000000 .LFB15
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:489    .text.ble_init:00000000000000d2 .LFE15
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3448   .debug_loc:0000000000000000 .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3462   .debug_loc:0000000000000021 .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4117   .debug_str:0000000000001aee .LASF273
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:439    .text.ble_init:000000000000005e .LBB12
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:459    .text.ble_init:000000000000008e .LBE12
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:445    .text.ble_init:000000000000006c .LVL57
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:450    .text.ble_init:000000000000007a .LVL58
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:457    .text.ble_init:000000000000008e .LVL59
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:404    .text.ble_init:0000000000000022 .LVL50
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:407    .text.ble_init:000000000000002a .LVL51
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:413    .text.ble_init:0000000000000034 .LVL52
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:419    .text.ble_init:0000000000000040 .LVL53
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:435    .text.ble_init:000000000000005e .LVL56
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:462    .text.ble_init:0000000000000096 .LVL60
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:465    .text.ble_init:000000000000009e .LVL61
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:470    .text.ble_init:00000000000000ae .LVL62
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:475    .text.ble_init:00000000000000be .LVL63
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:479    .text.ble_init:00000000000000c8 .LVL64
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3701   .debug_str:000000000000068d .LASF274
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:326    .text.ble_app_deinit:0000000000000000 .LFB14
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:370    .text.ble_app_deinit:0000000000000068 .LFE14
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:334    .text.ble_app_deinit:0000000000000010 .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:337    .text.ble_app_deinit:0000000000000018 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:340    .text.ble_app_deinit:0000000000000020 .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:343    .text.ble_app_deinit:0000000000000028 .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:346    .text.ble_app_deinit:0000000000000030 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:349    .text.ble_app_deinit:0000000000000038 .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:352    .text.ble_app_deinit:0000000000000040 .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:355    .text.ble_app_deinit:0000000000000048 .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:358    .text.ble_app_deinit:0000000000000050 .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:361    .text.ble_app_deinit:0000000000000058 .LVL46
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:364    .text.ble_app_deinit:0000000000000060 .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3971   .debug_str:000000000000141d .LASF275
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:275    .text.ble_app_init:0000000000000000 .LFB13
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:319    .text.ble_app_init:0000000000000068 .LFE13
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:283    .text.ble_app_init:0000000000000010 .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:286    .text.ble_app_init:0000000000000018 .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:289    .text.ble_app_init:0000000000000020 .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:292    .text.ble_app_init:0000000000000028 .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:295    .text.ble_app_init:0000000000000030 .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:298    .text.ble_app_init:0000000000000038 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:301    .text.ble_app_init:0000000000000040 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:304    .text.ble_app_init:0000000000000048 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:307    .text.ble_app_init:0000000000000050 .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:310    .text.ble_app_init:0000000000000058 .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:313    .text.ble_app_init:0000000000000060 .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4159   .debug_str:0000000000001cd3 .LASF276
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:251    .text.ble_profile_deinit:0000000000000000 .LFB12
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:268    .text.ble_profile_deinit:0000000000000020 .LFE12
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:259    .text.ble_profile_deinit:0000000000000010 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:262    .text.ble_profile_deinit:0000000000000018 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4173   .debug_str:0000000000001d94 .LASF277
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:227    .text.ble_profile_init:0000000000000000 .LFB11
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:244    .text.ble_profile_init:0000000000000020 .LFE11
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:235    .text.ble_profile_init:0000000000000010 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:238    .text.ble_profile_init:0000000000000018 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3613   .debug_str:000000000000027c .LASF339
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3781   .debug_str:0000000000000a77 .LASF278
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3727   .debug_str:00000000000007d0 .LASF279
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4109   .debug_str:0000000000001a9e .LASF340
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4125   .debug_str:0000000000001b47 .LASF341
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4225   .debug_str:00000000000020de .LASF342
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:102    .text.ble_wait_ready:0000000000000000 .LFB6
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:147    .text.ble_wait_ready:000000000000003e .LFE6
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:135    .text.ble_wait_ready:000000000000002c .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:142    .text.ble_wait_ready:000000000000003c .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4145   .debug_str:0000000000001c24 .LASF280
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:86     .text.ble_task_ready:0000000000000000 .LFB5
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:95     .text.ble_task_ready:0000000000000010 .LFE5
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:93     .text.ble_task_ready:0000000000000010 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:14     .text.ble_flash_erase_handler:0000000000000000 .LFB7
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:79     .text.ble_flash_erase_handler:000000000000005c .LFE7
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3473   .debug_loc:000000000000003f .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:36     .text.ble_flash_erase_handler:000000000000001c .LBB4
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:53     .text.ble_flash_erase_handler:000000000000003a .LBE4
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3498   .debug_loc:0000000000000079 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:41     .text.ble_flash_erase_handler:0000000000000026 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:45     .text.ble_flash_erase_handler:0000000000000030 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:49     .text.ble_flash_erase_handler:000000000000003a .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:28     .text.ble_flash_erase_handler:0000000000000012 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:75     .text.ble_flash_erase_handler:000000000000005a .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:158    .text.ble_module_init:0000000000000000 .LFB10
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:220    .text.ble_module_init:000000000000007c .LFE10
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:192    .text.ble_module_init:0000000000000040 .LBB8
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:218    .text.ble_module_init:000000000000007c .LBE8
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:196    .text.ble_module_init:0000000000000048 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:200    .text.ble_module_init:0000000000000052 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:203    .text.ble_module_init:000000000000005a .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:206    .text.ble_module_init:0000000000000062 .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:209    .text.ble_module_init:000000000000006a .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:212    .text.ble_module_init:0000000000000072 .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:215    .text.ble_module_init:000000000000007a .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:166    .text.ble_module_init:0000000000000010 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:170    .text.ble_module_init:0000000000000018 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:183    .text.ble_module_init:0000000000000038 .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3599   .debug_str:00000000000001fb .LASF281
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4175   .debug_str:0000000000001da5 .LASF282
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4211   .debug_str:0000000000001f4a .LASF283
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4229   .debug_str:00000000000020fa .LASF284
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3959   .debug_str:000000000000139a .LASF285
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3627   .debug_str:00000000000002fe .LASF286
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3679   .debug_str:0000000000000554 .LASF287
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4249   .debug_str:0000000000002200 .LASF288
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4193   .debug_str:0000000000001e84 .LASF343
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3649   .debug_str:000000000000041d .LASF344
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4231   .debug_str:000000000000211d .LASF289
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3719   .debug_str:000000000000076f .LASF290
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4085   .debug_str:000000000000196d .LASF291
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4023   .debug_str:00000000000016bf .LASF292
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3997   .debug_str:0000000000001577 .LASF293
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4185   .debug_str:0000000000001e33 .LASF294
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3917   .debug_str:000000000000118a .LASF295
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4035   .debug_str:000000000000172f .LASF296
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4209   .debug_str:0000000000001f37 .LASF297
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4039   .debug_str:0000000000001755 .LASF298
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3677   .debug_str:000000000000053f .LASF299
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3863   .debug_str:0000000000000edf .LASF300
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4163   .debug_str:0000000000001d0c .LASF301
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3845   .debug_str:0000000000000d96 .LASF302
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4091   .debug_str:00000000000019af .LASF303
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4237   .debug_str:0000000000002162 .LASF304
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4077   .debug_str:0000000000001913 .LASF305
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4195   .debug_str:0000000000001e8b .LASF306
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3913   .debug_str:0000000000001160 .LASF307
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4033   .debug_str:000000000000171d .LASF308
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3597   .debug_str:00000000000001e8 .LASF309
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3615   .debug_str:000000000000028c .LASF310
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3707   .debug_str:00000000000006cd .LASF311
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3663   .debug_str:00000000000004aa .LASF312
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3815   .debug_str:0000000000000c39 .LASF313
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3933   .debug_str:0000000000001265 .LASF314
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3645   .debug_str:00000000000003f5 .LASF315
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3921   .debug_str:00000000000011bd .LASF316
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3577   .debug_str:00000000000000df .LASF317
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4111   .debug_str:0000000000001ab6 .LASF318
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4063   .debug_str:0000000000001880 .LASF319
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3945   .debug_str:00000000000012f1 .LASF320
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4061   .debug_str:0000000000001874 .LASF321
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4191   .debug_str:0000000000001e71 .LASF322
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3691   .debug_str:00000000000005fd .LASF323
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3885   .debug_str:0000000000000fe1 .LASF324
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3741   .debug_str:000000000000085b .LASF325
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3937   .debug_str:000000000000129a .LASF326
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3887   .debug_str:0000000000000ff1 .LASF327
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3673   .debug_str:0000000000000512 .LASF328
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4147   .debug_str:0000000000001c33 .LASF329
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3831   .debug_str:0000000000000cd6 .LASF330
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4017   .debug_str:000000000000166e .LASF331
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4245   .debug_str:00000000000021cf .LASF332
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:3761   .debug_str:000000000000099b .LASF333
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:4227   .debug_str:00000000000020ed .LASF334
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:384    .text.ble_init:0000000000000000 .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:402    .text.ble_init:000000000000001a .LVL49
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:421    .text.ble_init:0000000000000042 .LVL54
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:432    .text.ble_init:0000000000000052 .LVL55
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:18     .text.ble_flash_erase_handler:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:59     .text.ble_flash_erase_handler:0000000000000042 .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:70     .text.ble_flash_erase_handler:0000000000000050 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:35     .text.ble_flash_erase_handler:000000000000001c .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccRfW0mg.s:609    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+__riscv_save_0
+ble_sleep_mode_get
+ble_sleep_mode_set
+ble_stack_task_resume
+ble_wait_pmu_on
+__riscv_restore_0
+sys_sema_up
+__riscv_save_2
+__riscv_restore_2
+sys_sema_down
+ble_storage_init
+ble_adp_init
+global_debug_level
+co_printf
+ble_adv_init
+ble_scan_init
+ble_sec_init
+ble_l2cap_init
+ble_conn_init
+ble_gatts_init
+ble_gattc_init
+ble_app_diss_init
+app_blue_courier_init
+ble_app_diss_deinit
+app_blue_courier_deinit
+app_adapter_init
+app_adv_mgr_init
+app_scan_mgr_init
+app_l2cap_mgr_init
+app_dm_init
+app_conn_mgr_init
+app_sec_mgr_init
+app_per_sync_mgr_init
+app_list_mgr_init
+app_iso_mgr_init
+app_adapter_deinit
+app_adv_mgr_deinit
+app_scan_mgr_deinit
+app_l2cap_mgr_deinit
+app_dm_deinit
+app_conn_mgr_deinit
+app_sec_mgr_deinit
+app_per_sync_mgr_deinit
+app_list_mgr_deinit
+app_iso_mgr_deinit
+__riscv_save_1
+memcpy
+ble_cli_init
+ble_power_on
+ble_stack_init
+ble_stack_task_init
+ble_app_task_init
+sys_sema_init_ext
+raw_flash_erase_handler_register
+coex_ble_event_notify
+ble_coex_evt_notify_register
+ble_work_status_set
+__riscv_restore_1
+raw_flash_erase_handler_unregister
+ble_power_off
+sys_sema_free
+ble_stack_task_deinit
+ble_app_task_deinit
+sys_malloc
+sys_calloc
+sys_mfree
+sys_memset
+sys_memcpy
+sys_memcmp
+sys_task_create
+sys_task_init_notification
+sys_task_wait_notification
+sys_task_notify
+sys_task_delete
+sys_ms_sleep
+sys_current_task_handle_get
+sys_queue_init
+sys_queue_free
+sys_queue_write
+sys_queue_read
+sys_random_bytes_get

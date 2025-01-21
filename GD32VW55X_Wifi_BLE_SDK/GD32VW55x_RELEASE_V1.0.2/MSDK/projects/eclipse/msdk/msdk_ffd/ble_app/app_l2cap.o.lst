@@ -1,0 +1,1776 @@
+   1              		.file	"app_l2cap.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.rodata.app_l2cap_coc_evt_handler.str1.4,"aMS",@progbits,1
+  10              		.align	2
+  11              	.LC0:
+  12 0000 6C326361 		.string	"l2cap coc local connect fail, conn idx: %d, status 0x%x, spspm 0x%x, created chann num %d
+  12      7020636F 
+  12      63206C6F 
+  12      63616C20 
+  12      636F6E6E 
+  13              		.align	2
+  14              	.LC1:
+  15 005c 6C326361 		.string	"l2cap coc connected, conn idx: %d,  spspm 0x%x, chann_lid %d, peer_rx_mtu %d, local_rx_mt
+  15      7020636F 
+  15      6320636F 
+  15      6E6E6563 
+  15      7465642C 
+  16              		.align	2
+  17              	.LC2:
+  18 00bc 6C326361 		.string	"l2cap disconnected, conn idx: %d, chann lid: %d, reason: 0x%x\r\n"
+  18      70206469 
+  18      73636F6E 
+  18      6E656374 
+  18      65642C20 
+  19              		.align	2
+  20              	.LC3:
+  21 00fc 6C326361 		.string	"l2cap disconnected, conn idx: %d, chann lid: %d, spsm: 0x%x, len: %u\r\n"
+  21      70206469 
+  21      73636F6E 
+  21      6E656374 
+  21      65642C20 
+  22 0143 00       		.align	2
+  23              	.LC4:
+  24 0144 20257800 		.string	" %x"
+  25              		.align	2
+  26              	.LC5:
+  27 0148 0D0A00   		.string	"\r\n"
+  28              		.section	.text.app_l2cap_coc_evt_handler,"ax",@progbits
+  29              		.align	1
+  31              	app_l2cap_coc_evt_handler:
+  32              	.LFB0:
+  33              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \file    app_l2cap.c
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief   l2cap Application Module entry point.
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \version 2023-07-20, V1.0.0, firmware for GD32VW55x
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     Copyright (c) 2023, GigaDevice Semiconductor Inc.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     Redistribution and use in source and binary forms, with or without modification,
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** are permitted provided that the following conditions are met:
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****        list of conditions and the following disclaimer.
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****        this list of conditions and the following disclaimer in the documentation
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****        and/or other materials provided with the distribution.
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****        may be used to endorse or promote products derived from this software without
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****        specific prior written permission.
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** OF SUCH DAMAGE.
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** #include "ble_app_config.h"
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** #if (BLE_APP_SUPPORT)
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** #include "ble_gap.h"
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** #include "app_l2cap.h"
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** #include "ble_l2cap_coc.h"
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** #include "wrapper_os.h"
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** #include "dbg_print.h"
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /* Max L2CAP channel number per BLE connection */
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** #define BLE_L2CAP_CHANN_NUM_PER_CONN        10
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /* Application L2CAP environment structure */
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** struct app_l2cap_env_tag
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     uint8_t nb_chan;            /*!< L2CAP channel number, 0xff to reject connection due to not eno
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     uint8_t new_chan_lid;       /*!< L2CAP channel local index */
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** };
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /* Application L2CAP environment data */
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** struct app_l2cap_env_tag app_l2cap_env;
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Callback function to handle L2CAP COC events
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  event: L2CAP COC event type
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  p_data: pointer to L2CAP COC event data
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** static void app_l2cap_coc_evt_handler(ble_l2cap_coc_evt_t event, ble_l2cap_coc_data_u *p_data)
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+  34              		.loc 1 67 1
+  35              		.cfi_startproc
+  36              	.LVL0:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     switch (event) {
+  37              		.loc 1 69 5
+  38 0000 7915     		addi	a0,a0,-2
+  39              	.LVL1:
+  40 0002 9947     		li	a5,6
+  41 0004 63EDA716 		bgtu	a0,a5,.L19
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  42              		.loc 1 67 1 is_stmt 0
+  43 0008 17030000 		call	t0,__riscv_save_5
+  43      E7020300 
+  44              		.cfi_offset 20, -24
+  45              		.cfi_offset 19, -20
+  46              		.cfi_offset 18, -16
+  47              		.cfi_offset 9, -12
+  48              		.cfi_offset 8, -8
+  49              		.cfi_offset 1, -4
+  50              		.cfi_def_cfa_offset 32
+  51 0010 B7070000 		lui	a5,%hi(.L4)
+  52 0014 93870700 		addi	a5,a5,%lo(.L4)
+  53 0018 3345F520 		sh2add	a0,a0,a5
+  54              	.LVL2:
+  55 001c 1C41     		lw	a5,0(a0)
+  56 001e 4111     		addi	sp,sp,-16
+  57              		.cfi_def_cfa_offset 48
+  58 0020 2E84     		mv	s0,a1
+  59 0022 8287     		jr	a5
+  60              		.section	.rodata.app_l2cap_coc_evt_handler,"a",@progbits
+  61              		.align	2
+  62              		.align	2
+  63              	.L4:
+  64 0000 00000000 		.word	.L8
+  65 0004 00000000 		.word	.L7
+  66 0008 00000000 		.word	.L6
+  67 000c 00000000 		.word	.L1
+  68 0010 00000000 		.word	.L5
+  69 0014 00000000 		.word	.L1
+  70 0018 00000000 		.word	.L3
+  71              		.section	.text.app_l2cap_coc_evt_handler
+  72              	.L8:
+  73              	.LBB2:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     case BLE_L2CAP_COC_EVT_REG_RSP:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     case BLE_L2CAP_COC_EVT_UNREG_RSP:
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     case BLE_L2CAP_COC_EVT_CONN_IND: {
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****             ble_l2cap_coc_conn_cfm_t cfm;
+  74              		.loc 1 77 13 is_stmt 1
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****             cfm.chann_num = app_l2cap_env.nb_chan == BLE_L2CAP_COC_NOT_AUTORIZED ?
+  75              		.loc 1 79 13
+  76              		.loc 1 79 42 is_stmt 0
+  77 0024 B7070000 		lui	a5,%hi(.LANCHOR0)
+  78 0028 83C70700 		lbu	a5,%lo(.LANCHOR0)(a5)
+  79              		.loc 1 79 27
+  80 002c 1307F00F 		li	a4,255
+  81 0030 6384E700 		beq	a5,a4,.L9
+  82              		.loc 1 79 27 discriminator 2
+  83 0034 83C71500 		lbu	a5,1(a1)
+  84              	.LVL3:
+  85              	.L9:
+  86              		.loc 1 79 27 discriminator 4
+  87 0038 2304F100 		sb	a5,8(sp)
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                             app_l2cap_env.nb_chan : p_data->conn_ind.chann_num;
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****             cfm.local_rx_mtu = BLE_GAP_MAX_OCTETS - BLE_L2CAP_HEADER_LEN;
+  88              		.loc 1 81 13 is_stmt 1 discriminator 4
+  89              		.loc 1 81 30 is_stmt 0 discriminator 4
+  90 003c 9307700F 		li	a5,247
+  91 0040 2316F100 		sh	a5,12(sp)
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****             cfm.token = p_data->conn_ind.token;
+  92              		.loc 1 82 13 is_stmt 1 discriminator 4
+  93              		.loc 1 82 23 is_stmt 0 discriminator 4
+  94 0044 83572400 		lhu	a5,2(s0)
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****             ble_l2cap_coc_connection_cfm(p_data->conn_ind.conn_idx, p_data->conn_ind.spsm, cfm);
+  95              		.loc 1 84 13 discriminator 4
+  96 0048 B246     		lw	a3,12(sp)
+  97 004a 83554400 		lhu	a1,4(s0)
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****             cfm.token = p_data->conn_ind.token;
+  98              		.loc 1 82 23 discriminator 4
+  99 004e 2315F100 		sh	a5,10(sp)
+ 100              		.loc 1 84 13 is_stmt 1 discriminator 4
+ 101 0052 2246     		lw	a2,8(sp)
+ 102 0054 03450400 		lbu	a0,0(s0)
+ 103 0058 97000000 		call	ble_l2cap_coc_connection_cfm
+ 103      E7800000 
+ 104              	.LVL4:
+ 105              	.LBE2:
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         } break;
+ 106              		.loc 1 85 11 discriminator 4
+ 107              	.L1:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     case BLE_L2CAP_COC_EVT_CONN_FAIL:
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "l2cap coc local connect fail, conn idx: %d, status 0x%x, spspm 0x%x, cre
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_fail.conidx, p_data->conn_fail.status, p_data->conn_fail.spsm,
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_fail.channel_num);
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     case BLE_L2CAP_COC_EVT_CONN_INFO:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "l2cap coc connected, conn idx: %d,  spspm 0x%x, chann_lid %d, peer_rx_mt
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_info.conn_idx, p_data->conn_info.spsm, p_data->conn_info.chann_lid,
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_info.peer_rx_mtu, p_data->conn_info.local_rx_mtu);
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         app_l2cap_env.new_chan_lid = p_data->conn_info.chann_lid;
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     case BLE_L2CAP_COC_EVT_RECFG_RSP:
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     case BLE_L2CAP_COC_EVT_DISCONN_INFO:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "l2cap disconnected, conn idx: %d, chann lid: %d, reason: 0x%x\r\n",
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->disconn_info.conn_idx, p_data->disconn_info.chann_lid,
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->disconn_info.reason);
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     case BLE_L2CAP_COC_EVT_TX_RSP:
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     case BLE_L2CAP_COC_EVT_RX_IND: {
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         int i = 0;
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "l2cap disconnected, conn idx: %d, chann lid: %d, spsm: 0x%x, len: %u\r\n
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->rx_ind.conn_idx, p_data->rx_ind.chann_lid, p_data->rx_ind.spsm, p_data->rx_i
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         while (i < p_data->rx_ind.len) {
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****             dbg_print(NOTICE, " %x", p_data->rx_ind.p_data[i++]);
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         }
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "\r\n");
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     } break;
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     default:
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     }
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 108              		.loc 1 124 1 is_stmt 0
+ 109 0060 4101     		addi	sp,sp,16
+ 110              		.cfi_remember_state
+ 111              		.cfi_def_cfa_offset 0
+ 112 0062 17030000 		tail	__riscv_restore_5
+ 112      67000300 
+ 113              		.cfi_restore 20
+ 114              		.cfi_restore 19
+ 115              		.cfi_restore 18
+ 116              		.cfi_restore 9
+ 117              		.cfi_restore 8
+ 118              		.cfi_restore 1
+ 119              		.cfi_def_cfa_offset -32
+ 120              	.L7:
+ 121              		.cfi_restore_state
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_fail.conidx, p_data->conn_fail.status, p_data->conn_fail.spsm,
+ 122              		.loc 1 88 9 is_stmt 1
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_fail.conidx, p_data->conn_fail.status, p_data->conn_fail.spsm,
+ 123              		.loc 1 88 9
+ 124 006a B7070000 		lui	a5,%hi(global_debug_level)
+ 125 006e 03C70700 		lbu	a4,%lo(global_debug_level)(a5)
+ 126 0072 8947     		li	a5,2
+ 127 0074 E3F6E7FE 		bleu	a4,a5,.L1
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_fail.conidx, p_data->conn_fail.status, p_data->conn_fail.spsm,
+ 128              		.loc 1 88 9 discriminator 1
+ 129 0078 03C73500 		lbu	a4,3(a1)
+ 130 007c 83D64500 		lhu	a3,4(a1)
+ 131 0080 03D60500 		lhu	a2,0(a1)
+ 132 0084 83C52500 		lbu	a1,2(a1)
+ 133 0088 37050000 		lui	a0,%hi(.LC0)
+ 134 008c 13050500 		addi	a0,a0,%lo(.LC0)
+ 135 0090 97000000 		call	co_printf
+ 135      E7800000 
+ 136              	.LVL5:
+ 137 0098 E1B7     		j	.L1
+ 138              	.L6:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_info.conn_idx, p_data->conn_info.spsm, p_data->conn_info.chann_lid,
+ 139              		.loc 1 94 9
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_info.conn_idx, p_data->conn_info.spsm, p_data->conn_info.chann_lid,
+ 140              		.loc 1 94 9
+ 141 009a B7070000 		lui	a5,%hi(global_debug_level)
+ 142 009e 03C70700 		lbu	a4,%lo(global_debug_level)(a5)
+ 143 00a2 8947     		li	a5,2
+ 144 00a4 63F4E702 		bleu	a4,a5,.L11
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_info.conn_idx, p_data->conn_info.spsm, p_data->conn_info.chann_lid,
+ 145              		.loc 1 94 9 discriminator 1
+ 146 00a8 83D74500 		lhu	a5,4(a1)
+ 147 00ac 03D76500 		lhu	a4,6(a1)
+ 148 00b0 83C63500 		lbu	a3,3(a1)
+ 149 00b4 03D60500 		lhu	a2,0(a1)
+ 150 00b8 83C52500 		lbu	a1,2(a1)
+ 151 00bc 37050000 		lui	a0,%hi(.LC1)
+ 152 00c0 13050500 		addi	a0,a0,%lo(.LC1)
+ 153 00c4 97000000 		call	co_printf
+ 153      E7800000 
+ 154              	.LVL6:
+ 155              	.L11:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->conn_info.conn_idx, p_data->conn_info.spsm, p_data->conn_info.chann_lid,
+ 156              		.loc 1 94 9 discriminator 3
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+ 157              		.loc 1 97 9 discriminator 3
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         break;
+ 158              		.loc 1 97 36 is_stmt 0 discriminator 3
+ 159 00cc 03473400 		lbu	a4,3(s0)
+ 160 00d0 B7070000 		lui	a5,%hi(.LANCHOR0+1)
+ 161 00d4 A380E700 		sb	a4,%lo(.LANCHOR0+1)(a5)
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 162              		.loc 1 98 9 is_stmt 1 discriminator 3
+ 163 00d8 61B7     		j	.L1
+ 164              	.L5:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->disconn_info.conn_idx, p_data->disconn_info.chann_lid,
+ 165              		.loc 1 104 9
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->disconn_info.conn_idx, p_data->disconn_info.chann_lid,
+ 166              		.loc 1 104 9
+ 167 00da B7070000 		lui	a5,%hi(global_debug_level)
+ 168 00de 03C70700 		lbu	a4,%lo(global_debug_level)(a5)
+ 169 00e2 8947     		li	a5,2
+ 170 00e4 E3FEE7F6 		bleu	a4,a5,.L1
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->disconn_info.conn_idx, p_data->disconn_info.chann_lid,
+ 171              		.loc 1 104 9 discriminator 1
+ 172 00e8 83D64500 		lhu	a3,4(a1)
+ 173 00ec 03C63500 		lbu	a2,3(a1)
+ 174 00f0 83C52500 		lbu	a1,2(a1)
+ 175 00f4 37050000 		lui	a0,%hi(.LC2)
+ 176 00f8 13050500 		addi	a0,a0,%lo(.LC2)
+ 177 00fc 97000000 		call	co_printf
+ 177      E7800000 
+ 178              	.LVL7:
+ 179 0104 B1BF     		j	.L1
+ 180              	.L3:
+ 181              	.LBB3:
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "l2cap disconnected, conn idx: %d, chann lid: %d, spsm: 0x%x, len: %u\r\n
+ 182              		.loc 1 113 9
+ 183              	.LVL8:
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->rx_ind.conn_idx, p_data->rx_ind.chann_lid, p_data->rx_ind.spsm, p_data->rx_i
+ 184              		.loc 1 114 9
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->rx_ind.conn_idx, p_data->rx_ind.chann_lid, p_data->rx_ind.spsm, p_data->rx_i
+ 185              		.loc 1 114 9
+ 186 0106 B7070000 		lui	a5,%hi(global_debug_level)
+ 187 010a 83C60700 		lbu	a3,%lo(global_debug_level)(a5)
+ 188 010e 0947     		li	a4,2
+ 189 0110 3E89     		mv	s2,a5
+ 190 0112 6372D702 		bleu	a3,a4,.L13
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                p_data->rx_ind.conn_idx, p_data->rx_ind.chann_lid, p_data->rx_ind.spsm, p_data->rx_i
+ 191              		.loc 1 114 9 discriminator 1
+ 192 0116 03D78500 		lhu	a4,8(a1)
+ 193 011a 83D60500 		lhu	a3,0(a1)
+ 194 011e 03C63500 		lbu	a2,3(a1)
+ 195 0122 83C52500 		lbu	a1,2(a1)
+ 196 0126 37050000 		lui	a0,%hi(.LC3)
+ 197 012a 13050500 		addi	a0,a0,%lo(.LC3)
+ 198 012e 97000000 		call	co_printf
+ 198      E7800000 
+ 199              	.LVL9:
+ 200              	.L13:
+ 201              	.LBE3:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 202              		.loc 1 67 1 is_stmt 0 discriminator 3
+ 203 0136 8144     		li	s1,0
+ 204              	.LBB4:
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         }
+ 205              		.loc 1 117 13 discriminator 3
+ 206 0138 8949     		li	s3,2
+ 207 013a 370A0000 		lui	s4,%hi(.LC4)
+ 208              	.LVL10:
+ 209              	.L14:
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****             dbg_print(NOTICE, " %x", p_data->rx_ind.p_data[i++]);
+ 210              		.loc 1 116 34 discriminator 3
+ 211 013e 03578400 		lhu	a4,8(s0)
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         }
+ 212              		.loc 1 117 13 discriminator 3
+ 213 0142 83470900 		lbu	a5,%lo(global_debug_level)(s2)
+ 214              	.L15:
+ 215              	.LVL11:
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         }
+ 216              		.loc 1 117 13 is_stmt 1 discriminator 3
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****             dbg_print(NOTICE, " %x", p_data->rx_ind.p_data[i++]);
+ 217              		.loc 1 116 15 discriminator 3
+ 218 0146 63CEE400 		blt	s1,a4,.L16
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     } break;
+ 219              		.loc 1 119 9
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     } break;
+ 220              		.loc 1 119 9
+ 221 014a 0947     		li	a4,2
+ 222 014c E37AF7F0 		bleu	a5,a4,.L1
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     } break;
+ 223              		.loc 1 119 9 discriminator 1
+ 224 0150 37050000 		lui	a0,%hi(.LC5)
+ 225 0154 13050500 		addi	a0,a0,%lo(.LC5)
+ 226 0158 97000000 		call	co_printf
+ 226      E7800000 
+ 227              	.LVL12:
+ 228              	.LBE4:
+ 229              		.loc 1 124 1 is_stmt 0 discriminator 1
+ 230 0160 01B7     		j	.L1
+ 231              	.L16:
+ 232              	.LBB5:
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         }
+ 233              		.loc 1 117 13 is_stmt 1
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         }
+ 234              		.loc 1 117 13
+ 235 0162 E3F2F9FE 		bleu	a5,s3,.L15
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         }
+ 236              		.loc 1 117 13 discriminator 1
+ 237              	.LVL13:
+ 238 0166 5C44     		lw	a5,12(s0)
+ 239 0168 13050A00 		addi	a0,s4,%lo(.LC4)
+ 240 016c A697     		add	a5,a5,s1
+ 241 016e 83C50700 		lbu	a1,0(a5)
+ 242 0172 8504     		addi	s1,s1,1
+ 243              	.LVL14:
+ 244 0174 97000000 		call	co_printf
+ 244      E7800000 
+ 245              	.LVL15:
+ 246 017c C9B7     		j	.L14
+ 247              	.LVL16:
+ 248              	.L19:
+ 249              		.cfi_def_cfa_offset 0
+ 250              		.cfi_restore 1
+ 251              		.cfi_restore 8
+ 252              		.cfi_restore 9
+ 253              		.cfi_restore 18
+ 254              		.cfi_restore 19
+ 255              		.cfi_restore 20
+ 256 017e 8280     		ret
+ 257              	.LBE5:
+ 258              		.cfi_endproc
+ 259              	.LFE0:
+ 261              		.section	.text.app_l2cap_reset,"ax",@progbits
+ 262              		.align	1
+ 263              		.globl	app_l2cap_reset
+ 265              	app_l2cap_reset:
+ 266              	.LFB1:
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Reset application L2CAP module
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  none
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_reset(void)
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 267              		.loc 1 133 1
+ 268              		.cfi_startproc
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     sys_memset(&app_l2cap_env, 0, sizeof(struct app_l2cap_env_tag));
+ 269              		.loc 1 134 5
+ 270 0000 37050000 		lui	a0,%hi(.LANCHOR0)
+ 271 0004 0946     		li	a2,2
+ 272 0006 8145     		li	a1,0
+ 273 0008 13050500 		addi	a0,a0,%lo(.LANCHOR0)
+ 274 000c 17030000 		tail	sys_memset
+ 274      67000300 
+ 275              	.LVL17:
+ 276              		.cfi_endproc
+ 277              	.LFE1:
+ 279              		.section	.text.app_l2cap_set_nb_chan,"ax",@progbits
+ 280              		.align	1
+ 281              		.globl	app_l2cap_set_nb_chan
+ 283              	app_l2cap_set_nb_chan:
+ 284              	.LFB2:
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Set application L2CAP channel number
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  nb_chan: channel number to set
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_set_nb_chan(uint8_t nb_chan)
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 285              		.loc 1 144 1
+ 286              		.cfi_startproc
+ 287              	.LVL18:
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     app_l2cap_env.nb_chan = nb_chan;
+ 288              		.loc 1 145 5
+ 289              		.loc 1 145 27 is_stmt 0
+ 290 0000 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 291 0004 2380A700 		sb	a0,%lo(.LANCHOR0)(a5)
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 292              		.loc 1 146 1
+ 293 0008 8280     		ret
+ 294              		.cfi_endproc
+ 295              	.LFE2:
+ 297              		.section	.text.app_l2cap_coc_enhanced_enable,"ax",@progbits
+ 298              		.align	1
+ 299              		.globl	app_l2cap_coc_enhanced_enable
+ 301              	app_l2cap_coc_enhanced_enable:
+ 302              	.LFB3:
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Enable enhanced L2CAP COC negotiations
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  conidx: connection index
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_coc_enhanced_enable(uint8_t conidx)
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 303              		.loc 1 155 1 is_stmt 1
+ 304              		.cfi_startproc
+ 305              	.LVL19:
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     ble_l2cap_coc_enhanced_enable(conidx, true);
+ 306              		.loc 1 156 5
+ 307 0000 8545     		li	a1,1
+ 308 0002 17030000 		tail	ble_l2cap_coc_enhanced_enable
+ 308      67000300 
+ 309              	.LVL20:
+ 310              		.cfi_endproc
+ 311              	.LFE3:
+ 313              		.section	.rodata.app_l2cap_spsm_add.str1.4,"aMS",@progbits,1
+ 314              		.align	2
+ 315              	.LC6:
+ 316 0000 6170705F 		.string	"app_l2cap_spsm_add spsm 0x%x fail\r\n"
+ 316      6C326361 
+ 316      705F7370 
+ 316      736D5F61 
+ 316      64642073 
+ 317              		.section	.text.app_l2cap_spsm_add,"ax",@progbits
+ 318              		.align	1
+ 319              		.globl	app_l2cap_spsm_add
+ 321              	app_l2cap_spsm_add:
+ 322              	.LFB4:
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Add Simplified Protocol/Service Multiplexer
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  spsm: Simplified Protocol/Service Multiplexer
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  sec_lvl_bf: security level bit field @ref ble_l2cap_sec_lvl_bf
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_spsm_add(uint16_t spsm, uint8_t sec_lvl_bf)
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 323              		.loc 1 167 1
+ 324              		.cfi_startproc
+ 325              	.LVL21:
+ 326 0000 17030000 		call	t0,__riscv_save_1
+ 326      E7020300 
+ 327              		.cfi_offset 8, -8
+ 328              		.cfi_offset 1, -4
+ 329              		.cfi_def_cfa_offset 16
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (ble_l2cap_spsm_register(spsm, sec_lvl_bf) != BLE_ERR_NO_ERROR) {
+ 330              		.loc 1 168 5
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (ble_l2cap_spsm_register(spsm, sec_lvl_bf) != BLE_ERR_NO_ERROR) {
+ 331              		.loc 1 167 1 is_stmt 0
+ 332 0008 2A84     		mv	s0,a0
+ 333              		.loc 1 168 9
+ 334 000a 97000000 		call	ble_l2cap_spsm_register
+ 334      E7800000 
+ 335              	.LVL22:
+ 336              		.loc 1 168 8
+ 337 0012 0DC1     		beq	a0,zero,.L27
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "app_l2cap_spsm_add spsm 0x%x fail\r\n", spsm);
+ 338              		.loc 1 169 9 is_stmt 1
+ 339              		.loc 1 169 9
+ 340 0014 B7070000 		lui	a5,%hi(global_debug_level)
+ 341 0018 03C70700 		lbu	a4,%lo(global_debug_level)(a5)
+ 342 001c 8947     		li	a5,2
+ 343 001e 63FBE700 		bleu	a4,a5,.L27
+ 344              		.loc 1 169 9 discriminator 1
+ 345 0022 37050000 		lui	a0,%hi(.LC6)
+ 346 0026 A285     		mv	a1,s0
+ 347 0028 13050500 		addi	a0,a0,%lo(.LC6)
+ 348 002c 97000000 		call	co_printf
+ 348      E7800000 
+ 349              	.LVL23:
+ 350              		.loc 1 169 9 discriminator 1
+ 351              	.L27:
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     }
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 352              		.loc 1 171 1 is_stmt 0
+ 353 0034 17030000 		tail	__riscv_restore_1
+ 353      67000300 
+ 354              		.cfi_restore 8
+ 355              		.cfi_restore 1
+ 356              		.cfi_def_cfa_offset 0
+ 357              		.cfi_endproc
+ 358              	.LFE4:
+ 360              		.section	.rodata.app_l2cap_spsm_remove.str1.4,"aMS",@progbits,1
+ 361              		.align	2
+ 362              	.LC7:
+ 363 0000 6170705F 		.string	"app_l2cap_spsm_remove spsm 0x%x fail\r\n"
+ 363      6C326361 
+ 363      705F7370 
+ 363      736D5F72 
+ 363      656D6F76 
+ 364              		.section	.text.app_l2cap_spsm_remove,"ax",@progbits
+ 365              		.align	1
+ 366              		.globl	app_l2cap_spsm_remove
+ 368              	app_l2cap_spsm_remove:
+ 369              	.LFB5:
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Remove Simplified Protocol/Service Multiplexer
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  spsm: Simplified Protocol/Service Multiplexer
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_spsm_remove(uint16_t spsm)
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 370              		.loc 1 180 1 is_stmt 1
+ 371              		.cfi_startproc
+ 372              	.LVL24:
+ 373 0000 17030000 		call	t0,__riscv_save_0
+ 373      E7020300 
+ 374              		.cfi_offset 1, -4
+ 375              		.cfi_def_cfa_offset 16
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (ble_l2cap_spsm_unregister(spsm) != BLE_ERR_NO_ERROR) {
+ 376              		.loc 1 181 5
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (ble_l2cap_spsm_unregister(spsm) != BLE_ERR_NO_ERROR) {
+ 377              		.loc 1 180 1 is_stmt 0
+ 378 0008 4111     		addi	sp,sp,-16
+ 379              		.cfi_def_cfa_offset 32
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (ble_l2cap_spsm_unregister(spsm) != BLE_ERR_NO_ERROR) {
+ 380              		.loc 1 180 1
+ 381 000a 2AC6     		sw	a0,12(sp)
+ 382              		.loc 1 181 9
+ 383 000c 97000000 		call	ble_l2cap_spsm_unregister
+ 383      E7800000 
+ 384              	.LVL25:
+ 385              		.loc 1 181 8
+ 386 0014 0DC1     		beq	a0,zero,.L33
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "app_l2cap_spsm_remove spsm 0x%x fail\r\n", spsm);
+ 387              		.loc 1 182 9 is_stmt 1
+ 388              		.loc 1 182 9
+ 389 0016 B7070000 		lui	a5,%hi(global_debug_level)
+ 390 001a 03C70700 		lbu	a4,%lo(global_debug_level)(a5)
+ 391 001e 8947     		li	a5,2
+ 392 0020 B245     		lw	a1,12(sp)
+ 393 0022 63FAE700 		bleu	a4,a5,.L33
+ 394              		.loc 1 182 9 discriminator 1
+ 395 0026 37050000 		lui	a0,%hi(.LC7)
+ 396 002a 13050500 		addi	a0,a0,%lo(.LC7)
+ 397 002e 97000000 		call	co_printf
+ 397      E7800000 
+ 398              	.LVL26:
+ 399              		.loc 1 182 9 discriminator 1
+ 400              	.L33:
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     }
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 401              		.loc 1 184 1 is_stmt 0
+ 402 0036 4101     		addi	sp,sp,16
+ 403              		.cfi_def_cfa_offset 0
+ 404 0038 17030000 		tail	__riscv_restore_0
+ 404      67000300 
+ 405              		.cfi_restore 1
+ 406              		.cfi_def_cfa_offset -16
+ 407              		.cfi_endproc
+ 408              	.LFE5:
+ 410              		.section	.rodata.app_l2cap_con_create.str1.4,"aMS",@progbits,1
+ 411              		.align	2
+ 412              	.LC8:
+ 413 0000 6170705F 		.string	"app_l2cap_con_creat conidx %u  spsm 0x%x fail\r\n"
+ 413      6C326361 
+ 413      705F636F 
+ 413      6E5F6372 
+ 413      65617420 
+ 414              		.section	.text.app_l2cap_con_create,"ax",@progbits
+ 415              		.align	1
+ 416              		.globl	app_l2cap_con_create
+ 418              	app_l2cap_con_create:
+ 419              	.LFB6:
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Create a L2CAP credit oriented connection
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  conidx: connection index
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  local_rx_mtu: local device reception maximum transmit unit size
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  nb_chan: number of L2CAP channel
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  spsm: Simplified Protocol/Service Multiplexer
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  enhanced: true to use enhanced L2CAP COC negotiation, otherwise false
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_con_create(uint8_t conidx, uint16_t local_rx_mtu, uint8_t nb_chan, uint16_t spsm,
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                          uint8_t enhanced)
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 420              		.loc 1 198 1 is_stmt 1
+ 421              		.cfi_startproc
+ 422              	.LVL27:
+ 423 0000 17030000 		call	t0,__riscv_save_2
+ 423      E7020300 
+ 424              		.cfi_offset 9, -12
+ 425              		.cfi_offset 8, -8
+ 426              		.cfi_offset 1, -4
+ 427              		.cfi_def_cfa_offset 16
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     ble_l2cap_coc_param_t param;
+ 428              		.loc 1 199 5
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     param.local_rx_mtu = local_rx_mtu;
+ 429              		.loc 1 201 5
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     ble_l2cap_coc_param_t param;
+ 430              		.loc 1 198 1 is_stmt 0
+ 431 0008 4111     		addi	sp,sp,-16
+ 432              		.cfi_def_cfa_offset 32
+ 433              		.loc 1 201 24
+ 434 000a 2317B100 		sh	a1,14(sp)
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     param.nb_chan = nb_chan;
+ 435              		.loc 1 202 5 is_stmt 1
+ 436              		.loc 1 202 19 is_stmt 0
+ 437 000e 2306C100 		sb	a2,12(sp)
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (ble_l2cap_coc_connection_req(conidx, spsm, param, enhanced) != BLE_ERR_NO_ERROR) {
+ 438              		.loc 1 205 5 is_stmt 1
+ 439              		.loc 1 205 9 is_stmt 0
+ 440 0012 3246     		lw	a2,12(sp)
+ 441              	.LVL28:
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     ble_l2cap_coc_param_t param;
+ 442              		.loc 1 198 1
+ 443 0014 3684     		mv	s0,a3
+ 444              		.loc 1 205 9
+ 445 0016 A285     		mv	a1,s0
+ 446              	.LVL29:
+ 447 0018 B336E000 		snez	a3,a4
+ 448              	.LVL30:
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     ble_l2cap_coc_param_t param;
+ 449              		.loc 1 198 1
+ 450 001c AA84     		mv	s1,a0
+ 451              		.loc 1 205 9
+ 452 001e 97000000 		call	ble_l2cap_coc_connection_req
+ 452      E7800000 
+ 453              	.LVL31:
+ 454              		.loc 1 205 8
+ 455 0026 15C1     		beq	a0,zero,.L39
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "app_l2cap_con_creat conidx %u  spsm 0x%x fail\r\n", conidx, spsm);
+ 456              		.loc 1 206 9 is_stmt 1
+ 457              		.loc 1 206 9
+ 458 0028 B7070000 		lui	a5,%hi(global_debug_level)
+ 459 002c 03C70700 		lbu	a4,%lo(global_debug_level)(a5)
+ 460 0030 8947     		li	a5,2
+ 461 0032 63FCE700 		bleu	a4,a5,.L39
+ 462              		.loc 1 206 9 discriminator 1
+ 463 0036 37050000 		lui	a0,%hi(.LC8)
+ 464 003a 2286     		mv	a2,s0
+ 465 003c A685     		mv	a1,s1
+ 466 003e 13050500 		addi	a0,a0,%lo(.LC8)
+ 467 0042 97000000 		call	co_printf
+ 467      E7800000 
+ 468              	.LVL32:
+ 469              		.loc 1 206 9 discriminator 1
+ 470              	.L39:
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     }
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 471              		.loc 1 208 1 is_stmt 0
+ 472 004a 4101     		addi	sp,sp,16
+ 473              		.cfi_def_cfa_offset 0
+ 474              	.LVL33:
+ 475 004c 17030000 		tail	__riscv_restore_2
+ 475      67000300 
+ 476              		.cfi_restore 9
+ 477              		.cfi_restore 8
+ 478              		.cfi_restore 1
+ 479              		.cfi_def_cfa_offset -16
+ 480              		.cfi_endproc
+ 481              	.LFE6:
+ 483              		.section	.text.app_l2cap_con_reconfig,"ax",@progbits
+ 484              		.align	1
+ 485              		.globl	app_l2cap_con_reconfig
+ 487              	app_l2cap_con_reconfig:
+ 488              	.LFB7:
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Reconfig a L2CAP credit oriented connection parameter
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  conidx: connection index
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  nb_chan: number of L2CAP channels to reconfigure
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  local_rx_mtu: local device rx mtu to reconfigure
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  local_rx_mps: local device rx mps to reconfigure
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_con_reconfig(uint8_t conidx, uint8_t nb_chan, uint16_t local_rx_mtu,
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****                             uint16_t local_rx_mps)
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 489              		.loc 1 221 1 is_stmt 1
+ 490              		.cfi_startproc
+ 491              	.LVL34:
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     ble_l2cap_coc_connection_recfg(conidx, nb_chan, local_rx_mtu, local_rx_mps, &app_l2cap_env.new_
+ 492              		.loc 1 222 5
+ 493 0000 37070000 		lui	a4,%hi(.LANCHOR0+1)
+ 494 0004 13071700 		addi	a4,a4,%lo(.LANCHOR0+1)
+ 495 0008 17030000 		tail	ble_l2cap_coc_connection_recfg
+ 495      67000300 
+ 496              	.LVL35:
+ 497              		.cfi_endproc
+ 498              	.LFE7:
+ 500              		.section	.rodata.app_l2cap_con_terminate.str1.4,"aMS",@progbits,1
+ 501              		.align	2
+ 502              	.LC9:
+ 503 0000 6170705F 		.string	"app_l2cap_con_terminate conidx %u  chan_lid 0x%x fail\r\n"
+ 503      6C326361 
+ 503      705F636F 
+ 503      6E5F7465 
+ 503      726D696E 
+ 504              		.section	.text.app_l2cap_con_terminate,"ax",@progbits
+ 505              		.align	1
+ 506              		.globl	app_l2cap_con_terminate
+ 508              	app_l2cap_con_terminate:
+ 509              	.LFB8:
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Terminate a L2CAP credit oriented connection
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  conidx: connection index
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  chan_lid: L2CAP channel identifier
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_con_terminate(uint8_t conidx, uint8_t chan_lid)
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 510              		.loc 1 233 1
+ 511              		.cfi_startproc
+ 512              	.LVL36:
+ 513 0000 17030000 		call	t0,__riscv_save_1
+ 513      E7020300 
+ 514              		.cfi_offset 8, -8
+ 515              		.cfi_offset 1, -4
+ 516              		.cfi_def_cfa_offset 16
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (ble_l2cap_coc_terminate(conidx, chan_lid) != BLE_ERR_NO_ERROR) {
+ 517              		.loc 1 234 5
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (ble_l2cap_coc_terminate(conidx, chan_lid) != BLE_ERR_NO_ERROR) {
+ 518              		.loc 1 233 1 is_stmt 0
+ 519 0008 4111     		addi	sp,sp,-16
+ 520              		.cfi_def_cfa_offset 32
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (ble_l2cap_coc_terminate(conidx, chan_lid) != BLE_ERR_NO_ERROR) {
+ 521              		.loc 1 233 1
+ 522 000a 2A84     		mv	s0,a0
+ 523 000c 2EC6     		sw	a1,12(sp)
+ 524              		.loc 1 234 9
+ 525 000e 97000000 		call	ble_l2cap_coc_terminate
+ 525      E7800000 
+ 526              	.LVL37:
+ 527              		.loc 1 234 8
+ 528 0016 15C1     		beq	a0,zero,.L47
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         dbg_print(NOTICE, "app_l2cap_con_terminate conidx %u  chan_lid 0x%x fail\r\n", conidx, chan
+ 529              		.loc 1 235 9 is_stmt 1
+ 530              		.loc 1 235 9
+ 531 0018 B7070000 		lui	a5,%hi(global_debug_level)
+ 532 001c 03C70700 		lbu	a4,%lo(global_debug_level)(a5)
+ 533 0020 8947     		li	a5,2
+ 534 0022 3246     		lw	a2,12(sp)
+ 535 0024 63FBE700 		bleu	a4,a5,.L47
+ 536              		.loc 1 235 9 discriminator 1
+ 537 0028 37050000 		lui	a0,%hi(.LC9)
+ 538 002c A285     		mv	a1,s0
+ 539 002e 13050500 		addi	a0,a0,%lo(.LC9)
+ 540 0032 97000000 		call	co_printf
+ 540      E7800000 
+ 541              	.LVL38:
+ 542              		.loc 1 235 9 discriminator 1
+ 543              	.L47:
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     }
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 544              		.loc 1 237 1 is_stmt 0
+ 545 003a 4101     		addi	sp,sp,16
+ 546              		.cfi_def_cfa_offset 0
+ 547 003c 17030000 		tail	__riscv_restore_1
+ 547      67000300 
+ 548              		.cfi_restore 8
+ 549              		.cfi_restore 1
+ 550              		.cfi_def_cfa_offset -16
+ 551              		.cfi_endproc
+ 552              	.LFE8:
+ 554              		.section	.text.app_l2cap_sdu_send,"ax",@progbits
+ 555              		.align	1
+ 556              		.globl	app_l2cap_sdu_send
+ 558              	app_l2cap_sdu_send:
+ 559              	.LFB9:
+ 238:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Transmit L2CAP segment packet
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  conidx: connection index
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  chan_lid: L2CAP channel identifier
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  dbg_bf: debug bitfield
+ 244:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  length: transmit data length
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 247:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 248:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_sdu_send(uint8_t conidx, uint8_t chan_lid, uint8_t dbg_bf, uint16_t length)
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 560              		.loc 1 249 1 is_stmt 1
+ 561              		.cfi_startproc
+ 562              	.LVL39:
+ 563 0000 17030000 		call	t0,__riscv_save_3
+ 563      E7020300 
+ 564              		.cfi_offset 18, -16
+ 565              		.cfi_offset 9, -12
+ 566              		.cfi_offset 8, -8
+ 567              		.cfi_offset 1, -4
+ 568              		.cfi_def_cfa_offset 16
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     uint8_t *p_data = sys_malloc(length);
+ 569              		.loc 1 250 5
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     uint8_t *p_data = sys_malloc(length);
+ 570              		.loc 1 249 1 is_stmt 0
+ 571 0008 4111     		addi	sp,sp,-16
+ 572              		.cfi_def_cfa_offset 32
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     uint8_t *p_data = sys_malloc(length);
+ 573              		.loc 1 249 1
+ 574 000a AA84     		mv	s1,a0
+ 575              		.loc 1 250 23
+ 576 000c 3685     		mv	a0,a3
+ 577              	.LVL40:
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     uint8_t *p_data = sys_malloc(length);
+ 578              		.loc 1 249 1
+ 579 000e 2E89     		mv	s2,a1
+ 580 0010 3684     		mv	s0,a3
+ 581              		.loc 1 250 23
+ 582 0012 97000000 		call	sys_malloc
+ 582      E7800000 
+ 583              	.LVL41:
+ 251:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     if (p_data == NULL)
+ 584              		.loc 1 251 5 is_stmt 1
+ 585              		.loc 1 251 8 is_stmt 0
+ 586 001a 2AC6     		sw	a0,12(sp)
+ 587 001c 05C1     		beq	a0,zero,.L53
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****         return;
+ 253:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 254:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     sys_memset(p_data, 0x55, length);
+ 588              		.loc 1 254 5 is_stmt 1
+ 589 001e 2286     		mv	a2,s0
+ 590 0020 93055005 		li	a1,85
+ 591 0024 97000000 		call	sys_memset
+ 591      E7800000 
+ 592              	.LVL42:
+ 255:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     ble_l2cap_coc_sdu_send(conidx, chan_lid, length, p_data);
+ 593              		.loc 1 255 5
+ 594 002c B246     		lw	a3,12(sp)
+ 595 002e 2286     		mv	a2,s0
+ 596 0030 CA85     		mv	a1,s2
+ 597 0032 2685     		mv	a0,s1
+ 598 0034 97000000 		call	ble_l2cap_coc_sdu_send
+ 598      E7800000 
+ 599              	.LVL43:
+ 600              	.L53:
+ 256:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 601              		.loc 1 256 1 is_stmt 0
+ 602 003c 4101     		addi	sp,sp,16
+ 603              		.cfi_def_cfa_offset 0
+ 604 003e 17030000 		tail	__riscv_restore_3
+ 604      67000300 
+ 605              		.cfi_restore 18
+ 606              		.cfi_restore 9
+ 607              		.cfi_restore 8
+ 608              		.cfi_restore 1
+ 609              		.cfi_def_cfa_offset -16
+ 610              		.cfi_endproc
+ 611              	.LFE9:
+ 613              		.section	.text.app_l2cap_mgr_init,"ax",@progbits
+ 614              		.align	1
+ 615              		.globl	app_l2cap_mgr_init
+ 617              	app_l2cap_mgr_init:
+ 618              	.LFB10:
+ 257:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 258:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 259:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Init application L2CAP module
+ 260:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  none
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 262:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 263:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 264:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_mgr_init(void)
+ 265:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 619              		.loc 1 265 1 is_stmt 1
+ 620              		.cfi_startproc
+ 621 0000 17030000 		call	t0,__riscv_save_0
+ 621      E7020300 
+ 622              		.cfi_offset 1, -4
+ 623              		.cfi_def_cfa_offset 16
+ 266:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     app_l2cap_reset();
+ 624              		.loc 1 266 5
+ 625 0008 97000000 		call	app_l2cap_reset
+ 625      E7800000 
+ 626              	.LVL44:
+ 267:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     ble_l2cap_coc_callback_register(app_l2cap_coc_evt_handler);
+ 627              		.loc 1 267 5
+ 628 0010 37050000 		lui	a0,%hi(app_l2cap_coc_evt_handler)
+ 629 0014 13050500 		addi	a0,a0,%lo(app_l2cap_coc_evt_handler)
+ 630 0018 97000000 		call	ble_l2cap_coc_callback_register
+ 630      E7800000 
+ 631              	.LVL45:
+ 268:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 632              		.loc 1 268 1 is_stmt 0
+ 633 0020 17030000 		tail	__riscv_restore_0
+ 633      67000300 
+ 634              		.cfi_restore 1
+ 635              		.cfi_def_cfa_offset 0
+ 636              		.cfi_endproc
+ 637              	.LFE10:
+ 639              		.section	.text.app_l2cap_mgr_deinit,"ax",@progbits
+ 640              		.align	1
+ 641              		.globl	app_l2cap_mgr_deinit
+ 643              	app_l2cap_mgr_deinit:
+ 644              	.LFB11:
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** 
+ 270:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** /*!
+ 271:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \brief      Deinit application L2CAP module
+ 272:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[in]  none
+ 273:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \param[out] none
+ 274:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     \retval     none
+ 275:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** */
+ 276:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** void app_l2cap_mgr_deinit(void)
+ 277:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** {
+ 645              		.loc 1 277 1 is_stmt 1
+ 646              		.cfi_startproc
+ 647 0000 17030000 		call	t0,__riscv_save_0
+ 647      E7020300 
+ 648              		.cfi_offset 1, -4
+ 649              		.cfi_def_cfa_offset 16
+ 278:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     app_l2cap_reset();
+ 650              		.loc 1 278 5
+ 651 0008 97000000 		call	app_l2cap_reset
+ 651      E7800000 
+ 652              	.LVL46:
+ 279:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c ****     ble_l2cap_coc_callback_unregister(app_l2cap_coc_evt_handler);
+ 653              		.loc 1 279 5
+ 654 0010 37050000 		lui	a0,%hi(app_l2cap_coc_evt_handler)
+ 655 0014 13050500 		addi	a0,a0,%lo(app_l2cap_coc_evt_handler)
+ 656 0018 97000000 		call	ble_l2cap_coc_callback_unregister
+ 656      E7800000 
+ 657              	.LVL47:
+ 280:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app\app_l2cap.c **** }
+ 658              		.loc 1 280 1 is_stmt 0
+ 659 0020 17030000 		tail	__riscv_restore_0
+ 659      67000300 
+ 660              		.cfi_restore 1
+ 661              		.cfi_def_cfa_offset 0
+ 662              		.cfi_endproc
+ 663              	.LFE11:
+ 665              		.globl	app_l2cap_env
+ 666              		.section	.sbss.app_l2cap_env,"aw",@nobits
+ 667              		.align	2
+ 668              		.set	.LANCHOR0,. + 0
+ 671              	app_l2cap_env:
+ 672 0000 0000     		.zero	2
+ 673              		.text
+ 674              	.Letext0:
+ 675              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 676              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 677              		.file 4 "..\\..\\..\\..\\blesw\\src\\export/ble_gap.h"
+ 678              		.file 5 "..\\..\\..\\..\\blesw\\src\\export/ble_error.h"
+ 679              		.file 6 "..\\..\\..\\..\\blesw\\src\\export/ble_l2cap_coc.h"
+ 680              		.file 7 "..\\..\\..\\..\\util\\include/dbg_print.h"
+ 681              		.file 8 "..\\..\\..\\..\\rtos\\rtos_wrapper/wrapper_os.h"
+ 682              		.file 9 "..\\..\\..\\..\\util\\include/debug_print.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 app_l2cap.c
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:31     .text.app_l2cap_coc_evt_handler:0000000000000000 app_l2cap_coc_evt_handler
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:35     .text.app_l2cap_coc_evt_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:37     .text.app_l2cap_coc_evt_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:38     .text.app_l2cap_coc_evt_handler:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:43     .text.app_l2cap_coc_evt_handler:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:44     .text.app_l2cap_coc_evt_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:45     .text.app_l2cap_coc_evt_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:46     .text.app_l2cap_coc_evt_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:47     .text.app_l2cap_coc_evt_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:48     .text.app_l2cap_coc_evt_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:49     .text.app_l2cap_coc_evt_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:50     .text.app_l2cap_coc_evt_handler:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:57     .text.app_l2cap_coc_evt_handler:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:75     .text.app_l2cap_coc_evt_handler:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:76     .text.app_l2cap_coc_evt_handler:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:77     .text.app_l2cap_coc_evt_handler:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:80     .text.app_l2cap_coc_evt_handler:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:83     .text.app_l2cap_coc_evt_handler:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:87     .text.app_l2cap_coc_evt_handler:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:89     .text.app_l2cap_coc_evt_handler:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:90     .text.app_l2cap_coc_evt_handler:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:93     .text.app_l2cap_coc_evt_handler:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:94     .text.app_l2cap_coc_evt_handler:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:96     .text.app_l2cap_coc_evt_handler:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:99     .text.app_l2cap_coc_evt_handler:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:101    .text.app_l2cap_coc_evt_handler:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:108    .text.app_l2cap_coc_evt_handler:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:109    .text.app_l2cap_coc_evt_handler:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:110    .text.app_l2cap_coc_evt_handler:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:111    .text.app_l2cap_coc_evt_handler:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:113    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:114    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:115    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:116    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:117    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:118    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:119    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:121    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:123    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:124    .text.app_l2cap_coc_evt_handler:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:129    .text.app_l2cap_coc_evt_handler:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:140    .text.app_l2cap_coc_evt_handler:000000000000009a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:141    .text.app_l2cap_coc_evt_handler:000000000000009a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:146    .text.app_l2cap_coc_evt_handler:00000000000000a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:157    .text.app_l2cap_coc_evt_handler:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:158    .text.app_l2cap_coc_evt_handler:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:159    .text.app_l2cap_coc_evt_handler:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:163    .text.app_l2cap_coc_evt_handler:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:166    .text.app_l2cap_coc_evt_handler:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:167    .text.app_l2cap_coc_evt_handler:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:172    .text.app_l2cap_coc_evt_handler:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:184    .text.app_l2cap_coc_evt_handler:0000000000000106 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:185    .text.app_l2cap_coc_evt_handler:0000000000000106 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:186    .text.app_l2cap_coc_evt_handler:0000000000000106 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:192    .text.app_l2cap_coc_evt_handler:0000000000000116 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:203    .text.app_l2cap_coc_evt_handler:0000000000000136 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:206    .text.app_l2cap_coc_evt_handler:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:211    .text.app_l2cap_coc_evt_handler:000000000000013e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:213    .text.app_l2cap_coc_evt_handler:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:217    .text.app_l2cap_coc_evt_handler:0000000000000146 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:218    .text.app_l2cap_coc_evt_handler:0000000000000146 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:220    .text.app_l2cap_coc_evt_handler:000000000000014a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:221    .text.app_l2cap_coc_evt_handler:000000000000014a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:224    .text.app_l2cap_coc_evt_handler:0000000000000150 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:230    .text.app_l2cap_coc_evt_handler:0000000000000160 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:234    .text.app_l2cap_coc_evt_handler:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:235    .text.app_l2cap_coc_evt_handler:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:238    .text.app_l2cap_coc_evt_handler:0000000000000166 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:249    .text.app_l2cap_coc_evt_handler:000000000000017e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:250    .text.app_l2cap_coc_evt_handler:000000000000017e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:251    .text.app_l2cap_coc_evt_handler:000000000000017e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:252    .text.app_l2cap_coc_evt_handler:000000000000017e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:253    .text.app_l2cap_coc_evt_handler:000000000000017e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:254    .text.app_l2cap_coc_evt_handler:000000000000017e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:255    .text.app_l2cap_coc_evt_handler:000000000000017e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:258    .text.app_l2cap_coc_evt_handler:0000000000000180 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:265    .text.app_l2cap_reset:0000000000000000 app_l2cap_reset
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:268    .text.app_l2cap_reset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:269    .text.app_l2cap_reset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:270    .text.app_l2cap_reset:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:276    .text.app_l2cap_reset:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:283    .text.app_l2cap_set_nb_chan:0000000000000000 app_l2cap_set_nb_chan
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:286    .text.app_l2cap_set_nb_chan:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:288    .text.app_l2cap_set_nb_chan:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:289    .text.app_l2cap_set_nb_chan:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:290    .text.app_l2cap_set_nb_chan:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:293    .text.app_l2cap_set_nb_chan:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:294    .text.app_l2cap_set_nb_chan:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:301    .text.app_l2cap_coc_enhanced_enable:0000000000000000 app_l2cap_coc_enhanced_enable
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:304    .text.app_l2cap_coc_enhanced_enable:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:306    .text.app_l2cap_coc_enhanced_enable:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:307    .text.app_l2cap_coc_enhanced_enable:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:310    .text.app_l2cap_coc_enhanced_enable:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:321    .text.app_l2cap_spsm_add:0000000000000000 app_l2cap_spsm_add
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:324    .text.app_l2cap_spsm_add:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:326    .text.app_l2cap_spsm_add:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:327    .text.app_l2cap_spsm_add:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:328    .text.app_l2cap_spsm_add:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:329    .text.app_l2cap_spsm_add:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:331    .text.app_l2cap_spsm_add:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:332    .text.app_l2cap_spsm_add:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:334    .text.app_l2cap_spsm_add:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:337    .text.app_l2cap_spsm_add:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:339    .text.app_l2cap_spsm_add:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:340    .text.app_l2cap_spsm_add:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:345    .text.app_l2cap_spsm_add:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:352    .text.app_l2cap_spsm_add:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:353    .text.app_l2cap_spsm_add:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:354    .text.app_l2cap_spsm_add:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:355    .text.app_l2cap_spsm_add:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:356    .text.app_l2cap_spsm_add:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:357    .text.app_l2cap_spsm_add:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:368    .text.app_l2cap_spsm_remove:0000000000000000 app_l2cap_spsm_remove
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:371    .text.app_l2cap_spsm_remove:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:373    .text.app_l2cap_spsm_remove:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:374    .text.app_l2cap_spsm_remove:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:375    .text.app_l2cap_spsm_remove:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:377    .text.app_l2cap_spsm_remove:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:378    .text.app_l2cap_spsm_remove:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:379    .text.app_l2cap_spsm_remove:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:381    .text.app_l2cap_spsm_remove:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:383    .text.app_l2cap_spsm_remove:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:386    .text.app_l2cap_spsm_remove:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:388    .text.app_l2cap_spsm_remove:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:389    .text.app_l2cap_spsm_remove:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:395    .text.app_l2cap_spsm_remove:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:401    .text.app_l2cap_spsm_remove:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:402    .text.app_l2cap_spsm_remove:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:403    .text.app_l2cap_spsm_remove:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:405    .text.app_l2cap_spsm_remove:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:406    .text.app_l2cap_spsm_remove:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:407    .text.app_l2cap_spsm_remove:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:418    .text.app_l2cap_con_create:0000000000000000 app_l2cap_con_create
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:421    .text.app_l2cap_con_create:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:423    .text.app_l2cap_con_create:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:424    .text.app_l2cap_con_create:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:425    .text.app_l2cap_con_create:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:426    .text.app_l2cap_con_create:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:427    .text.app_l2cap_con_create:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:429    .text.app_l2cap_con_create:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:430    .text.app_l2cap_con_create:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:431    .text.app_l2cap_con_create:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:432    .text.app_l2cap_con_create:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:434    .text.app_l2cap_con_create:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:436    .text.app_l2cap_con_create:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:437    .text.app_l2cap_con_create:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:439    .text.app_l2cap_con_create:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:440    .text.app_l2cap_con_create:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:443    .text.app_l2cap_con_create:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:445    .text.app_l2cap_con_create:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:450    .text.app_l2cap_con_create:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:452    .text.app_l2cap_con_create:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:455    .text.app_l2cap_con_create:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:457    .text.app_l2cap_con_create:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:458    .text.app_l2cap_con_create:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:463    .text.app_l2cap_con_create:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:471    .text.app_l2cap_con_create:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:472    .text.app_l2cap_con_create:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:473    .text.app_l2cap_con_create:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:476    .text.app_l2cap_con_create:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:477    .text.app_l2cap_con_create:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:478    .text.app_l2cap_con_create:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:479    .text.app_l2cap_con_create:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:480    .text.app_l2cap_con_create:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:487    .text.app_l2cap_con_reconfig:0000000000000000 app_l2cap_con_reconfig
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:490    .text.app_l2cap_con_reconfig:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:492    .text.app_l2cap_con_reconfig:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:493    .text.app_l2cap_con_reconfig:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:497    .text.app_l2cap_con_reconfig:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:508    .text.app_l2cap_con_terminate:0000000000000000 app_l2cap_con_terminate
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:511    .text.app_l2cap_con_terminate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:513    .text.app_l2cap_con_terminate:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:514    .text.app_l2cap_con_terminate:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:515    .text.app_l2cap_con_terminate:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:516    .text.app_l2cap_con_terminate:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:518    .text.app_l2cap_con_terminate:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:519    .text.app_l2cap_con_terminate:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:520    .text.app_l2cap_con_terminate:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:522    .text.app_l2cap_con_terminate:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:525    .text.app_l2cap_con_terminate:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:528    .text.app_l2cap_con_terminate:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:530    .text.app_l2cap_con_terminate:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:531    .text.app_l2cap_con_terminate:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:537    .text.app_l2cap_con_terminate:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:544    .text.app_l2cap_con_terminate:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:545    .text.app_l2cap_con_terminate:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:546    .text.app_l2cap_con_terminate:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:548    .text.app_l2cap_con_terminate:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:549    .text.app_l2cap_con_terminate:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:550    .text.app_l2cap_con_terminate:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:551    .text.app_l2cap_con_terminate:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:558    .text.app_l2cap_sdu_send:0000000000000000 app_l2cap_sdu_send
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:561    .text.app_l2cap_sdu_send:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:563    .text.app_l2cap_sdu_send:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:564    .text.app_l2cap_sdu_send:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:565    .text.app_l2cap_sdu_send:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:566    .text.app_l2cap_sdu_send:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:567    .text.app_l2cap_sdu_send:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:568    .text.app_l2cap_sdu_send:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:570    .text.app_l2cap_sdu_send:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:571    .text.app_l2cap_sdu_send:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:572    .text.app_l2cap_sdu_send:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:574    .text.app_l2cap_sdu_send:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:576    .text.app_l2cap_sdu_send:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:579    .text.app_l2cap_sdu_send:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:582    .text.app_l2cap_sdu_send:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:585    .text.app_l2cap_sdu_send:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:586    .text.app_l2cap_sdu_send:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:589    .text.app_l2cap_sdu_send:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:594    .text.app_l2cap_sdu_send:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:602    .text.app_l2cap_sdu_send:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:603    .text.app_l2cap_sdu_send:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:605    .text.app_l2cap_sdu_send:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:606    .text.app_l2cap_sdu_send:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:607    .text.app_l2cap_sdu_send:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:608    .text.app_l2cap_sdu_send:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:609    .text.app_l2cap_sdu_send:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:610    .text.app_l2cap_sdu_send:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:617    .text.app_l2cap_mgr_init:0000000000000000 app_l2cap_mgr_init
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:620    .text.app_l2cap_mgr_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:621    .text.app_l2cap_mgr_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:622    .text.app_l2cap_mgr_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:623    .text.app_l2cap_mgr_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:625    .text.app_l2cap_mgr_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:628    .text.app_l2cap_mgr_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:633    .text.app_l2cap_mgr_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:634    .text.app_l2cap_mgr_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:635    .text.app_l2cap_mgr_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:636    .text.app_l2cap_mgr_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:643    .text.app_l2cap_mgr_deinit:0000000000000000 app_l2cap_mgr_deinit
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:646    .text.app_l2cap_mgr_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:647    .text.app_l2cap_mgr_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:648    .text.app_l2cap_mgr_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:649    .text.app_l2cap_mgr_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:651    .text.app_l2cap_mgr_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:654    .text.app_l2cap_mgr_deinit:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:659    .text.app_l2cap_mgr_deinit:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:660    .text.app_l2cap_mgr_deinit:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:661    .text.app_l2cap_mgr_deinit:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:662    .text.app_l2cap_mgr_deinit:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:671    .sbss.app_l2cap_env:0000000000000000 app_l2cap_env
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:668    .sbss.app_l2cap_env:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:261    .text.app_l2cap_coc_evt_handler:0000000000000180 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:279    .text.app_l2cap_reset:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:297    .text.app_l2cap_set_nb_chan:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:313    .text.app_l2cap_coc_enhanced_enable:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:360    .text.app_l2cap_spsm_add:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:410    .text.app_l2cap_spsm_remove:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:483    .text.app_l2cap_con_create:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:500    .text.app_l2cap_con_reconfig:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:554    .text.app_l2cap_con_terminate:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:613    .text.app_l2cap_sdu_send:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:639    .text.app_l2cap_mgr_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:666    .text.app_l2cap_mgr_deinit:0000000000000028 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:63     .rodata.app_l2cap_coc_evt_handler:0000000000000000 .L4
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:11     .rodata.app_l2cap_coc_evt_handler.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:14     .rodata.app_l2cap_coc_evt_handler.str1.4:000000000000005c .LC1
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:17     .rodata.app_l2cap_coc_evt_handler.str1.4:00000000000000bc .LC2
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:20     .rodata.app_l2cap_coc_evt_handler.str1.4:00000000000000fc .LC3
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:23     .rodata.app_l2cap_coc_evt_handler.str1.4:0000000000000144 .LC4
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:26     .rodata.app_l2cap_coc_evt_handler.str1.4:0000000000000148 .LC5
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:248    .text.app_l2cap_coc_evt_handler:000000000000017e .L19
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:85     .text.app_l2cap_coc_evt_handler:0000000000000038 .L9
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:107    .text.app_l2cap_coc_evt_handler:0000000000000060 .L1
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:155    .text.app_l2cap_coc_evt_handler:00000000000000cc .L11
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:200    .text.app_l2cap_coc_evt_handler:0000000000000136 .L13
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:231    .text.app_l2cap_coc_evt_handler:0000000000000162 .L16
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:214    .text.app_l2cap_coc_evt_handler:0000000000000146 .L15
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:209    .text.app_l2cap_coc_evt_handler:000000000000013e .L14
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:72     .text.app_l2cap_coc_evt_handler:0000000000000024 .L8
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:120    .text.app_l2cap_coc_evt_handler:000000000000006a .L7
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:138    .text.app_l2cap_coc_evt_handler:000000000000009a .L6
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:164    .text.app_l2cap_coc_evt_handler:00000000000000da .L5
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:180    .text.app_l2cap_coc_evt_handler:0000000000000106 .L3
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:315    .rodata.app_l2cap_spsm_add.str1.4:0000000000000000 .LC6
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:351    .text.app_l2cap_spsm_add:0000000000000034 .L27
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:362    .rodata.app_l2cap_spsm_remove.str1.4:0000000000000000 .LC7
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:400    .text.app_l2cap_spsm_remove:0000000000000036 .L33
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:412    .rodata.app_l2cap_con_create.str1.4:0000000000000000 .LC8
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:470    .text.app_l2cap_con_create:000000000000004a .L39
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:502    .rodata.app_l2cap_con_terminate.str1.4:0000000000000000 .LC9
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:543    .text.app_l2cap_con_terminate:000000000000003a .L47
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:600    .text.app_l2cap_sdu_send:000000000000003c .L53
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:2719   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3946   .debug_str:0000000000000d13 .LASF302
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4204   .debug_str:0000000000001b21 .LASF303
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4032   .debug_str:00000000000011be .LASF304
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3638   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3674   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3790   .debug_str:0000000000000522 .LASF0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3738   .debug_str:00000000000002c3 .LASF3
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3814   .debug_str:000000000000061a .LASF1
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4178   .debug_str:00000000000019cc .LASF2
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3848   .debug_str:00000000000007df .LASF4
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4254   .debug_str:0000000000001e21 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3752   .debug_str:000000000000035f .LASF6
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3934   .debug_str:0000000000000c9e .LASF7
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3984   .debug_str:0000000000000fcc .LASF8
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4094   .debug_str:0000000000001571 .LASF9
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4030   .debug_str:00000000000011b1 .LASF10
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3792   .debug_str:000000000000052e .LASF11
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4104   .debug_str:00000000000015fc .LASF12
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3714   .debug_str:00000000000001cb .LASF13
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4264   .debug_str:0000000000001eb0 .LASF14
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3758   .debug_str:000000000000038a .LASF15
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3910   .debug_str:0000000000000b51 .LASF16
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4084   .debug_str:00000000000014f0 .LASF17
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4126   .debug_str:00000000000016fa .LASF18
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4214   .debug_str:0000000000001bef .LASF19
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3800   .debug_str:000000000000056d .LASF20
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3710   .debug_str:0000000000000197 .LASF21
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3824   .debug_str:000000000000069b .LASF22
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3694   .debug_str:00000000000000d9 .LASF23
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3914   .debug_str:0000000000000b88 .LASF24
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4062   .debug_str:00000000000013d3 .LASF25
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4212   .debug_str:0000000000001bc9 .LASF26
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3862   .debug_str:0000000000000894 .LASF27
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3798   .debug_str:0000000000000556 .LASF28
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4148   .debug_str:0000000000001827 .LASF29
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4236   .debug_str:0000000000001d34 .LASF30
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3748   .debug_str:0000000000000326 .LASF31
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3750   .debug_str:0000000000000341 .LASF32
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4088   .debug_str:0000000000001529 .LASF33
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3986   .debug_str:0000000000000fda .LASF34
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3920   .debug_str:0000000000000bd4 .LASF35
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3890   .debug_str:0000000000000a31 .LASF36
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4256   .debug_str:0000000000001e34 .LASF37
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4080   .debug_str:00000000000014b4 .LASF38
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4014   .debug_str:00000000000010f7 .LASF39
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3846   .debug_str:00000000000007c5 .LASF40
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4138   .debug_str:00000000000017ab .LASF41
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4238   .debug_str:0000000000001d50 .LASF42
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3972   .debug_str:0000000000000f20 .LASF43
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4170   .debug_str:0000000000001961 .LASF44
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4108   .debug_str:000000000000162f .LASF45
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4218   .debug_str:0000000000001c36 .LASF46
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3708   .debug_str:0000000000000177 .LASF47
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3816   .debug_str:0000000000000628 .LASF48
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3930   .debug_str:0000000000000c67 .LASF49
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4056   .debug_str:000000000000137d .LASF50
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3830   .debug_str:00000000000006df .LASF51
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4272   .debug_str:0000000000001f1a .LASF52
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4140   .debug_str:00000000000017c5 .LASF53
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3956   .debug_str:0000000000000e56 .LASF54
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3952   .debug_str:0000000000000e35 .LASF55
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3696   .debug_str:00000000000000f9 .LASF56
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3806   .debug_str:00000000000005bb .LASF57
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3744   .debug_str:00000000000002f6 .LASF58
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4240   .debug_str:0000000000001d71 .LASF59
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3924   .debug_str:0000000000000c19 .LASF60
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3732   .debug_str:000000000000027d .LASF61
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3736   .debug_str:00000000000002a8 .LASF62
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4036   .debug_str:0000000000001254 .LASF63
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3818   .debug_str:0000000000000644 .LASF64
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4282   .debug_str:0000000000001f9b .LASF65
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3868   .debug_str:00000000000008eb .LASF66
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3688   .debug_str:000000000000008a .LASF67
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3968   .debug_str:0000000000000ee7 .LASF68
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4252   .debug_str:0000000000001e02 .LASF69
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3858   .debug_str:000000000000086e .LASF70
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3970   .debug_str:0000000000000ef8 .LASF71
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4090   .debug_str:0000000000001547 .LASF72
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4100   .debug_str:00000000000015db .LASF73
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4150   .debug_str:0000000000001843 .LASF74
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4038   .debug_str:0000000000001271 .LASF75
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3898   .debug_str:0000000000000a9f .LASF76
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3900   .debug_str:0000000000000ab9 .LASF77
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3904   .debug_str:0000000000000af2 .LASF78
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4198   .debug_str:0000000000001ab5 .LASF79
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4044   .debug_str:00000000000012c9 .LASF80
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3722   .debug_str:0000000000000216 .LASF81
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4052   .debug_str:0000000000001344 .LASF82
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4048   .debug_str:000000000000130d .LASF83
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4040   .debug_str:0000000000001297 .LASF84
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4244   .debug_str:0000000000001d90 .LASF85
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3944   .debug_str:0000000000000cf0 .LASF86
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4058   .debug_str:0000000000001398 .LASF87
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4134   .debug_str:0000000000001765 .LASF88
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3980   .debug_str:0000000000000f8f .LASF89
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4096   .debug_str:0000000000001588 .LASF90
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4270   .debug_str:0000000000001ef0 .LASF91
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4228   .debug_str:0000000000001cc4 .LASF92
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3682   .debug_str:0000000000000035 .LASF93
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3922   .debug_str:0000000000000bf7 .LASF94
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3976   .debug_str:0000000000000f5f .LASF95
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3896   .debug_str:0000000000000a7f .LASF96
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4086   .debug_str:0000000000001508 .LASF97
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4072   .debug_str:0000000000001449 .LASF98
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4118   .debug_str:00000000000016a4 .LASF99
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3974   .debug_str:0000000000000f3c .LASF100
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3992   .debug_str:000000000000102b .LASF101
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3836   .debug_str:0000000000000736 .LASF102
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4018   .debug_str:000000000000111d .LASF103
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4106   .debug_str:0000000000001605 .LASF104
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4274   .debug_str:0000000000001f34 .LASF105
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3852   .debug_str:0000000000000809 .LASF106
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4000   .debug_str:0000000000001088 .LASF107
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4132   .debug_str:0000000000001749 .LASF108
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4186   .debug_str:0000000000001a1a .LASF109
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4078   .debug_str:0000000000001496 .LASF110
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3772   .debug_str:0000000000000438 .LASF111
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3788   .debug_str:000000000000050b .LASF112
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3842   .debug_str:000000000000078c .LASF113
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3982   .debug_str:0000000000000fb2 .LASF114
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4174   .debug_str:000000000000199f .LASF115
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4124   .debug_str:00000000000016d7 .LASF116
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4060   .debug_str:00000000000013ba .LASF117
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4142   .debug_str:00000000000017df .LASF118
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3832   .debug_str:00000000000006ff .LASF119
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3998   .debug_str:0000000000001073 .LASF120
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4248   .debug_str:0000000000001dcd .LASF121
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4110   .debug_str:0000000000001651 .LASF122
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3684   .debug_str:000000000000005a .LASF123
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4046   .debug_str:00000000000012eb .LASF124
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3756   .debug_str:000000000000036f .LASF125
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3716   .debug_str:00000000000001dc .LASF126
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3760   .debug_str:00000000000003a9 .LASF127
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4184   .debug_str:00000000000019fb .LASF128
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3834   .debug_str:0000000000000719 .LASF129
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4112   .debug_str:000000000000166a .LASF130
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3690   .debug_str:00000000000000a5 .LASF131
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3804   .debug_str:00000000000005a7 .LASF132
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3692   .debug_str:00000000000000ba .LASF133
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3780   .debug_str:00000000000004b6 .LASF134
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4290   .debug_str:0000000000001ff2 .LASF135
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4266   .debug_str:0000000000001ecb .LASF136
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3876   .debug_str:0000000000000958 .LASF137
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4074   .debug_str:0000000000001466 .LASF138
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4220   .debug_str:0000000000001c4f .LASF139
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3686   .debug_str:0000000000000073 .LASF140
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3838   .debug_str:0000000000000754 .LASF141
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4216   .debug_str:0000000000001c11 .LASF142
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4194   .debug_str:0000000000001a85 .LASF143
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4286   .debug_str:0000000000001fcf .LASF144
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4202   .debug_str:0000000000001afb .LASF145
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3822   .debug_str:0000000000000676 .LASF146
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4136   .debug_str:0000000000001783 .LASF147
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3958   .debug_str:0000000000000e73 .LASF148
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4092   .debug_str:000000000000155a .LASF149
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4284   .debug_str:0000000000001fb2 .LASF150
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3918   .debug_str:0000000000000bb4 .LASF151
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3886   .debug_str:00000000000009eb .LASF152
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3872   .debug_str:0000000000000920 .LASF153
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4262   .debug_str:0000000000001e8e .LASF154
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4152   .debug_str:0000000000001869 .LASF155
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3850   .debug_str:00000000000007ea .LASF156
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4128   .debug_str:0000000000001714 .LASF157
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4066   .debug_str:0000000000001406 .LASF158
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4164   .debug_str:000000000000191f .LASF159
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4276   .debug_str:0000000000001f5e .LASF160
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3866   .debug_str:00000000000008ca .LASF161
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3810   .debug_str:00000000000005f2 .LASF162
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3888   .debug_str:0000000000000a14 .LASF163
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3844   .debug_str:000000000000079e .LASF164
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3928   .debug_str:0000000000000c44 .LASF165
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3742   .debug_str:00000000000002db .LASF166
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4054   .debug_str:0000000000001364 .LASF167
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3826   .debug_str:00000000000006ba .LASF168
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4222   .debug_str:0000000000001c6d .LASF169
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3764   .debug_str:00000000000003d6 .LASF170
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3908   .debug_str:0000000000000b34 .LASF171
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3698   .debug_str:0000000000000118 .LASF172
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4098   .debug_str:00000000000015b2 .LASF173
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3778   .debug_str:0000000000000490 .LASF174
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4172   .debug_str:000000000000197d .LASF175
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3870   .debug_str:0000000000000908 .LASF176
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4026   .debug_str:000000000000117b .LASF177
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3774   .debug_str:0000000000000450 .LASF178
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3880   .debug_str:000000000000098c .LASF179
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3878   .debug_str:0000000000000970 .LASF180
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3960   .debug_str:0000000000000e99 .LASF181
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3856   .debug_str:0000000000000852 .LASF182
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3966   .debug_str:0000000000000ece .LASF183
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4200   .debug_str:0000000000001ada .LASF184
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3864   .debug_str:00000000000008ad .LASF185
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4160   .debug_str:00000000000018e3 .LASF186
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3680   .debug_str:0000000000000012 .LASF187
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3720   .debug_str:00000000000001fd .LASF188
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4082   .debug_str:00000000000014ce .LASF189
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4158   .debug_str:00000000000018c2 .LASF190
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4246   .debug_str:0000000000001db2 .LASF191
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3808   .debug_str:00000000000005d0 .LASF192
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3884   .debug_str:00000000000009c7 .LASF193
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3784   .debug_str:00000000000004de .LASF194
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3730   .debug_str:0000000000000264 .LASF195
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3906   .debug_str:0000000000000b0e .LASF196
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4144   .debug_str:0000000000001805 .LASF197
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4064   .debug_str:00000000000013f3 .LASF198
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3990   .debug_str:0000000000001016 .LASF199
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4042   .debug_str:00000000000012b4 .LASF200
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4250   .debug_str:0000000000001de8 .LASF201
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4050   .debug_str:000000000000132e .LASF202
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3892   .debug_str:0000000000000a47 .LASF203
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3820   .debug_str:0000000000000661 .LASF204
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4190   .debug_str:0000000000001a51 .LASF210
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4162   .debug_str:00000000000018fe .LASF205
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3776   .debug_str:0000000000000471 .LASF206
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3728   .debug_str:0000000000000246 .LASF207
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4232   .debug_str:0000000000001d02 .LASF208
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3802   .debug_str:0000000000000588 .LASF209
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4176   .debug_str:00000000000019ba .LASF211
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3978   .debug_str:0000000000000f78 .LASF212
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3936   .debug_str:0000000000000cb0 .LASF213
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4278   .debug_str:0000000000001f7f .LASF214
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4208   .debug_str:0000000000001b99 .LASF215
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4182   .debug_str:00000000000019df .LASF216
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4196   .debug_str:0000000000001a9f .LASF217
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3828   .debug_str:00000000000006d9 .LASF218
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4114   .debug_str:0000000000001683 .LASF219
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3840   .debug_str:0000000000000770 .LASF220
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4188   .debug_str:0000000000001a36 .LASF221
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3746   .debug_str:000000000000030a .LASF222
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3770   .debug_str:000000000000041c .LASF223
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3940   .debug_str:0000000000000cce .LASF224
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4258   .debug_str:0000000000001e52 .LASF225
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3950   .debug_str:0000000000000e1c .LASF226
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4226   .debug_str:0000000000001cab .LASF227
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3762   .debug_str:00000000000003c2 .LASF228
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3964   .debug_str:0000000000000ec6 .LASF229
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4006   .debug_str:00000000000010d4 .LASF230
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3734   .debug_str:0000000000000292 .LASF231
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3938   .debug_str:0000000000000cc7 .LASF232
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4206   .debug_str:0000000000001b94 .LASF233
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4076   .debug_str:000000000000147d .LASF234
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3962   .debug_str:0000000000000ebc .LASF235
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4242   .debug_str:0000000000001d8a .LASF236
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4002   .debug_str:00000000000010a5 .LASF237
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3996   .debug_str:000000000000106a .LASF238
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3676   .debug_str:0000000000000000 .LASF239
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3700   .debug_str:0000000000000132 .LASF240
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4008   .debug_str:00000000000010e1 .LASF241
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4016   .debug_str:0000000000001111 .LASF242
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4020   .debug_str:0000000000001140 .LASF243
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4070   .debug_str:000000000000143f .LASF244
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3932   .debug_str:0000000000000c84 .LASF245
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4166   .debug_str:000000000000193e .LASF246
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4120   .debug_str:00000000000016c6 .LASF247
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4260   .debug_str:0000000000001e71 .LASF248
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3902   .debug_str:0000000000000ad7 .LASF249
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3754   .debug_str:0000000000000368 .LASF250
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4022   .debug_str:000000000000115a .LASF251
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4234   .debug_str:0000000000001d21 .LASF305
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3718   .debug_str:00000000000001f5 .LASF252
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4180   .debug_str:00000000000019d6 .LASF253
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4122   .debug_str:00000000000016cd .LASF254
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3704   .debug_str:0000000000000156 .LASF255
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4230   .debug_str:0000000000001cf8 .LASF256
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4268   .debug_str:0000000000001ee3 .LASF257
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3782   .debug_str:00000000000004d7 .LASF258
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4116   .debug_str:000000000000169d .LASF259
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4028   .debug_str:000000000000119c .LASF260
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4280   .debug_str:0000000000001f96 .LASF261
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4012   .debug_str:00000000000010ef .LASF262
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3954   .debug_str:0000000000000e4f .LASF263
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4288   .debug_str:0000000000001fed .LASF264
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3678   .debug_str:000000000000000c .LASF265
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3724   .debug_str:000000000000022f .LASF266
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3766   .debug_str:00000000000003f6 .LASF268
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3726   .debug_str:0000000000000234 .LASF306
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3796   .debug_str:0000000000000549 .LASF267
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3740   .debug_str:00000000000002cd .LASF269
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3854   .debug_str:000000000000083d .LASF270
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:644    .text.app_l2cap_mgr_deinit:0000000000000000 .LFB11
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:663    .text.app_l2cap_mgr_deinit:0000000000000028 .LFE11
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:652    .text.app_l2cap_mgr_deinit:0000000000000010 .LVL46
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:657    .text.app_l2cap_mgr_deinit:0000000000000020 .LVL47
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4068   .debug_str:000000000000142c .LASF271
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:618    .text.app_l2cap_mgr_init:0000000000000000 .LFB10
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:637    .text.app_l2cap_mgr_init:0000000000000028 .LFE10
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:626    .text.app_l2cap_mgr_init:0000000000000010 .LVL44
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:631    .text.app_l2cap_mgr_init:0000000000000020 .LVL45
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3794   .debug_str:0000000000000536 .LASF272
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:559    .text.app_l2cap_sdu_send:0000000000000000 .LFB9
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:611    .text.app_l2cap_sdu_send:0000000000000046 .LFE9
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3274   .debug_loc:0000000000000000 .LLST18
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3860   .debug_str:000000000000088b .LASF273
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3288   .debug_loc:0000000000000021 .LLST19
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4010   .debug_str:00000000000010e8 .LASF274
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3302   .debug_loc:0000000000000042 .LLST20
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4102   .debug_str:00000000000015f5 .LASF275
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3316   .debug_loc:0000000000000063 .LLST21
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:583    .text.app_l2cap_sdu_send:000000000000001a .LVL41
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:592    .text.app_l2cap_sdu_send:000000000000002c .LVL42
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:599    .text.app_l2cap_sdu_send:000000000000003c .LVL43
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4034   .debug_str:000000000000123c .LASF276
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:509    .text.app_l2cap_con_terminate:0000000000000000 .LFB8
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:552    .text.app_l2cap_con_terminate:0000000000000044 .LFE8
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3330   .debug_loc:0000000000000084 .LLST16
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3344   .debug_loc:00000000000000a5 .LLST17
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:526    .text.app_l2cap_con_terminate:0000000000000016 .LVL37
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:541    .text.app_l2cap_con_terminate:000000000000003a .LVL38
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3706   .debug_str:0000000000000160 .LASF277
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:488    .text.app_l2cap_con_reconfig:0000000000000000 .LFB7
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:498    .text.app_l2cap_con_reconfig:0000000000000010 .LFE7
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3358   .debug_loc:00000000000000c6 .LLST12
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3372   .debug_loc:00000000000000e7 .LLST13
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3386   .debug_loc:0000000000000108 .LLST14
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3916   .debug_str:0000000000000ba7 .LASF278
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3400   .debug_loc:0000000000000129 .LLST15
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:496    .text.app_l2cap_con_reconfig:0000000000000010 .LVL35
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3926   .debug_str:0000000000000c2f .LASF279
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:419    .text.app_l2cap_con_create:0000000000000000 .LFB6
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:481    .text.app_l2cap_con_create:0000000000000054 .LFE6
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3414   .debug_loc:000000000000014a .LLST7
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3428   .debug_loc:000000000000016b .LLST8
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3445   .debug_loc:0000000000000196 .LLST9
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3462   .debug_loc:00000000000001c1 .LLST10
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4168   .debug_str:0000000000001958 .LASF280
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3476   .debug_loc:00000000000001e2 .LLST11
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3942   .debug_str:0000000000000cea .LASF281
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:453    .text.app_l2cap_con_create:0000000000000026 .LVL31
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:468    .text.app_l2cap_con_create:000000000000004a .LVL32
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4004   .debug_str:00000000000010be .LASF282
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:369    .text.app_l2cap_spsm_remove:0000000000000000 .LFB5
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:408    .text.app_l2cap_spsm_remove:0000000000000040 .LFE5
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3490   .debug_loc:0000000000000203 .LLST6
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:384    .text.app_l2cap_spsm_remove:0000000000000014 .LVL25
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:398    .text.app_l2cap_spsm_remove:0000000000000036 .LVL26
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3768   .debug_str:0000000000000409 .LASF283
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:322    .text.app_l2cap_spsm_add:0000000000000000 .LFB4
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:358    .text.app_l2cap_spsm_add:000000000000003c .LFE4
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3504   .debug_loc:0000000000000224 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3702   .debug_str:000000000000014b .LASF284
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3518   .debug_loc:0000000000000245 .LLST5
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:335    .text.app_l2cap_spsm_add:0000000000000012 .LVL22
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:349    .text.app_l2cap_spsm_add:0000000000000034 .LVL23
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4154   .debug_str:0000000000001886 .LASF285
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:302    .text.app_l2cap_coc_enhanced_enable:0000000000000000 .LFB3
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:311    .text.app_l2cap_coc_enhanced_enable:000000000000000a .LFE3
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3532   .debug_loc:0000000000000266 .LLST3
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:309    .text.app_l2cap_coc_enhanced_enable:000000000000000a .LVL20
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4210   .debug_str:0000000000001bb3 .LASF286
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:284    .text.app_l2cap_set_nb_chan:0000000000000000 .LFB2
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:295    .text.app_l2cap_set_nb_chan:000000000000000a .LFE2
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3948   .debug_str:0000000000000e0c .LASF287
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:266    .text.app_l2cap_reset:0000000000000000 .LFB1
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:277    .text.app_l2cap_reset:0000000000000014 .LFE1
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:275    .text.app_l2cap_reset:0000000000000014 .LVL17
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4130   .debug_str:000000000000172f .LASF307
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:32     .text.app_l2cap_coc_evt_handler:0000000000000000 .LFB0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:259    .text.app_l2cap_coc_evt_handler:0000000000000180 .LFE0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4024   .debug_str:0000000000001175 .LASF288
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3546   .debug_loc:0000000000000287 .LLST0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3566   .debug_loc:00000000000002b5 .LLST1
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:73     .text.app_l2cap_coc_evt_handler:0000000000000024 .LBB2
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:105    .text.app_l2cap_coc_evt_handler:0000000000000060 .LBE2
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:104    .text.app_l2cap_coc_evt_handler:0000000000000060 .LVL4
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3581   .debug_loc:00000000000002de .LLST2
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:199    .text.app_l2cap_coc_evt_handler:0000000000000136 .LVL9
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:227    .text.app_l2cap_coc_evt_handler:0000000000000160 .LVL12
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:245    .text.app_l2cap_coc_evt_handler:000000000000017c .LVL15
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:136    .text.app_l2cap_coc_evt_handler:0000000000000098 .LVL5
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:154    .text.app_l2cap_coc_evt_handler:00000000000000cc .LVL6
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:178    .text.app_l2cap_coc_evt_handler:0000000000000104 .LVL7
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3894   .debug_str:0000000000000a5d .LASF289
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4192   .debug_str:0000000000001a65 .LASF290
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3812   .debug_str:000000000000060f .LASF291
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3786   .debug_str:0000000000000500 .LASF292
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3912   .debug_str:0000000000000b71 .LASF293
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3874   .debug_str:0000000000000940 .LASF294
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4146   .debug_str:000000000000181d .LASF295
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4224   .debug_str:0000000000001c8c .LASF296
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3988   .debug_str:0000000000000ff9 .LASF297
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3712   .debug_str:00000000000001b1 .LASF298
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3882   .debug_str:00000000000009af .LASF299
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:4156   .debug_str:00000000000018a4 .LASF300
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:3994   .debug_str:000000000000104d .LASF301
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:562    .text.app_l2cap_sdu_send:0000000000000000 .LVL39
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:577    .text.app_l2cap_sdu_send:000000000000000e .LVL40
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:512    .text.app_l2cap_con_terminate:0000000000000000 .LVL36
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:491    .text.app_l2cap_con_reconfig:0000000000000000 .LVL34
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:422    .text.app_l2cap_con_create:0000000000000000 .LVL27
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:446    .text.app_l2cap_con_create:0000000000000018 .LVL29
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:474    .text.app_l2cap_con_create:000000000000004c .LVL33
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:441    .text.app_l2cap_con_create:0000000000000014 .LVL28
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:448    .text.app_l2cap_con_create:000000000000001c .LVL30
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:372    .text.app_l2cap_spsm_remove:0000000000000000 .LVL24
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:325    .text.app_l2cap_spsm_add:0000000000000000 .LVL21
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:305    .text.app_l2cap_coc_enhanced_enable:0000000000000000 .LVL19
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:36     .text.app_l2cap_coc_evt_handler:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:39     .text.app_l2cap_coc_evt_handler:0000000000000002 .LVL1
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:54     .text.app_l2cap_coc_evt_handler:000000000000001c .LVL2
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:84     .text.app_l2cap_coc_evt_handler:0000000000000038 .LVL3
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:247    .text.app_l2cap_coc_evt_handler:000000000000017e .LVL16
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:183    .text.app_l2cap_coc_evt_handler:0000000000000106 .LVL8
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:208    .text.app_l2cap_coc_evt_handler:000000000000013e .LVL10
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:215    .text.app_l2cap_coc_evt_handler:0000000000000146 .LVL11
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:237    .text.app_l2cap_coc_evt_handler:0000000000000166 .LVL13
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:243    .text.app_l2cap_coc_evt_handler:0000000000000174 .LVL14
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:684    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:181    .text.app_l2cap_coc_evt_handler:0000000000000106 .LBB3
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:201    .text.app_l2cap_coc_evt_handler:0000000000000136 .LBE3
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:204    .text.app_l2cap_coc_evt_handler:0000000000000138 .LBB4
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:228    .text.app_l2cap_coc_evt_handler:0000000000000160 .LBE4
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:232    .text.app_l2cap_coc_evt_handler:0000000000000162 .LBB5
+C:\Users\stapi\AppData\Local\Temp\cc4ykuCl.s:257    .text.app_l2cap_coc_evt_handler:0000000000000180 .LBE5
+
+UNDEFINED SYMBOLS
+__riscv_save_5
+ble_l2cap_coc_connection_cfm
+__riscv_restore_5
+global_debug_level
+co_printf
+sys_memset
+ble_l2cap_coc_enhanced_enable
+__riscv_save_1
+ble_l2cap_spsm_register
+__riscv_restore_1
+__riscv_save_0
+ble_l2cap_spsm_unregister
+__riscv_restore_0
+__riscv_save_2
+ble_l2cap_coc_connection_req
+__riscv_restore_2
+ble_l2cap_coc_connection_recfg
+ble_l2cap_coc_terminate
+__riscv_save_3
+sys_malloc
+ble_l2cap_coc_sdu_send
+__riscv_restore_3
+ble_l2cap_coc_callback_register
+ble_l2cap_coc_callback_unregister

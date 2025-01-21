@@ -1,0 +1,39 @@
+int main(void) {
+
+    platform_init();
+
+    dbg_print(NOTICE, "SDK Version: %s\n", WIFI_GIT_REVISION);
+    dbg_print(NOTICE, "Build date: %s\n", SDK_BUILD_DATE);
+
+
+    uint8_t *ssid = (uint8_t *)"Mobiliz NaRGE_Guest";       // Replace with your Wi-Fi SSID
+    uint8_t *password = (uint8_t *)"M@b!lz12.*"; // Replace with your Wi-Fi password
+    int status = 0;
+
+    if (wifi_init()) {
+            printf("wifi init failed.\r\n");
+        }
+
+//    if (wifi_management_init() != 0) {
+//        dbg_print(ERR, "Wi-Fi management initialization failed!\n");
+//        return -1;
+//    }
+//
+//
+//    status = wifi_management_connect((char *)ssid, (char *)password, true);
+//
+//    if (status != 0) {
+//        dbg_print(ERR, "Wi-Fi connection failed! Status: %d\n", status);
+//        return -1;
+//    }
+//
+//    dbg_print(NOTICE, "Wi-Fi connected successfully!\n");
+
+    sys_os_start();
+
+    for (;;) {
+
+    }
+
+    return 0;
+}

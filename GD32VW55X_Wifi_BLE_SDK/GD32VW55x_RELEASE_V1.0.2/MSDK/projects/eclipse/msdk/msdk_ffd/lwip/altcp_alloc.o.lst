@@ -1,0 +1,364 @@
+   1              		.file	"altcp_alloc.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.altcp_tls_new,"ax",@progbits
+  10              		.align	1
+  11              		.globl	altcp_tls_new
+  13              	altcp_tls_new:
+  14              	.LFB4:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** /**
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * @file
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * Application layered TCP connection API (to be used from TCPIP thread)\n
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * This interface mimics the tcp callback API to the application while preventing
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * direct linking (much like virtual functions).
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * This way, an application can make use of other application layer protocols
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * on top of TCP without knowing the details (e.g. TLS, proxy connection).
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * This file contains allocation implementation that combine several layers.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  */
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** 
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** /*
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * Copyright (c) 2017 Simon Goldschmidt
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * All rights reserved.
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * Redistribution and use in source and binary forms, with or without modification,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * are permitted provided that the following conditions are met:
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * 1. Redistributions of source code must retain the above copyright notice,
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *    this list of conditions and the following disclaimer.
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice,
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *    this list of conditions and the following disclaimer in the documentation
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *    and/or other materials provided with the distribution.
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * 3. The name of the author may not be used to endorse or promote products
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *    derived from this software without specific prior written permission.
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * OF SUCH DAMAGE.
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * This file is part of the lwIP TCP/IP stack.
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * Author: Simon Goldschmidt <goldsimon@gmx.de>
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  *
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  */
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** 
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** #include "lwip/opt.h"
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** 
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** #if LWIP_ALTCP /* don't build if not configured for use in lwipopts.h */
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** 
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** #include "lwip/altcp.h"
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** #include "lwip/altcp_tcp.h"
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** #include "lwip/altcp_tls.h"
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** #include "lwip/priv/altcp_priv.h"
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** #include "lwip/mem.h"
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** 
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** #include <string.h>
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** 
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** #if LWIP_ALTCP_TLS
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** 
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** /** This standard allocator function creates an altcp pcb for
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * TLS over TCP */
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** struct altcp_pcb *
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** altcp_tls_new(struct altcp_tls_config *config, u8_t ip_type)
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** {
+  16              		.loc 1 62 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  19 0000 17030000 		call	t0,__riscv_save_2
+  19      E7020300 
+  20              		.cfi_offset 9, -12
+  21              		.cfi_offset 8, -8
+  22              		.cfi_offset 1, -4
+  23              		.cfi_def_cfa_offset 16
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   struct altcp_pcb *inner_conn, *ret;
+  24              		.loc 1 63 3
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   LWIP_UNUSED_ARG(ip_type);
+  25              		.loc 1 64 3
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** 
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   inner_conn = altcp_tcp_new_ip_type(ip_type);
+  26              		.loc 1 66 3
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   struct altcp_pcb *inner_conn, *ret;
+  27              		.loc 1 62 1 is_stmt 0
+  28 0008 2A84     		mv	s0,a0
+  29              		.loc 1 66 16
+  30 000a 2E85     		mv	a0,a1
+  31              	.LVL1:
+  32 000c 97000000 		call	altcp_tcp_new_ip_type
+  32      E7800000 
+  33              	.LVL2:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   if (inner_conn == NULL) {
+  34              		.loc 1 67 3 is_stmt 1
+  35              		.loc 1 67 6 is_stmt 0
+  36 0014 05C5     		beq	a0,zero,.L3
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****     return NULL;
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   }
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   ret = altcp_tls_wrap(config, inner_conn);
+  37              		.loc 1 70 9
+  38 0016 AA85     		mv	a1,a0
+  39 0018 AA84     		mv	s1,a0
+  40              		.loc 1 70 3 is_stmt 1
+  41              		.loc 1 70 9 is_stmt 0
+  42 001a 2285     		mv	a0,s0
+  43              	.LVL3:
+  44 001c 97000000 		call	altcp_tls_wrap
+  44      E7800000 
+  45              	.LVL4:
+  46 0024 2A84     		mv	s0,a0
+  47              	.LVL5:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   if (ret == NULL) {
+  48              		.loc 1 71 3 is_stmt 1
+  49              		.loc 1 71 6 is_stmt 0
+  50 0026 11E5     		bne	a0,zero,.L1
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****     altcp_close(inner_conn);
+  51              		.loc 1 72 5 is_stmt 1
+  52 0028 2685     		mv	a0,s1
+  53 002a 97000000 		call	altcp_close
+  53      E7800000 
+  54              	.LVL6:
+  55              	.L1:
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   }
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   return ret;
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** }
+  56              		.loc 1 75 1 is_stmt 0
+  57 0032 2285     		mv	a0,s0
+  58 0034 17030000 		tail	__riscv_restore_2
+  58      67000300 
+  59              		.cfi_remember_state
+  60              		.cfi_restore 9
+  61              		.cfi_restore 8
+  62              		.cfi_restore 1
+  63              		.cfi_def_cfa_offset 0
+  64              	.LVL7:
+  65              	.L3:
+  66              		.cfi_restore_state
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   }
+  67              		.loc 1 68 12
+  68 003c 0144     		li	s0,0
+  69              	.LVL8:
+  70 003e D5BF     		j	.L1
+  71              		.cfi_endproc
+  72              	.LFE4:
+  74              		.section	.text.altcp_tls_alloc,"ax",@progbits
+  75              		.align	1
+  76              		.globl	altcp_tls_alloc
+  78              	altcp_tls_alloc:
+  79              	.LFB5:
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** 
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** /** This standard allocator function creates an altcp pcb for
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****  * TLS over TCP */
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** struct altcp_pcb *
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** altcp_tls_alloc(void *arg, u8_t ip_type)
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c **** {
+  80              		.loc 1 81 1 is_stmt 1
+  81              		.cfi_startproc
+  82              	.LVL9:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/src/core\altcp_alloc.c ****   return altcp_tls_new((struct altcp_tls_config *)arg, ip_type);
+  83              		.loc 1 82 3
+  84              		.loc 1 82 10 is_stmt 0
+  85 0000 17030000 		tail	altcp_tls_new
+  85      67000300 
+  86              	.LVL10:
+  87              		.cfi_endproc
+  88              	.LFE5:
+  90              		.text
+  91              	.Letext0:
+  92              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+  93              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+  94              		.file 4 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/arch.h"
+  95              		.file 5 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/err.h"
+  96              		.file 6 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/pbuf.h"
+  97              		.file 7 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/ip4_addr.h"
+  98              		.file 8 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/ip_addr.h"
+  99              		.file 9 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/altcp.h"
+ 100              		.file 10 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/priv/altcp_priv.h"
+ 101              		.file 11 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/altcp_tcp.h"
+ 102              		.file 12 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/altcp_tls.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 altcp_alloc.c
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:13     .text.altcp_tls_new:0000000000000000 altcp_tls_new
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:17     .text.altcp_tls_new:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:19     .text.altcp_tls_new:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:20     .text.altcp_tls_new:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:21     .text.altcp_tls_new:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:22     .text.altcp_tls_new:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:23     .text.altcp_tls_new:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:25     .text.altcp_tls_new:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:26     .text.altcp_tls_new:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:27     .text.altcp_tls_new:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:28     .text.altcp_tls_new:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:30     .text.altcp_tls_new:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:35     .text.altcp_tls_new:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:36     .text.altcp_tls_new:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:38     .text.altcp_tls_new:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:41     .text.altcp_tls_new:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:42     .text.altcp_tls_new:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:49     .text.altcp_tls_new:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:50     .text.altcp_tls_new:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:52     .text.altcp_tls_new:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:57     .text.altcp_tls_new:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:59     .text.altcp_tls_new:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:60     .text.altcp_tls_new:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:61     .text.altcp_tls_new:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:62     .text.altcp_tls_new:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:63     .text.altcp_tls_new:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:66     .text.altcp_tls_new:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:68     .text.altcp_tls_new:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:71     .text.altcp_tls_new:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:78     .text.altcp_tls_alloc:0000000000000000 altcp_tls_alloc
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:81     .text.altcp_tls_alloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:83     .text.altcp_tls_alloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:84     .text.altcp_tls_alloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:85     .text.altcp_tls_alloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:87     .text.altcp_tls_alloc:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:74     .text.altcp_tls_new:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:90     .text.altcp_tls_alloc:0000000000000008 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:65     .text.altcp_tls_new:000000000000003c .L3
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:55     .text.altcp_tls_new:0000000000000032 .L1
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1118   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1633   .debug_str:00000000000000f5 .LASF98
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1641   .debug_str:000000000000020c .LASF99
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1733   .debug_str:00000000000004a9 .LASF100
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1581   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1589   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1719   .debug_str:000000000000046e .LASF0
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1691   .debug_str:00000000000003b9 .LASF2
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1789   .debug_str:0000000000000665 .LASF1
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1679   .debug_str:000000000000037a .LASF3
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1609   .debug_str:000000000000006a .LASF4
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1623   .debug_str:00000000000000b8 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1725   .debug_str:0000000000000482 .LASF6
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1661   .debug_str:000000000000030e .LASF7
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1617   .debug_str:000000000000008d .LASF8
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1737   .debug_str:0000000000000534 .LASF9
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1655   .debug_str:00000000000002dc .LASF10
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1657   .debug_str:00000000000002ea .LASF11
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1703   .debug_str:00000000000003f9 .LASF12
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1601   .debug_str:000000000000003d .LASF13
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1753   .debug_str:0000000000000599 .LASF14
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1707   .debug_str:0000000000000414 .LASF15
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1699   .debug_str:00000000000003df .LASF16
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1723   .debug_str:000000000000047d .LASF17
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1747   .debug_str:0000000000000576 .LASF18
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1649   .debug_str:00000000000002ba .LASF19
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1757   .debug_str:00000000000005b0 .LASF20
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1749   .debug_str:000000000000057b .LASF21
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1721   .debug_str:0000000000000477 .LASF22
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1791   .debug_str:000000000000066f .LASF29
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1695   .debug_str:00000000000003cb .LASF23
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1785   .debug_str:000000000000064f .LASF24
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1767   .debug_str:00000000000005e1 .LASF25
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1671   .debug_str:0000000000000348 .LASF26
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1693   .debug_str:00000000000003c5 .LASF27
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1689   .debug_str:00000000000003b2 .LASF28
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1685   .debug_str:00000000000003a3 .LASF30
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1665   .debug_str:0000000000000328 .LASF31
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1741   .debug_str:000000000000055c .LASF32
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1759   .debug_str:00000000000005b6 .LASF33
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1793   .debug_str:0000000000000674 .LASF34
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1637   .debug_str:00000000000001fa .LASF35
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1713   .debug_str:0000000000000444 .LASF36
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1605   .debug_str:0000000000000052 .LASF37
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1763   .debug_str:00000000000005d3 .LASF38
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1681   .debug_str:0000000000000388 .LASF39
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1777   .debug_str:000000000000061c .LASF40
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1613   .debug_str:0000000000000079 .LASF41
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1611   .debug_str:0000000000000074 .LASF42
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1735   .debug_str:0000000000000527 .LASF43
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1761   .debug_str:00000000000005c0 .LASF44
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1603   .debug_str:0000000000000044 .LASF45
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1779   .debug_str:0000000000000621 .LASF46
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1787   .debug_str:0000000000000657 .LASF47
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1659   .debug_str:0000000000000301 .LASF48
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1625   .debug_str:00000000000000c3 .LASF49
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1781   .debug_str:000000000000062f .LASF50
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1745   .debug_str:000000000000056f .LASF51
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1727   .debug_str:0000000000000495 .LASF52
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1639   .debug_str:0000000000000204 .LASF53
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1729   .debug_str:000000000000049a .LASF54
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1687   .debug_str:00000000000003ac .LASF55
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1591   .debug_str:0000000000000000 .LASF56
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1643   .debug_str:0000000000000292 .LASF57
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1595   .debug_str:0000000000000016 .LASF58
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1765   .debug_str:00000000000005da .LASF59
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1651   .debug_str:00000000000002bf .LASF60
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1635   .debug_str:00000000000001ee .LASF61
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1773   .debug_str:00000000000005fe .LASF62
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1711   .debug_str:0000000000000437 .LASF63
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1755   .debug_str:00000000000005a1 .LASF64
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1731   .debug_str:00000000000004a1 .LASF65
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1743   .debug_str:0000000000000567 .LASF66
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1629   .debug_str:00000000000000da .LASF67
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1669   .debug_str:0000000000000342 .LASF68
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1677   .debug_str:0000000000000372 .LASF69
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1631   .debug_str:00000000000000e3 .LASF70
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1621   .debug_str:00000000000000a8 .LASF71
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1705   .debug_str:0000000000000406 .LASF72
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1701   .debug_str:00000000000003e8 .LASF73
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1675   .debug_str:0000000000000362 .LASF74
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1697   .debug_str:00000000000003d0 .LASF75
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1717   .debug_str:000000000000045f .LASF76
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1607   .debug_str:0000000000000058 .LASF77
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1615   .debug_str:000000000000007e .LASF78
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1775   .debug_str:000000000000060c .LASF79
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1771   .debug_str:00000000000005f1 .LASF80
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1715   .debug_str:000000000000044f .LASF81
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1667   .debug_str:000000000000032d .LASF82
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1783   .debug_str:0000000000000638 .LASF83
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1653   .debug_str:00000000000002c6 .LASF84
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1751   .debug_str:0000000000000581 .LASF85
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1663   .debug_str:0000000000000317 .LASF86
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1645   .debug_str:000000000000029b .LASF87
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1709   .debug_str:000000000000041d .LASF88
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1619   .debug_str:0000000000000098 .LASF89
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1599   .debug_str:000000000000002b .LASF90
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1593   .debug_str:0000000000000006 .LASF92
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:79     .text.altcp_tls_alloc:0000000000000000 .LFB5
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:88     .text.altcp_tls_alloc:0000000000000008 .LFE5
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1473   .debug_loc:0000000000000000 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1769   .debug_str:00000000000005e9 .LASF91
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1487   .debug_loc:0000000000000021 .LLST5
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:86     .text.altcp_tls_alloc:0000000000000008 .LVL10
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1647   .debug_str:00000000000002ac .LASF93
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:14     .text.altcp_tls_new:0000000000000000 .LFB4
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:72     .text.altcp_tls_new:0000000000000040 .LFE4
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1627   .debug_str:00000000000000d3 .LASF94
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1501   .debug_loc:0000000000000042 .LLST0
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1530   .debug_loc:0000000000000087 .LLST1
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1544   .debug_loc:00000000000000a8 .LLST2
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1559   .debug_loc:00000000000000d1 .LLST3
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:33     .text.altcp_tls_new:0000000000000014 .LVL2
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:45     .text.altcp_tls_new:0000000000000024 .LVL4
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:54     .text.altcp_tls_new:0000000000000032 .LVL6
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1683   .debug_str:0000000000000392 .LASF101
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1739   .debug_str:0000000000000546 .LASF95
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1597   .debug_str:000000000000001c .LASF96
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:1673   .debug_str:0000000000000356 .LASF97
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:82     .text.altcp_tls_alloc:0000000000000000 .LVL9
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:18     .text.altcp_tls_new:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:31     .text.altcp_tls_new:000000000000000c .LVL1
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:47     .text.altcp_tls_new:0000000000000026 .LVL5
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:64     .text.altcp_tls_new:000000000000003c .LVL7
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:69     .text.altcp_tls_new:000000000000003e .LVL8
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:43     .text.altcp_tls_new:000000000000001c .LVL3
+C:\Users\stapi\AppData\Local\Temp\cc12Q0mX.s:104    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+__riscv_save_2
+altcp_tcp_new_ip_type
+altcp_tls_wrap
+altcp_close
+__riscv_restore_2

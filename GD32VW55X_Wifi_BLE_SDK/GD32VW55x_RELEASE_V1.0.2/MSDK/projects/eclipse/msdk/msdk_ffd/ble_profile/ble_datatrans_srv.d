@@ -1,6 +1,6 @@
 ble_profile/ble_datatrans_srv.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/profile/datatrans/ble_datatrans_srv.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/profile/datatrans/ble_datatrans_srv.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/profile/datatrans/ble_datatrans_srv.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/profile/datatrans/ble_datatrans_srv.h \
  ..\..\..\..\blesw\src\export/ble_gatts.h \
  ..\..\..\..\blesw\src\export/ble_gatt.h \
  ..\..\..\..\plf\riscv\arch/arch.h ..\..\..\..\plf\riscv\arch\boot/boot.h \
@@ -19,7 +19,7 @@ ble_profile/ble_datatrans_srv.o: \
  ..\..\..\..\blesw\src\export/ble_utils.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/profile/datatrans/ble_datatrans_srv.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/profile/datatrans/ble_datatrans_srv.h:
 ..\..\..\..\blesw\src\export/ble_gatts.h:
 ..\..\..\..\blesw\src\export/ble_gatt.h:
 ..\..\..\..\plf\riscv\arch/arch.h:

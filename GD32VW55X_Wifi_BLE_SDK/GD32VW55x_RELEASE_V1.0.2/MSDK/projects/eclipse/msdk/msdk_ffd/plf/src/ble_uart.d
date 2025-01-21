@@ -1,5 +1,5 @@
 plf/src/ble_uart.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/ble_uart.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/ble_uart.c \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h \
  ..\..\..\..\util\include/dbg_print.h ..\..\..\..\app/app_cfg.h \
@@ -8,8 +8,8 @@ plf/src/ble_uart.o: \
  ..\..\..\..\blesw\src\export/ble_export.h \
  ..\..\..\..\blesw\src\export/ble_error.h \
  ..\..\..\..\plf\riscv\arch\ll/ll.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/ble_uart.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart_config.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/ble_uart.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart_config.h \
  ..\..\..\..\util\include/util_config.h \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \
  ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_core.h \
@@ -52,7 +52,7 @@ plf/src/ble_uart.o: \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_trng.h \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_usart.h \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_wwdgt.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart.h \
  ..\..\..\..\util\include/cyclic_buffer.h
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h:
@@ -65,8 +65,8 @@ plf/src/ble_uart.o: \
 ..\..\..\..\blesw\src\export/ble_export.h:
 ..\..\..\..\blesw\src\export/ble_error.h:
 ..\..\..\..\plf\riscv\arch\ll/ll.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/ble_uart.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart_config.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/ble_uart.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart_config.h:
 ..\..\..\..\util\include/util_config.h:
 ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h:
 ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_core.h:
@@ -109,5 +109,5 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_trng.h:
 ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_usart.h:
 ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_wwdgt.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart.h:
 ..\..\..\..\util\include/cyclic_buffer.h:

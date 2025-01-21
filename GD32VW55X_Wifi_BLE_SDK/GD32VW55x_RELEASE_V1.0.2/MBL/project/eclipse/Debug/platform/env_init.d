@@ -1,5 +1,5 @@
 platform/env_init.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/env_init.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/env/env_init.c \
  ../../../../MSDK/plf/riscv/gd32vw55x/gd32vw55x.h \
  ../../../../config/platform_def.h \
  ../../../../MSDK/plf/riscv/NMSIS/Core/Include/nmsis_core.h \

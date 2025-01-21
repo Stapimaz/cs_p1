@@ -1,6 +1,6 @@
 plf/src/dma.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/dma/dma.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/dma/dma.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/dma/dma.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/dma/dma.h \
  ..\..\..\..\plf\riscv\arch\compiler/compiler.h \
  ..\..\..\..\plf\riscv\arch/arch.h ..\..\..\..\plf\riscv\arch\boot/boot.h \
  ..\..\..\..\plf\riscv\arch\ll/ll.h \
@@ -46,7 +46,7 @@ plf/src/dma.o: \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_trng.h \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_usart.h \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_wwdgt.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/dma/dma.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/dma/dma.h:
 ..\..\..\..\plf\riscv\arch\compiler/compiler.h:
 ..\..\..\..\plf\riscv\arch/arch.h:
 ..\..\..\..\plf\riscv\arch\boot/boot.h:

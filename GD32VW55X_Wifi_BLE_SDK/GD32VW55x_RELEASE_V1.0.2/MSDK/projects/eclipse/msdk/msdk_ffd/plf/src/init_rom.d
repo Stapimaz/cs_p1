@@ -1,8 +1,8 @@
 plf/src/init_rom.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.c \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.h \
  ..\..\..\..\..\ROM-EXPORT\bootloader/rom_export.h \
  ..\..\..\..\..\ROM-EXPORT\bootloader/rom_trace.h \
  ..\..\..\..\..\ROM-EXPORT\halcomm/rom_region.h \
@@ -60,7 +60,7 @@ plf/src/init_rom.o: \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/platform_time.h \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/platform.h \
  ..\..\..\..\plf\src\trng/trng.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom_symbol.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom_symbol.c \
  ..\..\..\..\..\ROM-EXPORT\bootloader/rom_export_mbedtls.h \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/md5.h \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/sha1.h \
@@ -94,7 +94,7 @@ plf/src/init_rom.o: \
  ..\..\..\..\app/rftest_cfg.h ..\..\..\..\util\include/debug_print.h
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.h:
 ..\..\..\..\..\ROM-EXPORT\bootloader/rom_export.h:
 ..\..\..\..\..\ROM-EXPORT\bootloader/rom_trace.h:
 ..\..\..\..\..\ROM-EXPORT\halcomm/rom_region.h:
@@ -152,7 +152,7 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/platform_time.h:
 ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/platform.h:
 ..\..\..\..\plf\src\trng/trng.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom_symbol.c:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom_symbol.c:
 ..\..\..\..\..\ROM-EXPORT\bootloader/rom_export_mbedtls.h:
 ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/md5.h:
 ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/sha1.h:

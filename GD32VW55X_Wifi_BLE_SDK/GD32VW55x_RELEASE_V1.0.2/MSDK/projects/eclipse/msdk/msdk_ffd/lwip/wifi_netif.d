@@ -1,6 +1,6 @@
 lwip/wifi_netif.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/wifi_netif.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/wifi_netif.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/wifi_netif.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/wifi_netif.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/pbuf.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/opt.h \
  ..\..\..\..\lwip\lwip-2.1.2\port/lwipopts.h \
@@ -66,13 +66,13 @@ lwip/wifi_netif.o: \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/inet_chksum.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/netif/ethernet.h \
  ..\..\..\..\macsw\export/co_math.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/dhcpd.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/leases.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/dhcpd.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/leases.h \
  ..\..\..\..\util\include/dbg_print.h \
  ..\..\..\..\util\include/debug_print.h \
  ..\..\..\..\wifi_manager/wifi_init.h \
  ..\..\..\..\macsw\export/macif_types.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/wifi_netif.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/wifi_netif.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/pbuf.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/opt.h:
 ..\..\..\..\lwip\lwip-2.1.2\port/lwipopts.h:
@@ -144,8 +144,8 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/inet_chksum.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/netif/ethernet.h:
 ..\..\..\..\macsw\export/co_math.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/dhcpd.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/leases.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/dhcpd.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/leases.h:
 ..\..\..\..\util\include/dbg_print.h:
 ..\..\..\..\util\include/debug_print.h:
 ..\..\..\..\wifi_manager/wifi_init.h:

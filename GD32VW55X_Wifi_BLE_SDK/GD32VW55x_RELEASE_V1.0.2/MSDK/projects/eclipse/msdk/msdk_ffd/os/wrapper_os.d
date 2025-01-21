@@ -1,9 +1,9 @@
 os/wrapper_os.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os_config.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_freertos.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_freertos.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os_config.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_freertos.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_freertos.h \
  ..\..\..\..\rtos\FreeRTOS\Source\include/FreeRTOS.h \
  ..\..\..\..\rtos\FreeRTOS\config/FreeRTOSConfig.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h \
@@ -26,10 +26,10 @@ os/wrapper_os.o: \
  ..\..\..\..\util\include/debug_print.h \
  ..\..\..\..\plf\riscv\arch\compiler/compiler.h \
  ..\..\..\..\plf\src\trng/trng.h ..\..\..\..\plf\src\time/systime.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os_config.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_freertos.c:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_freertos.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_os_config.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_freertos.c:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/rtos_wrapper/wrapper_freertos.h:
 ..\..\..\..\rtos\FreeRTOS\Source\include/FreeRTOS.h:
 ..\..\..\..\rtos\FreeRTOS\config/FreeRTOSConfig.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h:

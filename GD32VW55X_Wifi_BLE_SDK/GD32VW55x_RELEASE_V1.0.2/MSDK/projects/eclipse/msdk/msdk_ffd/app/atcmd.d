@@ -1,11 +1,11 @@
 app/atcmd.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd.c \
  ..\..\..\..\macsw\export/version.h \
  ..\..\..\..\macsw\export/_build_version.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/_build_date.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/_build_date.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h \
  ..\..\..\..\..\config/platform_def.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h \
  ..\..\..\..\macsw\export/wlan_config.h \
  ..\..\..\..\wpa_supplicant\src\utils/build_config.h \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \
@@ -98,27 +98,27 @@ app/atcmd.o: \
  ..\..\..\..\macsw\export/wifi_export.h \
  ..\..\..\..\wifi_manager/wifi_init.h \
  ..\..\..\..\macsw\export/macif_types.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h \
  ..\..\..\..\macsw\export/co_int.h ..\..\..\..\macsw\export/co_math.h \
  ..\..\..\..\plf\src\uart/uart.h ..\..\..\..\util\include/cyclic_buffer.h \
  ..\..\..\..\plf\src\uart/uart_config.h \
  ..\..\..\..\util\include/util_config.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.h \
  ..\..\..\..\lwip\iperf/net_iperf.h ..\..\..\..\macsw\export/co_bool.h \
  ..\..\..\..\util\include/util.h ..\..\..\..\plf\src\time/systime.h \
  ..\..\..\..\plf\src\uart/log_uart.h \
  ..\..\..\..\plf\src\uart/uart_config.h ..\..\..\..\plf\src\uart/uart.h \
  ..\..\..\..\plf\src/wakelock.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd_wifi.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd_tcpip.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd_wifi.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd_tcpip.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/netdb.h
 ..\..\..\..\macsw\export/version.h:
 ..\..\..\..\macsw\export/_build_version.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/_build_date.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/_build_date.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h:
 ..\..\..\..\..\config/platform_def.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h:
 ..\..\..\..\macsw\export/wlan_config.h:
 ..\..\..\..\wpa_supplicant\src\utils/build_config.h:
 ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h:
@@ -218,14 +218,14 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\macsw\export/wifi_export.h:
 ..\..\..\..\wifi_manager/wifi_init.h:
 ..\..\..\..\macsw\export/macif_types.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h:
 ..\..\..\..\macsw\export/co_int.h:
 ..\..\..\..\macsw\export/co_math.h:
 ..\..\..\..\plf\src\uart/uart.h:
 ..\..\..\..\util\include/cyclic_buffer.h:
 ..\..\..\..\plf\src\uart/uart_config.h:
 ..\..\..\..\util\include/util_config.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.h:
 ..\..\..\..\lwip\iperf/net_iperf.h:
 ..\..\..\..\macsw\export/co_bool.h:
 ..\..\..\..\util\include/util.h:
@@ -234,7 +234,7 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\plf\src\uart/uart_config.h:
 ..\..\..\..\plf\src\uart/uart.h:
 ..\..\..\..\plf\src/wakelock.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd_wifi.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd_tcpip.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd_wifi.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/atcmd_tcpip.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/netdb.h:

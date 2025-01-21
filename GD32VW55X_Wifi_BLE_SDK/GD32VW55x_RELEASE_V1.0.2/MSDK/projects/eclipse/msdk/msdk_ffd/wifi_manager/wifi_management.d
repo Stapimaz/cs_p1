@@ -1,6 +1,6 @@
 wifi_manager/wifi_management.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_management.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_management.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.h \
  ..\..\..\..\app/app_cfg.h ..\..\..\..\..\config/platform_def.h \
  ..\..\..\..\app/rftest_cfg.h ..\..\..\..\macsw\export/wlan_config.h \
  ..\..\..\..\wpa_supplicant\src\utils/build_config.h \
@@ -38,15 +38,15 @@ wifi_manager/wifi_management.o: \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/memp_std.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/memp_priv.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/mem_priv.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_wpa.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_wpa.h \
  ..\..\..\..\macsw\export/mac_types.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_management.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_eloop.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_netlink.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_management.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_eloop.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_netlink.h \
  ..\..\..\..\util\include/dbg_print.h \
  ..\..\..\..\util\include/debug_print.h \
  ..\..\..\..\macsw\export/wifi_export.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/state_machine.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/state_machine.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/netifapi.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/sys.h \
  ..\..\..\..\lwip\lwip-2.1.2\port/arch/sys_arch.h \
@@ -68,10 +68,10 @@ wifi_manager/wifi_management.o: \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/netbuf.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/prot/ethernet.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/prot/ieee.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_net_ip.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_init.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_net_ip.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_init.h \
  ..\..\..\..\macsw\export/macif_types.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.h:
 ..\..\..\..\app/app_cfg.h:
 ..\..\..\..\..\config/platform_def.h:
 ..\..\..\..\app/rftest_cfg.h:
@@ -115,15 +115,15 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/memp_std.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/memp_priv.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/mem_priv.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_wpa.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_wpa.h:
 ..\..\..\..\macsw\export/mac_types.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_management.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_eloop.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_netlink.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_management.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_eloop.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_netlink.h:
 ..\..\..\..\util\include/dbg_print.h:
 ..\..\..\..\util\include/debug_print.h:
 ..\..\..\..\macsw\export/wifi_export.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/state_machine.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/state_machine.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/netifapi.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/sys.h:
 ..\..\..\..\lwip\lwip-2.1.2\port/arch/sys_arch.h:
@@ -145,6 +145,6 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/netbuf.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/prot/ethernet.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/prot/ieee.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_net_ip.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_init.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_net_ip.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_init.h:
 ..\..\..\..\macsw\export/macif_types.h:

@@ -1,5 +1,5 @@
 plf/src/trace_uart.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/trace_uart.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/trace_uart.c \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \
  ..\..\..\..\..\config/platform_def.h \
  ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_core.h \
@@ -47,10 +47,10 @@ plf/src/trace_uart.o: \
  ..\..\..\..\util\include/dbg_print.h ..\..\..\..\app/app_cfg.h \
  ..\..\..\..\app/rftest_cfg.h ..\..\..\..\util\include/debug_print.h \
  ..\..\..\..\plf\src/wakelock.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/trace_uart.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/trace_uart.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart.h \
  ..\..\..\..\util\include/cyclic_buffer.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart_config.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart_config.h \
  ..\..\..\..\util\include/util_config.h \
  ..\..\..\..\util\include/trace_ext.h \
  ..\..\..\..\util\include/util_config.h
@@ -103,10 +103,10 @@ plf/src/trace_uart.o: \
 ..\..\..\..\app/rftest_cfg.h:
 ..\..\..\..\util\include/debug_print.h:
 ..\..\..\..\plf\src/wakelock.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/trace_uart.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/trace_uart.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart.h:
 ..\..\..\..\util\include/cyclic_buffer.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart_config.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/uart/uart_config.h:
 ..\..\..\..\util\include/util_config.h:
 ..\..\..\..\util\include/trace_ext.h:
 ..\..\..\..\util\include/util_config.h:

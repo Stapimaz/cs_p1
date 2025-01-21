@@ -1,5 +1,5 @@
 tuya/src/tkl_queue.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/tuya/tuyaos_adapter/src/tkl_queue.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/tuya/tuyaos_adapter/src/tkl_queue.c \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \

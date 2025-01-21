@@ -1,5 +1,5 @@
 app/iperf.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/iperf.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/iperf.c \
  ..\..\..\..\lwip\iperf/net_iperf.h ..\..\..\..\macsw\export/co_int.h \
  ..\..\..\..\macsw\export/co_bool.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/sockets.h \
@@ -34,7 +34,7 @@ app/iperf.o: \
  ..\..\..\..\lwip\iperf/net_iperf_al.h \
  ..\..\..\..\util\include/dbg_print.h \
  ..\..\..\..\util\include/debug_print.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h \
  ..\..\..\..\macsw\export/co_math.h ..\..\..\..\macsw\export/co_int.h \
  ..\..\..\..\macsw\export/co_bool.h ..\..\..\..\macsw\export/co_bit.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include\lwip/tcpip.h \
@@ -79,7 +79,7 @@ app/iperf.o: \
 ..\..\..\..\lwip\iperf/net_iperf_al.h:
 ..\..\..\..\util\include/dbg_print.h:
 ..\..\..\..\util\include/debug_print.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h:
 ..\..\..\..\macsw\export/co_math.h:
 ..\..\..\..\macsw\export/co_int.h:
 ..\..\..\..\macsw\export/co_bool.h:

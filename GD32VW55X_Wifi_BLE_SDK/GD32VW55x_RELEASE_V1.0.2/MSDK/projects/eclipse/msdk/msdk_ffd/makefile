@@ -105,11 +105,11 @@ clean:
 	-@echo ' '
 
 pre-build:
-	-cmd /C "..\..\..\image_prebuild.bat riscv-nuclei-elf- C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/projects/eclipse/msdk/../../../ "
+	-cmd /C "..\..\..\image_prebuild.bat riscv-nuclei-elf- C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/projects/eclipse/msdk/../../../ "
 	-@echo ' '
 
 post-build:
-	-cmd /C "..\..\..\image_afterbuild.bat riscv-nuclei-elf- ECDSA256 CERT C:\Users\stapi\OneDrive\Desktop\GD32VW553\EmbeddedBuilder_v1.4.7.26843\EmbeddedBuilder\/../Tools/OpenOCD/xpack-openocd-0.11.0-3/bin C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/projects/eclipse/msdk/../../../../ "" "
+	-cmd /C "..\..\..\image_afterbuild.bat riscv-nuclei-elf- ECDSA256 CERT C:\Users\stapi\OneDrive\Desktop\GD32VW553\EmbeddedBuilder_v1.4.7.26843\EmbeddedBuilder\/../Tools/OpenOCD/xpack-openocd-0.11.0-3/bin C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/projects/eclipse/msdk/../../../../ "" "
 	-@echo ' '
 
 secondary-outputs: $(SECONDARY_FLASH_HEX) $(SECONDARY_FLASH_BIN) $(SECONDARY_LIST) $(SECONDARY_SIZE)

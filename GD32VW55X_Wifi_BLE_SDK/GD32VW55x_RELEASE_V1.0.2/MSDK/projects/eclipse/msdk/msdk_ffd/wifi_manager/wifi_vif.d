@@ -1,6 +1,6 @@
 wifi_manager/wifi_vif.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.h \
  ..\..\..\..\app/app_cfg.h ..\..\..\..\..\config/platform_def.h \
  ..\..\..\..\app/rftest_cfg.h ..\..\..\..\macsw\export/wlan_config.h \
  ..\..\..\..\wpa_supplicant\src\utils/build_config.h \
@@ -38,10 +38,10 @@ wifi_manager/wifi_vif.o: \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/memp_std.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/memp_priv.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/mem_priv.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_wpa.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_wpa.h \
  ..\..\..\..\macsw\export/mac_types.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_net_ip.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.h:
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_net_ip.h
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_vif.h:
 ..\..\..\..\app/app_cfg.h:
 ..\..\..\..\..\config/platform_def.h:
 ..\..\..\..\app/rftest_cfg.h:
@@ -85,6 +85,6 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/memp_std.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/memp_priv.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/mem_priv.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_wpa.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_wpa.h:
 ..\..\..\..\macsw\export/mac_types.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_net_ip.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wifi_manager/wifi_net_ip.h:

@@ -1,8 +1,8 @@
 app/ping.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h \
  ..\..\..\..\..\config/platform_def.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/opt.h \
  ..\..\..\..\lwip\lwip-2.1.2\port/lwipopts.h \
  ..\..\..\..\macsw\export/wlan_config.h ..\..\..\..\app/app_cfg.h \
@@ -40,12 +40,12 @@ app/ping.o: \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/prot/ip4.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/ip6.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/prot/ip.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.h \
  ..\..\..\..\util\include/dbg_print.h \
  ..\..\..\..\util\include/debug_print.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h:
 ..\..\..\..\..\config/platform_def.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/opt.h:
 ..\..\..\..\lwip\lwip-2.1.2\port/lwipopts.h:
 ..\..\..\..\macsw\export/wlan_config.h:
@@ -84,6 +84,6 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/prot/ip4.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/ip6.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/prot/ip.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/ping.h:
 ..\..\..\..\util\include/dbg_print.h:
 ..\..\..\..\util\include/debug_print.h:

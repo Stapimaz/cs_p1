@@ -1,8 +1,8 @@
 plf/gd32vw55x/system_gd32vw55x.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/system_gd32vw55x.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/system_gd32vw55x.c \
  ..\..\..\..\app/app_cfg.h ..\..\..\..\..\config/platform_def.h \
  ..\..\..\..\app/rftest_cfg.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/gd32vw55x.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/gd32vw55x.h \
  ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_core.h \
  ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_version.h \
  ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_compiler.h \
@@ -17,7 +17,7 @@ plf/gd32vw55x/system_gd32vw55x.o: \
  ..\..\..\..\plf\riscv\NMSIS\Core\Include/core_compatiable.h \
  ..\..\..\..\plf\riscv\NMSIS\Core\Include/core_feature_eclic.h \
  ..\..\..\..\plf\riscv\NMSIS\Core\Include/core_feature_timer.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/system_gd32vw55x.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/system_gd32vw55x.h \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral/gd32vw55x_libopt.h \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_adc.h \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \
@@ -47,7 +47,7 @@ plf/gd32vw55x/system_gd32vw55x.o: \
 ..\..\..\..\app/app_cfg.h:
 ..\..\..\..\..\config/platform_def.h:
 ..\..\..\..\app/rftest_cfg.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/gd32vw55x.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/gd32vw55x.h:
 ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_core.h:
 ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_version.h:
 ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_compiler.h:
@@ -62,7 +62,7 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\plf\riscv\NMSIS\Core\Include/core_compatiable.h:
 ..\..\..\..\plf\riscv\NMSIS\Core\Include/core_feature_eclic.h:
 ..\..\..\..\plf\riscv\NMSIS\Core\Include/core_feature_timer.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/system_gd32vw55x.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/riscv/gd32vw55x/system_gd32vw55x.h:
 ..\..\..\..\plf\GD32VW55x_standard_peripheral/gd32vw55x_libopt.h:
 ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_adc.h:
 ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h:

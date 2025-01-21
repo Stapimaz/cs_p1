@@ -1,5 +1,5 @@
 plf/src/trng.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng/trng.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng/trng.c \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_rcu.h \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \
  ..\..\..\..\..\config/platform_def.h \
@@ -46,7 +46,7 @@ plf/src/trng.o: \
  ..\..\..\..\app/rftest_cfg.h ..\..\..\..\util\include/debug_print.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng/trng.h
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng/trng.h
 ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_rcu.h:
 ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h:
 ..\..\..\..\..\config/platform_def.h:
@@ -95,4 +95,4 @@ plf/src/trng.o: \
 ..\..\..\..\util\include/debug_print.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng/trng.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/trng/trng.h:

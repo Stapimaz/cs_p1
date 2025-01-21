@@ -1,5 +1,5 @@
 coap/coap_async.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src/coap_async.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src/coap_async.c \
  ..\..\..\..\lwip\libcoap-4.3.4\include/coap3/coap_internal.h \
  ..\..\..\..\lwip\libcoap-4.3.4\port/coap_config.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/opt.h \

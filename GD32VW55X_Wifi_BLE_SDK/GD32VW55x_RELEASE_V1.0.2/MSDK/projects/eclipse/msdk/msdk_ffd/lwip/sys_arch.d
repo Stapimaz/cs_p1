@@ -1,6 +1,6 @@
 lwip/sys_arch.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/sys_arch.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/arch/sys_arch.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/sys_arch.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/arch/sys_arch.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/opt.h \
@@ -24,7 +24,7 @@ lwip/sys_arch.o: \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/priv/mem_priv.h \
  ..\..\..\..\util\include/dbg_print.h \
  ..\..\..\..\util\include/debug_print.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/arch/sys_arch.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/lwip-2.1.2/port/arch/sys_arch.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h:
 ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/opt.h:

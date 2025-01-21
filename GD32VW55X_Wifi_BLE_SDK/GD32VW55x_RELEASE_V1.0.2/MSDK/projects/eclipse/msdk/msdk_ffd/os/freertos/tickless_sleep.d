@@ -1,9 +1,9 @@
 os/freertos/tickless_sleep.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/Common/tickless_sleep.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/Common/tickless_sleep.c \
  ..\..\..\..\app/app_cfg.h ..\..\..\..\..\config/platform_def.h \
  ..\..\..\..\app/rftest_cfg.h ..\..\..\..\util\include/dbg_print.h \
  ..\..\..\..\util\include/debug_print.h ..\..\..\..\plf\src/wakelock.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/Common/tickless_sleep.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/Common/tickless_sleep.h \
  ..\..\..\..\plf\src/gd32vw55x_platform.h \
  ..\..\..\..\plf\src\time/systime.h \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \
@@ -68,7 +68,7 @@ os/freertos/tickless_sleep.o: \
 ..\..\..\..\util\include/dbg_print.h:
 ..\..\..\..\util\include/debug_print.h:
 ..\..\..\..\plf\src/wakelock.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/Common/tickless_sleep.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/rtos/FreeRTOS/Source/portable/Common/tickless_sleep.h:
 ..\..\..\..\plf\src/gd32vw55x_platform.h:
 ..\..\..\..\plf\src\time/systime.h:
 ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h:

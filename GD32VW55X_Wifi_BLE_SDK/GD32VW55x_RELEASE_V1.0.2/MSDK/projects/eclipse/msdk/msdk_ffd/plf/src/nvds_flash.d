@@ -1,9 +1,9 @@
 plf/src/nvds_flash.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_flash.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_flash.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_flash.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_flash.h \
  ..\..\..\..\plf\src\raw_flash/raw_flash_api.h ..\..\..\..\app/app_cfg.h \
  ..\..\..\..\..\config/platform_def.h ..\..\..\..\app/rftest_cfg.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_type.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_type.h \
  ..\..\..\..\util\include/slist.h \
  ..\..\..\..\plf\riscv\arch\compiler/compiler.h \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/aes.h \
@@ -67,12 +67,12 @@ plf/src/nvds_flash.o: \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h \
  ..\..\..\..\util\include/dbg_print.h \
  ..\..\..\..\util\include/debug_print.h ..\..\..\..\util\include/crc.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_flash.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_flash.h:
 ..\..\..\..\plf\src\raw_flash/raw_flash_api.h:
 ..\..\..\..\app/app_cfg.h:
 ..\..\..\..\..\config/platform_def.h:
 ..\..\..\..\app/rftest_cfg.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_type.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/nvds/nvds_type.h:
 ..\..\..\..\util\include/slist.h:
 ..\..\..\..\plf\riscv\arch\compiler/compiler.h:
 ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/aes.h:

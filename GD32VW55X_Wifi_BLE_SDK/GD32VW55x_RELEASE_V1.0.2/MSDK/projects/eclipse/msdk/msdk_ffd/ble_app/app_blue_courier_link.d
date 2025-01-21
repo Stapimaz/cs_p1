@@ -1,6 +1,6 @@
 ble_app/app_blue_courier_link.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier_link.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/ble_app_config.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier_link.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/ble_app_config.h \
  ..\..\..\..\blesw\src\export\config_max/ble_config.h \
  ..\..\..\..\ble\profile/ble_profile_config.h \
  ..\..\..\..\ble\profile/dis/ble_diss.h \
@@ -9,8 +9,8 @@ ble_app/app_blue_courier_link.o: \
  ..\..\..\..\blesw\src\export/ble_gap.h \
  ..\..\..\..\blesw\src\export/ble_types.h \
  ..\..\..\..\blesw\src\export/ble_error.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier_link.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier_link.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier.h \
  ..\..\..\..\blesw\src\export/ble_adv.h \
  ..\..\..\..\blesw\src\export/ble_gap.h \
  ..\..\..\..\blesw\src\export/ble_adv_data.h \
@@ -29,7 +29,7 @@ ble_app/app_blue_courier_link.o: \
  ..\..\..\..\util\include/debug_print.h \
  ..\..\..\..\macsw\export/co_math.h ..\..\..\..\macsw\export/co_int.h \
  ..\..\..\..\macsw\export/co_bool.h ..\..\..\..\macsw\export/co_bit.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/ble_app_config.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/ble_app_config.h:
 ..\..\..\..\blesw\src\export\config_max/ble_config.h:
 ..\..\..\..\ble\profile/ble_profile_config.h:
 ..\..\..\..\ble\profile/dis/ble_diss.h:
@@ -38,8 +38,8 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ..\..\..\..\blesw\src\export/ble_gap.h:
 ..\..\..\..\blesw\src\export/ble_types.h:
 ..\..\..\..\blesw\src\export/ble_error.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier_link.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier_link.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/ble/app/app_blue_courier.h:
 ..\..\..\..\blesw\src\export/ble_adv.h:
 ..\..\..\..\blesw\src\export/ble_gap.h:
 ..\..\..\..\blesw\src\export/ble_adv_data.h:

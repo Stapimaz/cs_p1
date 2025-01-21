@@ -11,49 +11,49 @@
   11              		.globl	coap_tcp_is_supported
   13              	coap_tcp_is_supported:
   14              	.LFB31:
-  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2
-   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** /*
-   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * coap_tcp.c -- TCP functions for libcoap
-   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  *
-   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * Copyright (C) 2019-2023 Olaf Bergmann <bergmann@tzi.org> and others
-   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  *
-   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * SPDX-License-Identifier: BSD-2-Clause
-   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  *
-   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * This file is part of the CoAP library libcoap. Please see README for terms
-   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * of use.
-  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  */
-  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** 
-  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** /**
-  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * @file coap_tcp.c
-  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * @brief CoAP TCP handling functions
-  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  */
-  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** 
-  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #include "coap3/coap_internal.h"
-  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** 
-  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #include <sys/types.h>
-  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #ifdef HAVE_SYS_SOCKET_H
-  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # include <sys/socket.h>
-  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define OPTVAL_T(t)         (t)
-  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define OPTVAL_GT(t)        (t)
-  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #endif
-  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #ifdef HAVE_SYS_IOCTL_H
-  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #include <sys/ioctl.h>
-  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #endif
-  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #ifdef HAVE_WS2TCPIP_H
-  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #include <ws2tcpip.h>
-  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define OPTVAL_T(t)         (const char*)(t)
-  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define OPTVAL_GT(t)        (char*)(t)
-  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # undef CMSG_DATA
-  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define CMSG_DATA WSA_CMSG_DATA
-  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #endif
-  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** 
-  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** int
-  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** coap_tcp_is_supported(void) {
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * coap_tcp.c -- TCP functions for libcoap
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  *
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * Copyright (C) 2019-2023 Olaf Bergmann <bergmann@tzi.org> and others
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  *
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * SPDX-License-Identifier: BSD-2-Clause
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  *
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * This file is part of the CoAP library libcoap. Please see README for terms
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * of use.
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  */
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** 
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** /**
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * @file coap_tcp.c
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  * @brief CoAP TCP handling functions
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****  */
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** 
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #include "coap3/coap_internal.h"
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** 
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #include <sys/types.h>
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #ifdef HAVE_SYS_SOCKET_H
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # include <sys/socket.h>
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define OPTVAL_T(t)         (t)
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define OPTVAL_GT(t)        (t)
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #endif
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #ifdef HAVE_SYS_IOCTL_H
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #include <sys/ioctl.h>
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #endif
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #ifdef HAVE_WS2TCPIP_H
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #include <ws2tcpip.h>
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define OPTVAL_T(t)         (const char*)(t)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define OPTVAL_GT(t)        (char*)(t)
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # undef CMSG_DATA
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** # define CMSG_DATA WSA_CMSG_DATA
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** #endif
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** 
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** int
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** coap_tcp_is_supported(void) {
   16              		.loc 1 37 29
   17              		.cfi_startproc
-  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****   return !COAP_DISABLE_TCP;
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c ****   return !COAP_DISABLE_TCP;
   18              		.loc 1 38 3
-  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** }
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/lwip/libcoap-4.3.4/src\coap_tcp.c **** }
   19              		.loc 1 39 1 is_stmt 0
   20 0000 0145     		li	a0,0
   21 0002 8280     		ret
@@ -63,33 +63,33 @@
   26              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 coap_tcp.c
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:13     .text.coap_tcp_is_supported:0000000000000000 coap_tcp_is_supported
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:17     .text.coap_tcp_is_supported:0000000000000000 .L0 
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:18     .text.coap_tcp_is_supported:0000000000000000 .L0 
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:19     .text.coap_tcp_is_supported:0000000000000000 .L0 
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:20     .text.coap_tcp_is_supported:0000000000000000 .L0 
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:22     .text.coap_tcp_is_supported:0000000000000004 .L0 
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:25     .text.coap_tcp_is_supported:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:13     .text.coap_tcp_is_supported:0000000000000000 coap_tcp_is_supported
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:17     .text.coap_tcp_is_supported:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:18     .text.coap_tcp_is_supported:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:19     .text.coap_tcp_is_supported:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:20     .text.coap_tcp_is_supported:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:22     .text.coap_tcp_is_supported:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:25     .text.coap_tcp_is_supported:0000000000000004 .L0 
                      .debug_frame:0000000000000000 .L0 
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:97     .debug_abbrev:0000000000000000 .Ldebug_abbrev0
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:194    .debug_str:000000000000009d .LASF10
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:204    .debug_str:00000000000001d6 .LASF11
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:188    .debug_str:0000000000000000 .LASF12
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:180    .debug_ranges:0000000000000000 .Ldebug_ranges0
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:186    .debug_line:0000000000000000 .Ldebug_line0
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:196    .debug_str:0000000000000196 .LASF0
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:208    .debug_str:000000000000026d .LASF1
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:200    .debug_str:00000000000001b5 .LASF2
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:198    .debug_str:00000000000001a2 .LASF3
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:210    .debug_str:000000000000027b .LASF4
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:192    .debug_str:000000000000008b .LASF5
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:214    .debug_str:0000000000000289 .LASF6
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:202    .debug_str:00000000000001bf .LASF7
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:190    .debug_str:000000000000007e .LASF8
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:212    .debug_str:0000000000000284 .LASF9
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:206    .debug_str:0000000000000257 .LASF13
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:14     .text.coap_tcp_is_supported:0000000000000000 .LFB31
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:23     .text.coap_tcp_is_supported:0000000000000004 .LFE31
-C:\Users\stapi\AppData\Local\Temp\cctz7pun.s:28     .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:97     .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:192    .debug_str:000000000000001f .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:212    .debug_str:0000000000000213 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:204    .debug_str:000000000000016e .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:180    .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:186    .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:194    .debug_str:0000000000000118 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:206    .debug_str:00000000000001f7 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:198    .debug_str:0000000000000137 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:196    .debug_str:0000000000000124 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:208    .debug_str:0000000000000205 .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:190    .debug_str:000000000000000d .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:214    .debug_str:000000000000029f .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:202    .debug_str:0000000000000157 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:188    .debug_str:0000000000000000 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:210    .debug_str:000000000000020e .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:200    .debug_str:0000000000000141 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:14     .text.coap_tcp_is_supported:0000000000000000 .LFB31
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:23     .text.coap_tcp_is_supported:0000000000000004 .LFE31
+C:\Users\stapi\AppData\Local\Temp\ccl7pH6c.s:28     .debug_info:0000000000000000 .Ldebug_info0
 
 NO UNDEFINED SYMBOLS

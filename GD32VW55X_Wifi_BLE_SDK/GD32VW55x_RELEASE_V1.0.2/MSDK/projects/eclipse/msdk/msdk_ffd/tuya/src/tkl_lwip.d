@@ -1,5 +1,5 @@
 tuya/src/tkl_lwip.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/tuya/tuyaos_adapter/src/tkl_lwip.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/tuya/tuyaos_adapter/src/tkl_lwip.c \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/netif.h \
  ..\..\..\..\lwip\lwip-2.1.2\src\include/lwip/opt.h \
  ..\..\..\..\lwip\lwip-2.1.2\port/lwipopts.h \

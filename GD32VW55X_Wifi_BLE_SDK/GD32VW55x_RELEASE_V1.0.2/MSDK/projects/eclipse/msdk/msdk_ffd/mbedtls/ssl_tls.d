@@ -1,5 +1,5 @@
 mbedtls/ssl_tls.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/mbedtls/mbedtls-2.17.0-ssl/library/ssl_tls.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/mbedtls/mbedtls-2.17.0-ssl/library/ssl_tls.c \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/config.h \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/rom_config.h \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/check_config.h \

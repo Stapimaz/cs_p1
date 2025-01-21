@@ -1,5 +1,5 @@
 plf/src/gd32vw55x_platform.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/gd32vw55x_platform.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/gd32vw55x_platform.c \
  ..\..\..\..\app/app_cfg.h ..\..\..\..\..\config/platform_def.h \
  ..\..\..\..\app/rftest_cfg.h ..\..\..\..\macsw\export/wlan_config.h \
  ..\..\..\..\macsw\export/wifi_export.h \
@@ -53,9 +53,9 @@ plf/src/gd32vw55x_platform.o: \
  ..\..\..\..\util\include/cyclic_buffer.h ..\..\..\..\plf\src\rf/rf_spi.h \
  ..\..\..\..\plf\src\rf/hal_rf.h ..\..\..\..\plf\src\reg/reg_access.h \
  ..\..\..\..\util\include/util.h ..\..\..\..\plf\src\dma/dma.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/gd32vw55x_platform.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/wakelock.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/gd32vw55x_platform.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/wakelock.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.h \
  ..\..\..\..\..\ROM-EXPORT\bootloader/rom_export.h \
  ..\..\..\..\..\ROM-EXPORT\bootloader/rom_trace.h \
  ..\..\..\..\..\ROM-EXPORT\halcomm/rom_region.h \
@@ -133,9 +133,9 @@ plf/src/gd32vw55x_platform.o: \
 ..\..\..\..\plf\src\reg/reg_access.h:
 ..\..\..\..\util\include/util.h:
 ..\..\..\..\plf\src\dma/dma.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/gd32vw55x_platform.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/wakelock.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/gd32vw55x_platform.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/wakelock.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/init_rom.h:
 ..\..\..\..\..\ROM-EXPORT\bootloader/rom_export.h:
 ..\..\..\..\..\ROM-EXPORT\bootloader/rom_trace.h:
 ..\..\..\..\..\ROM-EXPORT\halcomm/rom_region.h:

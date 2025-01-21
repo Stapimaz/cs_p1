@@ -1,5 +1,5 @@
 plf/GD32VW55x_standard_peripheral/gd32vw55x_i2c.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source/gd32vw55x_i2c.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/GD32VW55x_standard_peripheral/Source/gd32vw55x_i2c.c \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_i2c.h \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \
  ..\..\..\..\..\config/platform_def.h \

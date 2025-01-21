@@ -1,6 +1,6 @@
 mainboot/mbl_image_validate.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_image_validate.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_includes.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_image_validate.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_includes.h \
  ../../../../config/config_gdm32.h \
  ../../../../MSDK/plf/riscv/gd32vw55x/gd32vw55x.h \
  ../../../../config/platform_def.h \
@@ -44,7 +44,7 @@ mainboot/mbl_image_validate.o: \
  ../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_trng.h \
  ../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_usart.h \
  ../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_wwdgt.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_region.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_region.h \
  ../../../../ROM-EXPORT/bootloader/rom_export.h \
  ../../../../ROM-EXPORT/bootloader/rom_trace.h \
  ../../../../ROM-EXPORT/halcomm/rom_region.h \
@@ -52,8 +52,8 @@ mainboot/mbl_image_validate.o: \
  ../../../../ROM-EXPORT/bootloader/rom_sys.h \
  ../../../../ROM-EXPORT/bootloader/rom_ibl_state.h \
  ../../../../ROM-EXPORT/bootloader/rom_api.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_image_validate.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_includes.h:
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_image_validate.h
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_includes.h:
 ../../../../config/config_gdm32.h:
 ../../../../MSDK/plf/riscv/gd32vw55x/gd32vw55x.h:
 ../../../../config/platform_def.h:
@@ -97,7 +97,7 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_trng.h:
 ../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_usart.h:
 ../../../../MSDK/plf/GD32VW55x_standard_peripheral/Include/gd32vw55x_wwdgt.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_region.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_region.h:
 ../../../../ROM-EXPORT/bootloader/rom_export.h:
 ../../../../ROM-EXPORT/bootloader/rom_trace.h:
 ../../../../ROM-EXPORT/halcomm/rom_region.h:
@@ -105,4 +105,4 @@ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELE
 ../../../../ROM-EXPORT/bootloader/rom_sys.h:
 ../../../../ROM-EXPORT/bootloader/rom_ibl_state.h:
 ../../../../ROM-EXPORT/bootloader/rom_api.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_image_validate.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MBL/mainboot/mbl_image_validate.h:

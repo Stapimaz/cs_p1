@@ -1,5 +1,5 @@
 tuya/src/tkl_uart.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/tuya/tuyaos_adapter/src/tkl_uart.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/tuya/tuyaos_adapter/src/tkl_uart.c \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_usart.h \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \
  ..\..\..\..\..\config/platform_def.h \

@@ -1,5 +1,5 @@
 util/aes_ecb.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/util/src/aes_ecb.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/util/src/aes_ecb.c \
  ..\..\..\..\util\include/aes_ecb.h \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/aes.h \
  ..\..\..\..\..\ROM-EXPORT\mbedtls-2.17.0-rom\include/mbedtls/config.h \

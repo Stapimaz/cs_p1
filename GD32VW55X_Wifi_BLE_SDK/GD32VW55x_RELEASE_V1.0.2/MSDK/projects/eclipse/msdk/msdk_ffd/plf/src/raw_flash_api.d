@@ -1,5 +1,5 @@
 plf/src/raw_flash_api.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash/raw_flash_api.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash/raw_flash_api.c \
  ..\..\..\..\plf\riscv\gd32vw55x/gd32vw55x.h \
  ..\..\..\..\..\config/platform_def.h \
  ..\..\..\..\plf\riscv\NMSIS\Core\Include/nmsis_core.h \
@@ -44,7 +44,7 @@ plf/src/raw_flash_api.o: \
  ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_wwdgt.h \
  ..\..\..\..\util\include/slist.h \
  ..\..\..\..\plf\riscv\arch\compiler/compiler.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash/raw_flash_api.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash/raw_flash_api.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h \
  ..\..\..\..\..\ROM-EXPORT\bootloader/rom_export.h \
@@ -98,7 +98,7 @@ plf/src/raw_flash_api.o: \
 ..\..\..\..\plf\GD32VW55x_standard_peripheral\Include/gd32vw55x_wwdgt.h:
 ..\..\..\..\util\include/slist.h:
 ..\..\..\..\plf\riscv\arch\compiler/compiler.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash/raw_flash_api.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/plf/src/raw_flash/raw_flash_api.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h:
 ..\..\..\..\..\ROM-EXPORT\bootloader/rom_export.h:

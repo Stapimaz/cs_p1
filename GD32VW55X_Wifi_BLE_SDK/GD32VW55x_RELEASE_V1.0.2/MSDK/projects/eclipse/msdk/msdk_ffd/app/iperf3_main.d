@@ -1,13 +1,13 @@
 app/iperf3_main.o: \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/iperf3_main.c \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/iperf3_main.c \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h \
  ..\..\..\..\..\config/platform_def.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h \
  ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h \
  ..\..\..\..\util\include/dbg_print.h ..\..\..\..\app/app_cfg.h \
  ..\..\..\..\util\include/debug_print.h \
- C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h \
+ C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h \
  ..\..\..\..\macsw\export/co_int.h ..\..\..\..\macsw\export/co_math.h \
  ..\..\..\..\macsw\export/co_int.h ..\..\..\..\macsw\export/co_bool.h \
  ..\..\..\..\macsw\export/co_bit.h \
@@ -39,15 +39,15 @@ app/iperf3_main.o: \
  ..\..\..\..\lwip\iperf3/iperf_queue.h \
  ..\..\..\..\lwip\iperf3/iperf_timer.h ..\..\..\..\lwip\iperf3/iperf.h \
  ..\..\..\..\lwip\iperf3/iperf_api.h
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/app_cfg.h:
 ..\..\..\..\..\config/platform_def.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/rftest_cfg.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os.h:
 ..\..\..\..\rtos\rtos_wrapper/wrapper_os_config.h:
 ..\..\..\..\util\include/dbg_print.h:
 ..\..\..\..\app/app_cfg.h:
 ..\..\..\..\util\include/debug_print.h:
-C\:/Users/stapi/OneDrive/Desktop/GD32VW553/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h:
+C\:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/app/cmd_shell.h:
 ..\..\..\..\macsw\export/co_int.h:
 ..\..\..\..\macsw\export/co_math.h:
 ..\..\..\..\macsw\export/co_int.h:

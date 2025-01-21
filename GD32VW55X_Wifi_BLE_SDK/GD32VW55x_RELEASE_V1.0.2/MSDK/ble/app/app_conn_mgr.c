@@ -49,6 +49,7 @@ OF SUCH DAMAGE.
 #include "ble_storage.h"
 #include "ble_gattc.h"
 
+
 /* Connection parameters of fast paramter setting */
 #define BLE_CONN_FAST_INTV             6               // 7.5ms
 #define BLE_CONN_FAST_LATENCY          0

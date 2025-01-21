@@ -36,6 +36,8 @@ OF SUCH DAMAGE.
 
 #if (BLE_APP_SUPPORT && (BLE_CFG_ROLE & (BLE_CFG_ROLE_OBSERVER | BLE_CFG_ROLE_CENTRAL)))
 #include <string.h>
+#include <stdio.h> //KK
+
 #include "app_scan_mgr.h"
 #include "app_per_sync_mgr.h"
 
@@ -44,6 +46,14 @@ OF SUCH DAMAGE.
 
 #include "wrapper_os.h"
 #include "dbg_print.h"
+
+//KK
+#include "mqtt_cmd.h"       // So we can call cmd_mqtt()
+#include "wrapper_os.h"     // For sys_current_time_get(), etc.
+
+// Optional: a static variable to throttle publishes to every 3 seconds
+static uint32_t s_last_mqtt_pub_time = 0;
+
 
 /* Application scan manager module structure */
 typedef struct scan_mgr_cb
@@ -175,6 +185,103 @@ static void scan_mgr_report_hdlr(ble_gap_adv_report_info_t *p_info)
 
         p_dev_info->recv_name_flag = (p_name == NULL ? 0 : 1);
     }
+
+
+    /*
+     * ===== BEGIN CUSTOM BEACON PARSE & MQTT PUBLISH LOGIC =====
+     * Insert this code just before the final '}' of scan_mgr_report_hdlr().
+     */
+    {
+        // 1. Throttle: Only publish every 3 seconds
+        uint32_t now = sys_current_time_get();
+        if ((now - s_last_mqtt_pub_time) < 3000) {
+            // It's been less than 3000ms (3s), so skip.
+            return;
+        }
+        s_last_mqtt_pub_time = now;
+
+        // 2. Copy raw advertisement data into a buffer
+        uint8_t tmp_adv_buffer[512] = {0};
+        if (p_info->data.len > sizeof(tmp_adv_buffer)) {
+            // Just in case data is too large, clip it
+            app_print("Beacon adv data too large, skipping.\r\n");
+            return;
+        }
+        memcpy(tmp_adv_buffer, p_info->data.p_data, p_info->data.len);
+
+        // 3. Extract the BLE device address
+        uint8_t address[6] = {0};
+        memcpy(address, p_info->peer_addr.addr, 6);
+
+        // KK
+        // 4. EXAMPLE (INCOMPLETE): Check if it matches known beacons
+        //    (Replace with your real addresses, as in your example.)
+        //    For instance: Beacon 1
+        if ((address[0] == 0xc5 && address[1] == 0xb3 &&
+             address[2] == 0xbd && address[3] == 0x7f &&
+             address[4] == 0x2b && address[5] == 0xc6))
+        {
+            // Example parse: battery, distance, etc. (Indices from your old code)
+            uint16_t battery_voltage  = (tmp_adv_buffer[10] << 8) | tmp_adv_buffer[9];
+            uint16_t ranging_distance = (tmp_adv_buffer[15] << 8) | tmp_adv_buffer[14];
+
+            // Build a string for MQTT
+            char mqtt_payload[128];
+            snprintf(mqtt_payload, sizeof(mqtt_payload),
+                     "Device=Beacon1, Addr=%02X:%02X:%02X:%02X:%02X:%02X, Battery=%u, Distance=%u",
+                     address[5], address[4], address[3],
+                     address[2], address[1], address[0],
+                     battery_voltage, ranging_distance);
+
+            // Prepare the cmd_mqtt args
+            char *mqtt_args[] = {
+                "mqtt",
+                "publish",
+                "beacons/c5b3bd",  // Your desired MQTT topic
+                mqtt_payload,
+                "0",   // QoS 0
+                "0"    // Retain = 0
+            };
+            // Call cmd_mqtt to publish
+            cmd_mqtt(6, mqtt_args);
+        }
+
+        // 5. Another example beacon address check (BeaconX Pro, etc.)
+        else if ((address[0] == 0xfa && address[1] == 0x1a &&
+                  address[2] == 0x4e && address[3] == 0x53 &&
+                  address[4] == 0xf8 && address[5] == 0xd1))
+        {
+            // Possibly parse subType, battery, etc.
+            uint8_t sub_type = tmp_adv_buffer[18];
+            uint16_t mfg_code = (tmp_adv_buffer[5] << 8) | tmp_adv_buffer[6];
+            // ... other parse logic you used in your old example.
+
+            // Build a string
+            char mqtt_payload[128];
+            snprintf(mqtt_payload, sizeof(mqtt_payload),
+                     "Device=Beacon2, SubType=0x%02X, Mfg=0x%04X, MAC=%02X:%02X:%02X:%02X:%02X:%02X",
+                     sub_type, mfg_code,
+                     address[5], address[4], address[3], address[2], address[1], address[0]);
+
+            // Publish
+            char *mqtt_args[] = {
+                "mqtt",
+                "publish",
+                "beacons/fa1a4e",  // Another topic
+                mqtt_payload,
+                "0",
+                "0"
+            };
+            cmd_mqtt(6, mqtt_args);
+        }
+
+        // 6. If you have more addresses or frame types, do else-if blocks
+        //    or parse "frame_type" for BeaconX T&H / 3-axis frames, etc.
+    }
+    /*
+     * ===== END CUSTOM BEACON PARSE & MQTT PUBLISH LOGIC =====
+     */
+
 }
 
 /*!

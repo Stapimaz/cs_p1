@@ -1,0 +1,715 @@
+   1              		.file	"aes-cbc.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.aes_128_cbc_encrypt,"ax",@progbits
+  10              		.align	1
+  11              		.globl	aes_128_cbc_encrypt
+  13              	aes_128_cbc_encrypt:
+  14              	.LFB71:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * AES-128 CBC
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  *
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * Copyright (c) 2003-2007, Jouni Malinen <j@w1.fi>
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  *
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * This software may be distributed under the terms of the BSD license.
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * See README for more details.
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  */
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** #include "includes.h"
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** #include "common.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** #include "aes.h"
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** #include "aes_wrap.h"
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** /**
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * aes_128_cbc_encrypt - AES-128 CBC encryption
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * @key: Encryption key
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * @iv: Encryption IV for CBC mode (16 bytes)
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * @data: Data to encrypt in-place
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * @data_len: Length of data in bytes (must be divisible by 16)
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * Returns: 0 on success, -1 on failure
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  */
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** int aes_128_cbc_encrypt(const u8 *key, const u8 *iv, u8 *data, size_t data_len)
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** {
+  16              		.loc 1 25 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  19 0000 17030000 		call	t0,__riscv_save_6
+  19      E7020300 
+  20              		.cfi_offset 21, -28
+  21              		.cfi_offset 20, -24
+  22              		.cfi_offset 19, -20
+  23              		.cfi_offset 18, -16
+  24              		.cfi_offset 9, -12
+  25              		.cfi_offset 8, -8
+  26              		.cfi_offset 1, -4
+  27              		.cfi_def_cfa_offset 32
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+  28              		.loc 1 26 2
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	u8 cbc[AES_BLOCK_SIZE];
+  29              		.loc 1 27 2
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	u8 *pos = data;
+  30              		.loc 1 28 2
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+  31              		.loc 1 25 1 is_stmt 0
+  32 0008 4111     		addi	sp,sp,-16
+  33              		.cfi_def_cfa_offset 48
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+  34              		.loc 1 25 1
+  35 000a 2E89     		mv	s2,a1
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	int i, j, blocks;
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	if (TEST_FAIL())
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		return -1;
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	ctx = aes_encrypt_init(key, 16);
+  36              		.loc 1 34 8
+  37 000c C145     		li	a1,16
+  38              	.LVL1:
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+  39              		.loc 1 25 1
+  40 000e 328A     		mv	s4,a2
+  41              	.LVL2:
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	int i, j, blocks;
+  42              		.loc 1 29 2 is_stmt 1
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		return -1;
+  43              		.loc 1 31 2
+  44              		.loc 1 34 2
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+  45              		.loc 1 25 1 is_stmt 0
+  46 0010 B684     		mv	s1,a3
+  47              		.loc 1 34 8
+  48 0012 97000000 		call	aes_encrypt_init
+  48      E7800000 
+  49              	.LVL3:
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	if (ctx == NULL)
+  50              		.loc 1 35 2 is_stmt 1
+  51              		.loc 1 35 5 is_stmt 0
+  52 001a 3DC9     		beq	a0,zero,.L6
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		return -1;
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	os_memcpy(cbc, iv, AES_BLOCK_SIZE);
+  53              		.loc 1 37 2
+  54 001c CA85     		mv	a1,s2
+  55 001e 2A84     		mv	s0,a0
+  56              		.loc 1 37 2 is_stmt 1
+  57 0020 4146     		li	a2,16
+  58 0022 0A85     		mv	a0,sp
+  59              	.LVL4:
+  60 0024 97000000 		call	os_memcpy
+  60      E7800000 
+  61              	.LVL5:
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	blocks = data_len / AES_BLOCK_SIZE;
+  62              		.loc 1 39 2
+  63              		.loc 1 39 20 is_stmt 0
+  64 002c 9180     		srli	s1,s1,4
+  65              	.LVL6:
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	for (i = 0; i < blocks; i++) {
+  66              		.loc 1 40 2 is_stmt 1
+  67              		.loc 1 40 9 is_stmt 0
+  68 002e 0149     		li	s2,0
+  69              	.LVL7:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		for (j = 0; j < AES_BLOCK_SIZE; j++)
+  70              		.loc 1 41 3
+  71 0030 C14A     		li	s5,16
+  72              	.LVL8:
+  73              	.L3:
+  74 0032 93194900 		slli	s3,s2,4
+  75 0036 D299     		add	s3,s4,s3
+  76              	.LVL9:
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	for (i = 0; i < blocks; i++) {
+  77              		.loc 1 40 14 is_stmt 1 discriminator 1
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	for (i = 0; i < blocks; i++) {
+  78              		.loc 1 40 2 is_stmt 0 discriminator 1
+  79 0038 634D9900 		blt	s2,s1,.L5
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			cbc[j] ^= pos[j];
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		aes_encrypt(ctx, cbc, cbc);
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(pos, cbc, AES_BLOCK_SIZE);
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		pos += AES_BLOCK_SIZE;
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	}
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	aes_encrypt_deinit(ctx);
+  80              		.loc 1 47 2 is_stmt 1
+  81 003c 2285     		mv	a0,s0
+  82 003e 97000000 		call	aes_encrypt_deinit
+  82      E7800000 
+  83              	.LVL10:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	return 0;
+  84              		.loc 1 48 2
+  85              		.loc 1 48 9 is_stmt 0
+  86 0046 0145     		li	a0,0
+  87              	.LVL11:
+  88              	.L1:
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** }
+  89              		.loc 1 49 1
+  90 0048 4101     		addi	sp,sp,16
+  91              		.cfi_remember_state
+  92              		.cfi_def_cfa_offset 0
+  93 004a 17030000 		tail	__riscv_restore_6
+  93      67000300 
+  94              		.cfi_restore 21
+  95              		.cfi_restore 20
+  96              		.cfi_restore 19
+  97              		.cfi_restore 18
+  98              		.cfi_restore 9
+  99              		.cfi_restore 8
+ 100              		.cfi_restore 1
+ 101              		.cfi_def_cfa_offset -32
+ 102              	.LVL12:
+ 103              	.L5:
+ 104              		.cfi_restore_state
+ 105 0052 0A87     		mv	a4,sp
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			cbc[j] ^= pos[j];
+ 106              		.loc 1 41 10
+ 107 0054 8147     		li	a5,0
+ 108              	.L4:
+ 109              	.LVL13:
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		aes_encrypt(ctx, cbc, cbc);
+ 110              		.loc 1 42 4 is_stmt 1 discriminator 3
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		aes_encrypt(ctx, cbc, cbc);
+ 111              		.loc 1 42 17 is_stmt 0 discriminator 3
+ 112 0056 B386F900 		add	a3,s3,a5
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		aes_encrypt(ctx, cbc, cbc);
+ 113              		.loc 1 42 11 discriminator 3
+ 114 005a 03460700 		lbu	a2,0(a4)
+ 115 005e 83C60600 		lbu	a3,0(a3)
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			cbc[j] ^= pos[j];
+ 116              		.loc 1 41 36 discriminator 3
+ 117 0062 8507     		addi	a5,a5,1
+ 118              	.LVL14:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			cbc[j] ^= pos[j];
+ 119              		.loc 1 41 3 discriminator 3
+ 120 0064 0507     		addi	a4,a4,1
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		aes_encrypt(ctx, cbc, cbc);
+ 121              		.loc 1 42 11 discriminator 3
+ 122 0066 B18E     		xor	a3,a3,a2
+ 123 0068 A30FD7FE 		sb	a3,-1(a4)
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			cbc[j] ^= pos[j];
+ 124              		.loc 1 41 35 is_stmt 1 discriminator 3
+ 125              	.LVL15:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			cbc[j] ^= pos[j];
+ 126              		.loc 1 41 15 discriminator 3
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			cbc[j] ^= pos[j];
+ 127              		.loc 1 41 3 is_stmt 0 discriminator 3
+ 128 006c E39557FF 		bne	a5,s5,.L4
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(pos, cbc, AES_BLOCK_SIZE);
+ 129              		.loc 1 43 3 is_stmt 1 discriminator 2
+ 130 0070 0A86     		mv	a2,sp
+ 131 0072 8A85     		mv	a1,sp
+ 132 0074 2285     		mv	a0,s0
+ 133 0076 97000000 		call	aes_encrypt
+ 133      E7800000 
+ 134              	.LVL16:
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		pos += AES_BLOCK_SIZE;
+ 135              		.loc 1 44 3 discriminator 2
+ 136 007e 4146     		li	a2,16
+ 137 0080 8A85     		mv	a1,sp
+ 138 0082 4E85     		mv	a0,s3
+ 139 0084 97000000 		call	os_memcpy
+ 139      E7800000 
+ 140              	.LVL17:
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	}
+ 141              		.loc 1 45 3 discriminator 2
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		for (j = 0; j < AES_BLOCK_SIZE; j++)
+ 142              		.loc 1 40 26 discriminator 2
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		for (j = 0; j < AES_BLOCK_SIZE; j++)
+ 143              		.loc 1 40 27 is_stmt 0 discriminator 2
+ 144 008c 0509     		addi	s2,s2,1
+ 145              	.LVL18:
+ 146 008e 55B7     		j	.L3
+ 147              	.LVL19:
+ 148              	.L6:
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	os_memcpy(cbc, iv, AES_BLOCK_SIZE);
+ 149              		.loc 1 36 10
+ 150 0090 7D55     		li	a0,-1
+ 151              	.LVL20:
+ 152 0092 5DBF     		j	.L1
+ 153              		.cfi_endproc
+ 154              	.LFE71:
+ 156              		.section	.text.aes_128_cbc_decrypt,"ax",@progbits
+ 157              		.align	1
+ 158              		.globl	aes_128_cbc_decrypt
+ 160              	aes_128_cbc_decrypt:
+ 161              	.LFB72:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** /**
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * aes_128_cbc_decrypt - AES-128 CBC decryption
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * @key: Decryption key
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * @iv: Decryption IV for CBC mode (16 bytes)
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * @data: Data to decrypt in-place
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * @data_len: Length of data in bytes (must be divisible by 16)
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  * Returns: 0 on success, -1 on failure
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c ****  */
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** int aes_128_cbc_decrypt(const u8 *key, const u8 *iv, u8 *data, size_t data_len)
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** {
+ 162              		.loc 1 61 1 is_stmt 1
+ 163              		.cfi_startproc
+ 164              	.LVL21:
+ 165 0000 17030000 		call	t0,__riscv_save_5
+ 165      E7020300 
+ 166              		.cfi_offset 20, -24
+ 167              		.cfi_offset 19, -20
+ 168              		.cfi_offset 18, -16
+ 169              		.cfi_offset 9, -12
+ 170              		.cfi_offset 8, -8
+ 171              		.cfi_offset 1, -4
+ 172              		.cfi_def_cfa_offset 32
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+ 173              		.loc 1 62 2
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	u8 cbc[AES_BLOCK_SIZE], tmp[AES_BLOCK_SIZE];
+ 174              		.loc 1 63 2
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	u8 *pos = data;
+ 175              		.loc 1 64 2
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+ 176              		.loc 1 61 1 is_stmt 0
+ 177 0008 0111     		addi	sp,sp,-32
+ 178              		.cfi_def_cfa_offset 64
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+ 179              		.loc 1 61 1
+ 180 000a 2E84     		mv	s0,a1
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	int i, j, blocks;
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	if (TEST_FAIL())
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		return -1;
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	ctx = aes_decrypt_init(key, 16);
+ 181              		.loc 1 70 8
+ 182 000c C145     		li	a1,16
+ 183              	.LVL22:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+ 184              		.loc 1 61 1
+ 185 000e 328A     		mv	s4,a2
+ 186              	.LVL23:
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	int i, j, blocks;
+ 187              		.loc 1 65 2 is_stmt 1
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		return -1;
+ 188              		.loc 1 67 2
+ 189              		.loc 1 70 2
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	void *ctx;
+ 190              		.loc 1 61 1 is_stmt 0
+ 191 0010 3689     		mv	s2,a3
+ 192              		.loc 1 70 8
+ 193 0012 97000000 		call	aes_decrypt_init
+ 193      E7800000 
+ 194              	.LVL24:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	if (ctx == NULL)
+ 195              		.loc 1 71 2 is_stmt 1
+ 196              		.loc 1 71 5 is_stmt 0
+ 197 001a 59C1     		beq	a0,zero,.L14
+ 198 001c AA84     		mv	s1,a0
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		return -1;
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	os_memcpy(cbc, iv, AES_BLOCK_SIZE);
+ 199              		.loc 1 73 2 is_stmt 1
+ 200 001e 4146     		li	a2,16
+ 201 0020 A285     		mv	a1,s0
+ 202 0022 0A85     		mv	a0,sp
+ 203              	.LVL25:
+ 204 0024 97000000 		call	os_memcpy
+ 204      E7800000 
+ 205              	.LVL26:
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	blocks = data_len / AES_BLOCK_SIZE;
+ 206              		.loc 1 75 2
+ 207              		.loc 1 75 20 is_stmt 0
+ 208 002c 13594900 		srli	s2,s2,4
+ 209              	.LVL27:
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	for (i = 0; i < blocks; i++) {
+ 210              		.loc 1 76 2 is_stmt 1
+ 211              		.loc 1 76 9 is_stmt 0
+ 212 0030 8149     		li	s3,0
+ 213              	.LVL28:
+ 214              	.L11:
+ 215 0032 13944900 		slli	s0,s3,4
+ 216 0036 5294     		add	s0,s4,s0
+ 217              	.LVL29:
+ 218              		.loc 1 76 14 is_stmt 1 discriminator 1
+ 219              		.loc 1 76 2 is_stmt 0 discriminator 1
+ 220 0038 63CD2901 		blt	s3,s2,.L13
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(tmp, pos, AES_BLOCK_SIZE);
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		aes_decrypt(ctx, pos, pos);
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		for (j = 0; j < AES_BLOCK_SIZE; j++)
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			pos[j] ^= cbc[j];
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(cbc, tmp, AES_BLOCK_SIZE);
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		pos += AES_BLOCK_SIZE;
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	}
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	aes_decrypt_deinit(ctx);
+ 221              		.loc 1 84 2 is_stmt 1
+ 222 003c 2685     		mv	a0,s1
+ 223 003e 97000000 		call	aes_decrypt_deinit
+ 223      E7800000 
+ 224              	.LVL30:
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	return 0;
+ 225              		.loc 1 85 2
+ 226              		.loc 1 85 9 is_stmt 0
+ 227 0046 0145     		li	a0,0
+ 228              	.LVL31:
+ 229              	.L9:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** }
+ 230              		.loc 1 86 1
+ 231 0048 0561     		addi	sp,sp,32
+ 232              		.cfi_remember_state
+ 233              		.cfi_def_cfa_offset 0
+ 234 004a 17030000 		tail	__riscv_restore_5
+ 234      67000300 
+ 235              		.cfi_restore 20
+ 236              		.cfi_restore 19
+ 237              		.cfi_restore 18
+ 238              		.cfi_restore 9
+ 239              		.cfi_restore 8
+ 240              		.cfi_restore 1
+ 241              		.cfi_def_cfa_offset -32
+ 242              	.LVL32:
+ 243              	.L13:
+ 244              		.cfi_restore_state
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(tmp, pos, AES_BLOCK_SIZE);
+ 245              		.loc 1 77 3 is_stmt 1
+ 246 0052 4146     		li	a2,16
+ 247 0054 A285     		mv	a1,s0
+ 248 0056 0808     		addi	a0,sp,16
+ 249 0058 97000000 		call	os_memcpy
+ 249      E7800000 
+ 250              	.LVL33:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		for (j = 0; j < AES_BLOCK_SIZE; j++)
+ 251              		.loc 1 78 3
+ 252 0060 2286     		mv	a2,s0
+ 253 0062 A285     		mv	a1,s0
+ 254 0064 2685     		mv	a0,s1
+ 255 0066 97000000 		call	aes_decrypt
+ 255      E7800000 
+ 256              	.LVL34:
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			pos[j] ^= cbc[j];
+ 257              		.loc 1 79 3
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			pos[j] ^= cbc[j];
+ 258              		.loc 1 79 15
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			pos[j] ^= cbc[j];
+ 259              		.loc 1 79 10 is_stmt 0
+ 260 006e 8147     		li	a5,0
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			pos[j] ^= cbc[j];
+ 261              		.loc 1 79 3
+ 262 0070 4146     		li	a2,16
+ 263              	.LVL35:
+ 264              	.L12:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(cbc, tmp, AES_BLOCK_SIZE);
+ 265              		.loc 1 80 4 is_stmt 1 discriminator 3
+ 266 0072 B306F400 		add	a3,s0,a5
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(cbc, tmp, AES_BLOCK_SIZE);
+ 267              		.loc 1 80 17 is_stmt 0 discriminator 3
+ 268 0076 3307F100 		add	a4,sp,a5
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(cbc, tmp, AES_BLOCK_SIZE);
+ 269              		.loc 1 80 11 discriminator 3
+ 270 007a 83C50600 		lbu	a1,0(a3)
+ 271 007e 03470700 		lbu	a4,0(a4)
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			pos[j] ^= cbc[j];
+ 272              		.loc 1 79 36 discriminator 3
+ 273 0082 8507     		addi	a5,a5,1
+ 274              	.LVL36:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(cbc, tmp, AES_BLOCK_SIZE);
+ 275              		.loc 1 80 11 discriminator 3
+ 276 0084 2D8F     		xor	a4,a4,a1
+ 277 0086 2380E600 		sb	a4,0(a3)
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			pos[j] ^= cbc[j];
+ 278              		.loc 1 79 35 is_stmt 1 discriminator 3
+ 279              	.LVL37:
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			pos[j] ^= cbc[j];
+ 280              		.loc 1 79 15 discriminator 3
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 			pos[j] ^= cbc[j];
+ 281              		.loc 1 79 3 is_stmt 0 discriminator 3
+ 282 008a E394C7FE 		bne	a5,a2,.L12
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		pos += AES_BLOCK_SIZE;
+ 283              		.loc 1 81 3 is_stmt 1 discriminator 2
+ 284 008e 4146     		li	a2,16
+ 285 0090 0C08     		addi	a1,sp,16
+ 286 0092 0A85     		mv	a0,sp
+ 287 0094 97000000 		call	os_memcpy
+ 287      E7800000 
+ 288              	.LVL38:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	}
+ 289              		.loc 1 82 3 discriminator 2
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(tmp, pos, AES_BLOCK_SIZE);
+ 290              		.loc 1 76 26 discriminator 2
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 		os_memcpy(tmp, pos, AES_BLOCK_SIZE);
+ 291              		.loc 1 76 27 is_stmt 0 discriminator 2
+ 292 009c 8509     		addi	s3,s3,1
+ 293              	.LVL39:
+ 294 009e 51BF     		j	.L11
+ 295              	.LVL40:
+ 296              	.L14:
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\aes-cbc.c **** 	os_memcpy(cbc, iv, AES_BLOCK_SIZE);
+ 297              		.loc 1 72 10
+ 298 00a0 7D55     		li	a0,-1
+ 299              	.LVL41:
+ 300 00a2 5DB7     		j	.L9
+ 301              		.cfi_endproc
+ 302              	.LFE72:
+ 304              		.text
+ 305              	.Letext0:
+ 306              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 307              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 308              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 309              		.file 5 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+ 310              		.file 6 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/os.h"
+ 311              		.file 7 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/common.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 aes-cbc.c
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:13     .text.aes_128_cbc_encrypt:0000000000000000 aes_128_cbc_encrypt
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:17     .text.aes_128_cbc_encrypt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:19     .text.aes_128_cbc_encrypt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:20     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:21     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:22     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:23     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:24     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:25     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:26     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:27     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:29     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:30     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:31     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:32     .text.aes_128_cbc_encrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:33     .text.aes_128_cbc_encrypt:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:35     .text.aes_128_cbc_encrypt:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:37     .text.aes_128_cbc_encrypt:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:40     .text.aes_128_cbc_encrypt:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:43     .text.aes_128_cbc_encrypt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:44     .text.aes_128_cbc_encrypt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:45     .text.aes_128_cbc_encrypt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:46     .text.aes_128_cbc_encrypt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:48     .text.aes_128_cbc_encrypt:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:51     .text.aes_128_cbc_encrypt:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:52     .text.aes_128_cbc_encrypt:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:54     .text.aes_128_cbc_encrypt:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:57     .text.aes_128_cbc_encrypt:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:63     .text.aes_128_cbc_encrypt:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:64     .text.aes_128_cbc_encrypt:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:67     .text.aes_128_cbc_encrypt:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:68     .text.aes_128_cbc_encrypt:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:71     .text.aes_128_cbc_encrypt:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:78     .text.aes_128_cbc_encrypt:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:79     .text.aes_128_cbc_encrypt:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:81     .text.aes_128_cbc_encrypt:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:85     .text.aes_128_cbc_encrypt:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:86     .text.aes_128_cbc_encrypt:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:90     .text.aes_128_cbc_encrypt:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:91     .text.aes_128_cbc_encrypt:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:92     .text.aes_128_cbc_encrypt:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:94     .text.aes_128_cbc_encrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:95     .text.aes_128_cbc_encrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:96     .text.aes_128_cbc_encrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:97     .text.aes_128_cbc_encrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:98     .text.aes_128_cbc_encrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:99     .text.aes_128_cbc_encrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:100    .text.aes_128_cbc_encrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:101    .text.aes_128_cbc_encrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:104    .text.aes_128_cbc_encrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:107    .text.aes_128_cbc_encrypt:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:111    .text.aes_128_cbc_encrypt:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:112    .text.aes_128_cbc_encrypt:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:114    .text.aes_128_cbc_encrypt:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:117    .text.aes_128_cbc_encrypt:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:120    .text.aes_128_cbc_encrypt:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:122    .text.aes_128_cbc_encrypt:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:126    .text.aes_128_cbc_encrypt:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:127    .text.aes_128_cbc_encrypt:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:128    .text.aes_128_cbc_encrypt:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:130    .text.aes_128_cbc_encrypt:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:136    .text.aes_128_cbc_encrypt:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:142    .text.aes_128_cbc_encrypt:000000000000008c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:143    .text.aes_128_cbc_encrypt:000000000000008c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:144    .text.aes_128_cbc_encrypt:000000000000008c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:150    .text.aes_128_cbc_encrypt:0000000000000090 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:153    .text.aes_128_cbc_encrypt:0000000000000094 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:160    .text.aes_128_cbc_decrypt:0000000000000000 aes_128_cbc_decrypt
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:163    .text.aes_128_cbc_decrypt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:165    .text.aes_128_cbc_decrypt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:166    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:167    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:168    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:169    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:170    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:171    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:172    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:174    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:175    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:176    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:177    .text.aes_128_cbc_decrypt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:178    .text.aes_128_cbc_decrypt:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:180    .text.aes_128_cbc_decrypt:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:182    .text.aes_128_cbc_decrypt:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:185    .text.aes_128_cbc_decrypt:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:188    .text.aes_128_cbc_decrypt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:189    .text.aes_128_cbc_decrypt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:190    .text.aes_128_cbc_decrypt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:191    .text.aes_128_cbc_decrypt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:193    .text.aes_128_cbc_decrypt:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:196    .text.aes_128_cbc_decrypt:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:197    .text.aes_128_cbc_decrypt:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:200    .text.aes_128_cbc_decrypt:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:207    .text.aes_128_cbc_decrypt:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:208    .text.aes_128_cbc_decrypt:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:211    .text.aes_128_cbc_decrypt:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:212    .text.aes_128_cbc_decrypt:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:219    .text.aes_128_cbc_decrypt:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:220    .text.aes_128_cbc_decrypt:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:222    .text.aes_128_cbc_decrypt:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:226    .text.aes_128_cbc_decrypt:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:227    .text.aes_128_cbc_decrypt:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:231    .text.aes_128_cbc_decrypt:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:232    .text.aes_128_cbc_decrypt:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:233    .text.aes_128_cbc_decrypt:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:235    .text.aes_128_cbc_decrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:236    .text.aes_128_cbc_decrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:237    .text.aes_128_cbc_decrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:238    .text.aes_128_cbc_decrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:239    .text.aes_128_cbc_decrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:240    .text.aes_128_cbc_decrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:241    .text.aes_128_cbc_decrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:244    .text.aes_128_cbc_decrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:246    .text.aes_128_cbc_decrypt:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:252    .text.aes_128_cbc_decrypt:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:258    .text.aes_128_cbc_decrypt:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:259    .text.aes_128_cbc_decrypt:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:260    .text.aes_128_cbc_decrypt:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:262    .text.aes_128_cbc_decrypt:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:266    .text.aes_128_cbc_decrypt:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:268    .text.aes_128_cbc_decrypt:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:270    .text.aes_128_cbc_decrypt:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:273    .text.aes_128_cbc_decrypt:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:276    .text.aes_128_cbc_decrypt:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:280    .text.aes_128_cbc_decrypt:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:281    .text.aes_128_cbc_decrypt:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:282    .text.aes_128_cbc_decrypt:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:284    .text.aes_128_cbc_decrypt:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:290    .text.aes_128_cbc_decrypt:000000000000009c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:291    .text.aes_128_cbc_decrypt:000000000000009c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:292    .text.aes_128_cbc_decrypt:000000000000009c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:298    .text.aes_128_cbc_decrypt:00000000000000a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:301    .text.aes_128_cbc_decrypt:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:156    .text.aes_128_cbc_encrypt:0000000000000094 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:304    .text.aes_128_cbc_decrypt:00000000000000a4 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:148    .text.aes_128_cbc_encrypt:0000000000000090 .L6
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:103    .text.aes_128_cbc_encrypt:0000000000000052 .L5
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:108    .text.aes_128_cbc_encrypt:0000000000000056 .L4
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:73     .text.aes_128_cbc_encrypt:0000000000000032 .L3
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:88     .text.aes_128_cbc_encrypt:0000000000000048 .L1
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:296    .text.aes_128_cbc_decrypt:00000000000000a0 .L14
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:243    .text.aes_128_cbc_decrypt:0000000000000052 .L13
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:264    .text.aes_128_cbc_decrypt:0000000000000072 .L12
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:214    .text.aes_128_cbc_decrypt:0000000000000032 .L11
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:229    .text.aes_128_cbc_decrypt:0000000000000048 .L9
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:847    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1568   .debug_str:0000000000000170 .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1580   .debug_str:000000000000029d .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1564   .debug_str:00000000000000cd .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1526   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1534   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1540   .debug_str:0000000000000018 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1570   .debug_str:0000000000000269 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1588   .debug_str:000000000000034a .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1538   .debug_str:000000000000000e .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1558   .debug_str:000000000000009a .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1582   .debug_str:000000000000032b .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1562   .debug_str:00000000000000ba .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1586   .debug_str:0000000000000341 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1560   .debug_str:00000000000000a8 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1536   .debug_str:0000000000000000 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1556   .debug_str:0000000000000083 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1574   .debug_str:0000000000000289 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1576   .debug_str:000000000000028e .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1592   .debug_str:0000000000000362 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1546   .debug_str:000000000000003a .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:161    .text.aes_128_cbc_decrypt:0000000000000000 .LFB72
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:302    .text.aes_128_cbc_decrypt:00000000000000a4 .LFE72
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1144   .debug_loc:0000000000000000 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1158   .debug_loc:0000000000000021 .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1554   .debug_str:000000000000007e .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1180   .debug_loc:0000000000000058 .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1552   .debug_str:0000000000000075 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1191   .debug_loc:0000000000000076 .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1213   .debug_loc:00000000000000ad .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1232   .debug_loc:00000000000000e1 .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1281   .debug_loc:0000000000000148 .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1297   .debug_loc:0000000000000172 .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1578   .debug_str:0000000000000296 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1319   .debug_loc:00000000000001a9 .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:194    .text.aes_128_cbc_decrypt:000000000000001a .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:205    .text.aes_128_cbc_decrypt:000000000000002c .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:224    .text.aes_128_cbc_decrypt:0000000000000046 .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:250    .text.aes_128_cbc_decrypt:0000000000000060 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:256    .text.aes_128_cbc_decrypt:000000000000006e .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:288    .text.aes_128_cbc_decrypt:000000000000009c .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1548   .debug_str:000000000000004e .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:14     .text.aes_128_cbc_encrypt:0000000000000000 .LFB71
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:154    .text.aes_128_cbc_encrypt:0000000000000094 .LFE71
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1330   .debug_loc:00000000000001c7 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1344   .debug_loc:00000000000001e8 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1366   .debug_loc:000000000000021f .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1377   .debug_loc:000000000000023d .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1399   .debug_loc:0000000000000274 .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1418   .debug_loc:00000000000002a8 .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1467   .debug_loc:000000000000030f .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1483   .debug_loc:0000000000000339 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1500   .debug_loc:0000000000000364 .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:49     .text.aes_128_cbc_encrypt:000000000000001a .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:61     .text.aes_128_cbc_encrypt:000000000000002c .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:83     .text.aes_128_cbc_encrypt:0000000000000046 .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:134    .text.aes_128_cbc_encrypt:000000000000007e .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:140    .text.aes_128_cbc_encrypt:000000000000008c .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1566   .debug_str:000000000000015f .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1542   .debug_str:000000000000001f .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1572   .debug_str:0000000000000276 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1590   .debug_str:0000000000000356 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1544   .debug_str:0000000000000029 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1550   .debug_str:0000000000000062 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:1584   .debug_str:0000000000000335 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:164    .text.aes_128_cbc_decrypt:0000000000000000 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:183    .text.aes_128_cbc_decrypt:000000000000000e .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:213    .text.aes_128_cbc_decrypt:0000000000000032 .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:295    .text.aes_128_cbc_decrypt:00000000000000a0 .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:209    .text.aes_128_cbc_decrypt:0000000000000030 .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:203    .text.aes_128_cbc_decrypt:0000000000000024 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:228    .text.aes_128_cbc_decrypt:0000000000000048 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:242    .text.aes_128_cbc_decrypt:0000000000000052 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:299    .text.aes_128_cbc_decrypt:00000000000000a2 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:186    .text.aes_128_cbc_decrypt:0000000000000010 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:217    .text.aes_128_cbc_decrypt:0000000000000038 .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:293    .text.aes_128_cbc_decrypt:000000000000009e .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:263    .text.aes_128_cbc_decrypt:0000000000000072 .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:274    .text.aes_128_cbc_decrypt:0000000000000084 .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:279    .text.aes_128_cbc_decrypt:000000000000008a .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:18     .text.aes_128_cbc_encrypt:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:38     .text.aes_128_cbc_encrypt:000000000000000e .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:69     .text.aes_128_cbc_encrypt:0000000000000030 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:147    .text.aes_128_cbc_encrypt:0000000000000090 .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:65     .text.aes_128_cbc_encrypt:000000000000002e .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:59     .text.aes_128_cbc_encrypt:0000000000000024 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:87     .text.aes_128_cbc_encrypt:0000000000000048 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:102    .text.aes_128_cbc_encrypt:0000000000000052 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:151    .text.aes_128_cbc_encrypt:0000000000000092 .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:41     .text.aes_128_cbc_encrypt:0000000000000010 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:72     .text.aes_128_cbc_encrypt:0000000000000032 .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:76     .text.aes_128_cbc_encrypt:0000000000000038 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:145    .text.aes_128_cbc_encrypt:000000000000008e .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:109    .text.aes_128_cbc_encrypt:0000000000000056 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:118    .text.aes_128_cbc_encrypt:0000000000000064 .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:125    .text.aes_128_cbc_encrypt:000000000000006c .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccZKt0Wj.s:313    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+__riscv_save_6
+aes_encrypt_init
+os_memcpy
+aes_encrypt_deinit
+__riscv_restore_6
+aes_encrypt
+__riscv_save_5
+aes_decrypt_init
+aes_decrypt_deinit
+__riscv_restore_5
+aes_decrypt

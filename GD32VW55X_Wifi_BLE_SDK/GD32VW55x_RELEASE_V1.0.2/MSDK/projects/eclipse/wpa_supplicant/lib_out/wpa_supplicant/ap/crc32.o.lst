@@ -1,0 +1,243 @@
+   1              		.file	"crc32.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.crc32,"ax",@progbits
+  10              		.align	1
+  11              		.globl	crc32
+  13              	crc32:
+  14              	.LFB71:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  * 32-bit CRC for FCS calculation
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  * Copyright (c) 2010, Jouni Malinen <j@w1.fi>
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  *
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  * This software may be distributed under the terms of the BSD license.
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  * See README for more details.
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  */
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** #include "utils/includes.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** #include "utils/common.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** #include "utils/crc32.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** /*
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  * IEEE 802.11 FCS CRC32
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  * G(x) = x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11 + x^10 + x^8 + x^7 +
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  *        x^5 + x^4 + x^2 + x + 1
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c ****  */
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** static const u32 crc32_table[256] = {
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419,
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x706af48f, 0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4,
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xe0d5e91e, 0x97d2d988, 0x09b64c2b, 0x7eb17cbd, 0xe7b82d07,
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x90bf1d91, 0x1db71064, 0x6ab020f2, 0xf3b97148, 0x84be41de,
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x1adad47d, 0x6ddde4eb, 0xf4d4b551, 0x83d385c7, 0x136c9856,
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x646ba8c0, 0xfd62f97a, 0x8a65c9ec, 0x14015c4f, 0x63066cd9,
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xfa0f3d63, 0x8d080df5, 0x3b6e20c8, 0x4c69105e, 0xd56041e4,
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xa2677172, 0x3c03e4d1, 0x4b04d447, 0xd20d85fd, 0xa50ab56b,
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x35b5a8fa, 0x42b2986c, 0xdbbbc9d6, 0xacbcf940, 0x32d86ce3,
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x45df5c75, 0xdcd60dcf, 0xabd13d59, 0x26d930ac, 0x51de003a,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xc8d75180, 0xbfd06116, 0x21b4f4b5, 0x56b3c423, 0xcfba9599,
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xb8bda50f, 0x2802b89e, 0x5f058808, 0xc60cd9b2, 0xb10be924,
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x2f6f7c87, 0x58684c11, 0xc1611dab, 0xb6662d3d, 0x76dc4190,
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x01db7106, 0x98d220bc, 0xefd5102a, 0x71b18589, 0x06b6b51f,
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x9fbfe4a5, 0xe8b8d433, 0x7807c9a2, 0x0f00f934, 0x9609a88e,
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xe10e9818, 0x7f6a0dbb, 0x086d3d2d, 0x91646c97, 0xe6635c01,
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x6b6b51f4, 0x1c6c6162, 0x856530d8, 0xf262004e, 0x6c0695ed,
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x1b01a57b, 0x8208f4c1, 0xf50fc457, 0x65b0d9c6, 0x12b7e950,
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x8bbeb8ea, 0xfcb9887c, 0x62dd1ddf, 0x15da2d49, 0x8cd37cf3,
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xfbd44c65, 0x4db26158, 0x3ab551ce, 0xa3bc0074, 0xd4bb30e2,
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x4adfa541, 0x3dd895d7, 0xa4d1c46d, 0xd3d6f4fb, 0x4369e96a,
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x346ed9fc, 0xad678846, 0xda60b8d0, 0x44042d73, 0x33031de5,
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xaa0a4c5f, 0xdd0d7cc9, 0x5005713c, 0x270241aa, 0xbe0b1010,
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xc90c2086, 0x5768b525, 0x206f85b3, 0xb966d409, 0xce61e49f,
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x5edef90e, 0x29d9c998, 0xb0d09822, 0xc7d7a8b4, 0x59b33d17,
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x2eb40d81, 0xb7bd5c3b, 0xc0ba6cad, 0xedb88320, 0x9abfb3b6,
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x03b6e20c, 0x74b1d29a, 0xead54739, 0x9dd277af, 0x04db2615,
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x73dc1683, 0xe3630b12, 0x94643b84, 0x0d6d6a3e, 0x7a6a5aa8,
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xe40ecf0b, 0x9309ff9d, 0x0a00ae27, 0x7d079eb1, 0xf00f9344,
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x8708a3d2, 0x1e01f268, 0x6906c2fe, 0xf762575d, 0x806567cb,
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x196c3671, 0x6e6b06e7, 0xfed41b76, 0x89d32be0, 0x10da7a5a,
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x67dd4acc, 0xf9b9df6f, 0x8ebeeff9, 0x17b7be43, 0x60b08ed5,
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xd6d6a3e8, 0xa1d1937e, 0x38d8c2c4, 0x4fdff252, 0xd1bb67f1,
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xa6bc5767, 0x3fb506dd, 0x48b2364b, 0xd80d2bda, 0xaf0a1b4c,
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x36034af6, 0x41047a60, 0xdf60efc3, 0xa867df55, 0x316e8eef,
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x4669be79, 0xcb61b38c, 0xbc66831a, 0x256fd2a0, 0x5268e236,
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xcc0c7795, 0xbb0b4703, 0x220216b9, 0x5505262f, 0xc5ba3bbe,
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xb2bd0b28, 0x2bb45a92, 0x5cb36a04, 0xc2d7ffa7, 0xb5d0cf31,
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x2cd99e8b, 0x5bdeae1d, 0x9b64c2b0, 0xec63f226, 0x756aa39c,
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x026d930a, 0x9c0906a9, 0xeb0e363f, 0x72076785, 0x05005713,
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x95bf4a82, 0xe2b87a14, 0x7bb12bae, 0x0cb61b38, 0x92d28e9b,
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xe5d5be0d, 0x7cdcefb7, 0x0bdbdf21, 0x86d3d2d4, 0xf1d4e242,
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x68ddb3f8, 0x1fda836e, 0x81be16cd, 0xf6b9265b, 0x6fb077e1,
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x18b74777, 0x88085ae6, 0xff0f6a70, 0x66063bca, 0x11010b5c,
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x8f659eff, 0xf862ae69, 0x616bffd3, 0x166ccf45, 0xa00ae278,
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xd70dd2ee, 0x4e048354, 0x3903b3c2, 0xa7672661, 0xd06016f7,
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x4969474d, 0x3e6e77db, 0xaed16a4a, 0xd9d65adc, 0x40df0b66,
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x37d83bf0, 0xa9bcae53, 0xdebb9ec5, 0x47b2cf7f, 0x30b5ffe9,
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xbdbdf21c, 0xcabac28a, 0x53b39330, 0x24b4a3a6, 0xbad03605,
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0xcdd70693, 0x54de5729, 0x23d967bf, 0xb3667a2e, 0xc4614ab8,
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b,
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	0x2d02ef8d
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** };
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** extern uint32_t crc_tab[256];
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** u32 crc32(const u8 *frame, size_t frame_len)
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** {
+  16              		.loc 1 76 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	size_t i;
+  19              		.loc 1 77 2
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	u32 crc;
+  20              		.loc 1 78 2
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	crc = 0xFFFFFFFF;
+  21              		.loc 1 80 2
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	for (i = 0; i < frame_len; i++)
+  22              		.loc 1 81 2
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 		crc = crc_tab[(crc ^ frame[i]) & 0xff] ^ (crc >> 8);
+  23              		.loc 1 82 16 is_stmt 0
+  24 0000 37060000 		lui	a2,%hi(crc_tab)
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	for (i = 0; i < frame_len; i++)
+  25              		.loc 1 80 6
+  26 0004 7D57     		li	a4,-1
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	for (i = 0; i < frame_len; i++)
+  27              		.loc 1 81 9
+  28 0006 8146     		li	a3,0
+  29              		.loc 1 82 16
+  30 0008 13060600 		addi	a2,a2,%lo(crc_tab)
+  31              	.LVL1:
+  32              	.L2:
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	for (i = 0; i < frame_len; i++)
+  33              		.loc 1 81 14 is_stmt 1 discriminator 1
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	for (i = 0; i < frame_len; i++)
+  34              		.loc 1 81 2 is_stmt 0 discriminator 1
+  35 000c 6395B600 		bne	a3,a1,.L3
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 	return ~crc;
+  36              		.loc 1 84 2 is_stmt 1
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** }
+  37              		.loc 1 85 1 is_stmt 0
+  38 0010 1345F7FF 		not	a0,a4
+  39              	.LVL2:
+  40 0014 8280     		ret
+  41              	.LVL3:
+  42              	.L3:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  43              		.loc 1 82 3 is_stmt 1 discriminator 3
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  44              		.loc 1 82 29 is_stmt 0 discriminator 3
+  45 0016 B307D500 		add	a5,a0,a3
+  46 001a 83C70700 		lbu	a5,0(a5)
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 		crc = crc_tab[(crc ^ frame[i]) & 0xff] ^ (crc >> 8);
+  47              		.loc 1 81 30 discriminator 3
+  48 001e 8506     		addi	a3,a3,1
+  49              	.LVL4:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  50              		.loc 1 82 22 discriminator 3
+  51 0020 B98F     		xor	a5,a5,a4
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  52              		.loc 1 82 34 discriminator 3
+  53 0022 93F7F70F 		andi	a5,a5,255
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  54              		.loc 1 82 16 discriminator 3
+  55 0026 B3C7C720 		sh2add	a5,a5,a2
+  56 002a 9C43     		lw	a5,0(a5)
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  57              		.loc 1 82 49 discriminator 3
+  58 002c 2183     		srli	a4,a4,8
+  59              	.LVL5:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 
+  60              		.loc 1 82 7 discriminator 3
+  61 002e 3D8F     		xor	a4,a5,a4
+  62              	.LVL6:
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\crc32.c **** 		crc = crc_tab[(crc ^ frame[i]) & 0xff] ^ (crc >> 8);
+  63              		.loc 1 81 29 is_stmt 1 discriminator 3
+  64 0030 F1BF     		j	.L2
+  65              		.cfi_endproc
+  66              	.LFE71:
+  68              		.text
+  69              	.Letext0:
+  70              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+  71              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+  72              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+  73              		.file 5 "..\\..\\..\\..\\wpa_supplicant\\src/utils/common.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 crc32.c
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:13     .text.crc32:0000000000000000 crc32
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:17     .text.crc32:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:19     .text.crc32:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:20     .text.crc32:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:21     .text.crc32:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:22     .text.crc32:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:23     .text.crc32:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:24     .text.crc32:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:26     .text.crc32:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:28     .text.crc32:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:30     .text.crc32:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:34     .text.crc32:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:35     .text.crc32:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:37     .text.crc32:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:38     .text.crc32:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:44     .text.crc32:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:45     .text.crc32:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:48     .text.crc32:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:51     .text.crc32:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:53     .text.crc32:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:55     .text.crc32:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:58     .text.crc32:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:61     .text.crc32:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:64     .text.crc32:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:65     .text.crc32:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:68     .text.crc32:0000000000000032 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:42     .text.crc32:0000000000000016 .L3
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:32     .text.crc32:000000000000000c .L2
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1281   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1610   .debug_str:0000000000000118 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1606   .debug_str:0000000000000088 .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1624   .debug_str:000000000000024b .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1576   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1582   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1588   .debug_str:0000000000000018 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1628   .debug_str:00000000000002e7 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1620   .debug_str:0000000000000239 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1600   .debug_str:000000000000005f .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1592   .debug_str:0000000000000028 .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1626   .debug_str:00000000000002dd .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1618   .debug_str:0000000000000226 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1612   .debug_str:0000000000000211 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1594   .debug_str:0000000000000036 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1596   .debug_str:0000000000000041 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1584   .debug_str:0000000000000000 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1602   .debug_str:0000000000000069 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1608   .debug_str:0000000000000113 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1604   .debug_str:0000000000000080 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1590   .debug_str:000000000000001f .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1614   .debug_str:000000000000021a .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1598   .debug_str:0000000000000053 .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1630   .debug_str:00000000000002f4 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1616   .debug_str:0000000000000220 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:14     .text.crc32:0000000000000000 .LFB71
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:66     .text.crc32:0000000000000032 .LFE71
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1622   .debug_str:0000000000000245 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1506   .debug_loc:0000000000000000 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1586   .debug_str:000000000000000e .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1524   .debug_loc:000000000000002c .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:1546   .debug_loc:0000000000000063 .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:18     .text.crc32:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:39     .text.crc32:0000000000000014 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:41     .text.crc32:0000000000000016 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:31     .text.crc32:000000000000000c .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:49     .text.crc32:0000000000000020 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:62     .text.crc32:0000000000000030 .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:59     .text.crc32:000000000000002e .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccF5JhC5.s:75     .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+crc_tab

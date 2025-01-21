@@ -1,0 +1,2076 @@
+   1              		.file	"dm_fota.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.dm_fota_init,"ax",@progbits
+  10              		.align	1
+  11              		.globl	dm_fota_init
+  13              	dm_fota_init:
+  14              	.LFB21:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****  * Copyright (C) 2015-2018 Alibaba Group Holding Limited
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****  */
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** #if defined(OTA_ENABLED) && !defined(BUILD_AOS)
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** #include "iotx_dm_internal.h"
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** static dm_fota_ctx_t g_dm_fota_ctx;
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** static dm_fota_ctx_t *_dm_fota_get_ctx(void)
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** {
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return &g_dm_fota_ctx;
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** int dm_fota_init(void)
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** {
+  16              		.loc 1 15 1
+  17              		.cfi_startproc
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     dm_fota_ctx_t *ctx = _dm_fota_get_ctx();
+  18              		.loc 1 16 5
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+  19              		.loc 1 11 5
+  20              	.LVL0:
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     memset(ctx, 0, sizeof(dm_fota_ctx_t));
+  21              		.loc 1 18 5
+  22 0000 B7070000 		lui	a5,%hi(.LANCHOR0)
+  23 0004 23A00700 		sw	zero,%lo(.LANCHOR0)(a5)
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return SUCCESS_RETURN;
+  24              		.loc 1 20 5
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+  25              		.loc 1 21 1 is_stmt 0
+  26 0008 0145     		li	a0,0
+  27 000a 8280     		ret
+  28              		.cfi_endproc
+  29              	.LFE21:
+  31              		.section	.text.dm_fota_deinit,"ax",@progbits
+  32              		.align	1
+  33              		.globl	dm_fota_deinit
+  35              	dm_fota_deinit:
+  36              	.LFB28:
+  37              		.cfi_startproc
+  38 0000 17030000 		tail	dm_fota_init
+  38      67000300 
+  39              		.cfi_endproc
+  40              	.LFE28:
+  42              		.section	.rodata.dm_fota_perform_sync.str1.4,"aMS",@progbits,1
+  43              		.align	2
+  44              	.LC0:
+  45 0000 5B657272 		.string	"[err] "
+  45      5D2000
+  46 0007 00       		.align	2
+  47              	.LC1:
+  48 0008 466F7461 		.string	"Fota write firmware failed"
+  48      20777269 
+  48      74652066 
+  48      69726D77 
+  48      61726520 
+  49 0023 00       		.align	2
+  50              	.LC2:
+  51 0024 0D0A00   		.string	"\r\n"
+  52              		.section	.text.dm_fota_perform_sync,"ax",@progbits
+  53              		.align	1
+  54              		.globl	dm_fota_perform_sync
+  56              	dm_fota_perform_sync:
+  57              	.LFB24:
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** int dm_fota_deinit(void)
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** {
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     dm_fota_ctx_t *ctx = _dm_fota_get_ctx();
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     memset(ctx, 0, sizeof(dm_fota_ctx_t));
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return SUCCESS_RETURN;
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** static int _dm_fota_send_new_config_to_user(void *ota_handle)
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** {
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     int res = 0, message_len = 0;
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     char *message = NULL;
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     char version[128] = {0};
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     const char *fota_new_config_fmt = "{\"version\":\"%s\"}";
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     IOT_OTA_Ioctl(ota_handle, IOT_OTAG_VERSION, version, 128);
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     message_len = strlen(fota_new_config_fmt) + strlen(version) + 1;
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     message = DM_malloc(message_len);
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (message == NULL) {
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return DM_MEMORY_NOT_ENOUGH;
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     memset(message, 0, message_len);
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     HAL_Snprintf(message, message_len, fota_new_config_fmt, version);
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     dm_log_info("Send To User: %s", message);
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     res = _dm_msg_send_to_user(IOTX_DM_EVENT_FOTA_NEW_FIRMWARE, message);
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (res != SUCCESS_RETURN) {
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (message) {
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             DM_free(message);
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return SUCCESS_RETURN;
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** int dm_fota_perform_sync(_OU_ char *output, _IN_ int output_len)
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** {
+  58              		.loc 1 64 1 is_stmt 1
+  59              		.cfi_startproc
+  60              	.LVL1:
+  61              		.loc 1 64 1 is_stmt 0
+  62 0000 17030000 		call	t0,__riscv_save_12
+  62      E7020300 
+  63              		.cfi_offset 27, -52
+  64              		.cfi_offset 26, -48
+  65              		.cfi_offset 25, -44
+  66              		.cfi_offset 24, -40
+  67              		.cfi_offset 23, -36
+  68              		.cfi_offset 22, -32
+  69              		.cfi_offset 21, -28
+  70              		.cfi_offset 20, -24
+  71              		.cfi_offset 19, -20
+  72              		.cfi_offset 18, -16
+  73              		.cfi_offset 9, -12
+  74              		.cfi_offset 8, -8
+  75              		.cfi_offset 1, -4
+  76              		.cfi_def_cfa_offset 64
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     int res = 0, file_download = 0;
+  77              		.loc 1 65 5 is_stmt 1
+  78              	.LVL2:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     uint32_t file_size = 0, file_downloaded = 0;
+  79              		.loc 1 66 5
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     int res = 0, file_download = 0;
+  80              		.loc 1 64 1 is_stmt 0
+  81 0008 7971     		addi	sp,sp,-48
+  82              		.cfi_def_cfa_offset 112
+  83              		.loc 1 66 14
+  84 000a 02CE     		sw	zero,28(sp)
+  85              		.loc 1 66 29
+  86 000c 02D0     		sw	zero,32(sp)
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     uint32_t percent_pre = 0, percent_now = 0;
+  87              		.loc 1 67 5 is_stmt 1
+  88              	.LVL3:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     unsigned long long report_pre = 0, report_now = 0;
+  89              		.loc 1 68 5
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     dm_fota_ctx_t *ctx = _dm_fota_get_ctx();
+  90              		.loc 1 69 5
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+  91              		.loc 1 11 5
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     void *ota_handle = NULL;
+  92              		.loc 1 70 5
+  93              		.loc 1 70 11 is_stmt 0
+  94 000e 02D2     		sw	zero,36(sp)
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     uint32_t ota_type = IOT_OTAT_NONE;
+  95              		.loc 1 71 5 is_stmt 1
+  96              		.loc 1 71 14 is_stmt 0
+  97 0010 02D4     		sw	zero,40(sp)
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (output == NULL || output_len <= 0) {
+  98              		.loc 1 73 5 is_stmt 1
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return DM_INVALID_PARAMETER;
+  99              		.loc 1 74 16 is_stmt 0
+ 100 0012 7954     		li	s0,-2
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return DM_INVALID_PARAMETER;
+ 101              		.loc 1 73 8
+ 102 0014 11CD     		beq	a0,zero,.L4
+ 103 0016 2E8A     		mv	s4,a1
+ 104              		.loc 1 74 16 discriminator 1
+ 105 0018 7954     		li	s0,-2
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return DM_INVALID_PARAMETER;
+ 106              		.loc 1 73 24 discriminator 1
+ 107 001a 635BB000 		ble	a1,zero,.L4
+ 108 001e 2A89     		mv	s2,a0
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     /* Get Ota Handle */
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     res = dm_ota_get_ota_handle(&ota_handle);
+ 109              		.loc 1 78 5 is_stmt 1
+ 110              		.loc 1 78 11 is_stmt 0
+ 111 0020 4810     		addi	a0,sp,36
+ 112              	.LVL4:
+ 113 0022 97000000 		call	dm_ota_get_ota_handle
+ 113      E7800000 
+ 114              	.LVL5:
+ 115 002a 2A84     		mv	s0,a0
+ 116              	.LVL6:
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (res != SUCCESS_RETURN) {
+ 117              		.loc 1 79 5 is_stmt 1
+ 118              		.loc 1 79 8 is_stmt 0
+ 119 002c 01C9     		beq	a0,zero,.L6
+ 120              	.LVL7:
+ 121              	.L26:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (ota_handle == NULL) {
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     IOT_OTA_Ioctl(ota_handle, IOT_OTAG_OTA_TYPE, &ota_type, 4);
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if ((ota_type != IOT_OTAT_FOTA) && (ota_type != IOT_OTAT_FOTA_OFFLINE)) {
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     /* reset the size_fetched in ota_handle to be 0 */
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     IOT_OTA_Ioctl(ota_handle, IOT_OTAG_RESET_FETCHED_SIZE, ota_handle, 4);
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     /* Prepare Write Data To Storage */
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     HAL_Firmware_Persistence_Start();
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     while (1) {
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         file_download = IOT_OTA_FetchYield(ota_handle, output, output_len, 1);
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (file_download < 0) {
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, IOT_OTAP_FETCH_FAILED, NULL);
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             HAL_Firmware_Persistence_Stop();
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             ctx->is_report_new_config = 0;
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             return FAIL_RETURN;
+ 122              		.loc 1 102 13 is_stmt 1
+ 123              		.loc 1 102 20 is_stmt 0
+ 124 002e 7D54     		li	s0,-1
+ 125              	.LVL8:
+ 126              	.L4:
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         /* Write Config File Into Stroage */
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         res = HAL_Firmware_Persistence_Write(output, file_download);
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (res < 0) {
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, IOT_OTAP_BURN_FAILED, NULL);
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             dm_log_err("Fota write firmware failed");
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             HAL_Firmware_Persistence_Stop();
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             ctx->is_report_new_config = 0;
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             return FAIL_RETURN;
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         /* Get OTA information */
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         IOT_OTA_Ioctl(ota_handle, IOT_OTAG_FETCHED_SIZE, &file_downloaded, 4);
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         IOT_OTA_Ioctl(ota_handle, IOT_OTAG_FILE_SIZE, &file_size, 4);
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         /* Calculate Download Percent And Update Report Timestamp*/
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         percent_now = (file_downloaded * 100) / file_size;
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         report_now = HAL_UptimeMs();
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         /* Report Download Process To Cloud */
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (report_now < report_pre) {
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             report_pre = report_now;
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if ((((percent_now - percent_pre) > 5) &&
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****              ((report_now - report_pre) > 50)) || (percent_now >= IOT_OTAP_FETCH_PERCENTAGE_MAX)) {
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, percent_now, NULL);
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             percent_pre = percent_now;
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             report_pre = report_now;
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         /* Check If OTA Finished */
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (IOT_OTA_IsFetchFinish(ota_handle)) {
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             uint32_t file_isvalid = 0;
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_Ioctl(ota_handle, IOT_OTAG_CHECK_FIRMWARE, &file_isvalid, 4);
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             if (file_isvalid == 0) {
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 HAL_Firmware_Persistence_Stop();
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 IOT_OTA_ReportProgress(ota_handle, IOT_OTAP_CHECK_FALIED, NULL);
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 ctx->is_report_new_config = 0;
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 return FAIL_RETURN;
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             } else {
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 break;
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             }
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     HAL_Firmware_Persistence_Stop();
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     ctx->is_report_new_config = 0;
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return SUCCESS_RETURN;
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+ 127              		.loc 1 153 1
+ 128 0030 2285     		mv	a0,s0
+ 129 0032 4561     		addi	sp,sp,48
+ 130              		.cfi_remember_state
+ 131              		.cfi_def_cfa_offset 0
+ 132 0034 17030000 		tail	__riscv_restore_12
+ 132      67000300 
+ 133              		.cfi_restore 27
+ 134              		.cfi_restore 26
+ 135              		.cfi_restore 25
+ 136              		.cfi_restore 24
+ 137              		.cfi_restore 23
+ 138              		.cfi_restore 22
+ 139              		.cfi_restore 21
+ 140              		.cfi_restore 20
+ 141              		.cfi_restore 19
+ 142              		.cfi_restore 18
+ 143              		.cfi_restore 9
+ 144              		.cfi_restore 8
+ 145              		.cfi_restore 1
+ 146              		.cfi_def_cfa_offset -64
+ 147              	.LVL9:
+ 148              	.L6:
+ 149              		.cfi_restore_state
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 150              		.loc 1 83 5 is_stmt 1
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 151              		.loc 1 83 20 is_stmt 0
+ 152 003c 1255     		lw	a0,36(sp)
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 153              		.loc 1 83 8
+ 154 003e 65D9     		beq	a0,zero,.L26
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 155              		.loc 1 86 5 is_stmt 1
+ 156 0040 9146     		li	a3,4
+ 157 0042 3010     		addi	a2,sp,40
+ 158 0044 9945     		li	a1,6
+ 159 0046 97000000 		call	IOT_OTA_Ioctl
+ 159      E7800000 
+ 160              	.LVL10:
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 161              		.loc 1 88 5
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 162              		.loc 1 88 37 is_stmt 0
+ 163 004e A257     		lw	a5,40(sp)
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 164              		.loc 1 88 8
+ 165 0050 0547     		li	a4,1
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 166              		.loc 1 88 37
+ 167 0052 F917     		addi	a5,a5,-2
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 168              		.loc 1 88 8
+ 169 0054 E36DF7FC 		bgtu	a5,a4,.L26
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     /* Prepare Write Data To Storage */
+ 170              		.loc 1 93 5 is_stmt 1
+ 171 0058 1256     		lw	a2,36(sp)
+ 172 005a 9146     		li	a3,4
+ 173 005c B545     		li	a1,13
+ 174 005e 3285     		mv	a0,a2
+ 175 0060 97000000 		call	IOT_OTA_Ioctl
+ 175      E7800000 
+ 176              	.LVL11:
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     while (1) {
+ 177              		.loc 1 95 5
+ 178 0068 97000000 		call	HAL_Firmware_Persistence_Start
+ 178      E7800000 
+ 179              	.LVL12:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     dm_fota_ctx_t *ctx = _dm_fota_get_ctx();
+ 180              		.loc 1 68 24 is_stmt 0
+ 181 0070 814A     		li	s5,0
+ 182 0072 8149     		li	s3,0
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     unsigned long long report_pre = 0, report_now = 0;
+ 183              		.loc 1 67 14
+ 184 0074 014B     		li	s6,0
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         report_now = HAL_UptimeMs();
+ 185              		.loc 1 120 40
+ 186 0076 930B4006 		li	s7,100
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****              ((report_now - report_pre) > 50)) || (percent_now >= IOT_OTAP_FETCH_PERCENTAGE_MAX)) {
+ 187              		.loc 1 127 12
+ 188 007a 154C     		li	s8,5
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, percent_now, NULL);
+ 189              		.loc 1 128 48
+ 190 007c 930C3006 		li	s9,99
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****              ((report_now - report_pre) > 50)) || (percent_now >= IOT_OTAP_FETCH_PERCENTAGE_MAX)) {
+ 191              		.loc 1 127 48
+ 192 0080 130D2003 		li	s10,50
+ 193              	.LVL13:
+ 194              	.L16:
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         file_download = IOT_OTA_FetchYield(ota_handle, output, output_len, 1);
+ 195              		.loc 1 96 5 is_stmt 1
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (file_download < 0) {
+ 196              		.loc 1 97 9
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (file_download < 0) {
+ 197              		.loc 1 97 25 is_stmt 0
+ 198 0084 1255     		lw	a0,36(sp)
+ 199 0086 CA85     		mv	a1,s2
+ 200 0088 8546     		li	a3,1
+ 201 008a 5286     		mv	a2,s4
+ 202 008c 97000000 		call	IOT_OTA_FetchYield
+ 202      E7800000 
+ 203              	.LVL14:
+ 204 0094 AA85     		mv	a1,a0
+ 205              	.LVL15:
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, IOT_OTAP_FETCH_FAILED, NULL);
+ 206              		.loc 1 98 9 is_stmt 1
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, IOT_OTAP_FETCH_FAILED, NULL);
+ 207              		.loc 1 98 12 is_stmt 0
+ 208 0096 63520502 		bge	a0,zero,.L8
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             HAL_Firmware_Persistence_Stop();
+ 209              		.loc 1 99 13 is_stmt 1
+ 210 009a 1255     		lw	a0,36(sp)
+ 211              	.LVL16:
+ 212 009c 0146     		li	a2,0
+ 213 009e F955     		li	a1,-2
+ 214              	.LVL17:
+ 215 00a0 97000000 		call	IOT_OTA_ReportProgress
+ 215      E7800000 
+ 216              	.LVL18:
+ 217              	.L27:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             ctx->is_report_new_config = 0;
+ 218              		.loc 1 100 13
+ 219 00a8 97000000 		call	HAL_Firmware_Persistence_Stop
+ 219      E7800000 
+ 220              	.LVL19:
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             return FAIL_RETURN;
+ 221              		.loc 1 101 13
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             return FAIL_RETURN;
+ 222              		.loc 1 101 39 is_stmt 0
+ 223 00b0 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 224 00b4 23A00700 		sw	zero,%lo(.LANCHOR0)(a5)
+ 225 00b8 9DBF     		j	.L26
+ 226              	.LVL20:
+ 227              	.L8:
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (res < 0) {
+ 228              		.loc 1 106 9 is_stmt 1
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (res < 0) {
+ 229              		.loc 1 106 15 is_stmt 0
+ 230 00ba 4A85     		mv	a0,s2
+ 231              	.LVL21:
+ 232 00bc 97000000 		call	HAL_Firmware_Persistence_Write
+ 232      E7800000 
+ 233              	.LVL22:
+ 234 00c4 AA87     		mv	a5,a0
+ 235              	.LVL23:
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, IOT_OTAP_BURN_FAILED, NULL);
+ 236              		.loc 1 107 9 is_stmt 1
+ 237 00c6 1255     		lw	a0,36(sp)
+ 238              	.LVL24:
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, IOT_OTAP_BURN_FAILED, NULL);
+ 239              		.loc 1 107 12 is_stmt 0
+ 240 00c8 63D10704 		bge	a5,zero,.L9
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             dm_log_err("Fota write firmware failed");
+ 241              		.loc 1 108 13 is_stmt 1
+ 242 00cc 0146     		li	a2,0
+ 243 00ce F155     		li	a1,-4
+ 244 00d0 97000000 		call	IOT_OTA_ReportProgress
+ 244      E7800000 
+ 245              	.LVL25:
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             HAL_Firmware_Persistence_Stop();
+ 246              		.loc 1 109 13
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             HAL_Firmware_Persistence_Stop();
+ 247              		.loc 1 109 13
+ 248 00d8 37050000 		lui	a0,%hi(.LC0)
+ 249 00dc 13050500 		addi	a0,a0,%lo(.LC0)
+ 250 00e0 97000000 		call	HAL_Printf
+ 250      E7800000 
+ 251              	.LVL26:
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             HAL_Firmware_Persistence_Stop();
+ 252              		.loc 1 109 13
+ 253 00e8 37050000 		lui	a0,%hi(.LC1)
+ 254 00ec 13050500 		addi	a0,a0,%lo(.LC1)
+ 255 00f0 97000000 		call	HAL_Printf
+ 255      E7800000 
+ 256              	.LVL27:
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             HAL_Firmware_Persistence_Stop();
+ 257              		.loc 1 109 13
+ 258 00f8 37050000 		lui	a0,%hi(.LC2)
+ 259 00fc 13050500 		addi	a0,a0,%lo(.LC2)
+ 260 0100 97000000 		call	HAL_Printf
+ 260      E7800000 
+ 261              	.LVL28:
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             HAL_Firmware_Persistence_Stop();
+ 262              		.loc 1 109 13
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             ctx->is_report_new_config = 0;
+ 263              		.loc 1 110 13
+ 264 0108 45B7     		j	.L27
+ 265              	.LVL29:
+ 266              	.L9:
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         IOT_OTA_Ioctl(ota_handle, IOT_OTAG_FILE_SIZE, &file_size, 4);
+ 267              		.loc 1 116 9
+ 268 010a 9146     		li	a3,4
+ 269 010c 1010     		addi	a2,sp,32
+ 270 010e 9D45     		li	a1,7
+ 271 0110 97000000 		call	IOT_OTA_Ioctl
+ 271      E7800000 
+ 272              	.LVL30:
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 273              		.loc 1 117 9
+ 274 0118 1255     		lw	a0,36(sp)
+ 275 011a 9146     		li	a3,4
+ 276 011c 7008     		addi	a2,sp,28
+ 277 011e A145     		li	a1,8
+ 278 0120 97000000 		call	IOT_OTA_Ioctl
+ 278      E7800000 
+ 279              	.LVL31:
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         report_now = HAL_UptimeMs();
+ 280              		.loc 1 120 9
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         report_now = HAL_UptimeMs();
+ 281              		.loc 1 120 40 is_stmt 0
+ 282 0128 8254     		lw	s1,32(sp)
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         report_now = HAL_UptimeMs();
+ 283              		.loc 1 120 21
+ 284 012a F247     		lw	a5,28(sp)
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         report_now = HAL_UptimeMs();
+ 285              		.loc 1 120 40
+ 286 012c B3849B02 		mul	s1,s7,s1
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         report_now = HAL_UptimeMs();
+ 287              		.loc 1 120 21
+ 288 0130 B3D4F402 		divu	s1,s1,a5
+ 289              	.LVL32:
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 290              		.loc 1 121 9 is_stmt 1
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 291              		.loc 1 121 22 is_stmt 0
+ 292 0134 97000000 		call	HAL_UptimeMs
+ 292      E7800000 
+ 293              	.LVL33:
+ 294 013c AA87     		mv	a5,a0
+ 295 013e AE8D     		mv	s11,a1
+ 296              	.LVL34:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             report_pre = report_now;
+ 297              		.loc 1 124 9 is_stmt 1
+ 298 0140 63E63501 		bgtu	s3,a1,.L11
+ 299 0144 6396B900 		bne	s3,a1,.L10
+ 300 0148 63745501 		bleu	s5,a0,.L10
+ 301              	.L11:
+ 302 014c BE8A     		mv	s5,a5
+ 303              	.LVL35:
+ 304 014e EE89     		mv	s3,s11
+ 305              	.L10:
+ 306              	.LVL36:
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****              ((report_now - report_pre) > 50)) || (percent_now >= IOT_OTAP_FETCH_PERCENTAGE_MAX)) {
+ 307              		.loc 1 127 9
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****              ((report_now - report_pre) > 50)) || (percent_now >= IOT_OTAP_FETCH_PERCENTAGE_MAX)) {
+ 308              		.loc 1 127 28 is_stmt 0
+ 309 0150 33876441 		sub	a4,s1,s6
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****              ((report_now - report_pre) > 50)) || (percent_now >= IOT_OTAP_FETCH_PERCENTAGE_MAX)) {
+ 310              		.loc 1 127 12
+ 311 0154 637CEC00 		bleu	a4,s8,.L12
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, percent_now, NULL);
+ 312              		.loc 1 128 27 discriminator 1
+ 313 0158 33875741 		sub	a4,a5,s5
+ 314 015c B3B6E700 		sgtu	a3,a4,a5
+ 315 0160 33863D41 		sub	a2,s11,s3
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****              ((report_now - report_pre) > 50)) || (percent_now >= IOT_OTAP_FETCH_PERCENTAGE_MAX)) {
+ 316              		.loc 1 127 48 discriminator 1
+ 317 0164 6316D600 		bne	a2,a3,.L13
+ 318 0168 6364ED00 		bgtu	a4,s10,.L13
+ 319              	.L12:
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_ReportProgress(ota_handle, percent_now, NULL);
+ 320              		.loc 1 128 48
+ 321 016c 63FE9C00 		bleu	s1,s9,.L15
+ 322              	.L13:
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             percent_pre = percent_now;
+ 323              		.loc 1 129 13
+ 324 0170 1255     		lw	a0,36(sp)
+ 325              	.LVL37:
+ 326 0172 0146     		li	a2,0
+ 327 0174 A685     		mv	a1,s1
+ 328              	.LVL38:
+ 329 0176 3EC6     		sw	a5,12(sp)
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             percent_pre = percent_now;
+ 330              		.loc 1 129 13 is_stmt 1
+ 331 0178 97000000 		call	IOT_OTA_ReportProgress
+ 331      E7800000 
+ 332              	.LVL39:
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             report_pre = report_now;
+ 333              		.loc 1 130 13
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 334              		.loc 1 131 13
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 335              		.loc 1 131 24 is_stmt 0
+ 336 0180 B247     		lw	a5,12(sp)
+ 337 0182 EE89     		mv	s3,s11
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         report_now = HAL_UptimeMs();
+ 338              		.loc 1 120 21
+ 339 0184 268B     		mv	s6,s1
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 340              		.loc 1 131 24
+ 341 0186 BE8A     		mv	s5,a5
+ 342              	.LVL40:
+ 343              	.L15:
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             uint32_t file_isvalid = 0;
+ 344              		.loc 1 135 9 is_stmt 1
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             uint32_t file_isvalid = 0;
+ 345              		.loc 1 135 13 is_stmt 0
+ 346 0188 1255     		lw	a0,36(sp)
+ 347 018a 97000000 		call	IOT_OTA_IsFetchFinish
+ 347      E7800000 
+ 348              	.LVL41:
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             uint32_t file_isvalid = 0;
+ 349              		.loc 1 135 12
+ 350 0192 E30905EE 		beq	a0,zero,.L16
+ 351              	.LBB12:
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_Ioctl(ota_handle, IOT_OTAG_CHECK_FIRMWARE, &file_isvalid, 4);
+ 352              		.loc 1 136 13 is_stmt 1
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             if (file_isvalid == 0) {
+ 353              		.loc 1 137 13 is_stmt 0
+ 354 0196 1255     		lw	a0,36(sp)
+ 355 0198 9146     		li	a3,4
+ 356 019a 7010     		addi	a2,sp,44
+ 357 019c AD45     		li	a1,11
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             IOT_OTA_Ioctl(ota_handle, IOT_OTAG_CHECK_FIRMWARE, &file_isvalid, 4);
+ 358              		.loc 1 136 22
+ 359 019e 02D6     		sw	zero,44(sp)
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             if (file_isvalid == 0) {
+ 360              		.loc 1 137 13 is_stmt 1
+ 361 01a0 97000000 		call	IOT_OTA_Ioctl
+ 361      E7800000 
+ 362              	.LVL42:
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 HAL_Firmware_Persistence_Stop();
+ 363              		.loc 1 138 13
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 HAL_Firmware_Persistence_Stop();
+ 364              		.loc 1 138 16 is_stmt 0
+ 365 01a8 B257     		lw	a5,44(sp)
+ 366 01aa B7040000 		lui	s1,%hi(.LANCHOR0)
+ 367              	.LVL43:
+ 368 01ae 93840400 		addi	s1,s1,%lo(.LANCHOR0)
+ 369 01b2 99EF     		bne	a5,zero,.L17
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 IOT_OTA_ReportProgress(ota_handle, IOT_OTAP_CHECK_FALIED, NULL);
+ 370              		.loc 1 139 17 is_stmt 1
+ 371 01b4 97000000 		call	HAL_Firmware_Persistence_Stop
+ 371      E7800000 
+ 372              	.LVL44:
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 ctx->is_report_new_config = 0;
+ 373              		.loc 1 140 17
+ 374 01bc 1255     		lw	a0,36(sp)
+ 375 01be 0146     		li	a2,0
+ 376 01c0 F555     		li	a1,-3
+ 377 01c2 97000000 		call	IOT_OTA_ReportProgress
+ 377      E7800000 
+ 378              	.LVL45:
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 return FAIL_RETURN;
+ 379              		.loc 1 141 17
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 return FAIL_RETURN;
+ 380              		.loc 1 141 43 is_stmt 0
+ 381 01ca 23A00400 		sw	zero,0(s1)
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             } else {
+ 382              		.loc 1 142 17 is_stmt 1
+ 383 01ce 85B5     		j	.L26
+ 384              	.L17:
+ 385              	.LBE12:
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     ctx->is_report_new_config = 0;
+ 386              		.loc 1 149 5
+ 387 01d0 97000000 		call	HAL_Firmware_Persistence_Stop
+ 387      E7800000 
+ 388              	.LVL46:
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 389              		.loc 1 150 5
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 390              		.loc 1 150 31 is_stmt 0
+ 391 01d8 23A00400 		sw	zero,0(s1)
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+ 392              		.loc 1 152 5 is_stmt 1
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+ 393              		.loc 1 152 12 is_stmt 0
+ 394 01dc 91BD     		j	.L4
+ 395              		.cfi_endproc
+ 396              	.LFE24:
+ 398              		.section	.rodata.dm_fota_status_check.str1.4,"aMS",@progbits,1
+ 399              		.align	2
+ 400              	.LC3:
+ 401 0000 466F7461 		.string	"Fota Status Check"
+ 401      20537461 
+ 401      74757320 
+ 401      43686563 
+ 401      6B00
+ 402 0012 0000     		.align	2
+ 403              	.LC4:
+ 404 0014 444D00   		.string	"DM"
+ 405 0017 00       		.align	2
+ 406              	.LC5:
+ 407 0018 7B227665 		.string	"{\"version\":\"%s\"}"
+ 407      7273696F 
+ 407      6E223A22 
+ 407      2573227D 
+ 407      00
+ 408 0029 000000   		.align	2
+ 409              	.LC6:
+ 410 002c 5B696E66 		.string	"[inf] "
+ 410      5D2000
+ 411 0033 00       		.align	2
+ 412              	.LC7:
+ 413 0034 53656E64 		.string	"Send To User: %s"
+ 413      20546F20 
+ 413      55736572 
+ 413      3A202573 
+ 413      00
+ 414              		.section	.text.dm_fota_status_check,"ax",@progbits
+ 415              		.align	1
+ 416              		.globl	dm_fota_status_check
+ 418              	dm_fota_status_check:
+ 419              	.LFB25:
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** int dm_fota_status_check(void)
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** {
+ 420              		.loc 1 156 1 is_stmt 1
+ 421              		.cfi_startproc
+ 422 0000 17030000 		call	t0,__riscv_save_4
+ 422      E7020300 
+ 423              		.cfi_offset 19, -20
+ 424              		.cfi_offset 18, -16
+ 425              		.cfi_offset 9, -12
+ 426              		.cfi_offset 8, -8
+ 427              		.cfi_offset 1, -4
+ 428              		.cfi_def_cfa_offset 32
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     int res = 0;
+ 429              		.loc 1 157 5
+ 430              	.LVL47:
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     dm_fota_ctx_t *ctx = _dm_fota_get_ctx();
+ 431              		.loc 1 158 5
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+ 432              		.loc 1 11 5
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     void *ota_handle = NULL;
+ 433              		.loc 1 159 5
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     int res = 0;
+ 434              		.loc 1 156 1 is_stmt 0
+ 435 0008 7571     		addi	sp,sp,-144
+ 436              		.cfi_def_cfa_offset 176
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     /* Get Ota Handle */
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     res = dm_ota_get_ota_handle(&ota_handle);
+ 437              		.loc 1 162 11
+ 438 000a 2800     		addi	a0,sp,8
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 439              		.loc 1 159 11
+ 440 000c 02C4     		sw	zero,8(sp)
+ 441              		.loc 1 162 5 is_stmt 1
+ 442              		.loc 1 162 11 is_stmt 0
+ 443 000e 97000000 		call	dm_ota_get_ota_handle
+ 443      E7800000 
+ 444              	.LVL48:
+ 445 0016 AA87     		mv	a5,a0
+ 446              	.LVL49:
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (res != SUCCESS_RETURN) {
+ 447              		.loc 1 163 5 is_stmt 1
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 448              		.loc 1 164 16 is_stmt 0
+ 449 0018 7D55     		li	a0,-1
+ 450              	.LVL50:
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (res != SUCCESS_RETURN) {
+ 451              		.loc 1 163 8
+ 452 001a 639C0710 		bne	a5,zero,.L28
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (IOT_OTA_IsFetching(ota_handle)) {
+ 453              		.loc 1 167 5 is_stmt 1
+ 454              		.loc 1 167 9 is_stmt 0
+ 455 001e 2245     		lw	a0,8(sp)
+ 456 0020 97000000 		call	IOT_OTA_IsFetching
+ 456      E7800000 
+ 457              	.LVL51:
+ 458              		.loc 1 167 8
+ 459 0028 63050510 		beq	a0,zero,.L28
+ 460              	.LBB16:
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         uint32_t ota_type = IOT_OTAT_NONE;
+ 461              		.loc 1 168 9 is_stmt 1
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         IOT_OTA_Ioctl(ota_handle, IOT_OTAG_OTA_TYPE, &ota_type, 4);
+ 462              		.loc 1 170 9 is_stmt 0
+ 463 002c 2245     		lw	a0,8(sp)
+ 464 002e 9146     		li	a3,4
+ 465 0030 7000     		addi	a2,sp,12
+ 466 0032 9945     		li	a1,6
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         uint32_t ota_type = IOT_OTAT_NONE;
+ 467              		.loc 1 168 18
+ 468 0034 02C6     		sw	zero,12(sp)
+ 469              		.loc 1 170 9 is_stmt 1
+ 470 0036 97000000 		call	IOT_OTA_Ioctl
+ 470      E7800000 
+ 471              	.LVL52:
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if ((ota_type == IOT_OTAT_FOTA) ||(ota_type == IOT_OTAT_FOTA_OFFLINE)){
+ 472              		.loc 1 172 9
+ 473              		.loc 1 172 41 is_stmt 0
+ 474 003e B247     		lw	a5,12(sp)
+ 475              		.loc 1 172 12
+ 476 0040 8549     		li	s3,1
+ 477              		.loc 1 172 41
+ 478 0042 F917     		addi	a5,a5,-2
+ 479              		.loc 1 172 12
+ 480 0044 63E6F90E 		bgtu	a5,s3,.L30
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             /* Send New Config Information To User */
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             if (ctx->is_report_new_config == 0) {
+ 481              		.loc 1 174 13 is_stmt 1
+ 482              		.loc 1 174 20 is_stmt 0
+ 483 0048 37090000 		lui	s2,%hi(.LANCHOR0)
+ 484 004c 13090900 		addi	s2,s2,%lo(.LANCHOR0)
+ 485              		.loc 1 174 16
+ 486 0050 83270900 		lw	a5,0(s2)
+ 487 0054 F1EF     		bne	a5,zero,.L30
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 dm_log_debug("Fota Status Check");
+ 488              		.loc 1 175 17 is_stmt 1
+ 489 0056 37070000 		lui	a4,%hi(.LC3)
+ 490 005a B7050000 		lui	a1,%hi(.LANCHOR1)
+ 491 005e 37050000 		lui	a0,%hi(.LC4)
+ 492 0062 13070700 		addi	a4,a4,%lo(.LC3)
+ 493 0066 9546     		li	a3,5
+ 494 0068 1306F00A 		li	a2,175
+ 495 006c 93850500 		addi	a1,a1,%lo(.LANCHOR1)
+ 496 0070 13050500 		addi	a0,a0,%lo(.LC4)
+ 497 0074 97000000 		call	LITE_syslog
+ 497      E7800000 
+ 498              	.LVL53:
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 res = _dm_fota_send_new_config_to_user(ota_handle);
+ 499              		.loc 1 176 17
+ 500              		.loc 1 176 23 is_stmt 0
+ 501 007c 2244     		lw	s0,8(sp)
+ 502              	.LVL54:
+ 503              	.LBB17:
+ 504              	.LBB18:
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     char *message = NULL;
+ 505              		.loc 1 34 5 is_stmt 1
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     char version[128] = {0};
+ 506              		.loc 1 35 5
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     const char *fota_new_config_fmt = "{\"version\":\"%s\"}";
+ 507              		.loc 1 36 5
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     const char *fota_new_config_fmt = "{\"version\":\"%s\"}";
+ 508              		.loc 1 36 10 is_stmt 0
+ 509 007e 1306C007 		li	a2,124
+ 510 0082 8145     		li	a1,0
+ 511 0084 4808     		addi	a0,sp,20
+ 512 0086 02C8     		sw	zero,16(sp)
+ 513 0088 97000000 		call	memset
+ 513      E7800000 
+ 514              	.LVL55:
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 515              		.loc 1 37 5 is_stmt 1
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 516              		.loc 1 39 5
+ 517 0090 93060008 		li	a3,128
+ 518 0094 1008     		addi	a2,sp,16
+ 519 0096 A945     		li	a1,10
+ 520 0098 2285     		mv	a0,s0
+ 521 009a 97000000 		call	IOT_OTA_Ioctl
+ 521      E7800000 
+ 522              	.LVL56:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 523              		.loc 1 41 5
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 524              		.loc 1 41 49 is_stmt 0
+ 525 00a2 0808     		addi	a0,sp,16
+ 526 00a4 97000000 		call	strlen
+ 526      E7800000 
+ 527              	.LVL57:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 528              		.loc 1 41 65
+ 529 00ac 93041501 		addi	s1,a0,17
+ 530              	.LVL58:
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (message == NULL) {
+ 531              		.loc 1 43 5 is_stmt 1
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (message == NULL) {
+ 532              		.loc 1 43 15 is_stmt 0
+ 533 00b0 2686     		mv	a2,s1
+ 534 00b2 8145     		li	a1,0
+ 535 00b4 0145     		li	a0,0
+ 536 00b6 97000000 		call	LITE_malloc_internal
+ 536      E7800000 
+ 537              	.LVL59:
+ 538 00be 2A84     		mv	s0,a0
+ 539              	.LVL60:
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return DM_MEMORY_NOT_ENOUGH;
+ 540              		.loc 1 44 5 is_stmt 1
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return DM_MEMORY_NOT_ENOUGH;
+ 541              		.loc 1 44 8 is_stmt 0
+ 542 00c0 25C9     		beq	a0,zero,.L30
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     HAL_Snprintf(message, message_len, fota_new_config_fmt, version);
+ 543              		.loc 1 47 5 is_stmt 1
+ 544 00c2 2686     		mv	a2,s1
+ 545 00c4 8145     		li	a1,0
+ 546 00c6 97000000 		call	memset
+ 546      E7800000 
+ 547              	.LVL61:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 548              		.loc 1 48 5
+ 549 00ce 37060000 		lui	a2,%hi(.LC5)
+ 550 00d2 1408     		addi	a3,sp,16
+ 551 00d4 13060600 		addi	a2,a2,%lo(.LC5)
+ 552 00d8 A685     		mv	a1,s1
+ 553 00da 2285     		mv	a0,s0
+ 554 00dc 97000000 		call	HAL_Snprintf
+ 554      E7800000 
+ 555              	.LVL62:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 556              		.loc 1 50 5
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 557              		.loc 1 50 5
+ 558 00e4 37050000 		lui	a0,%hi(.LC6)
+ 559 00e8 13050500 		addi	a0,a0,%lo(.LC6)
+ 560 00ec 97000000 		call	HAL_Printf
+ 560      E7800000 
+ 561              	.LVL63:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 562              		.loc 1 50 5
+ 563 00f4 37050000 		lui	a0,%hi(.LC7)
+ 564 00f8 A285     		mv	a1,s0
+ 565 00fa 13050500 		addi	a0,a0,%lo(.LC7)
+ 566 00fe 97000000 		call	HAL_Printf
+ 566      E7800000 
+ 567              	.LVL64:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 568              		.loc 1 50 5
+ 569 0106 37050000 		lui	a0,%hi(.LC2)
+ 570 010a 13050500 		addi	a0,a0,%lo(.LC2)
+ 571 010e 97000000 		call	HAL_Printf
+ 571      E7800000 
+ 572              	.LVL65:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 573              		.loc 1 50 5
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (res != SUCCESS_RETURN) {
+ 574              		.loc 1 52 5
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (res != SUCCESS_RETURN) {
+ 575              		.loc 1 52 11 is_stmt 0
+ 576 0116 A285     		mv	a1,s0
+ 577 0118 1305C002 		li	a0,44
+ 578 011c 97000000 		call	_dm_msg_send_to_user
+ 578      E7800000 
+ 579              	.LVL66:
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (message) {
+ 580              		.loc 1 53 5 is_stmt 1
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         if (message) {
+ 581              		.loc 1 53 8 is_stmt 0
+ 582 0124 01CD     		beq	a0,zero,.L32
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             DM_free(message);
+ 583              		.loc 1 54 9 is_stmt 1
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 584              		.loc 1 55 13
+ 585 0126 2285     		mv	a0,s0
+ 586              	.LVL67:
+ 587 0128 97000000 		call	LITE_free_internal
+ 587      E7800000 
+ 588              	.LVL68:
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 589              		.loc 1 55 13
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 590              		.loc 1 55 29
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 591              		.loc 1 57 9
+ 592              	.LBE18:
+ 593              	.LBE17:
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 if (res == SUCCESS_RETURN) {
+ 594              		.loc 1 177 17
+ 595              	.L30:
+ 596              	.LBE16:
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                     ctx->is_report_new_config = 1;
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 }
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****             }
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         }
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return SUCCESS_RETURN;
+ 597              		.loc 1 184 12 is_stmt 0
+ 598 0130 0145     		li	a0,0
+ 599              	.L28:
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+ 600              		.loc 1 185 1
+ 601 0132 4961     		addi	sp,sp,144
+ 602              		.cfi_remember_state
+ 603              		.cfi_def_cfa_offset 0
+ 604 0134 17030000 		tail	__riscv_restore_4
+ 604      67000300 
+ 605              		.cfi_restore 19
+ 606              		.cfi_restore 18
+ 607              		.cfi_restore 9
+ 608              		.cfi_restore 8
+ 609              		.cfi_restore 1
+ 610              		.cfi_def_cfa_offset -32
+ 611              	.LVL69:
+ 612              	.L32:
+ 613              		.cfi_restore_state
+ 614              	.LBB19:
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                 if (res == SUCCESS_RETURN) {
+ 615              		.loc 1 177 17 is_stmt 1
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                     ctx->is_report_new_config = 1;
+ 616              		.loc 1 178 21
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****                     ctx->is_report_new_config = 1;
+ 617              		.loc 1 178 47 is_stmt 0
+ 618 013c 23203901 		sw	s3,0(s2)
+ 619 0140 C5BF     		j	.L30
+ 620              	.LBE19:
+ 621              		.cfi_endproc
+ 622              	.LFE25:
+ 624              		.section	.rodata.dm_fota_request_image.str1.4,"aMS",@progbits,1
+ 625              		.align	2
+ 626              	.LC8:
+ 627 0000 696E7661 		.string	"invalid input"
+ 627      6C696420 
+ 627      696E7075 
+ 627      7400
+ 628 000e 0000     		.align	2
+ 629              	.LC9:
+ 630 0010 6661696C 		.string	"failed to malloc"
+ 630      65642074 
+ 630      6F206D61 
+ 630      6C6C6F63 
+ 630      00
+ 631              		.section	.text.dm_fota_request_image,"ax",@progbits
+ 632              		.align	1
+ 633              		.globl	dm_fota_request_image
+ 635              	dm_fota_request_image:
+ 636              	.LFB26:
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** int dm_fota_request_image(const char *version, int buffer_len)
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** {
+ 637              		.loc 1 188 1 is_stmt 1
+ 638              		.cfi_startproc
+ 639              	.LVL70:
+ 640 0000 17030000 		call	t0,__riscv_save_4
+ 640      E7020300 
+ 641              		.cfi_offset 19, -20
+ 642              		.cfi_offset 18, -16
+ 643              		.cfi_offset 9, -12
+ 644              		.cfi_offset 8, -8
+ 645              		.cfi_offset 1, -4
+ 646              		.cfi_def_cfa_offset 32
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     int res = 0;
+ 647              		.loc 1 189 5
+ 648              	.LVL71:
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     void *ota_handle = NULL;
+ 649              		.loc 1 190 5
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     int res = 0;
+ 650              		.loc 1 188 1 is_stmt 0
+ 651 0008 0111     		addi	sp,sp,-32
+ 652              		.cfi_def_cfa_offset 64
+ 653              		.loc 1 190 11
+ 654 000a 02CE     		sw	zero,28(sp)
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (NULL == version || buffer_len <= 0) {
+ 655              		.loc 1 192 5 is_stmt 1
+ 656              		.loc 1 192 8 is_stmt 0
+ 657 000c 01C5     		beq	a0,zero,.L39
+ 658 000e 2E89     		mv	s2,a1
+ 659              		.loc 1 192 25 discriminator 1
+ 660 0010 6341B004 		bgt	a1,zero,.L40
+ 661              	.L39:
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         dm_log_info("invalid input");
+ 662              		.loc 1 193 9 is_stmt 1
+ 663              		.loc 1 193 9
+ 664 0014 37050000 		lui	a0,%hi(.LC6)
+ 665              	.LVL72:
+ 666 0018 13050500 		addi	a0,a0,%lo(.LC6)
+ 667 001c 97000000 		call	HAL_Printf
+ 667      E7800000 
+ 668              	.LVL73:
+ 669              		.loc 1 193 9
+ 670 0024 37050000 		lui	a0,%hi(.LC8)
+ 671 0028 13050500 		addi	a0,a0,%lo(.LC8)
+ 672 002c 97000000 		call	HAL_Printf
+ 672      E7800000 
+ 673              	.LVL74:
+ 674              		.loc 1 193 9
+ 675 0034 37050000 		lui	a0,%hi(.LC2)
+ 676 0038 13050500 		addi	a0,a0,%lo(.LC2)
+ 677 003c 97000000 		call	HAL_Printf
+ 677      E7800000 
+ 678              	.LVL75:
+ 679              		.loc 1 193 9
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 680              		.loc 1 194 9
+ 681              		.loc 1 194 16 is_stmt 0
+ 682 0044 7D54     		li	s0,-1
+ 683              	.LVL76:
+ 684              	.L38:
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     /* Get Ota Handle */
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     res = dm_ota_get_ota_handle(&ota_handle);
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (res != SUCCESS_RETURN) {
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     char *version_str = DM_malloc(buffer_len + 1);
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (NULL == version_str) {
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         dm_log_info("failed to malloc");
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     memset(version_str, 0, buffer_len + 1);
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     memcpy(version_str, version, buffer_len);
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     int ret = iotx_req_image(ota_handle, version_str);
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     DM_free(version_str);
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return ret;
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+ 685              		.loc 1 214 1
+ 686 0046 2285     		mv	a0,s0
+ 687 0048 0561     		addi	sp,sp,32
+ 688              		.cfi_remember_state
+ 689              		.cfi_def_cfa_offset 0
+ 690 004a 17030000 		tail	__riscv_restore_4
+ 690      67000300 
+ 691              		.cfi_restore 19
+ 692              		.cfi_restore 18
+ 693              		.cfi_restore 9
+ 694              		.cfi_restore 8
+ 695              		.cfi_restore 1
+ 696              		.cfi_def_cfa_offset -32
+ 697              	.LVL77:
+ 698              	.L40:
+ 699              		.cfi_restore_state
+ 700 0052 AA89     		mv	s3,a0
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (res != SUCCESS_RETURN) {
+ 701              		.loc 1 198 5 is_stmt 1
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (res != SUCCESS_RETURN) {
+ 702              		.loc 1 198 11 is_stmt 0
+ 703 0054 6808     		addi	a0,sp,28
+ 704              	.LVL78:
+ 705 0056 97000000 		call	dm_ota_get_ota_handle
+ 705      E7800000 
+ 706              	.LVL79:
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 707              		.loc 1 199 5 is_stmt 1
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 708              		.loc 1 200 16 is_stmt 0
+ 709 005e 7D54     		li	s0,-1
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 710              		.loc 1 199 8
+ 711 0060 7DF1     		bne	a0,zero,.L38
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (NULL == version_str) {
+ 712              		.loc 1 203 5 is_stmt 1
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (NULL == version_str) {
+ 713              		.loc 1 203 25 is_stmt 0
+ 714 0062 13061900 		addi	a2,s2,1
+ 715 0066 8145     		li	a1,0
+ 716 0068 32C6     		sw	a2,12(sp)
+ 717 006a 97000000 		call	LITE_malloc_internal
+ 717      E7800000 
+ 718              	.LVL80:
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         dm_log_info("failed to malloc");
+ 719              		.loc 1 204 8
+ 720 0072 3246     		lw	a2,12(sp)
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     if (NULL == version_str) {
+ 721              		.loc 1 203 25
+ 722 0074 AA84     		mv	s1,a0
+ 723              	.LVL81:
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         dm_log_info("failed to malloc");
+ 724              		.loc 1 204 5 is_stmt 1
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         dm_log_info("failed to malloc");
+ 725              		.loc 1 204 8 is_stmt 0
+ 726 0076 15E9     		bne	a0,zero,.L42
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 727              		.loc 1 205 9 is_stmt 1
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 728              		.loc 1 205 9
+ 729 0078 37050000 		lui	a0,%hi(.LC6)
+ 730 007c 13050500 		addi	a0,a0,%lo(.LC6)
+ 731 0080 97000000 		call	HAL_Printf
+ 731      E7800000 
+ 732              	.LVL82:
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 733              		.loc 1 205 9
+ 734 0088 37050000 		lui	a0,%hi(.LC9)
+ 735 008c 13050500 		addi	a0,a0,%lo(.LC9)
+ 736 0090 97000000 		call	HAL_Printf
+ 736      E7800000 
+ 737              	.LVL83:
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 738              		.loc 1 205 9
+ 739 0098 37050000 		lui	a0,%hi(.LC2)
+ 740 009c 13050500 		addi	a0,a0,%lo(.LC2)
+ 741 00a0 97000000 		call	HAL_Printf
+ 741      E7800000 
+ 742              	.LVL84:
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****         return FAIL_RETURN;
+ 743              		.loc 1 205 9
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 744              		.loc 1 206 9
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     }
+ 745              		.loc 1 206 16 is_stmt 0
+ 746 00a8 79BF     		j	.L38
+ 747              	.L42:
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     memcpy(version_str, version, buffer_len);
+ 748              		.loc 1 208 5 is_stmt 1
+ 749 00aa 8145     		li	a1,0
+ 750 00ac 97000000 		call	memset
+ 750      E7800000 
+ 751              	.LVL85:
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** 
+ 752              		.loc 1 209 5
+ 753 00b4 4A86     		mv	a2,s2
+ 754 00b6 CE85     		mv	a1,s3
+ 755 00b8 2685     		mv	a0,s1
+ 756 00ba 97000000 		call	memcpy
+ 756      E7800000 
+ 757              	.LVL86:
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     DM_free(version_str);
+ 758              		.loc 1 211 5
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     DM_free(version_str);
+ 759              		.loc 1 211 15 is_stmt 0
+ 760 00c2 7245     		lw	a0,28(sp)
+ 761 00c4 A685     		mv	a1,s1
+ 762 00c6 97000000 		call	iotx_req_image
+ 762      E7800000 
+ 763              	.LVL87:
+ 764 00ce 2A84     		mv	s0,a0
+ 765              	.LVL88:
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return ret;
+ 766              		.loc 1 212 5 is_stmt 1
+ 767 00d0 2685     		mv	a0,s1
+ 768 00d2 97000000 		call	LITE_free_internal
+ 768      E7800000 
+ 769              	.LVL89:
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return ret;
+ 770              		.loc 1 212 5
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c ****     return ret;
+ 771              		.loc 1 212 25
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+ 772              		.loc 1 213 5
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/linkkit/dm\dm_fota.c **** }
+ 773              		.loc 1 213 12 is_stmt 0
+ 774 00da B5B7     		j	.L38
+ 775              		.cfi_endproc
+ 776              	.LFE26:
+ 778              		.section	.rodata.__FUNCTION__.0,"a"
+ 779              		.align	2
+ 780              		.set	.LANCHOR1,. + 0
+ 783              	__FUNCTION__.0:
+ 784 0000 646D5F66 		.string	"dm_fota_status_check"
+ 784      6F74615F 
+ 784      73746174 
+ 784      75735F63 
+ 784      6865636B 
+ 785              		.section	.sbss.g_dm_fota_ctx,"aw",@nobits
+ 786              		.align	2
+ 787              		.set	.LANCHOR0,. + 0
+ 790              	g_dm_fota_ctx:
+ 791 0000 00000000 		.zero	4
+ 792              		.text
+ 793              	.Letext0:
+ 794              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 795              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 796              		.file 4 "..\\..\\..\\..\\cloud\\alicloud\\include/exports/iot_export_ota.h"
+ 797              		.file 5 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+ 798              		.file 6 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+ 799              		.file 7 "..\\..\\..\\..\\cloud\\alicloud\\include/iot_import.h"
+ 800              		.file 8 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+ 801              		.file 9 "..\\..\\..\\..\\cloud\\alicloud\\src\\infra\\utils/iotx_utils.h"
+ 802              		.file 10 "<built-in>"
+ 803              		.file 11 "..\\..\\..\\..\\cloud\\alicloud\\src\\services\\ota/iotx_ota.h"
+ 804              		.file 12 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nuc
+ 805              		.file 13 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RE
+ 806              		.file 14 "..\\..\\..\\..\\cloud\\alicloud\\src\\infra\\log/iotx_log.h"
+ 807              		.file 15 "..\\..\\..\\..\\cloud\\alicloud\\include/imports/iot_import_ota.h"
+ 808              		.file 16 "..\\..\\..\\..\\cloud\\alicloud\\include/exports/iot_export_errno.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 dm_fota.c
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:13     .text.dm_fota_init:0000000000000000 dm_fota_init
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:17     .text.dm_fota_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:18     .text.dm_fota_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:19     .text.dm_fota_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:21     .text.dm_fota_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:22     .text.dm_fota_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:25     .text.dm_fota_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:26     .text.dm_fota_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:28     .text.dm_fota_init:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:35     .text.dm_fota_deinit:0000000000000000 dm_fota_deinit
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:37     .text.dm_fota_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:39     .text.dm_fota_deinit:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:56     .text.dm_fota_perform_sync:0000000000000000 dm_fota_perform_sync
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:59     .text.dm_fota_perform_sync:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:61     .text.dm_fota_perform_sync:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:62     .text.dm_fota_perform_sync:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:63     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:64     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:65     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:66     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:67     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:68     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:69     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:70     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:71     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:72     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:73     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:74     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:75     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:76     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:79     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:80     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:81     .text.dm_fota_perform_sync:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:82     .text.dm_fota_perform_sync:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:84     .text.dm_fota_perform_sync:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:86     .text.dm_fota_perform_sync:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:89     .text.dm_fota_perform_sync:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:90     .text.dm_fota_perform_sync:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:91     .text.dm_fota_perform_sync:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:92     .text.dm_fota_perform_sync:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:93     .text.dm_fota_perform_sync:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:94     .text.dm_fota_perform_sync:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:96     .text.dm_fota_perform_sync:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:97     .text.dm_fota_perform_sync:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:99     .text.dm_fota_perform_sync:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:100    .text.dm_fota_perform_sync:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:102    .text.dm_fota_perform_sync:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:105    .text.dm_fota_perform_sync:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:107    .text.dm_fota_perform_sync:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:110    .text.dm_fota_perform_sync:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:111    .text.dm_fota_perform_sync:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:118    .text.dm_fota_perform_sync:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:119    .text.dm_fota_perform_sync:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:123    .text.dm_fota_perform_sync:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:124    .text.dm_fota_perform_sync:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:128    .text.dm_fota_perform_sync:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:130    .text.dm_fota_perform_sync:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:131    .text.dm_fota_perform_sync:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:133    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:134    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:135    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:136    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:137    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:138    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:139    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:140    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:141    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:142    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:143    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:144    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:145    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:146    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:149    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:151    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:152    .text.dm_fota_perform_sync:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:154    .text.dm_fota_perform_sync:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:156    .text.dm_fota_perform_sync:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:162    .text.dm_fota_perform_sync:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:163    .text.dm_fota_perform_sync:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:165    .text.dm_fota_perform_sync:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:167    .text.dm_fota_perform_sync:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:169    .text.dm_fota_perform_sync:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:171    .text.dm_fota_perform_sync:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:178    .text.dm_fota_perform_sync:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:181    .text.dm_fota_perform_sync:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:184    .text.dm_fota_perform_sync:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:186    .text.dm_fota_perform_sync:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:188    .text.dm_fota_perform_sync:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:190    .text.dm_fota_perform_sync:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:192    .text.dm_fota_perform_sync:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:196    .text.dm_fota_perform_sync:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:197    .text.dm_fota_perform_sync:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:198    .text.dm_fota_perform_sync:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:207    .text.dm_fota_perform_sync:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:208    .text.dm_fota_perform_sync:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:210    .text.dm_fota_perform_sync:000000000000009a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:219    .text.dm_fota_perform_sync:00000000000000a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:222    .text.dm_fota_perform_sync:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:223    .text.dm_fota_perform_sync:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:229    .text.dm_fota_perform_sync:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:230    .text.dm_fota_perform_sync:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:237    .text.dm_fota_perform_sync:00000000000000c6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:240    .text.dm_fota_perform_sync:00000000000000c8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:242    .text.dm_fota_perform_sync:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:247    .text.dm_fota_perform_sync:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:248    .text.dm_fota_perform_sync:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:253    .text.dm_fota_perform_sync:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:258    .text.dm_fota_perform_sync:00000000000000f8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:263    .text.dm_fota_perform_sync:0000000000000108 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:264    .text.dm_fota_perform_sync:0000000000000108 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:268    .text.dm_fota_perform_sync:000000000000010a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:274    .text.dm_fota_perform_sync:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:281    .text.dm_fota_perform_sync:0000000000000128 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:282    .text.dm_fota_perform_sync:0000000000000128 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:284    .text.dm_fota_perform_sync:000000000000012a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:286    .text.dm_fota_perform_sync:000000000000012c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:288    .text.dm_fota_perform_sync:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:291    .text.dm_fota_perform_sync:0000000000000134 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:292    .text.dm_fota_perform_sync:0000000000000134 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:298    .text.dm_fota_perform_sync:0000000000000140 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:308    .text.dm_fota_perform_sync:0000000000000150 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:309    .text.dm_fota_perform_sync:0000000000000150 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:311    .text.dm_fota_perform_sync:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:313    .text.dm_fota_perform_sync:0000000000000158 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:317    .text.dm_fota_perform_sync:0000000000000164 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:321    .text.dm_fota_perform_sync:000000000000016c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:324    .text.dm_fota_perform_sync:0000000000000170 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:331    .text.dm_fota_perform_sync:0000000000000178 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:334    .text.dm_fota_perform_sync:0000000000000180 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:335    .text.dm_fota_perform_sync:0000000000000180 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:336    .text.dm_fota_perform_sync:0000000000000180 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:339    .text.dm_fota_perform_sync:0000000000000184 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:341    .text.dm_fota_perform_sync:0000000000000186 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:345    .text.dm_fota_perform_sync:0000000000000188 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:346    .text.dm_fota_perform_sync:0000000000000188 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:350    .text.dm_fota_perform_sync:0000000000000192 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:353    .text.dm_fota_perform_sync:0000000000000196 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:354    .text.dm_fota_perform_sync:0000000000000196 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:359    .text.dm_fota_perform_sync:000000000000019e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:361    .text.dm_fota_perform_sync:00000000000001a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:364    .text.dm_fota_perform_sync:00000000000001a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:365    .text.dm_fota_perform_sync:00000000000001a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:371    .text.dm_fota_perform_sync:00000000000001b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:374    .text.dm_fota_perform_sync:00000000000001bc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:380    .text.dm_fota_perform_sync:00000000000001ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:381    .text.dm_fota_perform_sync:00000000000001ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:383    .text.dm_fota_perform_sync:00000000000001ce .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:387    .text.dm_fota_perform_sync:00000000000001d0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:390    .text.dm_fota_perform_sync:00000000000001d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:391    .text.dm_fota_perform_sync:00000000000001d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:393    .text.dm_fota_perform_sync:00000000000001dc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:394    .text.dm_fota_perform_sync:00000000000001dc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:395    .text.dm_fota_perform_sync:00000000000001de .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:418    .text.dm_fota_status_check:0000000000000000 dm_fota_status_check
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:421    .text.dm_fota_status_check:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:422    .text.dm_fota_status_check:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:423    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:424    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:425    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:426    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:427    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:428    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:431    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:432    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:433    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:434    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:435    .text.dm_fota_status_check:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:436    .text.dm_fota_status_check:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:438    .text.dm_fota_status_check:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:440    .text.dm_fota_status_check:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:442    .text.dm_fota_status_check:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:443    .text.dm_fota_status_check:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:448    .text.dm_fota_status_check:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:449    .text.dm_fota_status_check:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:452    .text.dm_fota_status_check:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:454    .text.dm_fota_status_check:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:455    .text.dm_fota_status_check:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:459    .text.dm_fota_status_check:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:462    .text.dm_fota_status_check:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:463    .text.dm_fota_status_check:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:468    .text.dm_fota_status_check:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:470    .text.dm_fota_status_check:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:473    .text.dm_fota_status_check:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:474    .text.dm_fota_status_check:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:476    .text.dm_fota_status_check:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:478    .text.dm_fota_status_check:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:480    .text.dm_fota_status_check:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:482    .text.dm_fota_status_check:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:483    .text.dm_fota_status_check:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:486    .text.dm_fota_status_check:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:489    .text.dm_fota_status_check:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:500    .text.dm_fota_status_check:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:501    .text.dm_fota_status_check:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:506    .text.dm_fota_status_check:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:507    .text.dm_fota_status_check:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:508    .text.dm_fota_status_check:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:509    .text.dm_fota_status_check:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:516    .text.dm_fota_status_check:0000000000000090 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:517    .text.dm_fota_status_check:0000000000000090 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:524    .text.dm_fota_status_check:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:525    .text.dm_fota_status_check:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:529    .text.dm_fota_status_check:00000000000000ac .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:532    .text.dm_fota_status_check:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:533    .text.dm_fota_status_check:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:541    .text.dm_fota_status_check:00000000000000c0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:542    .text.dm_fota_status_check:00000000000000c0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:544    .text.dm_fota_status_check:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:549    .text.dm_fota_status_check:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:557    .text.dm_fota_status_check:00000000000000e4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:558    .text.dm_fota_status_check:00000000000000e4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:563    .text.dm_fota_status_check:00000000000000f4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:569    .text.dm_fota_status_check:0000000000000106 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:574    .text.dm_fota_status_check:0000000000000116 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:575    .text.dm_fota_status_check:0000000000000116 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:576    .text.dm_fota_status_check:0000000000000116 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:581    .text.dm_fota_status_check:0000000000000124 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:582    .text.dm_fota_status_check:0000000000000124 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:584    .text.dm_fota_status_check:0000000000000126 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:585    .text.dm_fota_status_check:0000000000000126 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:590    .text.dm_fota_status_check:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:591    .text.dm_fota_status_check:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:594    .text.dm_fota_status_check:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:597    .text.dm_fota_status_check:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:598    .text.dm_fota_status_check:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:601    .text.dm_fota_status_check:0000000000000132 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:602    .text.dm_fota_status_check:0000000000000134 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:603    .text.dm_fota_status_check:0000000000000134 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:605    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:606    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:607    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:608    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:609    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:610    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:613    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:616    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:617    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:618    .text.dm_fota_status_check:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:621    .text.dm_fota_status_check:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:635    .text.dm_fota_request_image:0000000000000000 dm_fota_request_image
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:638    .text.dm_fota_request_image:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:640    .text.dm_fota_request_image:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:641    .text.dm_fota_request_image:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:642    .text.dm_fota_request_image:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:643    .text.dm_fota_request_image:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:644    .text.dm_fota_request_image:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:645    .text.dm_fota_request_image:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:646    .text.dm_fota_request_image:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:649    .text.dm_fota_request_image:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:650    .text.dm_fota_request_image:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:651    .text.dm_fota_request_image:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:652    .text.dm_fota_request_image:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:654    .text.dm_fota_request_image:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:656    .text.dm_fota_request_image:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:657    .text.dm_fota_request_image:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:660    .text.dm_fota_request_image:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:663    .text.dm_fota_request_image:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:664    .text.dm_fota_request_image:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:670    .text.dm_fota_request_image:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:675    .text.dm_fota_request_image:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:680    .text.dm_fota_request_image:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:681    .text.dm_fota_request_image:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:682    .text.dm_fota_request_image:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:686    .text.dm_fota_request_image:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:688    .text.dm_fota_request_image:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:689    .text.dm_fota_request_image:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:691    .text.dm_fota_request_image:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:692    .text.dm_fota_request_image:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:693    .text.dm_fota_request_image:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:694    .text.dm_fota_request_image:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:695    .text.dm_fota_request_image:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:696    .text.dm_fota_request_image:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:699    .text.dm_fota_request_image:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:702    .text.dm_fota_request_image:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:703    .text.dm_fota_request_image:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:708    .text.dm_fota_request_image:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:709    .text.dm_fota_request_image:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:711    .text.dm_fota_request_image:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:713    .text.dm_fota_request_image:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:714    .text.dm_fota_request_image:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:720    .text.dm_fota_request_image:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:722    .text.dm_fota_request_image:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:725    .text.dm_fota_request_image:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:726    .text.dm_fota_request_image:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:728    .text.dm_fota_request_image:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:729    .text.dm_fota_request_image:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:734    .text.dm_fota_request_image:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:739    .text.dm_fota_request_image:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:744    .text.dm_fota_request_image:00000000000000a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:745    .text.dm_fota_request_image:00000000000000a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:746    .text.dm_fota_request_image:00000000000000a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:749    .text.dm_fota_request_image:00000000000000aa .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:753    .text.dm_fota_request_image:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:759    .text.dm_fota_request_image:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:760    .text.dm_fota_request_image:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:767    .text.dm_fota_request_image:00000000000000d0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:771    .text.dm_fota_request_image:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:772    .text.dm_fota_request_image:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:773    .text.dm_fota_request_image:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:774    .text.dm_fota_request_image:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:775    .text.dm_fota_request_image:00000000000000dc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:780    .rodata.__FUNCTION__.0:0000000000000000 .LANCHOR1
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:783    .rodata.__FUNCTION__.0:0000000000000000 __FUNCTION__.0
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:787    .sbss.g_dm_fota_ctx:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:790    .sbss.g_dm_fota_ctx:0000000000000000 g_dm_fota_ctx
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:31     .text.dm_fota_init:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:398    .text.dm_fota_perform_sync:00000000000001de .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:624    .text.dm_fota_status_check:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:778    .text.dm_fota_request_image:00000000000000dc .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:44     .rodata.dm_fota_perform_sync.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:47     .rodata.dm_fota_perform_sync.str1.4:0000000000000008 .LC1
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:50     .rodata.dm_fota_perform_sync.str1.4:0000000000000024 .LC2
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:126    .text.dm_fota_perform_sync:0000000000000030 .L4
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:148    .text.dm_fota_perform_sync:000000000000003c .L6
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:121    .text.dm_fota_perform_sync:000000000000002e .L26
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:227    .text.dm_fota_perform_sync:00000000000000ba .L8
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:266    .text.dm_fota_perform_sync:000000000000010a .L9
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:217    .text.dm_fota_perform_sync:00000000000000a8 .L27
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:301    .text.dm_fota_perform_sync:000000000000014c .L11
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:305    .text.dm_fota_perform_sync:0000000000000150 .L10
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:319    .text.dm_fota_perform_sync:000000000000016c .L12
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:322    .text.dm_fota_perform_sync:0000000000000170 .L13
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:343    .text.dm_fota_perform_sync:0000000000000188 .L15
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:194    .text.dm_fota_perform_sync:0000000000000084 .L16
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:384    .text.dm_fota_perform_sync:00000000000001d0 .L17
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:400    .rodata.dm_fota_status_check.str1.4:0000000000000000 .LC3
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:403    .rodata.dm_fota_status_check.str1.4:0000000000000014 .LC4
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:406    .rodata.dm_fota_status_check.str1.4:0000000000000018 .LC5
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:409    .rodata.dm_fota_status_check.str1.4:000000000000002c .LC6
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:412    .rodata.dm_fota_status_check.str1.4:0000000000000034 .LC7
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:599    .text.dm_fota_status_check:0000000000000132 .L28
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:595    .text.dm_fota_status_check:0000000000000130 .L30
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:612    .text.dm_fota_status_check:000000000000013c .L32
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:626    .rodata.dm_fota_request_image.str1.4:0000000000000000 .LC8
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:629    .rodata.dm_fota_request_image.str1.4:0000000000000010 .LC9
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:661    .text.dm_fota_request_image:0000000000000014 .L39
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:698    .text.dm_fota_request_image:0000000000000052 .L40
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:684    .text.dm_fota_request_image:0000000000000046 .L38
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:747    .text.dm_fota_request_image:00000000000000aa .L42
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:2969   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4020   .debug_str:0000000000000176 .LASF333
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4640   .debug_str:0000000000002156 .LASF334
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4390   .debug_str:000000000000146d .LASF335
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3970   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3988   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4120   .debug_str:0000000000000787 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4128   .debug_str:00000000000007e5 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4508   .debug_str:0000000000001acf .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4618   .debug_str:000000000000207c .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4086   .debug_str:00000000000005dc .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4314   .debug_str:00000000000010e6 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4276   .debug_str:0000000000000f1a .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4316   .debug_str:00000000000010f1 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4426   .debug_str:00000000000016ef .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4358   .debug_str:00000000000012eb .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4164   .debug_str:000000000000099f .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4592   .debug_str:0000000000001f25 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4000   .debug_str:0000000000000070 .LASF336
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4122   .debug_str:0000000000000793 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4334   .debug_str:00000000000011bb .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4392   .debug_str:00000000000014fe .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4214   .debug_str:0000000000000bfa .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4586   .debug_str:0000000000001ee2 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4308   .debug_str:000000000000109a .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3990   .debug_str:0000000000000000 .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4468   .debug_str:00000000000018b3 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4614   .debug_str:000000000000205c .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4484   .debug_str:0000000000001993 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4446   .debug_str:00000000000017cf .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4178   .debug_str:0000000000000a19 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4396   .debug_str:0000000000001534 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4448   .debug_str:00000000000017de .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4272   .debug_str:0000000000000ef4 .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4628   .debug_str:00000000000020d3 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4318   .debug_str:00000000000010ff .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4416   .debug_str:000000000000164d .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4144   .debug_str:00000000000008a2 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4486   .debug_str:00000000000019a2 .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4008   .debug_str:00000000000000c3 .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4082   .debug_str:000000000000059d .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4452   .debug_str:000000000000180b .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4136   .debug_str:000000000000083e .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4266   .debug_str:0000000000000eae .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4430   .debug_str:000000000000172c .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4030   .debug_str:00000000000002c8 .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4522   .debug_str:0000000000001b8d .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4366   .debug_str:000000000000134b .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4172   .debug_str:00000000000009c2 .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4094   .debug_str:0000000000000636 .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4058   .debug_str:000000000000045f .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4414   .debug_str:0000000000001634 .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4552   .debug_str:0000000000001d33 .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4404   .debug_str:00000000000015af .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3992   .debug_str:000000000000000f .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4044   .debug_str:0000000000000390 .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4056   .debug_str:0000000000000440 .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4422   .debug_str:00000000000016ad .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4188   .debug_str:0000000000000a8c .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4312   .debug_str:00000000000010c4 .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4100   .debug_str:0000000000000688 .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4612   .debug_str:0000000000002040 .LASF54
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4632   .debug_str:0000000000002105 .LASF55
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4506   .debug_str:0000000000001ab7 .LASF56
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4594   .debug_str:0000000000001f2e .LASF57
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4134   .debug_str:0000000000000825 .LASF58
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4192   .debug_str:0000000000000ac0 .LASF59
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4378   .debug_str:00000000000013ed .LASF60
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4482   .debug_str:000000000000197b .LASF61
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4210   .debug_str:0000000000000bb4 .LASF62
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4182   .debug_str:0000000000000a45 .LASF63
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4458   .debug_str:0000000000001862 .LASF64
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4158   .debug_str:0000000000000945 .LASF65
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4052   .debug_str:000000000000040c .LASF66
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4518   .debug_str:0000000000001b4b .LASF67
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4258   .debug_str:0000000000000e38 .LASF68
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4252   .debug_str:0000000000000de0 .LASF69
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4140   .debug_str:0000000000000877 .LASF70
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4496   .debug_str:0000000000001a39 .LASF71
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4514   .debug_str:0000000000001b08 .LASF72
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4498   .debug_str:0000000000001a53 .LASF73
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4118   .debug_str:000000000000076f .LASF74
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4598   .debug_str:0000000000001f67 .LASF75
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4596   .debug_str:0000000000001f4a .LASF76
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4562   .debug_str:0000000000001daf .LASF77
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4608   .debug_str:0000000000002005 .LASF78
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4344   .debug_str:000000000000122b .LASF79
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4348   .debug_str:0000000000001262 .LASF80
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4224   .debug_str:0000000000000c6b .LASF81
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4010   .debug_str:00000000000000e3 .LASF82
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4550   .debug_str:0000000000001d17 .LASF83
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4398   .debug_str:0000000000001552 .LASF84
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4256   .debug_str:0000000000000e18 .LASF85
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4248   .debug_str:0000000000000db6 .LASF86
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4322   .debug_str:000000000000113a .LASF87
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4040   .debug_str:0000000000000357 .LASF88
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4602   .debug_str:0000000000001fb2 .LASF89
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4088   .debug_str:00000000000005e5 .LASF90
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4382   .debug_str:0000000000001424 .LASF91
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4580   .debug_str:0000000000001e9d .LASF92
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4024   .debug_str:000000000000027a .LASF93
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4554   .debug_str:0000000000001d51 .LASF94
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4606   .debug_str:0000000000001fe7 .LASF95
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3998   .debug_str:0000000000000056 .LASF96
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4306   .debug_str:0000000000001082 .LASF97
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4098   .debug_str:0000000000000667 .LASF98
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4668   .debug_str:0000000000002351 .LASF99
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4104   .debug_str:00000000000006b3 .LASF100
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4406   .debug_str:00000000000015c9 .LASF101
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4660   .debug_str:00000000000022d2 .LASF102
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4652   .debug_str:0000000000002257 .LASF103
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4090   .debug_str:00000000000005fe .LASF104
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4346   .debug_str:000000000000124a .LASF105
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4240   .debug_str:0000000000000d58 .LASF106
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4078   .debug_str:000000000000056d .LASF107
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4162   .debug_str:0000000000000981 .LASF108
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4062   .debug_str:00000000000004a1 .LASF109
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4102   .debug_str:000000000000069b .LASF110
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4584   .debug_str:0000000000001ece .LASF111
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4034   .debug_str:0000000000000300 .LASF112
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3996   .debug_str:000000000000003e .LASF113
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4114   .debug_str:0000000000000747 .LASF114
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4588   .debug_str:0000000000001ef3 .LASF115
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4080   .debug_str:0000000000000585 .LASF116
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4236   .debug_str:0000000000000d1a .LASF117
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4018   .debug_str:0000000000000160 .LASF118
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4112   .debug_str:000000000000072a .LASF119
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4520   .debug_str:0000000000001b6f .LASF120
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4208   .debug_str:0000000000000b8c .LASF121
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4574   .debug_str:0000000000001e4c .LASF122
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4176   .debug_str:0000000000000a01 .LASF123
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4576   .debug_str:0000000000001e74 .LASF124
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4230   .debug_str:0000000000000cc1 .LASF125
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4138   .debug_str:0000000000000857 .LASF126
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4060   .debug_str:000000000000047a .LASF127
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4310   .debug_str:00000000000010ac .LASF128
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4400   .debug_str:000000000000156e .LASF129
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4186   .debug_str:0000000000000a71 .LASF130
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4418   .debug_str:000000000000167e .LASF131
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4148   .debug_str:00000000000008e3 .LASF132
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4394   .debug_str:0000000000001515 .LASF133
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4084   .debug_str:00000000000005bf .LASF134
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4068   .debug_str:00000000000004ef .LASF135
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4226   .debug_str:0000000000000c8c .LASF136
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4284   .debug_str:0000000000000f92 .LASF137
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4582   .debug_str:0000000000001eb7 .LASF138
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4648   .debug_str:0000000000002237 .LASF139
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4330   .debug_str:0000000000001175 .LASF140
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4108   .debug_str:00000000000006eb .LASF141
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4234   .debug_str:0000000000000d00 .LASF142
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4462   .debug_str:0000000000001882 .LASF143
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4048   .debug_str:00000000000003c0 .LASF144
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4636   .debug_str:0000000000002127 .LASF145
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4538   .debug_str:0000000000001c5d .LASF146
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4200   .debug_str:0000000000000b14 .LASF147
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4126   .debug_str:00000000000007c2 .LASF148
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4572   .debug_str:0000000000001e28 .LASF149
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4238   .debug_str:0000000000000d37 .LASF150
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4300   .debug_str:000000000000102c .LASF151
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4320   .debug_str:000000000000111a .LASF152
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4042   .debug_str:000000000000036e .LASF153
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4542   .debug_str:0000000000001c9b .LASF154
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4666   .debug_str:0000000000002330 .LASF155
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4174   .debug_str:00000000000009de .LASF156
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4262   .debug_str:0000000000000e78 .LASF157
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4028   .debug_str:00000000000002a5 .LASF158
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4360   .debug_str:00000000000012f8 .LASF159
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4428   .debug_str:0000000000001706 .LASF160
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4662   .debug_str:00000000000022f1 .LASF161
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4480   .debug_str:0000000000001951 .LASF162
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4130   .debug_str:00000000000007f3 .LASF163
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4218   .debug_str:0000000000000c31 .LASF164
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4500   .debug_str:0000000000001a68 .LASF165
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4298   .debug_str:0000000000001010 .LASF166
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4376   .debug_str:00000000000013ca .LASF167
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4212   .debug_str:0000000000000bd4 .LASF168
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4454   .debug_str:000000000000181e .LASF169
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4442   .debug_str:00000000000017a6 .LASF170
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4526   .debug_str:0000000000001bb9 .LASF171
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4106   .debug_str:00000000000006ce .LASF172
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4278   .debug_str:0000000000000f2c .LASF173
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4566   .debug_str:0000000000001dd9 .LASF174
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4228   .debug_str:0000000000000ca3 .LASF175
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4670   .debug_str:0000000000002372 .LASF176
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4150   .debug_str:00000000000008fe .LASF177
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4022   .debug_str:000000000000025d .LASF178
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4292   .debug_str:0000000000000fdb .LASF179
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4146   .debug_str:00000000000008c9 .LASF180
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4116   .debug_str:0000000000000762 .LASF181
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4654   .debug_str:000000000000226d .LASF182
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4476   .debug_str:000000000000190c .LASF183
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4050   .debug_str:00000000000003df .LASF184
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4658   .debug_str:00000000000022a0 .LASF185
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4474   .debug_str:00000000000018fb .LASF186
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4362   .debug_str:0000000000001318 .LASF187
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4304   .debug_str:0000000000001071 .LASF188
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4036   .debug_str:0000000000000320 .LASF189
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4168   .debug_str:00000000000009ab .LASF190
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4616   .debug_str:000000000000206b .LASF191
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4370   .debug_str:0000000000001384 .LASF192
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4268   .debug_str:0000000000000ec5 .LASF193
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4634   .debug_str:000000000000211c .LASF194
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4490   .debug_str:00000000000019e8 .LASF195
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4644   .debug_str:000000000000220b .LASF196
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4352   .debug_str:0000000000001296 .LASF197
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4290   .debug_str:0000000000000fcc .LASF198
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4154   .debug_str:0000000000000928 .LASF199
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4578   .debug_str:0000000000001e8f .LASF200
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4274   .debug_str:0000000000000f0c .LASF201
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4546   .debug_str:0000000000001ce4 .LASF202
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4412   .debug_str:000000000000161f .LASF203
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4672   .debug_str:0000000000002398 .LASF204
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4338   .debug_str:00000000000011eb .LASF205
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3994   .debug_str:0000000000000026 .LASF206
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4494   .debug_str:0000000000001a1b .LASF207
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4364   .debug_str:000000000000132d .LASF208
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4072   .debug_str:000000000000052e .LASF209
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4032   .debug_str:00000000000002e6 .LASF210
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4002   .debug_str:0000000000000081 .LASF211
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4222   .debug_str:0000000000000c51 .LASF212
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4420   .debug_str:000000000000169b .LASF213
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4206   .debug_str:0000000000000b76 .LASF214
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4478   .debug_str:000000000000193f .LASF215
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4350   .debug_str:0000000000001280 .LASF216
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4444   .debug_str:00000000000017bc .LASF217
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4568   .debug_str:0000000000001dfa .LASF218
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4466   .debug_str:00000000000018a2 .LASF219
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4124   .debug_str:00000000000007aa .LASF220
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4190   .debug_str:0000000000000aaa .LASF221
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4504   .debug_str:0000000000001a9b .LASF222
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4328   .debug_str:000000000000116e .LASF223
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4374   .debug_str:00000000000013ac .LASF224
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4656   .debug_str:0000000000002281 .LASF225
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4232   .debug_str:0000000000000ce2 .LASF226
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4270   .debug_str:0000000000000ed6 .LASF227
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4530   .debug_str:0000000000001bdf .LASF228
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4110   .debug_str:000000000000070c .LASF229
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4610   .debug_str:0000000000002025 .LASF230
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4380   .debug_str:0000000000001408 .LASF231
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4336   .debug_str:00000000000011cd .LASF232
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4204   .debug_str:0000000000000b56 .LASF233
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4470   .debug_str:00000000000018c4 .LASF234
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4642   .debug_str:00000000000021f1 .LASF235
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4456   .debug_str:0000000000001841 .LASF236
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4512   .debug_str:0000000000001ae4 .LASF237
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4488   .debug_str:00000000000019c8 .LASF238
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4244   .debug_str:0000000000000d83 .LASF239
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4646   .debug_str:000000000000221c .LASF240
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4570   .debug_str:0000000000001e0a .LASF241
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4664   .debug_str:000000000000230c .LASF242
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4438   .debug_str:000000000000176f .LASF243
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4440   .debug_str:000000000000178b .LASF244
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4604   .debug_str:0000000000001fcc .LASF245
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4548   .debug_str:0000000000001cfa .LASF246
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4408   .debug_str:00000000000015eb .LASF247
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4424   .debug_str:00000000000016cb .LASF248
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4038   .debug_str:0000000000000331 .LASF249
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4472   .debug_str:00000000000018de .LASF250
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4354   .debug_str:00000000000012a2 .LASF251
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4492   .debug_str:00000000000019fa .LASF252
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4540   .debug_str:0000000000001c7e .LASF253
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4590   .debug_str:0000000000001f0b .LASF254
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4560   .debug_str:0000000000001d8b .LASF255
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4544   .debug_str:0000000000001cbc .LASF256
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4600   .debug_str:0000000000001f8a .LASF257
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4332   .debug_str:0000000000001195 .LASF258
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4532   .debug_str:0000000000001bfe .LASF259
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4516   .debug_str:0000000000001b27 .LASF260
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4534   .debug_str:0000000000001c24 .LASF261
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4282   .debug_str:0000000000000f6f .LASF262
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4368   .debug_str:000000000000135c .LASF263
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4356   .debug_str:00000000000012c2 .LASF264
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4260   .debug_str:0000000000000e57 .LASF265
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4302   .debug_str:000000000000104e .LASF266
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4202   .debug_str:0000000000000b38 .LASF267
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4160   .debug_str:0000000000000961 .LASF268
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4006   .debug_str:00000000000000a8 .LASF269
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4074   .debug_str:0000000000000546 .LASF270
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4066   .debug_str:00000000000004d5 .LASF271
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4402   .debug_str:000000000000158e .LASF272
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4016   .debug_str:0000000000000139 .LASF273
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4046   .debug_str:00000000000003ae .LASF274
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4558   .debug_str:0000000000001d71 .LASF275
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4254   .debug_str:0000000000000dfe .LASF276
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4012   .debug_str:000000000000010b .LASF277
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4246   .debug_str:0000000000000d9e .LASF278
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4280   .debug_str:0000000000000f54 .LASF279
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4622   .debug_str:000000000000209a .LASF280
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4410   .debug_str:0000000000001608 .LASF281
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4198   .debug_str:0000000000000afa .LASF282
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4638   .debug_str:000000000000213d .LASF283
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4450   .debug_str:00000000000017f6 .LASF284
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4180   .debug_str:0000000000000a30 .LASF285
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4294   .debug_str:0000000000000fe8 .LASF286
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4196   .debug_str:0000000000000ae5 .LASF337
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4288   .debug_str:0000000000000fbe .LASF287
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4528   .debug_str:0000000000001bd1 .LASF290
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4014   .debug_str:0000000000000123 .LASF293
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:636    .text.dm_fota_request_image:0000000000000000 .LFB26
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:776    .text.dm_fota_request_image:00000000000000dc .LFE26
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4460   .debug_str:000000000000187a .LASF288
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3552   .debug_loc:0000000000000000 .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4250   .debug_str:0000000000000dd5 .LASF289
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3574   .debug_loc:0000000000000037 .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3596   .debug_loc:000000000000006e .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4142   .debug_str:0000000000000897 .LASF291
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4076   .debug_str:0000000000000561 .LASF292
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3613   .debug_loc:0000000000000099 .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:668    .text.dm_fota_request_image:0000000000000024 .LVL73
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:673    .text.dm_fota_request_image:0000000000000034 .LVL74
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:678    .text.dm_fota_request_image:0000000000000044 .LVL75
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:706    .text.dm_fota_request_image:000000000000005e .LVL79
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:718    .text.dm_fota_request_image:0000000000000072 .LVL80
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:732    .text.dm_fota_request_image:0000000000000088 .LVL82
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:737    .text.dm_fota_request_image:0000000000000098 .LVL83
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:742    .text.dm_fota_request_image:00000000000000a8 .LVL84
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:751    .text.dm_fota_request_image:00000000000000b4 .LVL85
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:757    .text.dm_fota_request_image:00000000000000c2 .LVL86
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:763    .text.dm_fota_request_image:00000000000000ce .LVL87
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:769    .text.dm_fota_request_image:00000000000000da .LVL89
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4054   .debug_str:000000000000042b .LASF294
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:419    .text.dm_fota_status_check:0000000000000000 .LFB25
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:622    .text.dm_fota_status_check:0000000000000142 .LFE25
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3625   .debug_loc:00000000000000b8 .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4386   .debug_str:0000000000001453 .LASF338
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4650   .debug_str:000000000000224e .LASF295
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:503    .text.dm_fota_status_check:000000000000007e .LBB17
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:593    .text.dm_fota_status_check:0000000000000130 .LBE17
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3646   .debug_loc:00000000000000ee .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3653   .debug_loc:0000000000000101 .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3665   .debug_loc:0000000000000120 .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3677   .debug_loc:000000000000013f .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3689   .debug_loc:000000000000015e .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:514    .text.dm_fota_status_check:0000000000000090 .LVL55
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:522    .text.dm_fota_status_check:00000000000000a2 .LVL56
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:527    .text.dm_fota_status_check:00000000000000ac .LVL57
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:537    .text.dm_fota_status_check:00000000000000be .LVL59
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:547    .text.dm_fota_status_check:00000000000000ce .LVL61
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:555    .text.dm_fota_status_check:00000000000000e4 .LVL62
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:561    .text.dm_fota_status_check:00000000000000f4 .LVL63
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:567    .text.dm_fota_status_check:0000000000000106 .LVL64
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:572    .text.dm_fota_status_check:0000000000000116 .LVL65
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:579    .text.dm_fota_status_check:0000000000000124 .LVL66
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:588    .text.dm_fota_status_check:0000000000000130 .LVL68
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:471    .text.dm_fota_status_check:000000000000003e .LVL52
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:498    .text.dm_fota_status_check:000000000000007c .LVL53
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:444    .text.dm_fota_status_check:0000000000000016 .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:457    .text.dm_fota_status_check:0000000000000028 .LVL51
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4384   .debug_str:000000000000143e .LASF296
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:57     .text.dm_fota_perform_sync:0000000000000000 .LFB24
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:396    .text.dm_fota_perform_sync:00000000000001de .LFE24
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4170   .debug_str:00000000000009bb .LASF297
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3704   .debug_loc:0000000000000186 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4620   .debug_str:000000000000208f .LASF298
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3726   .debug_loc:00000000000001bd .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3748   .debug_loc:00000000000001f4 .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4372   .debug_str:000000000000139e .LASF299
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3776   .debug_loc:000000000000023f .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4242   .debug_str:0000000000000d79 .LASF300
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4630   .debug_str:00000000000020f5 .LASF301
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4220   .debug_str:0000000000000c45 .LASF302
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3805   .debug_loc:000000000000028b .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4434   .debug_str:0000000000001755 .LASF303
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3830   .debug_loc:00000000000002cc .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4194   .debug_str:0000000000000ada .LASF304
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3847   .debug_loc:00000000000002f7 .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4510   .debug_str:0000000000001ad9 .LASF305
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:3899   .debug_loc:0000000000000368 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:351    .text.dm_fota_perform_sync:0000000000000196 .LBB12
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:385    .text.dm_fota_perform_sync:00000000000001d0 .LBE12
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4152   .debug_str:000000000000091b .LASF306
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:362    .text.dm_fota_perform_sync:00000000000001a8 .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:372    .text.dm_fota_perform_sync:00000000000001bc .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:378    .text.dm_fota_perform_sync:00000000000001ca .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:114    .text.dm_fota_perform_sync:000000000000002a .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:160    .text.dm_fota_perform_sync:000000000000004e .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:176    .text.dm_fota_perform_sync:0000000000000068 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:179    .text.dm_fota_perform_sync:0000000000000070 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:203    .text.dm_fota_perform_sync:0000000000000094 .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:216    .text.dm_fota_perform_sync:00000000000000a8 .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:220    .text.dm_fota_perform_sync:00000000000000b0 .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:233    .text.dm_fota_perform_sync:00000000000000c4 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:245    .text.dm_fota_perform_sync:00000000000000d8 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:251    .text.dm_fota_perform_sync:00000000000000e8 .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:256    .text.dm_fota_perform_sync:00000000000000f8 .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:261    .text.dm_fota_perform_sync:0000000000000108 .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:272    .text.dm_fota_perform_sync:0000000000000118 .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:279    .text.dm_fota_perform_sync:0000000000000128 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:293    .text.dm_fota_perform_sync:000000000000013c .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:332    .text.dm_fota_perform_sync:0000000000000180 .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:348    .text.dm_fota_perform_sync:0000000000000192 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:388    .text.dm_fota_perform_sync:00000000000001d8 .LVL46
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4070   .debug_str:000000000000050d .LASF339
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4464   .debug_str:0000000000001896 .LASF307
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4624   .debug_str:00000000000020b5 .LASF308
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4004   .debug_str:0000000000000094 .LASF309
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4432   .debug_str:0000000000001746 .LASF340
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4326   .debug_str:0000000000001161 .LASF310
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:14     .text.dm_fota_init:0000000000000000 .LFB21
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:29     .text.dm_fota_init:000000000000000c .LFE21
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4524   .debug_str:0000000000001ba8 .LASF341
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4342   .debug_str:0000000000001220 .LASF311
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4626   .debug_str:00000000000020bd .LASF312
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4264   .debug_str:0000000000000e99 .LASF313
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4166   .debug_str:00000000000009a4 .LASF314
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4096   .debug_str:0000000000000656 .LASF316
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4564   .debug_str:0000000000001dd2 .LASF315
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4184   .debug_str:0000000000000a60 .LASF317
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4156   .debug_str:0000000000000936 .LASF318
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4132   .debug_str:0000000000000812 .LASF319
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4436   .debug_str:0000000000001761 .LASF320
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4556   .debug_str:0000000000001d6a .LASF321
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4502   .debug_str:0000000000001a8e .LASF322
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4286   .debug_str:0000000000000fa9 .LASF323
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4026   .debug_str:0000000000000299 .LASF324
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4296   .debug_str:0000000000000ffd .LASF325
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4216   .debug_str:0000000000000c13 .LASF326
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4536   .debug_str:0000000000001c46 .LASF327
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4340   .debug_str:0000000000001201 .LASF328
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4324   .debug_str:000000000000114e .LASF329
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4092   .debug_str:0000000000000617 .LASF330
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4388   .debug_str:0000000000001460 .LASF331
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:4064   .debug_str:00000000000004bf .LASF332
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:639    .text.dm_fota_request_image:0000000000000000 .LVL70
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:665    .text.dm_fota_request_image:0000000000000018 .LVL72
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:697    .text.dm_fota_request_image:0000000000000052 .LVL77
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:704    .text.dm_fota_request_image:0000000000000056 .LVL78
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:648    .text.dm_fota_request_image:0000000000000008 .LVL71
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:683    .text.dm_fota_request_image:0000000000000046 .LVL76
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:723    .text.dm_fota_request_image:0000000000000076 .LVL81
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:430    .text.dm_fota_status_check:0000000000000008 .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:446    .text.dm_fota_status_check:0000000000000018 .LVL49
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:450    .text.dm_fota_status_check:000000000000001a .LVL50
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:611    .text.dm_fota_status_check:000000000000013c .LVL69
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:502    .text.dm_fota_status_check:000000000000007e .LVL54
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:539    .text.dm_fota_status_check:00000000000000c0 .LVL60
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:586    .text.dm_fota_status_check:0000000000000128 .LVL67
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:530    .text.dm_fota_status_check:00000000000000b0 .LVL58
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:60     .text.dm_fota_perform_sync:0000000000000000 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:112    .text.dm_fota_perform_sync:0000000000000022 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:125    .text.dm_fota_perform_sync:0000000000000030 .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:147    .text.dm_fota_perform_sync:000000000000003c .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:78     .text.dm_fota_perform_sync:0000000000000008 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:116    .text.dm_fota_perform_sync:000000000000002c .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:120    .text.dm_fota_perform_sync:000000000000002e .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:193    .text.dm_fota_perform_sync:0000000000000084 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:235    .text.dm_fota_perform_sync:00000000000000c6 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:238    .text.dm_fota_perform_sync:00000000000000c8 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:265    .text.dm_fota_perform_sync:000000000000010a .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:205    .text.dm_fota_perform_sync:0000000000000096 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:211    .text.dm_fota_perform_sync:000000000000009c .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:214    .text.dm_fota_perform_sync:00000000000000a0 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:226    .text.dm_fota_perform_sync:00000000000000ba .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:231    .text.dm_fota_perform_sync:00000000000000bc .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:88     .text.dm_fota_perform_sync:000000000000000e .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:342    .text.dm_fota_perform_sync:0000000000000188 .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:289    .text.dm_fota_perform_sync:0000000000000134 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:367    .text.dm_fota_perform_sync:00000000000001ae .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:303    .text.dm_fota_perform_sync:000000000000014e .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:306    .text.dm_fota_perform_sync:0000000000000150 .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:296    .text.dm_fota_perform_sync:0000000000000140 .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:325    .text.dm_fota_perform_sync:0000000000000172 .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:328    .text.dm_fota_perform_sync:0000000000000176 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:810    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:460    .text.dm_fota_status_check:000000000000002c .LBB16
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:596    .text.dm_fota_status_check:0000000000000130 .LBE16
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:614    .text.dm_fota_status_check:000000000000013c .LBB19
+C:\Users\stapi\AppData\Local\Temp\ccWTofQh.s:620    .text.dm_fota_status_check:0000000000000142 .LBE19
+
+UNDEFINED SYMBOLS
+__riscv_save_12
+dm_ota_get_ota_handle
+__riscv_restore_12
+IOT_OTA_Ioctl
+HAL_Firmware_Persistence_Start
+IOT_OTA_FetchYield
+IOT_OTA_ReportProgress
+HAL_Firmware_Persistence_Stop
+HAL_Firmware_Persistence_Write
+HAL_Printf
+HAL_UptimeMs
+IOT_OTA_IsFetchFinish
+__riscv_save_4
+IOT_OTA_IsFetching
+LITE_syslog
+memset
+strlen
+LITE_malloc_internal
+HAL_Snprintf
+_dm_msg_send_to_user
+LITE_free_internal
+__riscv_restore_4
+memcpy
+iotx_req_image

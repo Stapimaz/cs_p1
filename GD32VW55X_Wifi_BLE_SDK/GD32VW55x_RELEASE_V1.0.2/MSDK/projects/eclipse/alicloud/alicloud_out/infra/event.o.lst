@@ -1,0 +1,1742 @@
+   1              		.file	"event.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.iotx_event_callback,"ax",@progbits
+  10              		.align	1
+  11              		.globl	iotx_event_callback
+  13              	iotx_event_callback:
+  14              	.LFB4:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #include <string.h>
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #include "iot_export.h"
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** typedef struct {
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     int eventid;
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     void *callback;
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** } impl_event_map_t;
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** static impl_event_map_t g_impl_event_map[] = {
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_AWSS_STATUS,          NULL},
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_CONNECT_SUCC,         NULL},
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_CONNECT_FAIL,         NULL},
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_DISCONNECTED,         NULL},
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_REDIRECT,             NULL},
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_OFFLINE_RESET,        NULL},
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_RAWDATA_ARRIVED,      NULL},
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #ifndef LINK_VISUAL_ENABLE
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_SERVICE_REQUEST,      NULL},
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #else
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_SERVICE_REQUST,       NULL},
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #endif
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_PROPERTY_SET,         NULL},
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_PROPERTY_GET,         NULL},
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_REPORT_REPLY,         NULL},
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_TRIGGER_EVENT_REPLY,  NULL},
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_TIMESTAMP_REPLY,      NULL},
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_TOPOLIST_REPLY,       NULL},
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_TOPO_CHANGE,          NULL},
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_SUBDEV_MISC_OPS,      NULL},
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_PERMIT_JOIN,          NULL},
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_INITIALIZE_COMPLETED, NULL},
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_FOTA,                 NULL},
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_COTA,                 NULL},
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_MQTT_CONNECT_SUCC,    NULL},
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_EVENT_NOTIFY,         NULL},
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #ifdef LINK_VISUAL_ENABLE
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_LINK_VISUAL,          NULL},
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #endif
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_CLOUD_ERROR,          NULL},
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_EVERYTHING,     NULL},
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_USER_INPUT,     NULL},
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_SYS_DEPEND,     NULL},
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_MQTT_COMM,      NULL},
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_WIFI_PROV,      NULL},
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_COAP_LOCAL,     NULL},
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_HTTP_COMM,      NULL},
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_OTA,            NULL},
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_DEV_BIND,       NULL},
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_SUB_DEVICE,     NULL},
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #ifdef DM_UNIFIED_SERVICE_POST
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_UNIFIED_SERVICE_POST, NULL},
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #endif
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     {ITE_STATE_DEV_MODEL,      NULL}        /* DEV_MODEL must be last entry */
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** };
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** void *iotx_event_callback(int evt)
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** {
+  16              		.loc 1 59 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     if (evt < 0 || evt >= sizeof(g_impl_event_map) / sizeof(impl_event_map_t)) {
+  19              		.loc 1 60 5
+  20              		.loc 1 60 8 is_stmt 0
+  21 0000 93071002 		li	a5,33
+  22 0004 63EAA700 		bgtu	a0,a5,.L3
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         return NULL;
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     }
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     return g_impl_event_map[evt].callback;
+  23              		.loc 1 63 5 is_stmt 1
+  24              		.loc 1 63 33 is_stmt 0
+  25 0008 B7070000 		lui	a5,%hi(.LANCHOR0)
+  26 000c 93870700 		addi	a5,a5,%lo(.LANCHOR0)
+  27 0010 3365F520 		sh3add	a0,a0,a5
+  28              	.LVL1:
+  29 0014 4841     		lw	a0,4(a0)
+  30 0016 8280     		ret
+  31              	.LVL2:
+  32              	.L3:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         return NULL;
+  33              		.loc 1 61 16
+  34 0018 0145     		li	a0,0
+  35              	.LVL3:
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** }
+  36              		.loc 1 64 1
+  37 001a 8280     		ret
+  38              		.cfi_endproc
+  39              	.LFE4:
+  41              		.section	.text.iotx_register_for_ITE_AWSS_STATUS,"ax",@progbits
+  42              		.align	1
+  43              		.globl	iotx_register_for_ITE_AWSS_STATUS
+  45              	iotx_register_for_ITE_AWSS_STATUS:
+  46              	.LFB5:
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_AWSS_STATUS,          int (*callback)(int))
+  47              		.loc 1 66 1 is_stmt 1
+  48              		.cfi_startproc
+  49              	.LVL4:
+  50              		.loc 1 66 1
+  51              		.loc 1 66 1
+  52 0000 B7070000 		lui	a5,%hi(.LANCHOR0+4)
+  53 0004 23A2A700 		sw	a0,%lo(.LANCHOR0+4)(a5)
+  54              		.loc 1 66 1
+  55 0008 0145     		li	a0,0
+  56              	.LVL5:
+  57 000a 8280     		ret
+  58              		.cfi_endproc
+  59              	.LFE5:
+  61              		.section	.text.iotx_register_for_ITE_CONNECT_SUCC,"ax",@progbits
+  62              		.align	1
+  63              		.globl	iotx_register_for_ITE_CONNECT_SUCC
+  65              	iotx_register_for_ITE_CONNECT_SUCC:
+  66              	.LFB6:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_CONNECT_SUCC,         int (*callback)(void))
+  67              		.loc 1 67 1
+  68              		.cfi_startproc
+  69              	.LVL6:
+  70              		.loc 1 67 1
+  71              		.loc 1 67 1
+  72 0000 B7070000 		lui	a5,%hi(.LANCHOR0+12)
+  73 0004 23A6A700 		sw	a0,%lo(.LANCHOR0+12)(a5)
+  74              		.loc 1 67 1
+  75 0008 0145     		li	a0,0
+  76              	.LVL7:
+  77 000a 8280     		ret
+  78              		.cfi_endproc
+  79              	.LFE6:
+  81              		.section	.text.iotx_register_for_ITE_CONNECT_FAIL,"ax",@progbits
+  82              		.align	1
+  83              		.globl	iotx_register_for_ITE_CONNECT_FAIL
+  85              	iotx_register_for_ITE_CONNECT_FAIL:
+  86              	.LFB7:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_CONNECT_FAIL,         int (*callback)(void))
+  87              		.loc 1 68 1
+  88              		.cfi_startproc
+  89              	.LVL8:
+  90              		.loc 1 68 1
+  91              		.loc 1 68 1
+  92 0000 B7070000 		lui	a5,%hi(.LANCHOR0+20)
+  93 0004 23AAA700 		sw	a0,%lo(.LANCHOR0+20)(a5)
+  94              		.loc 1 68 1
+  95 0008 0145     		li	a0,0
+  96              	.LVL9:
+  97 000a 8280     		ret
+  98              		.cfi_endproc
+  99              	.LFE7:
+ 101              		.section	.text.iotx_register_for_ITE_DISCONNECTED,"ax",@progbits
+ 102              		.align	1
+ 103              		.globl	iotx_register_for_ITE_DISCONNECTED
+ 105              	iotx_register_for_ITE_DISCONNECTED:
+ 106              	.LFB8:
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_DISCONNECTED,         int (*callback)(void))
+ 107              		.loc 1 69 1
+ 108              		.cfi_startproc
+ 109              	.LVL10:
+ 110              		.loc 1 69 1
+ 111              		.loc 1 69 1
+ 112 0000 B7070000 		lui	a5,%hi(.LANCHOR0+28)
+ 113 0004 23AEA700 		sw	a0,%lo(.LANCHOR0+28)(a5)
+ 114              		.loc 1 69 1
+ 115 0008 0145     		li	a0,0
+ 116              	.LVL11:
+ 117 000a 8280     		ret
+ 118              		.cfi_endproc
+ 119              	.LFE8:
+ 121              		.section	.text.iotx_register_for_ITE_REDIRECT,"ax",@progbits
+ 122              		.align	1
+ 123              		.globl	iotx_register_for_ITE_REDIRECT
+ 125              	iotx_register_for_ITE_REDIRECT:
+ 126              	.LFB9:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_REDIRECT,             int (*callback)(void))
+ 127              		.loc 1 70 1
+ 128              		.cfi_startproc
+ 129              	.LVL12:
+ 130              		.loc 1 70 1
+ 131              		.loc 1 70 1
+ 132 0000 B7070000 		lui	a5,%hi(.LANCHOR0+36)
+ 133 0004 23A2A702 		sw	a0,%lo(.LANCHOR0+36)(a5)
+ 134              		.loc 1 70 1
+ 135 0008 0145     		li	a0,0
+ 136              	.LVL13:
+ 137 000a 8280     		ret
+ 138              		.cfi_endproc
+ 139              	.LFE9:
+ 141              		.section	.text.iotx_register_for_ITE_OFFLINE_RESET,"ax",@progbits
+ 142              		.align	1
+ 143              		.globl	iotx_register_for_ITE_OFFLINE_RESET
+ 145              	iotx_register_for_ITE_OFFLINE_RESET:
+ 146              	.LFB10:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_OFFLINE_RESET,        int (*callback)(void))
+ 147              		.loc 1 71 1
+ 148              		.cfi_startproc
+ 149              	.LVL14:
+ 150              		.loc 1 71 1
+ 151              		.loc 1 71 1
+ 152 0000 B7070000 		lui	a5,%hi(.LANCHOR0+44)
+ 153 0004 23A6A702 		sw	a0,%lo(.LANCHOR0+44)(a5)
+ 154              		.loc 1 71 1
+ 155 0008 0145     		li	a0,0
+ 156              	.LVL15:
+ 157 000a 8280     		ret
+ 158              		.cfi_endproc
+ 159              	.LFE10:
+ 161              		.section	.text.iotx_register_for_ITE_RAWDATA_ARRIVED,"ax",@progbits
+ 162              		.align	1
+ 163              		.globl	iotx_register_for_ITE_RAWDATA_ARRIVED
+ 165              	iotx_register_for_ITE_RAWDATA_ARRIVED:
+ 166              	.LFB11:
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_RAWDATA_ARRIVED,      int (*callback)(const int, const unsigned char *, c
+ 167              		.loc 1 72 1
+ 168              		.cfi_startproc
+ 169              	.LVL16:
+ 170              		.loc 1 72 1
+ 171              		.loc 1 72 1
+ 172 0000 B7070000 		lui	a5,%hi(.LANCHOR0+52)
+ 173 0004 23AAA702 		sw	a0,%lo(.LANCHOR0+52)(a5)
+ 174              		.loc 1 72 1
+ 175 0008 0145     		li	a0,0
+ 176              	.LVL17:
+ 177 000a 8280     		ret
+ 178              		.cfi_endproc
+ 179              	.LFE11:
+ 181              		.section	.text.iotx_register_for_ITE_SERVICE_REQUEST,"ax",@progbits
+ 182              		.align	1
+ 183              		.globl	iotx_register_for_ITE_SERVICE_REQUEST
+ 185              	iotx_register_for_ITE_SERVICE_REQUEST:
+ 186              	.LFB12:
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #ifndef LINK_VISUAL_ENABLE
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_SERVICE_REQUEST,       int (*callback)(const int, const char *, const int
+ 187              		.loc 1 74 1
+ 188              		.cfi_startproc
+ 189              	.LVL18:
+ 190              		.loc 1 74 1
+ 191              		.loc 1 74 1
+ 192 0000 B7070000 		lui	a5,%hi(.LANCHOR0+60)
+ 193 0004 23AEA702 		sw	a0,%lo(.LANCHOR0+60)(a5)
+ 194              		.loc 1 74 1
+ 195 0008 0145     		li	a0,0
+ 196              	.LVL19:
+ 197 000a 8280     		ret
+ 198              		.cfi_endproc
+ 199              	.LFE12:
+ 201              		.section	.text.iotx_register_for_ITE_PROPERTY_SET,"ax",@progbits
+ 202              		.align	1
+ 203              		.globl	iotx_register_for_ITE_PROPERTY_SET
+ 205              	iotx_register_for_ITE_PROPERTY_SET:
+ 206              	.LFB13:
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****                       const int, char **, int *))
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #else
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_LINK_VISUAL,          int (*callback)(const int, const char *, const int,
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_SERVICE_REQUST,       int (*callback)(const int, const char *, const int,
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****                         const char *, const int, const char *, const int, char **, int *))
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #endif
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_PROPERTY_SET,         int (*callback)(const int, const char *, const int)
+ 207              		.loc 1 81 1
+ 208              		.cfi_startproc
+ 209              	.LVL20:
+ 210              		.loc 1 81 1
+ 211              		.loc 1 81 1
+ 212 0000 B7070000 		lui	a5,%hi(.LANCHOR0+68)
+ 213 0004 23A2A704 		sw	a0,%lo(.LANCHOR0+68)(a5)
+ 214              		.loc 1 81 1
+ 215 0008 0145     		li	a0,0
+ 216              	.LVL21:
+ 217 000a 8280     		ret
+ 218              		.cfi_endproc
+ 219              	.LFE13:
+ 221              		.section	.text.iotx_register_for_ITE_PROPERTY_GET,"ax",@progbits
+ 222              		.align	1
+ 223              		.globl	iotx_register_for_ITE_PROPERTY_GET
+ 225              	iotx_register_for_ITE_PROPERTY_GET:
+ 226              	.LFB14:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_PROPERTY_GET,         int (*callback)(const int, const char *, const int,
+ 227              		.loc 1 82 1
+ 228              		.cfi_startproc
+ 229              	.LVL22:
+ 230              		.loc 1 82 1
+ 231              		.loc 1 82 1
+ 232 0000 B7070000 		lui	a5,%hi(.LANCHOR0+76)
+ 233 0004 23A6A704 		sw	a0,%lo(.LANCHOR0+76)(a5)
+ 234              		.loc 1 82 1
+ 235 0008 0145     		li	a0,0
+ 236              	.LVL23:
+ 237 000a 8280     		ret
+ 238              		.cfi_endproc
+ 239              	.LFE14:
+ 241              		.section	.text.iotx_register_for_ITE_REPORT_REPLY,"ax",@progbits
+ 242              		.align	1
+ 243              		.globl	iotx_register_for_ITE_REPORT_REPLY
+ 245              	iotx_register_for_ITE_REPORT_REPLY:
+ 246              	.LFB15:
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_REPORT_REPLY,         int (*callback)(const int, const int, const int, co
+ 247              		.loc 1 83 1
+ 248              		.cfi_startproc
+ 249              	.LVL24:
+ 250              		.loc 1 83 1
+ 251              		.loc 1 83 1
+ 252 0000 B7070000 		lui	a5,%hi(.LANCHOR0+84)
+ 253 0004 23AAA704 		sw	a0,%lo(.LANCHOR0+84)(a5)
+ 254              		.loc 1 83 1
+ 255 0008 0145     		li	a0,0
+ 256              	.LVL25:
+ 257 000a 8280     		ret
+ 258              		.cfi_endproc
+ 259              	.LFE15:
+ 261              		.section	.text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY,"ax",@progbits
+ 262              		.align	1
+ 263              		.globl	iotx_register_for_ITE_TRIGGER_EVENT_REPLY
+ 265              	iotx_register_for_ITE_TRIGGER_EVENT_REPLY:
+ 266              	.LFB16:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****                       const int))
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_TRIGGER_EVENT_REPLY,  int (*callback)(const int, const int, const int, co
+ 267              		.loc 1 85 1
+ 268              		.cfi_startproc
+ 269              	.LVL26:
+ 270              		.loc 1 85 1
+ 271              		.loc 1 85 1
+ 272 0000 B7070000 		lui	a5,%hi(.LANCHOR0+92)
+ 273 0004 23AEA704 		sw	a0,%lo(.LANCHOR0+92)(a5)
+ 274              		.loc 1 85 1
+ 275 0008 0145     		li	a0,0
+ 276              	.LVL27:
+ 277 000a 8280     		ret
+ 278              		.cfi_endproc
+ 279              	.LFE16:
+ 281              		.section	.text.iotx_register_for_ITE_TIMESTAMP_REPLY,"ax",@progbits
+ 282              		.align	1
+ 283              		.globl	iotx_register_for_ITE_TIMESTAMP_REPLY
+ 285              	iotx_register_for_ITE_TIMESTAMP_REPLY:
+ 286              	.LFB17:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****                       const int, const char *, const int))
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_TIMESTAMP_REPLY,      int (*callback)(const char *))
+ 287              		.loc 1 87 1
+ 288              		.cfi_startproc
+ 289              	.LVL28:
+ 290              		.loc 1 87 1
+ 291              		.loc 1 87 1
+ 292 0000 B7070000 		lui	a5,%hi(.LANCHOR0+100)
+ 293 0004 23A2A706 		sw	a0,%lo(.LANCHOR0+100)(a5)
+ 294              		.loc 1 87 1
+ 295 0008 0145     		li	a0,0
+ 296              	.LVL29:
+ 297 000a 8280     		ret
+ 298              		.cfi_endproc
+ 299              	.LFE17:
+ 301              		.section	.text.iotx_register_for_ITE_TOPOLIST_REPLY,"ax",@progbits
+ 302              		.align	1
+ 303              		.globl	iotx_register_for_ITE_TOPOLIST_REPLY
+ 305              	iotx_register_for_ITE_TOPOLIST_REPLY:
+ 306              	.LFB18:
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_TOPOLIST_REPLY,       int (*callback)(const int, const int, const int, co
+ 307              		.loc 1 88 1
+ 308              		.cfi_startproc
+ 309              	.LVL30:
+ 310              		.loc 1 88 1
+ 311              		.loc 1 88 1
+ 312 0000 B7070000 		lui	a5,%hi(.LANCHOR0+108)
+ 313 0004 23A6A706 		sw	a0,%lo(.LANCHOR0+108)(a5)
+ 314              		.loc 1 88 1
+ 315 0008 0145     		li	a0,0
+ 316              	.LVL31:
+ 317 000a 8280     		ret
+ 318              		.cfi_endproc
+ 319              	.LFE18:
+ 321              		.section	.text.iotx_register_for_ITE_TOPO_CHANGE,"ax",@progbits
+ 322              		.align	1
+ 323              		.globl	iotx_register_for_ITE_TOPO_CHANGE
+ 325              	iotx_register_for_ITE_TOPO_CHANGE:
+ 326              	.LFB19:
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****                       const int))
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_TOPO_CHANGE,          int (*callback)(const int, const char *, const int)
+ 327              		.loc 1 90 1
+ 328              		.cfi_startproc
+ 329              	.LVL32:
+ 330              		.loc 1 90 1
+ 331              		.loc 1 90 1
+ 332 0000 B7070000 		lui	a5,%hi(.LANCHOR0+116)
+ 333 0004 23AAA706 		sw	a0,%lo(.LANCHOR0+116)(a5)
+ 334              		.loc 1 90 1
+ 335 0008 0145     		li	a0,0
+ 336              	.LVL33:
+ 337 000a 8280     		ret
+ 338              		.cfi_endproc
+ 339              	.LFE19:
+ 341              		.section	.text.iotx_register_for_ITE_SUBDEV_MISC_OPS,"ax",@progbits
+ 342              		.align	1
+ 343              		.globl	iotx_register_for_ITE_SUBDEV_MISC_OPS
+ 345              	iotx_register_for_ITE_SUBDEV_MISC_OPS:
+ 346              	.LFB20:
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_SUBDEV_MISC_OPS,      int (*callback)(const int, const int, const int, co
+ 347              		.loc 1 91 1
+ 348              		.cfi_startproc
+ 349              	.LVL34:
+ 350              		.loc 1 91 1
+ 351              		.loc 1 91 1
+ 352 0000 B7070000 		lui	a5,%hi(.LANCHOR0+132)
+ 353 0004 23A2A708 		sw	a0,%lo(.LANCHOR0+132)(a5)
+ 354              		.loc 1 91 1
+ 355 0008 0145     		li	a0,0
+ 356              	.LVL35:
+ 357 000a 8280     		ret
+ 358              		.cfi_endproc
+ 359              	.LFE20:
+ 361              		.section	.text.iotx_register_for_ITE_PERMIT_JOIN,"ax",@progbits
+ 362              		.align	1
+ 363              		.globl	iotx_register_for_ITE_PERMIT_JOIN
+ 365              	iotx_register_for_ITE_PERMIT_JOIN:
+ 366              	.LFB21:
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****                       const int))
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_PERMIT_JOIN,          int (*callback)(const char *, int))
+ 367              		.loc 1 93 1
+ 368              		.cfi_startproc
+ 369              	.LVL36:
+ 370              		.loc 1 93 1
+ 371              		.loc 1 93 1
+ 372 0000 B7070000 		lui	a5,%hi(.LANCHOR0+124)
+ 373 0004 23AEA706 		sw	a0,%lo(.LANCHOR0+124)(a5)
+ 374              		.loc 1 93 1
+ 375 0008 0145     		li	a0,0
+ 376              	.LVL37:
+ 377 000a 8280     		ret
+ 378              		.cfi_endproc
+ 379              	.LFE21:
+ 381              		.section	.text.iotx_register_for_ITE_INITIALIZE_COMPLETED,"ax",@progbits
+ 382              		.align	1
+ 383              		.globl	iotx_register_for_ITE_INITIALIZE_COMPLETED
+ 385              	iotx_register_for_ITE_INITIALIZE_COMPLETED:
+ 386              	.LFB22:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_INITIALIZE_COMPLETED, int (*callback)(const int))
+ 387              		.loc 1 94 1
+ 388              		.cfi_startproc
+ 389              	.LVL38:
+ 390              		.loc 1 94 1
+ 391              		.loc 1 94 1
+ 392 0000 B7070000 		lui	a5,%hi(.LANCHOR0+140)
+ 393 0004 23A6A708 		sw	a0,%lo(.LANCHOR0+140)(a5)
+ 394              		.loc 1 94 1
+ 395 0008 0145     		li	a0,0
+ 396              	.LVL39:
+ 397 000a 8280     		ret
+ 398              		.cfi_endproc
+ 399              	.LFE22:
+ 401              		.section	.text.iotx_register_for_ITE_FOTA,"ax",@progbits
+ 402              		.align	1
+ 403              		.globl	iotx_register_for_ITE_FOTA
+ 405              	iotx_register_for_ITE_FOTA:
+ 406              	.LFB23:
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_FOTA,                 int (*callback)(const int, const char *))
+ 407              		.loc 1 95 1
+ 408              		.cfi_startproc
+ 409              	.LVL40:
+ 410              		.loc 1 95 1
+ 411              		.loc 1 95 1
+ 412 0000 B7070000 		lui	a5,%hi(.LANCHOR0+148)
+ 413 0004 23AAA708 		sw	a0,%lo(.LANCHOR0+148)(a5)
+ 414              		.loc 1 95 1
+ 415 0008 0145     		li	a0,0
+ 416              	.LVL41:
+ 417 000a 8280     		ret
+ 418              		.cfi_endproc
+ 419              	.LFE23:
+ 421              		.section	.text.iotx_register_for_ITE_COTA,"ax",@progbits
+ 422              		.align	1
+ 423              		.globl	iotx_register_for_ITE_COTA
+ 425              	iotx_register_for_ITE_COTA:
+ 426              	.LFB24:
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_COTA,                 int (*callback)(const int, const char *, int, const
+ 427              		.loc 1 96 1
+ 428              		.cfi_startproc
+ 429              	.LVL42:
+ 430              		.loc 1 96 1
+ 431              		.loc 1 96 1
+ 432 0000 B7070000 		lui	a5,%hi(.LANCHOR0+156)
+ 433 0004 23AEA708 		sw	a0,%lo(.LANCHOR0+156)(a5)
+ 434              		.loc 1 96 1
+ 435 0008 0145     		li	a0,0
+ 436              	.LVL43:
+ 437 000a 8280     		ret
+ 438              		.cfi_endproc
+ 439              	.LFE24:
+ 441              		.section	.text.iotx_register_for_ITE_MQTT_CONNECT_SUCC,"ax",@progbits
+ 442              		.align	1
+ 443              		.globl	iotx_register_for_ITE_MQTT_CONNECT_SUCC
+ 445              	iotx_register_for_ITE_MQTT_CONNECT_SUCC:
+ 446              	.LFB25:
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****                       const char *, const char *, const char *))
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_MQTT_CONNECT_SUCC,    int (*callback)(void))
+ 447              		.loc 1 98 1
+ 448              		.cfi_startproc
+ 449              	.LVL44:
+ 450              		.loc 1 98 1
+ 451              		.loc 1 98 1
+ 452 0000 B7070000 		lui	a5,%hi(.LANCHOR0+164)
+ 453 0004 23A2A70A 		sw	a0,%lo(.LANCHOR0+164)(a5)
+ 454              		.loc 1 98 1
+ 455 0008 0145     		li	a0,0
+ 456              	.LVL45:
+ 457 000a 8280     		ret
+ 458              		.cfi_endproc
+ 459              	.LFE25:
+ 461              		.section	.text.iotx_register_for_ITE_CLOUD_ERROR,"ax",@progbits
+ 462              		.align	1
+ 463              		.globl	iotx_register_for_ITE_CLOUD_ERROR
+ 465              	iotx_register_for_ITE_CLOUD_ERROR:
+ 466              	.LFB26:
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_CLOUD_ERROR,          int (*callback)(const int, const char *, const char
+ 467              		.loc 1 99 1
+ 468              		.cfi_startproc
+ 469              	.LVL46:
+ 470              		.loc 1 99 1
+ 471              		.loc 1 99 1
+ 472 0000 B7070000 		lui	a5,%hi(.LANCHOR0+180)
+ 473 0004 23AAA70A 		sw	a0,%lo(.LANCHOR0+180)(a5)
+ 474              		.loc 1 99 1
+ 475 0008 0145     		li	a0,0
+ 476              	.LVL47:
+ 477 000a 8280     		ret
+ 478              		.cfi_endproc
+ 479              	.LFE26:
+ 481              		.section	.text.iotx_register_for_ITE_EVENT_NOTIFY,"ax",@progbits
+ 482              		.align	1
+ 483              		.globl	iotx_register_for_ITE_EVENT_NOTIFY
+ 485              	iotx_register_for_ITE_EVENT_NOTIFY:
+ 486              	.LFB27:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_EVENT_NOTIFY,         int (*callback)(const int, const char *, const int)
+ 487              		.loc 1 100 1
+ 488              		.cfi_startproc
+ 489              	.LVL48:
+ 490              		.loc 1 100 1
+ 491              		.loc 1 100 1
+ 492 0000 B7070000 		lui	a5,%hi(.LANCHOR0+172)
+ 493 0004 23A6A70A 		sw	a0,%lo(.LANCHOR0+172)(a5)
+ 494              		.loc 1 100 1
+ 495 0008 0145     		li	a0,0
+ 496              	.LVL49:
+ 497 000a 8280     		ret
+ 498              		.cfi_endproc
+ 499              	.LFE27:
+ 501              		.section	.text.iotx_register_for_ITE_STATE_EVERYTHING,"ax",@progbits
+ 502              		.align	1
+ 503              		.globl	iotx_register_for_ITE_STATE_EVERYTHING
+ 505              	iotx_register_for_ITE_STATE_EVERYTHING:
+ 506              	.LFB28:
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #ifdef DM_UNIFIED_SERVICE_POST
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_UNIFIED_SERVICE_POST,         int (*callback)(const int, const int, const
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #endif
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** int iotx_register_for_ITE_STATE_EVERYTHING(state_handler_t callback)
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** {
+ 507              		.loc 1 107 1
+ 508              		.cfi_startproc
+ 509              	.LVL50:
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     int idx = 0;
+ 510              		.loc 1 108 5
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     for (idx = ITE_STATE_EVERYTHING; idx <= ITE_STATE_DEV_MODEL; idx++) {
+ 511              		.loc 1 110 5
+ 512              		.loc 1 110 38
+ 513 0000 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 514 0004 93870700 		addi	a5,a5,%lo(.LANCHOR0)
+ 515 0008 13878705 		addi	a4,a5,88
+ 516              	.LVL51:
+ 517              	.L28:
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         g_impl_event_map[idx].callback = (void *)callback;
+ 518              		.loc 1 111 9 discriminator 3
+ 519              		.loc 1 111 40 is_stmt 0 discriminator 3
+ 520 000c 23AEA70A 		sw	a0,188(a5)
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         g_impl_event_map[idx].callback = (void *)callback;
+ 521              		.loc 1 110 66 is_stmt 1 discriminator 3
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         g_impl_event_map[idx].callback = (void *)callback;
+ 522              		.loc 1 110 38 discriminator 3
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         g_impl_event_map[idx].callback = (void *)callback;
+ 523              		.loc 1 110 5 is_stmt 0 discriminator 3
+ 524 0010 A107     		addi	a5,a5,8
+ 525 0012 E39DE7FE 		bne	a5,a4,.L28
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     }
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     return 0;
+ 526              		.loc 1 114 5 is_stmt 1
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** }
+ 527              		.loc 1 115 1 is_stmt 0
+ 528 0016 0145     		li	a0,0
+ 529              	.LVL52:
+ 530 0018 8280     		ret
+ 531              		.cfi_endproc
+ 532              	.LFE28:
+ 534              		.section	.text.iotx_register_for_ITE_STATE_USER_INPUT,"ax",@progbits
+ 535              		.align	1
+ 536              		.globl	iotx_register_for_ITE_STATE_USER_INPUT
+ 538              	iotx_register_for_ITE_STATE_USER_INPUT:
+ 539              	.LFB29:
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_USER_INPUT, state_handler_t callback)
+ 540              		.loc 1 117 1 is_stmt 1
+ 541              		.cfi_startproc
+ 542              	.LVL53:
+ 543              		.loc 1 117 1
+ 544              		.loc 1 117 1
+ 545 0000 B7070000 		lui	a5,%hi(.LANCHOR0+196)
+ 546 0004 23A2A70C 		sw	a0,%lo(.LANCHOR0+196)(a5)
+ 547              		.loc 1 117 1
+ 548 0008 0145     		li	a0,0
+ 549              	.LVL54:
+ 550 000a 8280     		ret
+ 551              		.cfi_endproc
+ 552              	.LFE29:
+ 554              		.section	.text.iotx_register_for_ITE_STATE_SYS_DEPEND,"ax",@progbits
+ 555              		.align	1
+ 556              		.globl	iotx_register_for_ITE_STATE_SYS_DEPEND
+ 558              	iotx_register_for_ITE_STATE_SYS_DEPEND:
+ 559              	.LFB30:
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_SYS_DEPEND, state_handler_t callback)
+ 560              		.loc 1 118 1
+ 561              		.cfi_startproc
+ 562              	.LVL55:
+ 563              		.loc 1 118 1
+ 564              		.loc 1 118 1
+ 565 0000 B7070000 		lui	a5,%hi(.LANCHOR0+204)
+ 566 0004 23A6A70C 		sw	a0,%lo(.LANCHOR0+204)(a5)
+ 567              		.loc 1 118 1
+ 568 0008 0145     		li	a0,0
+ 569              	.LVL56:
+ 570 000a 8280     		ret
+ 571              		.cfi_endproc
+ 572              	.LFE30:
+ 574              		.section	.text.iotx_register_for_ITE_STATE_MQTT_COMM,"ax",@progbits
+ 575              		.align	1
+ 576              		.globl	iotx_register_for_ITE_STATE_MQTT_COMM
+ 578              	iotx_register_for_ITE_STATE_MQTT_COMM:
+ 579              	.LFB31:
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_MQTT_COMM,  state_handler_t callback)
+ 580              		.loc 1 119 1
+ 581              		.cfi_startproc
+ 582              	.LVL57:
+ 583              		.loc 1 119 1
+ 584              		.loc 1 119 1
+ 585 0000 B7070000 		lui	a5,%hi(.LANCHOR0+212)
+ 586 0004 23AAA70C 		sw	a0,%lo(.LANCHOR0+212)(a5)
+ 587              		.loc 1 119 1
+ 588 0008 0145     		li	a0,0
+ 589              	.LVL58:
+ 590 000a 8280     		ret
+ 591              		.cfi_endproc
+ 592              	.LFE31:
+ 594              		.section	.text.iotx_register_for_ITE_STATE_WIFI_PROV,"ax",@progbits
+ 595              		.align	1
+ 596              		.globl	iotx_register_for_ITE_STATE_WIFI_PROV
+ 598              	iotx_register_for_ITE_STATE_WIFI_PROV:
+ 599              	.LFB32:
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_WIFI_PROV,  state_handler_t callback)
+ 600              		.loc 1 120 1
+ 601              		.cfi_startproc
+ 602              	.LVL59:
+ 603              		.loc 1 120 1
+ 604              		.loc 1 120 1
+ 605 0000 B7070000 		lui	a5,%hi(.LANCHOR0+220)
+ 606 0004 23AEA70C 		sw	a0,%lo(.LANCHOR0+220)(a5)
+ 607              		.loc 1 120 1
+ 608 0008 0145     		li	a0,0
+ 609              	.LVL60:
+ 610 000a 8280     		ret
+ 611              		.cfi_endproc
+ 612              	.LFE32:
+ 614              		.section	.text.iotx_register_for_ITE_STATE_COAP_LOCAL,"ax",@progbits
+ 615              		.align	1
+ 616              		.globl	iotx_register_for_ITE_STATE_COAP_LOCAL
+ 618              	iotx_register_for_ITE_STATE_COAP_LOCAL:
+ 619              	.LFB33:
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_COAP_LOCAL, state_handler_t callback)
+ 620              		.loc 1 121 1
+ 621              		.cfi_startproc
+ 622              	.LVL61:
+ 623              		.loc 1 121 1
+ 624              		.loc 1 121 1
+ 625 0000 B7070000 		lui	a5,%hi(.LANCHOR0+228)
+ 626 0004 23A2A70E 		sw	a0,%lo(.LANCHOR0+228)(a5)
+ 627              		.loc 1 121 1
+ 628 0008 0145     		li	a0,0
+ 629              	.LVL62:
+ 630 000a 8280     		ret
+ 631              		.cfi_endproc
+ 632              	.LFE33:
+ 634              		.section	.text.iotx_register_for_ITE_STATE_HTTP_COMM,"ax",@progbits
+ 635              		.align	1
+ 636              		.globl	iotx_register_for_ITE_STATE_HTTP_COMM
+ 638              	iotx_register_for_ITE_STATE_HTTP_COMM:
+ 639              	.LFB34:
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_HTTP_COMM,  state_handler_t callback)
+ 640              		.loc 1 122 1
+ 641              		.cfi_startproc
+ 642              	.LVL63:
+ 643              		.loc 1 122 1
+ 644              		.loc 1 122 1
+ 645 0000 B7070000 		lui	a5,%hi(.LANCHOR0+236)
+ 646 0004 23A6A70E 		sw	a0,%lo(.LANCHOR0+236)(a5)
+ 647              		.loc 1 122 1
+ 648 0008 0145     		li	a0,0
+ 649              	.LVL64:
+ 650 000a 8280     		ret
+ 651              		.cfi_endproc
+ 652              	.LFE34:
+ 654              		.section	.text.iotx_register_for_ITE_STATE_OTA,"ax",@progbits
+ 655              		.align	1
+ 656              		.globl	iotx_register_for_ITE_STATE_OTA
+ 658              	iotx_register_for_ITE_STATE_OTA:
+ 659              	.LFB35:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_OTA,        state_handler_t callback)
+ 660              		.loc 1 123 1
+ 661              		.cfi_startproc
+ 662              	.LVL65:
+ 663              		.loc 1 123 1
+ 664              		.loc 1 123 1
+ 665 0000 B7070000 		lui	a5,%hi(.LANCHOR0+244)
+ 666 0004 23AAA70E 		sw	a0,%lo(.LANCHOR0+244)(a5)
+ 667              		.loc 1 123 1
+ 668 0008 0145     		li	a0,0
+ 669              	.LVL66:
+ 670 000a 8280     		ret
+ 671              		.cfi_endproc
+ 672              	.LFE35:
+ 674              		.section	.text.iotx_register_for_ITE_STATE_DEV_BIND,"ax",@progbits
+ 675              		.align	1
+ 676              		.globl	iotx_register_for_ITE_STATE_DEV_BIND
+ 678              	iotx_register_for_ITE_STATE_DEV_BIND:
+ 679              	.LFB36:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_DEV_BIND,   state_handler_t callback)
+ 680              		.loc 1 124 1
+ 681              		.cfi_startproc
+ 682              	.LVL67:
+ 683              		.loc 1 124 1
+ 684              		.loc 1 124 1
+ 685 0000 B7070000 		lui	a5,%hi(.LANCHOR0+252)
+ 686 0004 23AEA70E 		sw	a0,%lo(.LANCHOR0+252)(a5)
+ 687              		.loc 1 124 1
+ 688 0008 0145     		li	a0,0
+ 689              	.LVL68:
+ 690 000a 8280     		ret
+ 691              		.cfi_endproc
+ 692              	.LFE36:
+ 694              		.section	.text.iotx_register_for_ITE_STATE_SUB_DEVICE,"ax",@progbits
+ 695              		.align	1
+ 696              		.globl	iotx_register_for_ITE_STATE_SUB_DEVICE
+ 698              	iotx_register_for_ITE_STATE_SUB_DEVICE:
+ 699              	.LFB37:
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_SUB_DEVICE, state_handler_t callback)
+ 700              		.loc 1 125 1
+ 701              		.cfi_startproc
+ 702              	.LVL69:
+ 703              		.loc 1 125 1
+ 704              		.loc 1 125 1
+ 705 0000 B7070000 		lui	a5,%hi(.LANCHOR0+260)
+ 706 0004 23A2A710 		sw	a0,%lo(.LANCHOR0+260)(a5)
+ 707              		.loc 1 125 1
+ 708 0008 0145     		li	a0,0
+ 709              	.LVL70:
+ 710 000a 8280     		ret
+ 711              		.cfi_endproc
+ 712              	.LFE37:
+ 714              		.section	.text.iotx_register_for_ITE_STATE_DEV_MODEL,"ax",@progbits
+ 715              		.align	1
+ 716              		.globl	iotx_register_for_ITE_STATE_DEV_MODEL
+ 718              	iotx_register_for_ITE_STATE_DEV_MODEL:
+ 719              	.LFB38:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** DEFINE_EVENT_CALLBACK(ITE_STATE_DEV_MODEL,  state_handler_t callback)
+ 720              		.loc 1 126 1
+ 721              		.cfi_startproc
+ 722              	.LVL71:
+ 723              		.loc 1 126 1
+ 724              		.loc 1 126 1
+ 725 0000 B7070000 		lui	a5,%hi(.LANCHOR0+268)
+ 726 0004 23A6A710 		sw	a0,%lo(.LANCHOR0+268)(a5)
+ 727              		.loc 1 126 1
+ 728 0008 0145     		li	a0,0
+ 729              	.LVL72:
+ 730 000a 8280     		ret
+ 731              		.cfi_endproc
+ 732              	.LFE38:
+ 734              		.section	.text.iotx_state_event,"ax",@progbits
+ 735              		.align	1
+ 736              		.globl	iotx_state_event
+ 738              	iotx_state_event:
+ 739              	.LFB39:
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** #define IOTX_STATE_EVENT_MESSAGE_MAXLEN         DEV_ERRCODE_MSG_MAX_LEN
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** int iotx_state_event(const int event, const int code, const char *msg_format, ...)
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** {
+ 740              		.loc 1 130 1
+ 741              		.cfi_startproc
+ 742              	.LVL73:
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     char message[IOTX_STATE_EVENT_MESSAGE_MAXLEN + 1] = {0};
+ 743              		.loc 1 131 5
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     char message[IOTX_STATE_EVENT_MESSAGE_MAXLEN + 1] = {0};
+ 744              		.loc 1 130 1 is_stmt 0
+ 745 0000 7571     		addi	sp,sp,-144
+ 746              		.cfi_def_cfa_offset 144
+ 747 0002 A2D4     		sw	s0,104(sp)
+ 748 0004 A6D2     		sw	s1,100(sp)
+ 749 0006 CAD0     		sw	s2,96(sp)
+ 750              		.cfi_offset 8, -40
+ 751              		.cfi_offset 9, -44
+ 752              		.cfi_offset 18, -48
+ 753 0008 AA84     		mv	s1,a0
+ 754 000a 2E89     		mv	s2,a1
+ 755 000c 3284     		mv	s0,a2
+ 756              		.loc 1 131 10
+ 757 000e 8145     		li	a1,0
+ 758              	.LVL74:
+ 759 0010 1306D003 		li	a2,61
+ 760              	.LVL75:
+ 761 0014 0808     		addi	a0,sp,16
+ 762              	.LVL76:
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     char message[IOTX_STATE_EVENT_MESSAGE_MAXLEN + 1] = {0};
+ 763              		.loc 1 130 1
+ 764 0016 CECE     		sw	s3,92(sp)
+ 765 0018 86D6     		sw	ra,108(sp)
+ 766              		.cfi_offset 19, -52
+ 767              		.cfi_offset 1, -36
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     char message[IOTX_STATE_EVENT_MESSAGE_MAXLEN + 1] = {0};
+ 768              		.loc 1 130 1
+ 769 001a 3EC3     		sw	a5,132(sp)
+ 770 001c B6DE     		sw	a3,124(sp)
+ 771 001e 3AC1     		sw	a4,128(sp)
+ 772 0020 42C5     		sw	a6,136(sp)
+ 773 0022 46C7     		sw	a7,140(sp)
+ 774              		.loc 1 131 10
+ 775 0024 02C6     		sw	zero,12(sp)
+ 776 0026 97000000 		call	memset
+ 776      E7800000 
+ 777              	.LVL77:
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     char *msg_report = NULL;
+ 778              		.loc 1 132 5 is_stmt 1
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     void *everything_state_handler = iotx_event_callback(ITE_STATE_EVERYTHING);
+ 779              		.loc 1 133 5
+ 780              	.LBB4:
+ 781              	.LBB5:
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         return NULL;
+ 782              		.loc 1 60 5
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** }
+ 783              		.loc 1 63 5
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** }
+ 784              		.loc 1 63 33 is_stmt 0
+ 785 002e B7070000 		lui	a5,%hi(.LANCHOR0+188)
+ 786              	.LBE5:
+ 787              	.LBE4:
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     void *state_handler = iotx_event_callback(event);
+ 788              		.loc 1 134 27
+ 789 0032 2685     		mv	a0,s1
+ 790              	.LBB7:
+ 791              	.LBB6:
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** }
+ 792              		.loc 1 63 33
+ 793 0034 83A9C70B 		lw	s3,%lo(.LANCHOR0+188)(a5)
+ 794              	.LVL78:
+ 795              	.LBE6:
+ 796              	.LBE7:
+ 797              		.loc 1 134 5 is_stmt 1
+ 798              		.loc 1 134 27 is_stmt 0
+ 799 0038 97000000 		call	iotx_event_callback
+ 799      E7800000 
+ 800              	.LVL79:
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     va_list     args;
+ 801              		.loc 1 135 5 is_stmt 1
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     if (state_handler == NULL) {
+ 802              		.loc 1 137 5
+ 803              		.loc 1 137 8 is_stmt 0
+ 804 0040 29C1     		beq	a0,zero,.L43
+ 805 0042 AA84     		mv	s1,a0
+ 806              	.LVL80:
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         return -1;
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     }
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     if (msg_format != NULL) {
+ 807              		.loc 1 141 5 is_stmt 1
+ 808              		.loc 1 141 8 is_stmt 0
+ 809 0044 01CC     		beq	s0,zero,.L42
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         memset(message, 0, sizeof(message));
+ 810              		.loc 1 142 9 is_stmt 1
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         va_start(args, msg_format);
+ 811              		.loc 1 143 9
+ 812 0046 F418     		addi	a3,sp,124
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         vsnprintf(message, IOTX_STATE_EVENT_MESSAGE_MAXLEN, msg_format, args);
+ 813              		.loc 1 144 9 is_stmt 0
+ 814 0048 2286     		mv	a2,s0
+ 815 004a 93050004 		li	a1,64
+ 816 004e 6800     		addi	a0,sp,12
+ 817              	.LVL81:
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         va_start(args, msg_format);
+ 818              		.loc 1 143 9
+ 819 0050 36C4     		sw	a3,8(sp)
+ 820              		.loc 1 144 9 is_stmt 1
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         va_end(args);
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         msg_report = message;
+ 821              		.loc 1 146 20 is_stmt 0
+ 822 0052 6000     		addi	s0,sp,12
+ 823              	.LVL82:
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         vsnprintf(message, IOTX_STATE_EVENT_MESSAGE_MAXLEN, msg_format, args);
+ 824              		.loc 1 144 9
+ 825 0054 97000000 		call	vsnprintf
+ 825      E7800000 
+ 826              	.LVL83:
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         va_end(args);
+ 827              		.loc 1 145 9 is_stmt 1
+ 828              		.loc 1 146 9
+ 829              	.L42:
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     }
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     ((state_handler_t)state_handler)(code, msg_report);
+ 830              		.loc 1 149 5
+ 831              		.loc 1 149 6 is_stmt 0
+ 832 005c A285     		mv	a1,s0
+ 833 005e 4A85     		mv	a0,s2
+ 834 0060 8294     		jalr	s1
+ 835              	.LVL84:
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     if (everything_state_handler && everything_state_handler != state_handler) {
+ 836              		.loc 1 151 5 is_stmt 1
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         ((state_handler_t)everything_state_handler)(code, msg_report);
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     }
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** 
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     return 0;
+ 837              		.loc 1 155 12 is_stmt 0
+ 838 0062 0145     		li	a0,0
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         ((state_handler_t)everything_state_handler)(code, msg_report);
+ 839              		.loc 1 151 8
+ 840 0064 63880900 		beq	s3,zero,.L40
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         ((state_handler_t)everything_state_handler)(code, msg_report);
+ 841              		.loc 1 151 34 discriminator 1
+ 842 0068 63869900 		beq	s3,s1,.L40
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         ((state_handler_t)everything_state_handler)(code, msg_report);
+ 843              		.loc 1 152 9 is_stmt 1
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****         ((state_handler_t)everything_state_handler)(code, msg_report);
+ 844              		.loc 1 152 10 is_stmt 0
+ 845 006c A285     		mv	a1,s0
+ 846 006e 4A85     		mv	a0,s2
+ 847 0070 8299     		jalr	s3
+ 848              	.LVL85:
+ 849              		.loc 1 155 12
+ 850 0072 0145     		li	a0,0
+ 851              	.LVL86:
+ 852              	.L40:
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c **** }
+ 853              		.loc 1 156 1
+ 854 0074 B650     		lw	ra,108(sp)
+ 855              		.cfi_remember_state
+ 856              		.cfi_restore 1
+ 857 0076 2654     		lw	s0,104(sp)
+ 858              		.cfi_restore 8
+ 859 0078 9654     		lw	s1,100(sp)
+ 860              		.cfi_restore 9
+ 861 007a 0659     		lw	s2,96(sp)
+ 862              		.cfi_restore 18
+ 863              	.LVL87:
+ 864 007c F649     		lw	s3,92(sp)
+ 865              		.cfi_restore 19
+ 866              	.LVL88:
+ 867 007e 4961     		addi	sp,sp,144
+ 868              		.cfi_def_cfa_offset 0
+ 869 0080 8280     		jr	ra
+ 870              	.LVL89:
+ 871              	.L43:
+ 872              		.cfi_restore_state
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/system\event.c ****     }
+ 873              		.loc 1 138 16
+ 874 0082 7D55     		li	a0,-1
+ 875              	.LVL90:
+ 876 0084 C5BF     		j	.L40
+ 877              		.cfi_endproc
+ 878              	.LFE39:
+ 880              		.section	.data.g_impl_event_map,"aw"
+ 881              		.align	2
+ 882              		.set	.LANCHOR0,. + 0
+ 885              	g_impl_event_map:
+ 886 0000 00000000 		.word	0
+ 887 0004 00000000 		.word	0
+ 888 0008 01000000 		.word	1
+ 889 000c 00000000 		.word	0
+ 890 0010 02000000 		.word	2
+ 891 0014 00000000 		.word	0
+ 892 0018 03000000 		.word	3
+ 893 001c 00000000 		.word	0
+ 894 0020 04000000 		.word	4
+ 895 0024 00000000 		.word	0
+ 896 0028 05000000 		.word	5
+ 897 002c 00000000 		.word	0
+ 898 0030 06000000 		.word	6
+ 899 0034 00000000 		.word	0
+ 900 0038 07000000 		.word	7
+ 901 003c 00000000 		.word	0
+ 902 0040 08000000 		.word	8
+ 903 0044 00000000 		.word	0
+ 904 0048 09000000 		.word	9
+ 905 004c 00000000 		.word	0
+ 906 0050 0A000000 		.word	10
+ 907 0054 00000000 		.word	0
+ 908 0058 0B000000 		.word	11
+ 909 005c 00000000 		.word	0
+ 910 0060 0C000000 		.word	12
+ 911 0064 00000000 		.word	0
+ 912 0068 0D000000 		.word	13
+ 913 006c 00000000 		.word	0
+ 914 0070 0E000000 		.word	14
+ 915 0074 00000000 		.word	0
+ 916 0078 10000000 		.word	16
+ 917 007c 00000000 		.word	0
+ 918 0080 0F000000 		.word	15
+ 919 0084 00000000 		.word	0
+ 920 0088 11000000 		.word	17
+ 921 008c 00000000 		.word	0
+ 922 0090 12000000 		.word	18
+ 923 0094 00000000 		.word	0
+ 924 0098 13000000 		.word	19
+ 925 009c 00000000 		.word	0
+ 926 00a0 14000000 		.word	20
+ 927 00a4 00000000 		.word	0
+ 928 00a8 15000000 		.word	21
+ 929 00ac 00000000 		.word	0
+ 930 00b0 16000000 		.word	22
+ 931 00b4 00000000 		.word	0
+ 932 00b8 17000000 		.word	23
+ 933 00bc 00000000 		.word	0
+ 934 00c0 18000000 		.word	24
+ 935 00c4 00000000 		.word	0
+ 936 00c8 19000000 		.word	25
+ 937 00cc 00000000 		.word	0
+ 938 00d0 1A000000 		.word	26
+ 939 00d4 00000000 		.word	0
+ 940 00d8 1B000000 		.word	27
+ 941 00dc 00000000 		.word	0
+ 942 00e0 1C000000 		.word	28
+ 943 00e4 00000000 		.word	0
+ 944 00e8 1D000000 		.word	29
+ 945 00ec 00000000 		.word	0
+ 946 00f0 1E000000 		.word	30
+ 947 00f4 00000000 		.word	0
+ 948 00f8 1F000000 		.word	31
+ 949 00fc 00000000 		.word	0
+ 950 0100 20000000 		.word	32
+ 951 0104 00000000 		.word	0
+ 952 0108 21000000 		.word	33
+ 953 010c 00000000 		.word	0
+ 954              		.text
+ 955              	.Letext0:
+ 956              		.file 2 "..\\..\\..\\..\\cloud\\alicloud\\include/iot_export.h"
+ 957              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 958              		.file 4 "<built-in>"
+ 959              		.file 5 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 event.c
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:13     .text.iotx_event_callback:0000000000000000 iotx_event_callback
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:17     .text.iotx_event_callback:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:19     .text.iotx_event_callback:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:20     .text.iotx_event_callback:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:21     .text.iotx_event_callback:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:24     .text.iotx_event_callback:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:25     .text.iotx_event_callback:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:34     .text.iotx_event_callback:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:37     .text.iotx_event_callback:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:38     .text.iotx_event_callback:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:45     .text.iotx_register_for_ITE_AWSS_STATUS:0000000000000000 iotx_register_for_ITE_AWSS_STATUS
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:48     .text.iotx_register_for_ITE_AWSS_STATUS:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:50     .text.iotx_register_for_ITE_AWSS_STATUS:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:51     .text.iotx_register_for_ITE_AWSS_STATUS:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:52     .text.iotx_register_for_ITE_AWSS_STATUS:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:55     .text.iotx_register_for_ITE_AWSS_STATUS:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:58     .text.iotx_register_for_ITE_AWSS_STATUS:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:65     .text.iotx_register_for_ITE_CONNECT_SUCC:0000000000000000 iotx_register_for_ITE_CONNECT_SUCC
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:68     .text.iotx_register_for_ITE_CONNECT_SUCC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:70     .text.iotx_register_for_ITE_CONNECT_SUCC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:71     .text.iotx_register_for_ITE_CONNECT_SUCC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:72     .text.iotx_register_for_ITE_CONNECT_SUCC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:75     .text.iotx_register_for_ITE_CONNECT_SUCC:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:78     .text.iotx_register_for_ITE_CONNECT_SUCC:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:85     .text.iotx_register_for_ITE_CONNECT_FAIL:0000000000000000 iotx_register_for_ITE_CONNECT_FAIL
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:88     .text.iotx_register_for_ITE_CONNECT_FAIL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:90     .text.iotx_register_for_ITE_CONNECT_FAIL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:91     .text.iotx_register_for_ITE_CONNECT_FAIL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:92     .text.iotx_register_for_ITE_CONNECT_FAIL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:95     .text.iotx_register_for_ITE_CONNECT_FAIL:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:98     .text.iotx_register_for_ITE_CONNECT_FAIL:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:105    .text.iotx_register_for_ITE_DISCONNECTED:0000000000000000 iotx_register_for_ITE_DISCONNECTED
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:108    .text.iotx_register_for_ITE_DISCONNECTED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:110    .text.iotx_register_for_ITE_DISCONNECTED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:111    .text.iotx_register_for_ITE_DISCONNECTED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:112    .text.iotx_register_for_ITE_DISCONNECTED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:115    .text.iotx_register_for_ITE_DISCONNECTED:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:118    .text.iotx_register_for_ITE_DISCONNECTED:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:125    .text.iotx_register_for_ITE_REDIRECT:0000000000000000 iotx_register_for_ITE_REDIRECT
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:128    .text.iotx_register_for_ITE_REDIRECT:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:130    .text.iotx_register_for_ITE_REDIRECT:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:131    .text.iotx_register_for_ITE_REDIRECT:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:132    .text.iotx_register_for_ITE_REDIRECT:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:135    .text.iotx_register_for_ITE_REDIRECT:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:138    .text.iotx_register_for_ITE_REDIRECT:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:145    .text.iotx_register_for_ITE_OFFLINE_RESET:0000000000000000 iotx_register_for_ITE_OFFLINE_RESET
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:148    .text.iotx_register_for_ITE_OFFLINE_RESET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:150    .text.iotx_register_for_ITE_OFFLINE_RESET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:151    .text.iotx_register_for_ITE_OFFLINE_RESET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:152    .text.iotx_register_for_ITE_OFFLINE_RESET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:155    .text.iotx_register_for_ITE_OFFLINE_RESET:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:158    .text.iotx_register_for_ITE_OFFLINE_RESET:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:165    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:0000000000000000 iotx_register_for_ITE_RAWDATA_ARRIVED
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:168    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:170    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:171    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:172    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:175    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:178    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:185    .text.iotx_register_for_ITE_SERVICE_REQUEST:0000000000000000 iotx_register_for_ITE_SERVICE_REQUEST
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:188    .text.iotx_register_for_ITE_SERVICE_REQUEST:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:190    .text.iotx_register_for_ITE_SERVICE_REQUEST:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:191    .text.iotx_register_for_ITE_SERVICE_REQUEST:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:192    .text.iotx_register_for_ITE_SERVICE_REQUEST:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:195    .text.iotx_register_for_ITE_SERVICE_REQUEST:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:198    .text.iotx_register_for_ITE_SERVICE_REQUEST:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:205    .text.iotx_register_for_ITE_PROPERTY_SET:0000000000000000 iotx_register_for_ITE_PROPERTY_SET
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:208    .text.iotx_register_for_ITE_PROPERTY_SET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:210    .text.iotx_register_for_ITE_PROPERTY_SET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:211    .text.iotx_register_for_ITE_PROPERTY_SET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:212    .text.iotx_register_for_ITE_PROPERTY_SET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:215    .text.iotx_register_for_ITE_PROPERTY_SET:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:218    .text.iotx_register_for_ITE_PROPERTY_SET:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:225    .text.iotx_register_for_ITE_PROPERTY_GET:0000000000000000 iotx_register_for_ITE_PROPERTY_GET
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:228    .text.iotx_register_for_ITE_PROPERTY_GET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:230    .text.iotx_register_for_ITE_PROPERTY_GET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:231    .text.iotx_register_for_ITE_PROPERTY_GET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:232    .text.iotx_register_for_ITE_PROPERTY_GET:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:235    .text.iotx_register_for_ITE_PROPERTY_GET:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:238    .text.iotx_register_for_ITE_PROPERTY_GET:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:245    .text.iotx_register_for_ITE_REPORT_REPLY:0000000000000000 iotx_register_for_ITE_REPORT_REPLY
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:248    .text.iotx_register_for_ITE_REPORT_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:250    .text.iotx_register_for_ITE_REPORT_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:251    .text.iotx_register_for_ITE_REPORT_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:252    .text.iotx_register_for_ITE_REPORT_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:255    .text.iotx_register_for_ITE_REPORT_REPLY:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:258    .text.iotx_register_for_ITE_REPORT_REPLY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:265    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:0000000000000000 iotx_register_for_ITE_TRIGGER_EVENT_REPLY
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:268    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:270    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:271    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:272    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:275    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:278    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:285    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:0000000000000000 iotx_register_for_ITE_TIMESTAMP_REPLY
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:288    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:290    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:291    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:292    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:295    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:298    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:305    .text.iotx_register_for_ITE_TOPOLIST_REPLY:0000000000000000 iotx_register_for_ITE_TOPOLIST_REPLY
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:308    .text.iotx_register_for_ITE_TOPOLIST_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:310    .text.iotx_register_for_ITE_TOPOLIST_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:311    .text.iotx_register_for_ITE_TOPOLIST_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:312    .text.iotx_register_for_ITE_TOPOLIST_REPLY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:315    .text.iotx_register_for_ITE_TOPOLIST_REPLY:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:318    .text.iotx_register_for_ITE_TOPOLIST_REPLY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:325    .text.iotx_register_for_ITE_TOPO_CHANGE:0000000000000000 iotx_register_for_ITE_TOPO_CHANGE
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:328    .text.iotx_register_for_ITE_TOPO_CHANGE:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:330    .text.iotx_register_for_ITE_TOPO_CHANGE:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:331    .text.iotx_register_for_ITE_TOPO_CHANGE:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:332    .text.iotx_register_for_ITE_TOPO_CHANGE:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:335    .text.iotx_register_for_ITE_TOPO_CHANGE:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:338    .text.iotx_register_for_ITE_TOPO_CHANGE:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:345    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:0000000000000000 iotx_register_for_ITE_SUBDEV_MISC_OPS
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:348    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:350    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:351    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:352    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:355    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:358    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:365    .text.iotx_register_for_ITE_PERMIT_JOIN:0000000000000000 iotx_register_for_ITE_PERMIT_JOIN
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:368    .text.iotx_register_for_ITE_PERMIT_JOIN:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:370    .text.iotx_register_for_ITE_PERMIT_JOIN:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:371    .text.iotx_register_for_ITE_PERMIT_JOIN:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:372    .text.iotx_register_for_ITE_PERMIT_JOIN:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:375    .text.iotx_register_for_ITE_PERMIT_JOIN:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:378    .text.iotx_register_for_ITE_PERMIT_JOIN:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:385    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:0000000000000000 iotx_register_for_ITE_INITIALIZE_COMPLETED
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:388    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:390    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:391    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:392    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:395    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:398    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:405    .text.iotx_register_for_ITE_FOTA:0000000000000000 iotx_register_for_ITE_FOTA
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:408    .text.iotx_register_for_ITE_FOTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:410    .text.iotx_register_for_ITE_FOTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:411    .text.iotx_register_for_ITE_FOTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:412    .text.iotx_register_for_ITE_FOTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:415    .text.iotx_register_for_ITE_FOTA:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:418    .text.iotx_register_for_ITE_FOTA:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:425    .text.iotx_register_for_ITE_COTA:0000000000000000 iotx_register_for_ITE_COTA
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:428    .text.iotx_register_for_ITE_COTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:430    .text.iotx_register_for_ITE_COTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:431    .text.iotx_register_for_ITE_COTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:432    .text.iotx_register_for_ITE_COTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:435    .text.iotx_register_for_ITE_COTA:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:438    .text.iotx_register_for_ITE_COTA:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:445    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:0000000000000000 iotx_register_for_ITE_MQTT_CONNECT_SUCC
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:448    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:450    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:451    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:452    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:455    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:458    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:465    .text.iotx_register_for_ITE_CLOUD_ERROR:0000000000000000 iotx_register_for_ITE_CLOUD_ERROR
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:468    .text.iotx_register_for_ITE_CLOUD_ERROR:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:470    .text.iotx_register_for_ITE_CLOUD_ERROR:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:471    .text.iotx_register_for_ITE_CLOUD_ERROR:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:472    .text.iotx_register_for_ITE_CLOUD_ERROR:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:475    .text.iotx_register_for_ITE_CLOUD_ERROR:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:478    .text.iotx_register_for_ITE_CLOUD_ERROR:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:485    .text.iotx_register_for_ITE_EVENT_NOTIFY:0000000000000000 iotx_register_for_ITE_EVENT_NOTIFY
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:488    .text.iotx_register_for_ITE_EVENT_NOTIFY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:490    .text.iotx_register_for_ITE_EVENT_NOTIFY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:491    .text.iotx_register_for_ITE_EVENT_NOTIFY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:492    .text.iotx_register_for_ITE_EVENT_NOTIFY:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:495    .text.iotx_register_for_ITE_EVENT_NOTIFY:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:498    .text.iotx_register_for_ITE_EVENT_NOTIFY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:505    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000000 iotx_register_for_ITE_STATE_EVERYTHING
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:508    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:510    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:511    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:512    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:513    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:519    .text.iotx_register_for_ITE_STATE_EVERYTHING:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:520    .text.iotx_register_for_ITE_STATE_EVERYTHING:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:522    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:523    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:524    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:527    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:528    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:531    .text.iotx_register_for_ITE_STATE_EVERYTHING:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:538    .text.iotx_register_for_ITE_STATE_USER_INPUT:0000000000000000 iotx_register_for_ITE_STATE_USER_INPUT
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:541    .text.iotx_register_for_ITE_STATE_USER_INPUT:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:543    .text.iotx_register_for_ITE_STATE_USER_INPUT:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:544    .text.iotx_register_for_ITE_STATE_USER_INPUT:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:545    .text.iotx_register_for_ITE_STATE_USER_INPUT:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:548    .text.iotx_register_for_ITE_STATE_USER_INPUT:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:551    .text.iotx_register_for_ITE_STATE_USER_INPUT:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:558    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:0000000000000000 iotx_register_for_ITE_STATE_SYS_DEPEND
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:561    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:563    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:564    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:565    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:568    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:571    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:578    .text.iotx_register_for_ITE_STATE_MQTT_COMM:0000000000000000 iotx_register_for_ITE_STATE_MQTT_COMM
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:581    .text.iotx_register_for_ITE_STATE_MQTT_COMM:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:583    .text.iotx_register_for_ITE_STATE_MQTT_COMM:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:584    .text.iotx_register_for_ITE_STATE_MQTT_COMM:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:585    .text.iotx_register_for_ITE_STATE_MQTT_COMM:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:588    .text.iotx_register_for_ITE_STATE_MQTT_COMM:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:591    .text.iotx_register_for_ITE_STATE_MQTT_COMM:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:598    .text.iotx_register_for_ITE_STATE_WIFI_PROV:0000000000000000 iotx_register_for_ITE_STATE_WIFI_PROV
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:601    .text.iotx_register_for_ITE_STATE_WIFI_PROV:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:603    .text.iotx_register_for_ITE_STATE_WIFI_PROV:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:604    .text.iotx_register_for_ITE_STATE_WIFI_PROV:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:605    .text.iotx_register_for_ITE_STATE_WIFI_PROV:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:608    .text.iotx_register_for_ITE_STATE_WIFI_PROV:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:611    .text.iotx_register_for_ITE_STATE_WIFI_PROV:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:618    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:0000000000000000 iotx_register_for_ITE_STATE_COAP_LOCAL
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:621    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:623    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:624    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:625    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:628    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:631    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:638    .text.iotx_register_for_ITE_STATE_HTTP_COMM:0000000000000000 iotx_register_for_ITE_STATE_HTTP_COMM
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:641    .text.iotx_register_for_ITE_STATE_HTTP_COMM:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:643    .text.iotx_register_for_ITE_STATE_HTTP_COMM:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:644    .text.iotx_register_for_ITE_STATE_HTTP_COMM:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:645    .text.iotx_register_for_ITE_STATE_HTTP_COMM:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:648    .text.iotx_register_for_ITE_STATE_HTTP_COMM:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:651    .text.iotx_register_for_ITE_STATE_HTTP_COMM:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:658    .text.iotx_register_for_ITE_STATE_OTA:0000000000000000 iotx_register_for_ITE_STATE_OTA
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:661    .text.iotx_register_for_ITE_STATE_OTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:663    .text.iotx_register_for_ITE_STATE_OTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:664    .text.iotx_register_for_ITE_STATE_OTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:665    .text.iotx_register_for_ITE_STATE_OTA:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:668    .text.iotx_register_for_ITE_STATE_OTA:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:671    .text.iotx_register_for_ITE_STATE_OTA:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:678    .text.iotx_register_for_ITE_STATE_DEV_BIND:0000000000000000 iotx_register_for_ITE_STATE_DEV_BIND
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:681    .text.iotx_register_for_ITE_STATE_DEV_BIND:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:683    .text.iotx_register_for_ITE_STATE_DEV_BIND:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:684    .text.iotx_register_for_ITE_STATE_DEV_BIND:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:685    .text.iotx_register_for_ITE_STATE_DEV_BIND:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:688    .text.iotx_register_for_ITE_STATE_DEV_BIND:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:691    .text.iotx_register_for_ITE_STATE_DEV_BIND:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:698    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:0000000000000000 iotx_register_for_ITE_STATE_SUB_DEVICE
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:701    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:703    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:704    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:705    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:708    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:711    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:718    .text.iotx_register_for_ITE_STATE_DEV_MODEL:0000000000000000 iotx_register_for_ITE_STATE_DEV_MODEL
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:721    .text.iotx_register_for_ITE_STATE_DEV_MODEL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:723    .text.iotx_register_for_ITE_STATE_DEV_MODEL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:724    .text.iotx_register_for_ITE_STATE_DEV_MODEL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:725    .text.iotx_register_for_ITE_STATE_DEV_MODEL:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:728    .text.iotx_register_for_ITE_STATE_DEV_MODEL:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:731    .text.iotx_register_for_ITE_STATE_DEV_MODEL:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:738    .text.iotx_state_event:0000000000000000 iotx_state_event
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:741    .text.iotx_state_event:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:743    .text.iotx_state_event:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:744    .text.iotx_state_event:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:745    .text.iotx_state_event:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:746    .text.iotx_state_event:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:750    .text.iotx_state_event:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:751    .text.iotx_state_event:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:752    .text.iotx_state_event:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:757    .text.iotx_state_event:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:764    .text.iotx_state_event:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:766    .text.iotx_state_event:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:767    .text.iotx_state_event:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:769    .text.iotx_state_event:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:775    .text.iotx_state_event:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:779    .text.iotx_state_event:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:782    .text.iotx_state_event:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:783    .text.iotx_state_event:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:784    .text.iotx_state_event:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:785    .text.iotx_state_event:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:789    .text.iotx_state_event:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:793    .text.iotx_state_event:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:798    .text.iotx_state_event:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:799    .text.iotx_state_event:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:802    .text.iotx_state_event:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:803    .text.iotx_state_event:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:804    .text.iotx_state_event:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:808    .text.iotx_state_event:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:809    .text.iotx_state_event:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:811    .text.iotx_state_event:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:812    .text.iotx_state_event:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:814    .text.iotx_state_event:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:819    .text.iotx_state_event:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:821    .text.iotx_state_event:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:822    .text.iotx_state_event:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:825    .text.iotx_state_event:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:828    .text.iotx_state_event:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:830    .text.iotx_state_event:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:831    .text.iotx_state_event:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:832    .text.iotx_state_event:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:837    .text.iotx_state_event:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:838    .text.iotx_state_event:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:840    .text.iotx_state_event:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:842    .text.iotx_state_event:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:844    .text.iotx_state_event:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:845    .text.iotx_state_event:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:850    .text.iotx_state_event:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:854    .text.iotx_state_event:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:855    .text.iotx_state_event:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:856    .text.iotx_state_event:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:858    .text.iotx_state_event:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:860    .text.iotx_state_event:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:862    .text.iotx_state_event:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:865    .text.iotx_state_event:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:868    .text.iotx_state_event:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:872    .text.iotx_state_event:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:874    .text.iotx_state_event:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:877    .text.iotx_state_event:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:882    .data.g_impl_event_map:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:885    .data.g_impl_event_map:0000000000000000 g_impl_event_map
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:41     .text.iotx_event_callback:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:61     .text.iotx_register_for_ITE_AWSS_STATUS:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:81     .text.iotx_register_for_ITE_CONNECT_SUCC:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:101    .text.iotx_register_for_ITE_CONNECT_FAIL:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:121    .text.iotx_register_for_ITE_DISCONNECTED:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:141    .text.iotx_register_for_ITE_REDIRECT:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:161    .text.iotx_register_for_ITE_OFFLINE_RESET:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:181    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:201    .text.iotx_register_for_ITE_SERVICE_REQUEST:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:221    .text.iotx_register_for_ITE_PROPERTY_SET:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:241    .text.iotx_register_for_ITE_PROPERTY_GET:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:261    .text.iotx_register_for_ITE_REPORT_REPLY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:281    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:301    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:321    .text.iotx_register_for_ITE_TOPOLIST_REPLY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:341    .text.iotx_register_for_ITE_TOPO_CHANGE:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:361    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:381    .text.iotx_register_for_ITE_PERMIT_JOIN:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:401    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:421    .text.iotx_register_for_ITE_FOTA:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:441    .text.iotx_register_for_ITE_COTA:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:461    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:481    .text.iotx_register_for_ITE_CLOUD_ERROR:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:501    .text.iotx_register_for_ITE_EVENT_NOTIFY:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:534    .text.iotx_register_for_ITE_STATE_EVERYTHING:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:554    .text.iotx_register_for_ITE_STATE_USER_INPUT:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:574    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:594    .text.iotx_register_for_ITE_STATE_MQTT_COMM:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:614    .text.iotx_register_for_ITE_STATE_WIFI_PROV:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:634    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:654    .text.iotx_register_for_ITE_STATE_HTTP_COMM:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:674    .text.iotx_register_for_ITE_STATE_OTA:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:694    .text.iotx_register_for_ITE_STATE_DEV_BIND:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:714    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:734    .text.iotx_register_for_ITE_STATE_DEV_MODEL:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:880    .text.iotx_state_event:0000000000000086 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:32     .text.iotx_event_callback:0000000000000018 .L3
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:517    .text.iotx_register_for_ITE_STATE_EVERYTHING:000000000000000c .L28
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:871    .text.iotx_state_event:0000000000000082 .L43
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:829    .text.iotx_state_event:000000000000005c .L42
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:852    .text.iotx_state_event:0000000000000074 .L40
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2284   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3533   .debug_str:00000000000003b8 .LASF94
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3545   .debug_str:0000000000000503 .LASF95
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3527   .debug_str:00000000000002ed .LASF96
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3383   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3465   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3581   .debug_str:000000000000071e .LASF0
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3573   .debug_str:00000000000006d1 .LASF1
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3569   .debug_str:000000000000069c .LASF2
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3489   .debug_str:0000000000000136 .LASF3
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3593   .debug_str:000000000000078d .LASF4
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3541   .debug_str:00000000000004d7 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3623   .debug_str:00000000000008b8 .LASF6
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3537   .debug_str:00000000000004b0 .LASF7
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3575   .debug_str:00000000000006dd .LASF8
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3625   .debug_str:00000000000008ca .LASF97
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3603   .debug_str:00000000000007e4 .LASF9
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3483   .debug_str:00000000000000ec .LASF10
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3535   .debug_str:000000000000049f .LASF11
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3653   .debug_str:0000000000000a08 .LASF12
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3547   .debug_str:0000000000000595 .LASF13
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3475   .debug_str:0000000000000088 .LASF14
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3657   .debug_str:0000000000000a29 .LASF15
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3499   .debug_str:00000000000001c0 .LASF16
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3601   .debug_str:00000000000007d0 .LASF17
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3495   .debug_str:0000000000000184 .LASF18
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3619   .debug_str:0000000000000880 .LASF19
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3599   .debug_str:00000000000007bf .LASF20
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3627   .debug_str:00000000000008dc .LASF21
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3663   .debug_str:0000000000000a75 .LASF22
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3647   .debug_str:00000000000009c3 .LASF23
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3641   .debug_str:0000000000000999 .LASF24
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3655   .debug_str:0000000000000a19 .LASF25
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3661   .debug_str:0000000000000a61 .LASF26
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3539   .debug_str:00000000000004be .LASF27
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3645   .debug_str:00000000000009ba .LASF28
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3525   .debug_str:00000000000002e4 .LASF29
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3615   .debug_str:0000000000000855 .LASF30
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3555   .debug_str:00000000000005ee .LASF31
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3563   .debug_str:000000000000064e .LASF32
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3577   .debug_str:00000000000006f4 .LASF33
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3595   .debug_str:00000000000007a0 .LASF34
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3579   .debug_str:0000000000000709 .LASF35
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3523   .debug_str:00000000000002d0 .LASF36
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3487   .debug_str:0000000000000122 .LASF37
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3617   .debug_str:000000000000086b .LASF38
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3529   .debug_str:000000000000037e .LASF39
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3549   .debug_str:00000000000005a6 .LASF40
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3605   .debug_str:00000000000007e9 .LASF41
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3613   .debug_str:0000000000000840 .LASF42
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3519   .debug_str:00000000000002a1 .LASF43
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3611   .debug_str:0000000000000830 .LASF44
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3649   .debug_str:00000000000009d6 .LASF45
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3505   .debug_str:00000000000001fc .LASF46
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3559   .debug_str:0000000000000623 .LASF47
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3669   .debug_str:0000000000000ace .LASF48
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3607   .debug_str:00000000000007fc .LASF49
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3509   .debug_str:0000000000000226 .LASF53
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3643   .debug_str:00000000000009a9 .LASF59
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:739    .text.iotx_state_event:0000000000000000 .LFB39
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:878    .text.iotx_state_event:0000000000000086 .LFE39
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3503   .debug_str:00000000000001f6 .LASF50
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2738   .debug_loc:0000000000000000 .LLST36
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3587   .debug_str:0000000000000757 .LASF51
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2760   .debug_loc:0000000000000037 .LLST37
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3591   .debug_str:0000000000000782 .LASF52
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2782   .debug_loc:000000000000006e .LLST38
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3479   .debug_str:00000000000000bc .LASF54
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3633   .debug_str:0000000000000941 .LASF55
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2808   .debug_loc:00000000000000b0 .LLST39
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3471   .debug_str:000000000000004c .LASF56
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2825   .debug_loc:00000000000000db .LLST40
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3517   .debug_str:0000000000000293 .LASF57
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2836   .debug_loc:00000000000000f9 .LLST41
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3585   .debug_str:0000000000000752 .LASF58
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:780    .text.iotx_state_event:000000000000002e .LBB4
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2851   .debug_loc:0000000000000122 .LLST42
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:777    .text.iotx_state_event:000000000000002e .LVL77
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:800    .text.iotx_state_event:0000000000000040 .LVL79
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:826    .text.iotx_state_event:000000000000005c .LVL83
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:835    .text.iotx_state_event:0000000000000062 .LVL84
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:848    .text.iotx_state_event:0000000000000072 .LVL85
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3589   .debug_str:000000000000075c .LASF60
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:719    .text.iotx_register_for_ITE_STATE_DEV_MODEL:0000000000000000 .LFB38
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:732    .text.iotx_register_for_ITE_STATE_DEV_MODEL:000000000000000c .LFE38
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2859   .debug_loc:0000000000000136 .LLST35
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3629   .debug_str:00000000000008f4 .LASF61
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:699    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:0000000000000000 .LFB37
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:712    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:000000000000000c .LFE37
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2871   .debug_loc:0000000000000158 .LLST34
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3511   .debug_str:0000000000000237 .LASF62
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:679    .text.iotx_register_for_ITE_STATE_DEV_BIND:0000000000000000 .LFB36
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:692    .text.iotx_register_for_ITE_STATE_DEV_BIND:000000000000000c .LFE36
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2883   .debug_loc:000000000000017a .LLST33
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3635   .debug_str:000000000000094c .LASF63
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:659    .text.iotx_register_for_ITE_STATE_OTA:0000000000000000 .LFB35
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:672    .text.iotx_register_for_ITE_STATE_OTA:000000000000000c .LFE35
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2895   .debug_loc:000000000000019c .LLST32
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3631   .debug_str:000000000000091b .LASF64
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:639    .text.iotx_register_for_ITE_STATE_HTTP_COMM:0000000000000000 .LFB34
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:652    .text.iotx_register_for_ITE_STATE_HTTP_COMM:000000000000000c .LFE34
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2907   .debug_loc:00000000000001be .LLST31
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3621   .debug_str:0000000000000891 .LASF65
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:619    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:0000000000000000 .LFB33
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:632    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:000000000000000c .LFE33
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2919   .debug_loc:00000000000001e0 .LLST30
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3485   .debug_str:00000000000000fc .LASF66
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:599    .text.iotx_register_for_ITE_STATE_WIFI_PROV:0000000000000000 .LFB32
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:612    .text.iotx_register_for_ITE_STATE_WIFI_PROV:000000000000000c .LFE32
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2931   .debug_loc:0000000000000202 .LLST29
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3553   .debug_str:00000000000005c8 .LASF67
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:579    .text.iotx_register_for_ITE_STATE_MQTT_COMM:0000000000000000 .LFB31
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:592    .text.iotx_register_for_ITE_STATE_MQTT_COMM:000000000000000c .LFE31
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2943   .debug_loc:0000000000000224 .LLST28
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3477   .debug_str:0000000000000095 .LASF68
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:559    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:0000000000000000 .LFB30
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:572    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:000000000000000c .LFE30
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2955   .debug_loc:0000000000000246 .LLST27
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3571   .debug_str:00000000000006aa .LASF69
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:539    .text.iotx_register_for_ITE_STATE_USER_INPUT:0000000000000000 .LFB29
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:552    .text.iotx_register_for_ITE_STATE_USER_INPUT:000000000000000c .LFE29
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2967   .debug_loc:0000000000000268 .LLST26
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3583   .debug_str:000000000000072b .LASF70
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:506    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000000 .LFB28
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:532    .text.iotx_register_for_ITE_STATE_EVERYTHING:000000000000001a .LFE28
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2979   .debug_loc:000000000000028a .LLST24
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2991   .debug_loc:00000000000002aa .LLST25
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3667   .debug_str:0000000000000aab .LASF71
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:486    .text.iotx_register_for_ITE_EVENT_NOTIFY:0000000000000000 .LFB27
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:499    .text.iotx_register_for_ITE_EVENT_NOTIFY:000000000000000c .LFE27
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:2999   .debug_loc:00000000000002be .LLST23
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3501   .debug_str:00000000000001d4 .LASF72
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:466    .text.iotx_register_for_ITE_CLOUD_ERROR:0000000000000000 .LFB26
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:479    .text.iotx_register_for_ITE_CLOUD_ERROR:000000000000000c .LFE26
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3011   .debug_loc:00000000000002e0 .LLST22
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3481   .debug_str:00000000000000c4 .LASF73
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:446    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:0000000000000000 .LFB25
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:459    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:000000000000000c .LFE25
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3023   .debug_loc:0000000000000302 .LLST21
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3567   .debug_str:0000000000000681 .LASF74
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:426    .text.iotx_register_for_ITE_COTA:0000000000000000 .LFB24
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:439    .text.iotx_register_for_ITE_COTA:000000000000000c .LFE24
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3035   .debug_loc:0000000000000324 .LLST20
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3521   .debug_str:00000000000002b5 .LASF75
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:406    .text.iotx_register_for_ITE_FOTA:0000000000000000 .LFB23
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:419    .text.iotx_register_for_ITE_FOTA:000000000000000c .LFE23
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3047   .debug_loc:0000000000000346 .LLST19
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3497   .debug_str:0000000000000195 .LASF76
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:386    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:0000000000000000 .LFB22
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:399    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:000000000000000c .LFE22
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3059   .debug_loc:0000000000000368 .LLST18
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3467   .debug_str:0000000000000000 .LASF77
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:366    .text.iotx_register_for_ITE_PERMIT_JOIN:0000000000000000 .LFB21
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:379    .text.iotx_register_for_ITE_PERMIT_JOIN:000000000000000c .LFE21
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3071   .debug_loc:000000000000038a .LLST17
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3659   .debug_str:0000000000000a3b .LASF78
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:346    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:0000000000000000 .LFB20
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:359    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:000000000000000c .LFE20
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3083   .debug_loc:00000000000003ac .LLST16
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3665   .debug_str:0000000000000a89 .LASF79
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:326    .text.iotx_register_for_ITE_TOPO_CHANGE:0000000000000000 .LFB19
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:339    .text.iotx_register_for_ITE_TOPO_CHANGE:000000000000000c .LFE19
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3095   .debug_loc:00000000000003ce .LLST15
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3493   .debug_str:000000000000015f .LASF80
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:306    .text.iotx_register_for_ITE_TOPOLIST_REPLY:0000000000000000 .LFB18
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:319    .text.iotx_register_for_ITE_TOPOLIST_REPLY:000000000000000c .LFE18
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3107   .debug_loc:00000000000003f0 .LLST14
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3513   .debug_str:000000000000025c .LASF81
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:286    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:0000000000000000 .LFB17
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:299    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:000000000000000c .LFE17
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3119   .debug_loc:0000000000000412 .LLST13
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3469   .debug_str:0000000000000022 .LASF82
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:266    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:0000000000000000 .LFB16
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:279    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:000000000000000c .LFE16
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3131   .debug_loc:0000000000000434 .LLST12
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3609   .debug_str:000000000000080d .LASF83
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:246    .text.iotx_register_for_ITE_REPORT_REPLY:0000000000000000 .LFB15
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:259    .text.iotx_register_for_ITE_REPORT_REPLY:000000000000000c .LFE15
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3143   .debug_loc:0000000000000456 .LLST11
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3543   .debug_str:00000000000004e0 .LASF84
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:226    .text.iotx_register_for_ITE_PROPERTY_GET:0000000000000000 .LFB14
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:239    .text.iotx_register_for_ITE_PROPERTY_GET:000000000000000c .LFE14
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3155   .debug_loc:0000000000000478 .LLST10
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3473   .debug_str:0000000000000065 .LASF85
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:206    .text.iotx_register_for_ITE_PROPERTY_SET:0000000000000000 .LFB13
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:219    .text.iotx_register_for_ITE_PROPERTY_SET:000000000000000c .LFE13
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3167   .debug_loc:000000000000049a .LLST9
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3637   .debug_str:000000000000096c .LASF86
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:186    .text.iotx_register_for_ITE_SERVICE_REQUEST:0000000000000000 .LFB12
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:199    .text.iotx_register_for_ITE_SERVICE_REQUEST:000000000000000c .LFE12
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3179   .debug_loc:00000000000004bc .LLST8
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3531   .debug_str:0000000000000392 .LASF87
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:166    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:0000000000000000 .LFB11
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:179    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:000000000000000c .LFE11
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3191   .debug_loc:00000000000004de .LLST7
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3557   .debug_str:00000000000005ff .LASF88
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:146    .text.iotx_register_for_ITE_OFFLINE_RESET:0000000000000000 .LFB10
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:159    .text.iotx_register_for_ITE_OFFLINE_RESET:000000000000000c .LFE10
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3203   .debug_loc:0000000000000500 .LLST6
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3491   .debug_str:0000000000000140 .LASF89
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:126    .text.iotx_register_for_ITE_REDIRECT:0000000000000000 .LFB9
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:139    .text.iotx_register_for_ITE_REDIRECT:000000000000000c .LFE9
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3215   .debug_loc:0000000000000522 .LLST5
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3561   .debug_str:000000000000062b .LASF90
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:106    .text.iotx_register_for_ITE_DISCONNECTED:0000000000000000 .LFB8
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:119    .text.iotx_register_for_ITE_DISCONNECTED:000000000000000c .LFE8
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3227   .debug_loc:0000000000000544 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3565   .debug_str:000000000000065e .LASF91
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:86     .text.iotx_register_for_ITE_CONNECT_FAIL:0000000000000000 .LFB7
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:99     .text.iotx_register_for_ITE_CONNECT_FAIL:000000000000000c .LFE7
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3239   .debug_loc:0000000000000566 .LLST3
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3651   .debug_str:00000000000009e5 .LASF92
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:66     .text.iotx_register_for_ITE_CONNECT_SUCC:0000000000000000 .LFB6
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:79     .text.iotx_register_for_ITE_CONNECT_SUCC:000000000000000c .LFE6
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3251   .debug_loc:0000000000000588 .LLST2
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3507   .debug_str:0000000000000204 .LASF93
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:46     .text.iotx_register_for_ITE_AWSS_STATUS:0000000000000000 .LFB5
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:59     .text.iotx_register_for_ITE_AWSS_STATUS:000000000000000c .LFE5
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3263   .debug_loc:00000000000005aa .LLST1
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3551   .debug_str:00000000000005b4 .LASF98
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:14     .text.iotx_event_callback:0000000000000000 .LFB4
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:39     .text.iotx_event_callback:000000000000001c .LFE4
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3275   .debug_loc:00000000000005cc .LLST0
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3639   .debug_str:0000000000000992 .LASF99
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3515   .debug_str:0000000000000282 .LASF100
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:3597   .debug_str:00000000000007b5 .LASF101
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:742    .text.iotx_state_event:0000000000000000 .LVL73
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:762    .text.iotx_state_event:0000000000000016 .LVL76
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:806    .text.iotx_state_event:0000000000000044 .LVL80
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:870    .text.iotx_state_event:0000000000000082 .LVL89
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:758    .text.iotx_state_event:0000000000000010 .LVL74
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:863    .text.iotx_state_event:000000000000007c .LVL87
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:760    .text.iotx_state_event:0000000000000014 .LVL75
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:823    .text.iotx_state_event:0000000000000054 .LVL82
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:851    .text.iotx_state_event:0000000000000074 .LVL86
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:794    .text.iotx_state_event:0000000000000038 .LVL78
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:866    .text.iotx_state_event:000000000000007e .LVL88
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:817    .text.iotx_state_event:0000000000000050 .LVL81
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:875    .text.iotx_state_event:0000000000000084 .LVL90
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:722    .text.iotx_register_for_ITE_STATE_DEV_MODEL:0000000000000000 .LVL71
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:729    .text.iotx_register_for_ITE_STATE_DEV_MODEL:000000000000000a .LVL72
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:702    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:0000000000000000 .LVL69
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:709    .text.iotx_register_for_ITE_STATE_SUB_DEVICE:000000000000000a .LVL70
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:682    .text.iotx_register_for_ITE_STATE_DEV_BIND:0000000000000000 .LVL67
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:689    .text.iotx_register_for_ITE_STATE_DEV_BIND:000000000000000a .LVL68
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:662    .text.iotx_register_for_ITE_STATE_OTA:0000000000000000 .LVL65
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:669    .text.iotx_register_for_ITE_STATE_OTA:000000000000000a .LVL66
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:642    .text.iotx_register_for_ITE_STATE_HTTP_COMM:0000000000000000 .LVL63
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:649    .text.iotx_register_for_ITE_STATE_HTTP_COMM:000000000000000a .LVL64
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:622    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:0000000000000000 .LVL61
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:629    .text.iotx_register_for_ITE_STATE_COAP_LOCAL:000000000000000a .LVL62
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:602    .text.iotx_register_for_ITE_STATE_WIFI_PROV:0000000000000000 .LVL59
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:609    .text.iotx_register_for_ITE_STATE_WIFI_PROV:000000000000000a .LVL60
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:582    .text.iotx_register_for_ITE_STATE_MQTT_COMM:0000000000000000 .LVL57
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:589    .text.iotx_register_for_ITE_STATE_MQTT_COMM:000000000000000a .LVL58
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:562    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:0000000000000000 .LVL55
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:569    .text.iotx_register_for_ITE_STATE_SYS_DEPEND:000000000000000a .LVL56
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:542    .text.iotx_register_for_ITE_STATE_USER_INPUT:0000000000000000 .LVL53
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:549    .text.iotx_register_for_ITE_STATE_USER_INPUT:000000000000000a .LVL54
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:509    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000000 .LVL50
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:529    .text.iotx_register_for_ITE_STATE_EVERYTHING:0000000000000018 .LVL52
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:516    .text.iotx_register_for_ITE_STATE_EVERYTHING:000000000000000c .LVL51
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:489    .text.iotx_register_for_ITE_EVENT_NOTIFY:0000000000000000 .LVL48
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:496    .text.iotx_register_for_ITE_EVENT_NOTIFY:000000000000000a .LVL49
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:469    .text.iotx_register_for_ITE_CLOUD_ERROR:0000000000000000 .LVL46
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:476    .text.iotx_register_for_ITE_CLOUD_ERROR:000000000000000a .LVL47
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:449    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:0000000000000000 .LVL44
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:456    .text.iotx_register_for_ITE_MQTT_CONNECT_SUCC:000000000000000a .LVL45
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:429    .text.iotx_register_for_ITE_COTA:0000000000000000 .LVL42
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:436    .text.iotx_register_for_ITE_COTA:000000000000000a .LVL43
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:409    .text.iotx_register_for_ITE_FOTA:0000000000000000 .LVL40
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:416    .text.iotx_register_for_ITE_FOTA:000000000000000a .LVL41
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:389    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:0000000000000000 .LVL38
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:396    .text.iotx_register_for_ITE_INITIALIZE_COMPLETED:000000000000000a .LVL39
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:369    .text.iotx_register_for_ITE_PERMIT_JOIN:0000000000000000 .LVL36
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:376    .text.iotx_register_for_ITE_PERMIT_JOIN:000000000000000a .LVL37
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:349    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:0000000000000000 .LVL34
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:356    .text.iotx_register_for_ITE_SUBDEV_MISC_OPS:000000000000000a .LVL35
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:329    .text.iotx_register_for_ITE_TOPO_CHANGE:0000000000000000 .LVL32
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:336    .text.iotx_register_for_ITE_TOPO_CHANGE:000000000000000a .LVL33
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:309    .text.iotx_register_for_ITE_TOPOLIST_REPLY:0000000000000000 .LVL30
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:316    .text.iotx_register_for_ITE_TOPOLIST_REPLY:000000000000000a .LVL31
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:289    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:0000000000000000 .LVL28
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:296    .text.iotx_register_for_ITE_TIMESTAMP_REPLY:000000000000000a .LVL29
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:269    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:0000000000000000 .LVL26
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:276    .text.iotx_register_for_ITE_TRIGGER_EVENT_REPLY:000000000000000a .LVL27
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:249    .text.iotx_register_for_ITE_REPORT_REPLY:0000000000000000 .LVL24
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:256    .text.iotx_register_for_ITE_REPORT_REPLY:000000000000000a .LVL25
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:229    .text.iotx_register_for_ITE_PROPERTY_GET:0000000000000000 .LVL22
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:236    .text.iotx_register_for_ITE_PROPERTY_GET:000000000000000a .LVL23
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:209    .text.iotx_register_for_ITE_PROPERTY_SET:0000000000000000 .LVL20
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:216    .text.iotx_register_for_ITE_PROPERTY_SET:000000000000000a .LVL21
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:189    .text.iotx_register_for_ITE_SERVICE_REQUEST:0000000000000000 .LVL18
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:196    .text.iotx_register_for_ITE_SERVICE_REQUEST:000000000000000a .LVL19
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:169    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:0000000000000000 .LVL16
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:176    .text.iotx_register_for_ITE_RAWDATA_ARRIVED:000000000000000a .LVL17
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:149    .text.iotx_register_for_ITE_OFFLINE_RESET:0000000000000000 .LVL14
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:156    .text.iotx_register_for_ITE_OFFLINE_RESET:000000000000000a .LVL15
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:129    .text.iotx_register_for_ITE_REDIRECT:0000000000000000 .LVL12
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:136    .text.iotx_register_for_ITE_REDIRECT:000000000000000a .LVL13
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:109    .text.iotx_register_for_ITE_DISCONNECTED:0000000000000000 .LVL10
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:116    .text.iotx_register_for_ITE_DISCONNECTED:000000000000000a .LVL11
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:89     .text.iotx_register_for_ITE_CONNECT_FAIL:0000000000000000 .LVL8
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:96     .text.iotx_register_for_ITE_CONNECT_FAIL:000000000000000a .LVL9
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:69     .text.iotx_register_for_ITE_CONNECT_SUCC:0000000000000000 .LVL6
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:76     .text.iotx_register_for_ITE_CONNECT_SUCC:000000000000000a .LVL7
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:49     .text.iotx_register_for_ITE_AWSS_STATUS:0000000000000000 .LVL4
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:56     .text.iotx_register_for_ITE_AWSS_STATUS:000000000000000a .LVL5
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:18     .text.iotx_event_callback:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:28     .text.iotx_event_callback:0000000000000014 .LVL1
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:31     .text.iotx_event_callback:0000000000000018 .LVL2
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:35     .text.iotx_event_callback:000000000000001a .LVL3
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:961    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:787    .text.iotx_state_event:0000000000000032 .LBE4
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:790    .text.iotx_state_event:0000000000000034 .LBB7
+C:\Users\stapi\AppData\Local\Temp\cclRtZml.s:796    .text.iotx_state_event:0000000000000038 .LBE7
+
+UNDEFINED SYMBOLS
+memset
+vsnprintf

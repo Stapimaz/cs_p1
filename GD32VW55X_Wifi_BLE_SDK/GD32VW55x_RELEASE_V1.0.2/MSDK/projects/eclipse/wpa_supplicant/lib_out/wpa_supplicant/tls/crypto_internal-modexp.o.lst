@@ -1,0 +1,1186 @@
+   1              		.file	"crypto_internal-modexp.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.crypto_mod_exp,"ax",@progbits
+  10              		.align	1
+  11              		.globl	crypto_mod_exp
+  13              	crypto_mod_exp:
+  14              	.LFB73:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c ****  * Crypto wrapper for internal crypto implementation - modexp
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c ****  * Copyright (c) 2006-2009, Jouni Malinen <j@w1.fi>
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c ****  *
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c ****  * This software may be distributed under the terms of the BSD license.
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c ****  * See README for more details.
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c ****  */
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** #include "includes.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** #include "common.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** #include "tls/bignum.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** #include "crypto.h"
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** int crypto_dh_init(u8 generator, const u8 *prime, size_t prime_len, u8 *privkey,
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		   u8 *pubkey)
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** {
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	size_t pubkey_len, pad;
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (os_get_random(privkey, prime_len) < 0)
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		return -1;
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (os_memcmp(privkey, prime, prime_len) > 0) {
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		/* Make sure private value is smaller than prime */
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		privkey[0] = 0;
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	}
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	pubkey_len = prime_len;
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (crypto_mod_exp(&generator, 1, privkey, prime_len, prime, prime_len,
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			   pubkey, &pubkey_len) < 0)
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		return -1;
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (pubkey_len < prime_len) {
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		pad = prime_len - pubkey_len;
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		os_memmove(pubkey + pad, pubkey, pubkey_len);
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		os_memset(pubkey, 0, pad);
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	}
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	return 0;
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** }
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** int crypto_dh_derive_secret(u8 generator, const u8 *prime, size_t prime_len,
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			    const u8 *order, size_t order_len,
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			    const u8 *privkey, size_t privkey_len,
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			    const u8 *pubkey, size_t pubkey_len,
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			    u8 *secret, size_t *len)
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** {
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	struct bignum *pub;
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	int res = -1;
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (pubkey_len > prime_len ||
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    (pubkey_len == prime_len &&
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	     os_memcmp(pubkey, prime, prime_len) >= 0))
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		return -1;
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	pub = bignum_init();
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (!pub || bignum_set_unsigned_bin(pub, pubkey, pubkey_len) < 0 ||
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_cmp_d(pub, 1) <= 0)
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		goto fail;
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (order) {
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		struct bignum *p, *q, *tmp;
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		int failed;
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		/* verify: pubkey^q == 1 mod p */
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		p = bignum_init();
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		q = bignum_init();
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		tmp = bignum_init();
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		failed = !p || !q || !tmp ||
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_set_unsigned_bin(p, prime, prime_len) < 0 ||
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_set_unsigned_bin(q, order, order_len) < 0 ||
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_exptmod(pub, q, p, tmp) < 0 ||
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_cmp_d(tmp, 1) != 0;
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		bignum_deinit(p);
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		bignum_deinit(q);
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		bignum_deinit(tmp);
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		if (failed)
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			goto fail;
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	}
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	res = crypto_mod_exp(pubkey, pubkey_len, privkey, privkey_len,
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			     prime, prime_len, secret, len);
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** fail:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	bignum_deinit(pub);
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	return res;
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** }
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** int crypto_mod_exp(const u8 *base, size_t base_len,
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		   const u8 *power, size_t power_len,
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		   const u8 *modulus, size_t modulus_len,
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		   u8 *result, size_t *result_len)
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** {
+  16              		.loc 1 93 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  19 0000 17030000 		call	t0,__riscv_save_12
+  19      E7020300 
+  20              		.cfi_offset 27, -52
+  21              		.cfi_offset 26, -48
+  22              		.cfi_offset 25, -44
+  23              		.cfi_offset 24, -40
+  24              		.cfi_offset 23, -36
+  25              		.cfi_offset 22, -32
+  26              		.cfi_offset 21, -28
+  27              		.cfi_offset 20, -24
+  28              		.cfi_offset 19, -20
+  29              		.cfi_offset 18, -16
+  30              		.cfi_offset 9, -12
+  31              		.cfi_offset 8, -8
+  32              		.cfi_offset 1, -4
+  33              		.cfi_def_cfa_offset 64
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	struct bignum *bn_base, *bn_exp, *bn_modulus, *bn_result;
+  34              		.loc 1 94 2
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	int ret = -1;
+  35              		.loc 1 95 2
+  36              	.LVL1:
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	bn_base = bignum_init();
+  37              		.loc 1 97 2
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	struct bignum *bn_base, *bn_exp, *bn_modulus, *bn_result;
+  38              		.loc 1 93 1 is_stmt 0
+  39 0008 AE8D     		mv	s11,a1
+  40 000a 328C     		mv	s8,a2
+  41 000c B68C     		mv	s9,a3
+  42 000e 3A8B     		mv	s6,a4
+  43 0010 BE8B     		mv	s7,a5
+  44 0012 428A     		mv	s4,a6
+  45 0014 C68A     		mv	s5,a7
+  46 0016 2A8D     		mv	s10,a0
+  47              		.loc 1 97 12
+  48 0018 97000000 		call	bignum_init
+  48      E7800000 
+  49              	.LVL2:
+  50 0020 AA89     		mv	s3,a0
+  51              	.LVL3:
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	bn_exp = bignum_init();
+  52              		.loc 1 98 2 is_stmt 1
+  53              		.loc 1 98 11 is_stmt 0
+  54 0022 97000000 		call	bignum_init
+  54      E7800000 
+  55              	.LVL4:
+  56 002a 2A89     		mv	s2,a0
+  57              	.LVL5:
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	bn_modulus = bignum_init();
+  58              		.loc 1 99 2 is_stmt 1
+  59              		.loc 1 99 15 is_stmt 0
+  60 002c 97000000 		call	bignum_init
+  60      E7800000 
+  61              	.LVL6:
+  62 0034 AA84     		mv	s1,a0
+  63              	.LVL7:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	bn_result = bignum_init();
+  64              		.loc 1 100 2 is_stmt 1
+  65              		.loc 1 100 14 is_stmt 0
+  66 0036 97000000 		call	bignum_init
+  66      E7800000 
+  67              	.LVL8:
+  68 003e 2A84     		mv	s0,a0
+  69              	.LVL9:
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (bn_base == NULL || bn_exp == NULL || bn_modulus == NULL ||
+  70              		.loc 1 102 2 is_stmt 1
+  71              		.loc 1 102 5 is_stmt 0
+  72 0040 639C0902 		bne	s3,zero,.L2
+  73              	.L4:
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+  74              		.loc 1 95 6
+  75 0044 7D5A     		li	s4,-1
+  76              	.LVL10:
+  77              	.L3:
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bn_result == NULL)
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		goto error;
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (bignum_set_unsigned_bin(bn_base, base, base_len) < 0 ||
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_set_unsigned_bin(bn_exp, power, power_len) < 0 ||
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_set_unsigned_bin(bn_modulus, modulus, modulus_len) < 0)
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		goto error;
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (bignum_exptmod(bn_base, bn_exp, bn_modulus, bn_result) < 0)
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		goto error;
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	ret = bignum_get_unsigned_bin(bn_result, result, result_len);
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** error:
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	bignum_deinit(bn_base);
+  78              		.loc 1 117 2 is_stmt 1
+  79 0046 4E85     		mv	a0,s3
+  80 0048 97000000 		call	bignum_deinit
+  80      E7800000 
+  81              	.LVL11:
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	bignum_deinit(bn_exp);
+  82              		.loc 1 118 2
+  83 0050 4A85     		mv	a0,s2
+  84 0052 97000000 		call	bignum_deinit
+  84      E7800000 
+  85              	.LVL12:
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	bignum_deinit(bn_modulus);
+  86              		.loc 1 119 2
+  87 005a 2685     		mv	a0,s1
+  88 005c 97000000 		call	bignum_deinit
+  88      E7800000 
+  89              	.LVL13:
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	bignum_deinit(bn_result);
+  90              		.loc 1 120 2
+  91 0064 2285     		mv	a0,s0
+  92 0066 97000000 		call	bignum_deinit
+  92      E7800000 
+  93              	.LVL14:
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	return ret;
+  94              		.loc 1 121 2
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** }
+  95              		.loc 1 122 1 is_stmt 0
+  96 006e 5285     		mv	a0,s4
+  97 0070 17030000 		tail	__riscv_restore_12
+  97      67000300 
+  98              		.cfi_remember_state
+  99              		.cfi_restore 27
+ 100              		.cfi_restore 26
+ 101              		.cfi_restore 25
+ 102              		.cfi_restore 24
+ 103              		.cfi_restore 23
+ 104              		.cfi_restore 22
+ 105              		.cfi_restore 21
+ 106              		.cfi_restore 20
+ 107              		.cfi_restore 19
+ 108              		.cfi_restore 18
+ 109              		.cfi_restore 9
+ 110              		.cfi_restore 8
+ 111              		.cfi_restore 1
+ 112              		.cfi_def_cfa_offset 0
+ 113              	.LVL15:
+ 114              	.L2:
+ 115              		.cfi_restore_state
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bn_result == NULL)
+ 116              		.loc 1 102 22 discriminator 1
+ 117 0078 E30609FC 		beq	s2,zero,.L4
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bn_result == NULL)
+ 118              		.loc 1 102 40 discriminator 2
+ 119 007c E1D4     		beq	s1,zero,.L4
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bn_result == NULL)
+ 120              		.loc 1 102 62 discriminator 3
+ 121 007e 79D1     		beq	a0,zero,.L4
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_set_unsigned_bin(bn_exp, power, power_len) < 0 ||
+ 122              		.loc 1 106 2 is_stmt 1
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_set_unsigned_bin(bn_exp, power, power_len) < 0 ||
+ 123              		.loc 1 106 6 is_stmt 0
+ 124 0080 6E86     		mv	a2,s11
+ 125 0082 EA85     		mv	a1,s10
+ 126 0084 4E85     		mv	a0,s3
+ 127 0086 97000000 		call	bignum_set_unsigned_bin
+ 127      E7800000 
+ 128              	.LVL16:
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_set_unsigned_bin(bn_exp, power, power_len) < 0 ||
+ 129              		.loc 1 106 5
+ 130 008e E34B05FA 		blt	a0,zero,.L4
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_set_unsigned_bin(bn_modulus, modulus, modulus_len) < 0)
+ 131              		.loc 1 107 6 discriminator 1
+ 132 0092 6686     		mv	a2,s9
+ 133 0094 E285     		mv	a1,s8
+ 134 0096 4A85     		mv	a0,s2
+ 135 0098 97000000 		call	bignum_set_unsigned_bin
+ 135      E7800000 
+ 136              	.LVL17:
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_set_unsigned_bin(bn_exp, power, power_len) < 0 ||
+ 137              		.loc 1 106 59 discriminator 1
+ 138 00a0 E34205FA 		blt	a0,zero,.L4
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		goto error;
+ 139              		.loc 1 108 6
+ 140 00a4 5E86     		mv	a2,s7
+ 141 00a6 DA85     		mv	a1,s6
+ 142 00a8 2685     		mv	a0,s1
+ 143 00aa 97000000 		call	bignum_set_unsigned_bin
+ 143      E7800000 
+ 144              	.LVL18:
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_set_unsigned_bin(bn_modulus, modulus, modulus_len) < 0)
+ 145              		.loc 1 107 60
+ 146 00b2 E34905F8 		blt	a0,zero,.L4
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		goto error;
+ 147              		.loc 1 111 2 is_stmt 1
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		goto error;
+ 148              		.loc 1 111 6 is_stmt 0
+ 149 00b6 A286     		mv	a3,s0
+ 150 00b8 2686     		mv	a2,s1
+ 151 00ba CA85     		mv	a1,s2
+ 152 00bc 4E85     		mv	a0,s3
+ 153 00be 97000000 		call	bignum_exptmod
+ 153      E7800000 
+ 154              	.LVL19:
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		goto error;
+ 155              		.loc 1 111 5
+ 156 00c6 E34F05F6 		blt	a0,zero,.L4
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 157              		.loc 1 114 2 is_stmt 1
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 158              		.loc 1 114 8 is_stmt 0
+ 159 00ca D285     		mv	a1,s4
+ 160 00cc 5686     		mv	a2,s5
+ 161 00ce 2285     		mv	a0,s0
+ 162 00d0 97000000 		call	bignum_get_unsigned_bin
+ 162      E7800000 
+ 163              	.LVL20:
+ 164 00d8 2A8A     		mv	s4,a0
+ 165              	.LVL21:
+ 166 00da B5B7     		j	.L3
+ 167              		.cfi_endproc
+ 168              	.LFE73:
+ 170              		.section	.text.crypto_dh_init,"ax",@progbits
+ 171              		.align	1
+ 172              		.globl	crypto_dh_init
+ 174              	crypto_dh_init:
+ 175              	.LFB71:
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	size_t pubkey_len, pad;
+ 176              		.loc 1 18 1 is_stmt 1
+ 177              		.cfi_startproc
+ 178              	.LVL22:
+ 179 0000 17030000 		call	t0,__riscv_save_4
+ 179      E7020300 
+ 180              		.cfi_offset 19, -20
+ 181              		.cfi_offset 18, -16
+ 182              		.cfi_offset 9, -12
+ 183              		.cfi_offset 8, -8
+ 184              		.cfi_offset 1, -4
+ 185              		.cfi_def_cfa_offset 32
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 186              		.loc 1 19 2
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		return -1;
+ 187              		.loc 1 21 2
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	size_t pubkey_len, pad;
+ 188              		.loc 1 18 1 is_stmt 0
+ 189 0008 0111     		addi	sp,sp,-32
+ 190              		.cfi_def_cfa_offset 64
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	size_t pubkey_len, pad;
+ 191              		.loc 1 18 1
+ 192 000a AE89     		mv	s3,a1
+ 193 000c A307A100 		sb	a0,15(sp)
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		return -1;
+ 194              		.loc 1 21 6
+ 195 0010 B285     		mv	a1,a2
+ 196              	.LVL23:
+ 197 0012 3685     		mv	a0,a3
+ 198              	.LVL24:
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	size_t pubkey_len, pad;
+ 199              		.loc 1 18 1
+ 200 0014 3284     		mv	s0,a2
+ 201 0016 3689     		mv	s2,a3
+ 202 0018 BA84     		mv	s1,a4
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		return -1;
+ 203              		.loc 1 21 6
+ 204 001a 97000000 		call	os_get_random
+ 204      E7800000 
+ 205              	.LVL25:
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		return -1;
+ 206              		.loc 1 21 5
+ 207 0022 63590500 		bge	a0,zero,.L16
+ 208              	.L19:
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (os_memcmp(privkey, prime, prime_len) > 0) {
+ 209              		.loc 1 22 10
+ 210 0026 7D59     		li	s2,-1
+ 211              	.LVL26:
+ 212              	.L15:
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 213              		.loc 1 39 1
+ 214 0028 4A85     		mv	a0,s2
+ 215 002a 0561     		addi	sp,sp,32
+ 216              		.cfi_remember_state
+ 217              		.cfi_def_cfa_offset 0
+ 218 002c 17030000 		tail	__riscv_restore_4
+ 218      67000300 
+ 219              		.cfi_restore 19
+ 220              		.cfi_restore 18
+ 221              		.cfi_restore 9
+ 222              		.cfi_restore 8
+ 223              		.cfi_restore 1
+ 224              		.cfi_def_cfa_offset -32
+ 225              	.LVL27:
+ 226              	.L16:
+ 227              		.cfi_restore_state
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		/* Make sure private value is smaller than prime */
+ 228              		.loc 1 23 2 is_stmt 1
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		/* Make sure private value is smaller than prime */
+ 229              		.loc 1 23 6 is_stmt 0
+ 230 0034 2286     		mv	a2,s0
+ 231 0036 CE85     		mv	a1,s3
+ 232 0038 4A85     		mv	a0,s2
+ 233 003a 97000000 		call	os_memcmp
+ 233      E7800000 
+ 234              	.LVL28:
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		/* Make sure private value is smaller than prime */
+ 235              		.loc 1 23 5
+ 236 0042 6354A000 		ble	a0,zero,.L18
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	}
+ 237              		.loc 1 25 3 is_stmt 1
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	}
+ 238              		.loc 1 25 14 is_stmt 0
+ 239 0046 23000900 		sb	zero,0(s2)
+ 240              	.L18:
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (crypto_mod_exp(&generator, 1, privkey, prime_len, prime, prime_len,
+ 241              		.loc 1 28 2 is_stmt 1
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			   pubkey, &pubkey_len) < 0)
+ 242              		.loc 1 29 6 is_stmt 0
+ 243 004a 9308C101 		addi	a7,sp,28
+ 244 004e 2688     		mv	a6,s1
+ 245 0050 A287     		mv	a5,s0
+ 246 0052 4E87     		mv	a4,s3
+ 247 0054 A286     		mv	a3,s0
+ 248 0056 4A86     		mv	a2,s2
+ 249 0058 8545     		li	a1,1
+ 250 005a 1305F100 		addi	a0,sp,15
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (crypto_mod_exp(&generator, 1, privkey, prime_len, prime, prime_len,
+ 251              		.loc 1 28 13
+ 252 005e 22CE     		sw	s0,28(sp)
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			   pubkey, &pubkey_len) < 0)
+ 253              		.loc 1 29 2 is_stmt 1
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			   pubkey, &pubkey_len) < 0)
+ 254              		.loc 1 29 6 is_stmt 0
+ 255 0060 97000000 		call	crypto_mod_exp
+ 255      E7800000 
+ 256              	.LVL29:
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			   pubkey, &pubkey_len) < 0)
+ 257              		.loc 1 29 5
+ 258 0068 E34F05FA 		blt	a0,zero,.L19
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		pad = prime_len - pubkey_len;
+ 259              		.loc 1 32 2 is_stmt 1
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		pad = prime_len - pubkey_len;
+ 260              		.loc 1 32 17 is_stmt 0
+ 261 006c 7246     		lw	a2,28(sp)
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** }
+ 262              		.loc 1 38 9
+ 263 006e 0149     		li	s2,0
+ 264              	.LVL30:
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		pad = prime_len - pubkey_len;
+ 265              		.loc 1 32 5
+ 266 0070 E37C86FA 		bgeu	a2,s0,.L15
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		os_memmove(pubkey + pad, pubkey, pubkey_len);
+ 267              		.loc 1 33 3 is_stmt 1
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		os_memmove(pubkey + pad, pubkey, pubkey_len);
+ 268              		.loc 1 33 7 is_stmt 0
+ 269 0074 118C     		sub	s0,s0,a2
+ 270              	.LVL31:
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		os_memset(pubkey, 0, pad);
+ 271              		.loc 1 34 3 is_stmt 1
+ 272 0076 A685     		mv	a1,s1
+ 273 0078 33858400 		add	a0,s1,s0
+ 274 007c 97000000 		call	os_memmove
+ 274      E7800000 
+ 275              	.LVL32:
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	}
+ 276              		.loc 1 35 3
+ 277 0084 2286     		mv	a2,s0
+ 278 0086 8145     		li	a1,0
+ 279 0088 2685     		mv	a0,s1
+ 280 008a 97000000 		call	os_memset
+ 280      E7800000 
+ 281              	.LVL33:
+ 282 0092 59BF     		j	.L15
+ 283              		.cfi_endproc
+ 284              	.LFE71:
+ 286              		.section	.text.crypto_dh_derive_secret,"ax",@progbits
+ 287              		.align	1
+ 288              		.globl	crypto_dh_derive_secret
+ 290              	crypto_dh_derive_secret:
+ 291              	.LFB72:
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	struct bignum *pub;
+ 292              		.loc 1 47 1
+ 293              		.cfi_startproc
+ 294              	.LVL34:
+ 295 0000 17030000 		call	t0,__riscv_save_12
+ 295      E7020300 
+ 296              		.cfi_offset 27, -52
+ 297              		.cfi_offset 26, -48
+ 298              		.cfi_offset 25, -44
+ 299              		.cfi_offset 24, -40
+ 300              		.cfi_offset 23, -36
+ 301              		.cfi_offset 22, -32
+ 302              		.cfi_offset 21, -28
+ 303              		.cfi_offset 20, -24
+ 304              		.cfi_offset 19, -20
+ 305              		.cfi_offset 18, -16
+ 306              		.cfi_offset 9, -12
+ 307              		.cfi_offset 8, -8
+ 308              		.cfi_offset 1, -4
+ 309              		.cfi_def_cfa_offset 64
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	int res = -1;
+ 310              		.loc 1 48 2
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 311              		.loc 1 49 2
+ 312              	.LVL35:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    (pubkey_len == prime_len &&
+ 313              		.loc 1 51 2
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	struct bignum *pub;
+ 314              		.loc 1 47 1 is_stmt 0
+ 315 0008 064C     		lw	s8,64(sp)
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    (pubkey_len == prime_len &&
+ 316              		.loc 1 51 5
+ 317 000a 63788601 		bleu	s8,a2,.L23
+ 318              	.LVL36:
+ 319              	.L28:
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 320              		.loc 1 54 10
+ 321 000e FD54     		li	s1,-1
+ 322              	.LVL37:
+ 323              	.L22:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 324              		.loc 1 86 1
+ 325 0010 2685     		mv	a0,s1
+ 326 0012 17030000 		tail	__riscv_restore_12
+ 326      67000300 
+ 327              		.cfi_remember_state
+ 328              		.cfi_restore 27
+ 329              		.cfi_restore 26
+ 330              		.cfi_restore 25
+ 331              		.cfi_restore 24
+ 332              		.cfi_restore 23
+ 333              		.cfi_restore 22
+ 334              		.cfi_restore 21
+ 335              		.cfi_restore 20
+ 336              		.cfi_restore 19
+ 337              		.cfi_restore 18
+ 338              		.cfi_restore 9
+ 339              		.cfi_restore 8
+ 340              		.cfi_restore 1
+ 341              		.cfi_def_cfa_offset 0
+ 342              	.LVL38:
+ 343              	.L23:
+ 344              		.cfi_restore_state
+ 345 001a AE8B     		mv	s7,a1
+ 346 001c 328A     		mv	s4,a2
+ 347 001e 368B     		mv	s6,a3
+ 348 0020 BA8D     		mv	s11,a4
+ 349 0022 BE8C     		mv	s9,a5
+ 350 0024 428D     		mv	s10,a6
+ 351 0026 C68A     		mv	s5,a7
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    (pubkey_len == prime_len &&
+ 352              		.loc 1 51 29 discriminator 1
+ 353 0028 630FCC00 		beq	s8,a2,.L25
+ 354              	.LVL39:
+ 355              	.L29:
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (!pub || bignum_set_unsigned_bin(pub, pubkey, pubkey_len) < 0 ||
+ 356              		.loc 1 56 2 is_stmt 1
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	if (!pub || bignum_set_unsigned_bin(pub, pubkey, pubkey_len) < 0 ||
+ 357              		.loc 1 56 8 is_stmt 0
+ 358 002c 97000000 		call	bignum_init
+ 358      E7800000 
+ 359              	.LVL40:
+ 360 0034 2A84     		mv	s0,a0
+ 361              	.LVL41:
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_cmp_d(pub, 1) <= 0)
+ 362              		.loc 1 57 2 is_stmt 1
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_cmp_d(pub, 1) <= 0)
+ 363              		.loc 1 57 5 is_stmt 0
+ 364 0036 05E1     		bne	a0,zero,.L45
+ 365              	.LVL42:
+ 366              	.L26:
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 367              		.loc 1 49 6
+ 368 0038 FD54     		li	s1,-1
+ 369              	.LVL43:
+ 370              	.L30:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	return res;
+ 371              		.loc 1 84 2 is_stmt 1
+ 372 003a 2285     		mv	a0,s0
+ 373 003c 97000000 		call	bignum_deinit
+ 373      E7800000 
+ 374              	.LVL44:
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** }
+ 375              		.loc 1 85 2
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** }
+ 376              		.loc 1 85 9 is_stmt 0
+ 377 0044 F1B7     		j	.L22
+ 378              	.LVL45:
+ 379              	.L25:
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		return -1;
+ 380              		.loc 1 53 7
+ 381 0046 4685     		mv	a0,a7
+ 382              	.LVL46:
+ 383 0048 97000000 		call	os_memcmp
+ 383      E7800000 
+ 384              	.LVL47:
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	     os_memcmp(pubkey, prime, prime_len) >= 0))
+ 385              		.loc 1 52 31
+ 386 0050 E34E05FC 		blt	a0,zero,.L29
+ 387 0054 6DBF     		j	.L28
+ 388              	.LVL48:
+ 389              	.L45:
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_cmp_d(pub, 1) <= 0)
+ 390              		.loc 1 57 14 discriminator 1
+ 391 0056 6286     		mv	a2,s8
+ 392 0058 D685     		mv	a1,s5
+ 393 005a 97000000 		call	bignum_set_unsigned_bin
+ 393      E7800000 
+ 394              	.LVL49:
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_cmp_d(pub, 1) <= 0)
+ 395              		.loc 1 57 11 discriminator 1
+ 396 0062 E34B05FC 		blt	a0,zero,.L26
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		goto fail;
+ 397              		.loc 1 58 6 discriminator 2
+ 398 0066 8545     		li	a1,1
+ 399 0068 2285     		mv	a0,s0
+ 400 006a 97000000 		call	bignum_cmp_d
+ 400      E7800000 
+ 401              	.LVL50:
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 	    bignum_cmp_d(pub, 1) <= 0)
+ 402              		.loc 1 57 67 discriminator 2
+ 403 0072 E353A0FC 		ble	a0,zero,.L26
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		struct bignum *p, *q, *tmp;
+ 404              		.loc 1 61 2 is_stmt 1
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		struct bignum *p, *q, *tmp;
+ 405              		.loc 1 61 5 is_stmt 0
+ 406 0076 63100B02 		bne	s6,zero,.L31
+ 407              	.LVL51:
+ 408              	.L35:
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			     prime, prime_len, secret, len);
+ 409              		.loc 1 81 2 is_stmt 1
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			     prime, prime_len, secret, len);
+ 410              		.loc 1 81 8 is_stmt 0
+ 411 007a A648     		lw	a7,72(sp)
+ 412 007c 1648     		lw	a6,68(sp)
+ 413 007e D287     		mv	a5,s4
+ 414 0080 5E87     		mv	a4,s7
+ 415 0082 EA86     		mv	a3,s10
+ 416 0084 6686     		mv	a2,s9
+ 417 0086 E285     		mv	a1,s8
+ 418 0088 5685     		mv	a0,s5
+ 419 008a 97000000 		call	crypto_mod_exp
+ 419      E7800000 
+ 420              	.LVL52:
+ 421 0092 AA84     		mv	s1,a0
+ 422              	.LVL53:
+ 423 0094 5DB7     		j	.L30
+ 424              	.LVL54:
+ 425              	.L31:
+ 426              	.LBB2:
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		int failed;
+ 427              		.loc 1 62 3 is_stmt 1
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 
+ 428              		.loc 1 63 3
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		q = bignum_init();
+ 429              		.loc 1 66 3
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		q = bignum_init();
+ 430              		.loc 1 66 7 is_stmt 0
+ 431 0096 97000000 		call	bignum_init
+ 431      E7800000 
+ 432              	.LVL55:
+ 433 009e AA89     		mv	s3,a0
+ 434              	.LVL56:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		tmp = bignum_init();
+ 435              		.loc 1 67 3 is_stmt 1
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		tmp = bignum_init();
+ 436              		.loc 1 67 7 is_stmt 0
+ 437 00a0 97000000 		call	bignum_init
+ 437      E7800000 
+ 438              	.LVL57:
+ 439 00a8 2A89     		mv	s2,a0
+ 440              	.LVL58:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		failed = !p || !q || !tmp ||
+ 441              		.loc 1 68 3 is_stmt 1
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		failed = !p || !q || !tmp ||
+ 442              		.loc 1 68 9 is_stmt 0
+ 443 00aa 97000000 		call	bignum_init
+ 443      E7800000 
+ 444              	.LVL59:
+ 445 00b2 AA84     		mv	s1,a0
+ 446              	.LVL60:
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_set_unsigned_bin(p, prime, prime_len) < 0 ||
+ 447              		.loc 1 69 3 is_stmt 1
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_cmp_d(tmp, 1) != 0;
+ 448              		.loc 1 72 39 is_stmt 0
+ 449 00b4 63950902 		bne	s3,zero,.L32
+ 450              	.L34:
+ 451 00b8 054B     		li	s6,1
+ 452              	.LVL61:
+ 453              	.L33:
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		bignum_deinit(q);
+ 454              		.loc 1 74 3 is_stmt 1
+ 455 00ba 4E85     		mv	a0,s3
+ 456 00bc 97000000 		call	bignum_deinit
+ 456      E7800000 
+ 457              	.LVL62:
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		bignum_deinit(tmp);
+ 458              		.loc 1 75 3
+ 459 00c4 4A85     		mv	a0,s2
+ 460 00c6 97000000 		call	bignum_deinit
+ 460      E7800000 
+ 461              	.LVL63:
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		if (failed)
+ 462              		.loc 1 76 3
+ 463 00ce 2685     		mv	a0,s1
+ 464 00d0 97000000 		call	bignum_deinit
+ 464      E7800000 
+ 465              	.LVL64:
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			goto fail;
+ 466              		.loc 1 77 3
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			goto fail;
+ 467              		.loc 1 77 6 is_stmt 0
+ 468 00d8 E3010BFA 		beq	s6,zero,.L35
+ 469 00dc B1BF     		j	.L26
+ 470              	.LVL65:
+ 471              	.L32:
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_set_unsigned_bin(p, prime, prime_len) < 0 ||
+ 472              		.loc 1 69 15
+ 473 00de E30D09FC 		beq	s2,zero,.L34
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_set_unsigned_bin(p, prime, prime_len) < 0 ||
+ 474              		.loc 1 69 21 discriminator 1
+ 475 00e2 79D9     		beq	a0,zero,.L34
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_set_unsigned_bin(q, order, order_len) < 0 ||
+ 476              		.loc 1 70 4 discriminator 2
+ 477 00e4 5286     		mv	a2,s4
+ 478 00e6 DE85     		mv	a1,s7
+ 479 00e8 4E85     		mv	a0,s3
+ 480 00ea 97000000 		call	bignum_set_unsigned_bin
+ 480      E7800000 
+ 481              	.LVL66:
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_set_unsigned_bin(p, prime, prime_len) < 0 ||
+ 482              		.loc 1 69 29 discriminator 2
+ 483 00f2 E34305FC 		blt	a0,zero,.L34
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_exptmod(pub, q, p, tmp) < 0 ||
+ 484              		.loc 1 71 4
+ 485 00f6 6E86     		mv	a2,s11
+ 486 00f8 DA85     		mv	a1,s6
+ 487 00fa 4A85     		mv	a0,s2
+ 488 00fc 97000000 		call	bignum_set_unsigned_bin
+ 488      E7800000 
+ 489              	.LVL67:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_set_unsigned_bin(q, order, order_len) < 0 ||
+ 490              		.loc 1 70 53
+ 491 0104 E34A05FA 		blt	a0,zero,.L34
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_cmp_d(tmp, 1) != 0;
+ 492              		.loc 1 72 4
+ 493 0108 A686     		mv	a3,s1
+ 494 010a 4E86     		mv	a2,s3
+ 495 010c CA85     		mv	a1,s2
+ 496 010e 2285     		mv	a0,s0
+ 497 0110 97000000 		call	bignum_exptmod
+ 497      E7800000 
+ 498              	.LVL68:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_exptmod(pub, q, p, tmp) < 0 ||
+ 499              		.loc 1 71 53
+ 500 0118 E34005FA 		blt	a0,zero,.L34
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 		bignum_deinit(p);
+ 501              		.loc 1 73 4 discriminator 2
+ 502 011c 8545     		li	a1,1
+ 503 011e 2685     		mv	a0,s1
+ 504 0120 97000000 		call	bignum_cmp_d
+ 504      E7800000 
+ 505              	.LVL69:
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-modexp.c **** 			bignum_cmp_d(tmp, 1) != 0;
+ 506              		.loc 1 72 39 discriminator 2
+ 507 0128 333BA000 		snez	s6,a0
+ 508              	.LVL70:
+ 509 012c 79B7     		j	.L33
+ 510              	.LBE2:
+ 511              		.cfi_endproc
+ 512              	.LFE72:
+ 514              		.text
+ 515              	.Letext0:
+ 516              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 517              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 518              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 519              		.file 5 "..\\..\\..\\..\\wpa_supplicant\\src/tls/bignum.h"
+ 520              		.file 6 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/os.h"
+ 521              		.file 7 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/common.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 crypto_internal-modexp.c
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:13     .text.crypto_mod_exp:0000000000000000 crypto_mod_exp
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:17     .text.crypto_mod_exp:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:19     .text.crypto_mod_exp:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:20     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:21     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:22     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:23     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:24     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:25     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:26     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:27     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:28     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:29     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:30     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:31     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:32     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:33     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:35     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:37     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:38     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:39     .text.crypto_mod_exp:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:48     .text.crypto_mod_exp:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:53     .text.crypto_mod_exp:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:54     .text.crypto_mod_exp:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:59     .text.crypto_mod_exp:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:60     .text.crypto_mod_exp:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:65     .text.crypto_mod_exp:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:66     .text.crypto_mod_exp:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:71     .text.crypto_mod_exp:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:72     .text.crypto_mod_exp:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:75     .text.crypto_mod_exp:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:79     .text.crypto_mod_exp:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:83     .text.crypto_mod_exp:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:87     .text.crypto_mod_exp:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:91     .text.crypto_mod_exp:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:95     .text.crypto_mod_exp:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:96     .text.crypto_mod_exp:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:98     .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:99     .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:100    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:101    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:102    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:103    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:104    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:105    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:106    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:107    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:108    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:109    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:110    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:111    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:112    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:115    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:117    .text.crypto_mod_exp:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:119    .text.crypto_mod_exp:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:121    .text.crypto_mod_exp:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:123    .text.crypto_mod_exp:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:124    .text.crypto_mod_exp:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:130    .text.crypto_mod_exp:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:132    .text.crypto_mod_exp:0000000000000092 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:138    .text.crypto_mod_exp:00000000000000a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:140    .text.crypto_mod_exp:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:146    .text.crypto_mod_exp:00000000000000b2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:148    .text.crypto_mod_exp:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:149    .text.crypto_mod_exp:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:156    .text.crypto_mod_exp:00000000000000c6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:158    .text.crypto_mod_exp:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:159    .text.crypto_mod_exp:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:167    .text.crypto_mod_exp:00000000000000dc .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:174    .text.crypto_dh_init:0000000000000000 crypto_dh_init
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:177    .text.crypto_dh_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:179    .text.crypto_dh_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:180    .text.crypto_dh_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:181    .text.crypto_dh_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:182    .text.crypto_dh_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:183    .text.crypto_dh_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:184    .text.crypto_dh_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:185    .text.crypto_dh_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:187    .text.crypto_dh_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:188    .text.crypto_dh_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:189    .text.crypto_dh_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:190    .text.crypto_dh_init:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:192    .text.crypto_dh_init:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:195    .text.crypto_dh_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:200    .text.crypto_dh_init:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:204    .text.crypto_dh_init:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:207    .text.crypto_dh_init:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:210    .text.crypto_dh_init:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:214    .text.crypto_dh_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:216    .text.crypto_dh_init:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:217    .text.crypto_dh_init:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:219    .text.crypto_dh_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:220    .text.crypto_dh_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:221    .text.crypto_dh_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:222    .text.crypto_dh_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:223    .text.crypto_dh_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:224    .text.crypto_dh_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:227    .text.crypto_dh_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:229    .text.crypto_dh_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:230    .text.crypto_dh_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:236    .text.crypto_dh_init:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:238    .text.crypto_dh_init:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:239    .text.crypto_dh_init:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:242    .text.crypto_dh_init:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:243    .text.crypto_dh_init:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:252    .text.crypto_dh_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:254    .text.crypto_dh_init:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:255    .text.crypto_dh_init:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:258    .text.crypto_dh_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:260    .text.crypto_dh_init:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:261    .text.crypto_dh_init:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:263    .text.crypto_dh_init:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:266    .text.crypto_dh_init:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:268    .text.crypto_dh_init:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:269    .text.crypto_dh_init:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:272    .text.crypto_dh_init:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:277    .text.crypto_dh_init:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:283    .text.crypto_dh_init:0000000000000094 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:290    .text.crypto_dh_derive_secret:0000000000000000 crypto_dh_derive_secret
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:293    .text.crypto_dh_derive_secret:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:295    .text.crypto_dh_derive_secret:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:296    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:297    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:298    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:299    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:300    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:301    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:302    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:303    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:304    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:305    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:306    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:307    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:308    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:309    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:311    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:313    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:314    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:315    .text.crypto_dh_derive_secret:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:317    .text.crypto_dh_derive_secret:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:321    .text.crypto_dh_derive_secret:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:325    .text.crypto_dh_derive_secret:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:327    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:328    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:329    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:330    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:331    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:332    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:333    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:334    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:335    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:336    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:337    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:338    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:339    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:340    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:341    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:344    .text.crypto_dh_derive_secret:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:353    .text.crypto_dh_derive_secret:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:357    .text.crypto_dh_derive_secret:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:358    .text.crypto_dh_derive_secret:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:363    .text.crypto_dh_derive_secret:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:364    .text.crypto_dh_derive_secret:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:368    .text.crypto_dh_derive_secret:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:372    .text.crypto_dh_derive_secret:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:376    .text.crypto_dh_derive_secret:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:377    .text.crypto_dh_derive_secret:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:381    .text.crypto_dh_derive_secret:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:386    .text.crypto_dh_derive_secret:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:391    .text.crypto_dh_derive_secret:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:396    .text.crypto_dh_derive_secret:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:398    .text.crypto_dh_derive_secret:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:403    .text.crypto_dh_derive_secret:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:405    .text.crypto_dh_derive_secret:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:406    .text.crypto_dh_derive_secret:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:410    .text.crypto_dh_derive_secret:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:411    .text.crypto_dh_derive_secret:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:428    .text.crypto_dh_derive_secret:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:429    .text.crypto_dh_derive_secret:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:430    .text.crypto_dh_derive_secret:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:431    .text.crypto_dh_derive_secret:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:436    .text.crypto_dh_derive_secret:00000000000000a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:437    .text.crypto_dh_derive_secret:00000000000000a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:442    .text.crypto_dh_derive_secret:00000000000000aa .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:443    .text.crypto_dh_derive_secret:00000000000000aa .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:448    .text.crypto_dh_derive_secret:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:449    .text.crypto_dh_derive_secret:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:455    .text.crypto_dh_derive_secret:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:459    .text.crypto_dh_derive_secret:00000000000000c4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:463    .text.crypto_dh_derive_secret:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:467    .text.crypto_dh_derive_secret:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:468    .text.crypto_dh_derive_secret:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:473    .text.crypto_dh_derive_secret:00000000000000de .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:475    .text.crypto_dh_derive_secret:00000000000000e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:477    .text.crypto_dh_derive_secret:00000000000000e4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:483    .text.crypto_dh_derive_secret:00000000000000f2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:485    .text.crypto_dh_derive_secret:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:491    .text.crypto_dh_derive_secret:0000000000000104 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:493    .text.crypto_dh_derive_secret:0000000000000108 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:500    .text.crypto_dh_derive_secret:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:502    .text.crypto_dh_derive_secret:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:507    .text.crypto_dh_derive_secret:0000000000000128 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:511    .text.crypto_dh_derive_secret:000000000000012e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:170    .text.crypto_mod_exp:00000000000000dc .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:286    .text.crypto_dh_init:0000000000000094 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:514    .text.crypto_dh_derive_secret:000000000000012e .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:114    .text.crypto_mod_exp:0000000000000078 .L2
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:73     .text.crypto_mod_exp:0000000000000044 .L4
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:77     .text.crypto_mod_exp:0000000000000046 .L3
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:226    .text.crypto_dh_init:0000000000000034 .L16
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:240    .text.crypto_dh_init:000000000000004a .L18
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:208    .text.crypto_dh_init:0000000000000026 .L19
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:212    .text.crypto_dh_init:0000000000000028 .L15
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:343    .text.crypto_dh_derive_secret:000000000000001a .L23
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:379    .text.crypto_dh_derive_secret:0000000000000046 .L25
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:389    .text.crypto_dh_derive_secret:0000000000000056 .L45
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:323    .text.crypto_dh_derive_secret:0000000000000010 .L22
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:355    .text.crypto_dh_derive_secret:000000000000002c .L29
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:319    .text.crypto_dh_derive_secret:000000000000000e .L28
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:366    .text.crypto_dh_derive_secret:0000000000000038 .L26
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:425    .text.crypto_dh_derive_secret:0000000000000096 .L31
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:370    .text.crypto_dh_derive_secret:000000000000003a .L30
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:471    .text.crypto_dh_derive_secret:00000000000000de .L32
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:408    .text.crypto_dh_derive_secret:000000000000007a .L35
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:450    .text.crypto_dh_derive_secret:00000000000000b8 .L34
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:453    .text.crypto_dh_derive_secret:00000000000000ba .L33
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:1564   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2573   .debug_str:0000000000000117 .LASF52
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2587   .debug_str:000000000000024c .LASF53
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2555   .debug_str:0000000000000041 .LASF54
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2531   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2541   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2553   .debug_str:000000000000003a .LASF2
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2613   .debug_str:0000000000000379 .LASF0
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2585   .debug_str:0000000000000240 .LASF1
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2597   .debug_str:000000000000030b .LASF3
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2603   .debug_str:000000000000032c .LASF4
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2551   .debug_str:0000000000000030 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2617   .debug_str:0000000000000391 .LASF6
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2595   .debug_str:0000000000000302 .LASF7
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2637   .debug_str:0000000000000404 .LASF8
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2589   .debug_str:00000000000002e9 .LASF9
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2611   .debug_str:0000000000000362 .LASF10
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2619   .debug_str:00000000000003a4 .LASF11
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2575   .debug_str:0000000000000210 .LASF12
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2631   .debug_str:00000000000003ee .LASF13
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2653   .debug_str:0000000000000462 .LASF26
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:14     .text.crypto_mod_exp:0000000000000000 .LFB73
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:168    .text.crypto_mod_exp:00000000000000dc .LFE73
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2649   .debug_str:0000000000000455 .LASF14
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:1914   .debug_loc:0000000000000000 .LLST0
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2563   .debug_str:00000000000000eb .LASF15
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:1925   .debug_loc:000000000000001e .LLST1
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2635   .debug_str:00000000000003fe .LASF16
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:1936   .debug_loc:000000000000003c .LLST2
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2625   .debug_str:00000000000003c2 .LASF17
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:1947   .debug_loc:000000000000005a .LLST3
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2601   .debug_str:0000000000000324 .LASF18
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:1958   .debug_loc:0000000000000078 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2565   .debug_str:00000000000000f4 .LASF19
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:1969   .debug_loc:0000000000000096 .LLST5
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2543   .debug_str:0000000000000000 .LASF20
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:1980   .debug_loc:00000000000000b4 .LLST6
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2605   .debug_str:000000000000033a .LASF21
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2009   .debug_loc:00000000000000f9 .LLST7
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2577   .debug_str:0000000000000218 .LASF22
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2020   .debug_loc:0000000000000117 .LLST8
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2561   .debug_str:00000000000000e4 .LASF23
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2031   .debug_loc:0000000000000135 .LLST9
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2623   .debug_str:00000000000003b7 .LASF24
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2629   .debug_str:00000000000003e4 .LASF25
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2042   .debug_loc:0000000000000153 .LLST10
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2645   .debug_str:0000000000000444 .LASF38
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:49     .text.crypto_mod_exp:0000000000000020 .LVL2
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:55     .text.crypto_mod_exp:000000000000002a .LVL4
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:61     .text.crypto_mod_exp:0000000000000034 .LVL6
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:67     .text.crypto_mod_exp:000000000000003e .LVL8
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:81     .text.crypto_mod_exp:0000000000000050 .LVL11
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:85     .text.crypto_mod_exp:000000000000005a .LVL12
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:89     .text.crypto_mod_exp:0000000000000064 .LVL13
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:93     .text.crypto_mod_exp:000000000000006e .LVL14
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:128    .text.crypto_mod_exp:000000000000008e .LVL16
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:136    .text.crypto_mod_exp:00000000000000a0 .LVL17
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:144    .text.crypto_mod_exp:00000000000000b2 .LVL18
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:154    .text.crypto_mod_exp:00000000000000c6 .LVL19
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:163    .text.crypto_mod_exp:00000000000000d8 .LVL20
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2559   .debug_str:00000000000000dd .LASF55
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2549   .debug_str:0000000000000018 .LASF27
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:291    .text.crypto_dh_derive_secret:0000000000000000 .LFB72
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:512    .text.crypto_dh_derive_secret:000000000000012e .LFE72
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2545   .debug_str:0000000000000007 .LASF28
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2065   .debug_loc:000000000000018b .LLST16
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2569   .debug_str:000000000000010a .LASF29
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2101   .debug_loc:00000000000001de .LLST17
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2557   .debug_str:00000000000000d3 .LASF30
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2131   .debug_loc:000000000000022b .LLST18
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2593   .debug_str:00000000000002fc .LASF31
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2161   .debug_loc:0000000000000278 .LLST19
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2641   .debug_str:000000000000042e .LASF32
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2227   .debug_loc:0000000000000313 .LLST20
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2651   .debug_str:000000000000045a .LASF33
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2257   .debug_loc:0000000000000360 .LLST21
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2579   .debug_str:0000000000000220 .LASF34
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2287   .debug_loc:00000000000003ad .LLST22
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2547   .debug_str:0000000000000011 .LASF35
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2317   .debug_loc:00000000000003fa .LLST23
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2647   .debug_str:000000000000044a .LASF36
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2583   .debug_str:0000000000000239 .LASF37
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2347   .debug_loc:0000000000000447 .LLST24
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2358   .debug_loc:0000000000000465 .LLST25
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2591   .debug_str:00000000000002f7 .LASF39
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:426    .text.crypto_dh_derive_secret:0000000000000096 .LBB2
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:510    .text.crypto_dh_derive_secret:000000000000012e .LBE2
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2393   .debug_loc:00000000000004b7 .LLST26
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2404   .debug_loc:00000000000004d5 .LLST27
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2571   .debug_str:0000000000000110 .LASF40
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2415   .debug_loc:00000000000004f3 .LLST28
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:432    .text.crypto_dh_derive_secret:000000000000009e .LVL55
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:438    .text.crypto_dh_derive_secret:00000000000000a8 .LVL57
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:444    .text.crypto_dh_derive_secret:00000000000000b2 .LVL59
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:457    .text.crypto_dh_derive_secret:00000000000000c4 .LVL62
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:461    .text.crypto_dh_derive_secret:00000000000000ce .LVL63
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:465    .text.crypto_dh_derive_secret:00000000000000d8 .LVL64
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:481    .text.crypto_dh_derive_secret:00000000000000f2 .LVL66
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:489    .text.crypto_dh_derive_secret:0000000000000104 .LVL67
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:498    .text.crypto_dh_derive_secret:0000000000000118 .LVL68
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:505    .text.crypto_dh_derive_secret:0000000000000128 .LVL69
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:359    .text.crypto_dh_derive_secret:0000000000000034 .LVL40
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:374    .text.crypto_dh_derive_secret:0000000000000044 .LVL44
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:384    .text.crypto_dh_derive_secret:0000000000000050 .LVL47
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:394    .text.crypto_dh_derive_secret:0000000000000062 .LVL49
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:401    .text.crypto_dh_derive_secret:0000000000000072 .LVL50
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:420    .text.crypto_dh_derive_secret:0000000000000092 .LVL52
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2599   .debug_str:0000000000000315 .LASF41
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:175    .text.crypto_dh_init:0000000000000000 .LFB71
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:284    .text.crypto_dh_init:0000000000000094 .LFE71
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2422   .debug_loc:0000000000000506 .LLST11
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2434   .debug_loc:0000000000000525 .LLST12
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2445   .debug_loc:0000000000000543 .LLST13
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2474   .debug_loc:0000000000000588 .LLST14
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2503   .debug_loc:00000000000005cd .LLST15
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:205    .text.crypto_dh_init:0000000000000022 .LVL25
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:234    .text.crypto_dh_init:0000000000000042 .LVL28
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:256    .text.crypto_dh_init:0000000000000068 .LVL29
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:275    .text.crypto_dh_init:0000000000000084 .LVL32
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:281    .text.crypto_dh_init:0000000000000092 .LVL33
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2643   .debug_str:0000000000000438 .LASF42
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2609   .debug_str:0000000000000354 .LASF43
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2639   .debug_str:0000000000000416 .LASF44
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2607   .debug_str:0000000000000345 .LASF45
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2627   .debug_str:00000000000003cc .LASF46
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2581   .debug_str:000000000000022c .LASF47
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2567   .debug_str:0000000000000100 .LASF48
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2621   .debug_str:00000000000003a9 .LASF49
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2615   .debug_str:0000000000000386 .LASF50
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:2633   .debug_str:00000000000003f4 .LASF51
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:18     .text.crypto_mod_exp:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:76     .text.crypto_mod_exp:0000000000000046 .LVL10
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:113    .text.crypto_mod_exp:0000000000000078 .LVL15
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:165    .text.crypto_mod_exp:00000000000000da .LVL21
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:51     .text.crypto_mod_exp:0000000000000022 .LVL3
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:57     .text.crypto_mod_exp:000000000000002c .LVL5
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:36     .text.crypto_mod_exp:0000000000000008 .LVL1
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:294    .text.crypto_dh_derive_secret:0000000000000000 .LVL34
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:318    .text.crypto_dh_derive_secret:000000000000000e .LVL36
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:342    .text.crypto_dh_derive_secret:000000000000001a .LVL38
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:354    .text.crypto_dh_derive_secret:000000000000002c .LVL39
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:378    .text.crypto_dh_derive_secret:0000000000000046 .LVL45
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:382    .text.crypto_dh_derive_secret:0000000000000048 .LVL46
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:365    .text.crypto_dh_derive_secret:0000000000000038 .LVL42
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:407    .text.crypto_dh_derive_secret:000000000000007a .LVL51
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:424    .text.crypto_dh_derive_secret:0000000000000096 .LVL54
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:452    .text.crypto_dh_derive_secret:00000000000000ba .LVL61
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:470    .text.crypto_dh_derive_secret:00000000000000de .LVL65
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:508    .text.crypto_dh_derive_secret:000000000000012c .LVL70
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:361    .text.crypto_dh_derive_secret:0000000000000036 .LVL41
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:388    .text.crypto_dh_derive_secret:0000000000000056 .LVL48
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:312    .text.crypto_dh_derive_secret:0000000000000008 .LVL35
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:322    .text.crypto_dh_derive_secret:0000000000000010 .LVL37
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:369    .text.crypto_dh_derive_secret:000000000000003a .LVL43
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:422    .text.crypto_dh_derive_secret:0000000000000094 .LVL53
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:434    .text.crypto_dh_derive_secret:00000000000000a0 .LVL56
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:440    .text.crypto_dh_derive_secret:00000000000000aa .LVL58
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:178    .text.crypto_dh_init:0000000000000000 .LVL22
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:198    .text.crypto_dh_init:0000000000000014 .LVL24
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:196    .text.crypto_dh_init:0000000000000012 .LVL23
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:211    .text.crypto_dh_init:0000000000000028 .LVL26
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:225    .text.crypto_dh_init:0000000000000034 .LVL27
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:270    .text.crypto_dh_init:0000000000000076 .LVL31
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:264    .text.crypto_dh_init:0000000000000070 .LVL30
+C:\Users\stapi\AppData\Local\Temp\cchOGXb5.s:523    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+__riscv_save_12
+bignum_init
+bignum_deinit
+__riscv_restore_12
+bignum_set_unsigned_bin
+bignum_exptmod
+bignum_get_unsigned_bin
+__riscv_save_4
+os_get_random
+__riscv_restore_4
+os_memcmp
+os_memmove
+os_memset
+bignum_cmp_d

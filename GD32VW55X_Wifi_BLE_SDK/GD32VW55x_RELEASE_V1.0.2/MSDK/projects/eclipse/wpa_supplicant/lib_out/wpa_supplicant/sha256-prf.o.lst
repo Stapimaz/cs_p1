@@ -1,0 +1,926 @@
+   1              		.file	"sha256-prf.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.sha256_prf_bits,"ax",@progbits
+  10              		.align	1
+  11              		.globl	sha256_prf_bits
+  13              	sha256_prf_bits:
+  14              	.LFB72:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * SHA256-based PRF (IEEE 802.11r)
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * Copyright (c) 2003-2016, Jouni Malinen <j@w1.fi>
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  *
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * This software may be distributed under the terms of the BSD license.
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * See README for more details.
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  */
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** #include "includes.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** #include "common.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** #include "sha256.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** #include "crypto.h"
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** /**
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * sha256_prf - SHA256-based Pseudo-Random Function (IEEE 802.11r, 8.5.1.5.2)
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @key: Key for PRF
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @key_len: Length of the key in bytes
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @label: A unique label for each purpose of the PRF
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @data: Extra data to bind into the key
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @data_len: Length of the data
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @buf: Buffer for the generated pseudo-random key
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @buf_len: Number of bytes of key to generate
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * Returns: 0 on success, -1 on failure
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  *
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * This function is used to derive new, cryptographically separate keys from a
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * given key.
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  */
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** int sha256_prf(const u8 *key, size_t key_len, const char *label,
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		const u8 *data, size_t data_len, u8 *buf, size_t buf_len)
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** {
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	return sha256_prf_bits(key, key_len, label, data, data_len, buf,
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			       buf_len * 8);
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** }
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** /**
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * sha256_prf_bits - IEEE Std 802.11-2012, 11.6.1.7.2 Key derivation function
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @key: Key for KDF
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @key_len: Length of the key in bytes
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @label: A unique label for each purpose of the PRF
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @data: Extra data to bind into the key
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @data_len: Length of the data
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @buf: Buffer for the generated pseudo-random key
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * @buf_len: Number of bits of key to generate
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * Returns: 0 on success, -1 on failure
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  *
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * This function is used to derive new, cryptographically separate keys from a
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * given key. If the requested buf_len is not divisible by eight, the least
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * significant 1-7 bits of the last octet in the output are not part of the
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  * requested output.
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c ****  */
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** int sha256_prf_bits(const u8 *key, size_t key_len, const char *label,
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		    const u8 *data, size_t data_len, u8 *buf,
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		    size_t buf_len_bits)
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** {
+  16              		.loc 1 57 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  19 0000 17030000 		call	t0,__riscv_save_9
+  19      E7020300 
+  20              		.cfi_offset 24, -40
+  21              		.cfi_offset 23, -36
+  22              		.cfi_offset 22, -32
+  23              		.cfi_offset 21, -28
+  24              		.cfi_offset 20, -24
+  25              		.cfi_offset 19, -20
+  26              		.cfi_offset 18, -16
+  27              		.cfi_offset 9, -12
+  28              		.cfi_offset 8, -8
+  29              		.cfi_offset 1, -4
+  30              		.cfi_def_cfa_offset 48
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	u16 counter = 1;
+  31              		.loc 1 58 2
+  32              	.LVL1:
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	size_t pos, plen;
+  33              		.loc 1 59 2
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	u8 hash[SHA256_MAC_LEN];
+  34              		.loc 1 60 2
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	const u8 *addr[4];
+  35              		.loc 1 61 2
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	size_t len[4];
+  36              		.loc 1 62 2
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	u8 counter_le[2], length_le[2];
+  37              		.loc 1 63 2
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	size_t buf_len = (buf_len_bits + 7) / 8;
+  38              		.loc 1 64 2
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	u16 counter = 1;
+  39              		.loc 1 57 1 is_stmt 0
+  40 0008 5D71     		addi	sp,sp,-80
+  41              		.cfi_def_cfa_offset 128
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	addr[0] = counter_le;
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[0] = 2;
+  42              		.loc 1 67 9
+  43 000a 894B     		li	s7,2
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	u16 counter = 1;
+  44              		.loc 1 57 1
+  45 000c AA8A     		mv	s5,a0
+  46 000e BE84     		mv	s1,a5
+  47 0010 3285     		mv	a0,a2
+  48              	.LVL2:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[0] = 2;
+  49              		.loc 1 66 10
+  50 0012 3C00     		addi	a5,sp,8
+  51              	.LVL3:
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	u16 counter = 1;
+  52              		.loc 1 57 1
+  53 0014 368A     		mv	s4,a3
+  54 0016 3A84     		mv	s0,a4
+  55 0018 4289     		mv	s2,a6
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  56              		.loc 1 64 33
+  57 001a 93097800 		addi	s3,a6,7
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[0] = 2;
+  58              		.loc 1 66 10
+  59 001e 3EC8     		sw	a5,16(sp)
+  60              		.loc 1 67 9
+  61 0020 5ED0     		sw	s7,32(sp)
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	u16 counter = 1;
+  62              		.loc 1 57 1
+  63 0022 2E8B     		mv	s6,a1
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	addr[1] = (u8 *) label;
+  64              		.loc 1 68 10
+  65 0024 32CA     		sw	a2,20(sp)
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[1] = os_strlen(label);
+  66              		.loc 1 69 11
+  67 0026 97000000 		call	os_strlen
+  67      E7800000 
+  68              	.LVL4:
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  69              		.loc 1 64 9
+  70 002e 93D93900 		srli	s3,s3,3
+  71              	.LVL5:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[0] = 2;
+  72              		.loc 1 66 2 is_stmt 1
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	addr[1] = (u8 *) label;
+  73              		.loc 1 67 2
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[1] = os_strlen(label);
+  74              		.loc 1 68 2
+  75              		.loc 1 69 2
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	addr[2] = data;
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[2] = data_len;
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	addr[3] = length_le;
+  76              		.loc 1 72 10 is_stmt 0
+  77 0032 7C00     		addi	a5,sp,12
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	addr[2] = data;
+  78              		.loc 1 70 10
+  79 0034 52CC     		sw	s4,24(sp)
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	addr[3] = length_le;
+  80              		.loc 1 71 9
+  81 0036 22D4     		sw	s0,40(sp)
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[3] = sizeof(length_le);
+  82              		.loc 1 73 9
+  83 0038 5ED6     		sw	s7,44(sp)
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	addr[2] = data;
+  84              		.loc 1 69 9
+  85 003a 2AD2     		sw	a0,36(sp)
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[2] = data_len;
+  86              		.loc 1 70 2 is_stmt 1
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	addr[3] = length_le;
+  87              		.loc 1 71 2
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[3] = sizeof(length_le);
+  88              		.loc 1 72 2
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	len[3] = sizeof(length_le);
+  89              		.loc 1 72 10 is_stmt 0
+  90 003c 3ECE     		sw	a5,28(sp)
+  91              		.loc 1 73 2 is_stmt 1
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	WPA_PUT_LE16(length_le, buf_len_bits);
+  92              		.loc 1 75 2
+  93              	.LVL6:
+  94              	.LBB7:
+  95              	.LBB8:
+  96              		.file 2 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/common.h"
+   1:..\..\..\..\wpa_supplicant\src\utils/common.h **** /*
+   2:..\..\..\..\wpa_supplicant\src\utils/common.h ****  * wpa_supplicant/hostapd / common helper functions, etc.
+   3:..\..\..\..\wpa_supplicant\src\utils/common.h ****  * Copyright (c) 2002-2007, Jouni Malinen <j@w1.fi>
+   4:..\..\..\..\wpa_supplicant\src\utils/common.h ****  *
+   5:..\..\..\..\wpa_supplicant\src\utils/common.h ****  * This software may be distributed under the terms of the BSD license.
+   6:..\..\..\..\wpa_supplicant\src\utils/common.h ****  * See README for more details.
+   7:..\..\..\..\wpa_supplicant\src\utils/common.h ****  */
+   8:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+   9:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef COMMON_H
+  10:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define COMMON_H
+  11:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  12:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include "os.h"
+  13:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  14:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if defined(__linux__) || defined(__GLIBC__)
+  15:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <endian.h>
+  16:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <byteswap.h>
+  17:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __linux__ */
+  18:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  19:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || \
+  20:..\..\..\..\wpa_supplicant\src\utils/common.h ****     defined(__OpenBSD__)
+  21:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <sys/types.h>
+  22:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <sys/endian.h>
+  23:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER	_BYTE_ORDER
+  24:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define	__LITTLE_ENDIAN	_LITTLE_ENDIAN
+  25:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define	__BIG_ENDIAN	_BIG_ENDIAN
+  26:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef __OpenBSD__
+  27:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_16 swap16
+  28:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_32 swap32
+  29:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_64 swap64
+  30:..\..\..\..\wpa_supplicant\src\utils/common.h **** #else /* __OpenBSD__ */
+  31:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_16 bswap16
+  32:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_32 bswap32
+  33:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_64 bswap64
+  34:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __OpenBSD__ */
+  35:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* defined(__FreeBSD__) || defined(__NetBSD__) ||
+  36:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	* defined(__DragonFly__) || defined(__OpenBSD__) */
+  37:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  38:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef __APPLE__
+  39:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <sys/types.h>
+  40:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <machine/endian.h>
+  41:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER	_BYTE_ORDER
+  42:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __LITTLE_ENDIAN	_LITTLE_ENDIAN
+  43:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BIG_ENDIAN	_BIG_ENDIAN
+  44:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned short bswap_16(unsigned short v)
+  45:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  46:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 8) | (v >> 8);
+  47:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+  48:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  49:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned int bswap_32(unsigned int v)
+  50:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  51:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 24) | ((v & 0xff00) << 8) |
+  52:..\..\..\..\wpa_supplicant\src\utils/common.h **** 		((v & 0xff0000) >> 8) | (v >> 24);
+  53:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+  54:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __APPLE__ */
+  55:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  56:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef CONFIG_GDWIFI
+  57:..\..\..\..\wpa_supplicant\src\utils/common.h **** // #include <sys/types.h>
+  58:..\..\..\..\wpa_supplicant\src\utils/common.h **** // #include <machine/endian.h>
+  59:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER	BYTE_ORDER
+  60:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __LITTLE_ENDIAN	LITTLE_ENDIAN
+  61:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BIG_ENDIAN	BIG_ENDIAN
+  62:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define ETHER_ADDR_LEN	6
+  63:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define ETH_P_802_3	0x0001		/* Dummy type for 802.3 frames  */
+  64:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  65:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned short bswap_16(unsigned short v)
+  66:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  67:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 8) | (v >> 8);
+  68:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+  69:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  70:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned int bswap_32(unsigned int v)
+  71:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  72:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 24) | ((v & 0xff00) << 8) |
+  73:..\..\..\..\wpa_supplicant\src\utils/common.h **** 		((v & 0xff0000) >> 8) | (v >> 24);
+  74:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+  75:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  76:..\..\..\..\wpa_supplicant\src\utils/common.h **** struct ether_header
+  77:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  78:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	uint8_t  ether_dhost[ETHER_ADDR_LEN];
+  79:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	uint8_t  ether_shost[ETHER_ADDR_LEN];
+  80:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	uint16_t ether_type;
+  81:..\..\..\..\wpa_supplicant\src\utils/common.h **** } __PACKED;
+  82:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* CONFIG_GDWIFI */
+  83:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef __rtems__
+  84:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <rtems/endian.h>
+  85:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER BYTE_ORDER
+  86:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __LITTLE_ENDIAN LITTLE_ENDIAN
+  87:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BIG_ENDIAN BIG_ENDIAN
+  88:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_16 CPU_swap_u16
+  89:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_32 CPU_swap_u32
+  90:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __rtems__ */
+  91:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  92:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef CONFIG_NATIVE_WINDOWS
+  93:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <winsock.h>
+  94:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  95:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int socklen_t;
+  96:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  97:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef MSG_DONTWAIT
+  98:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define MSG_DONTWAIT 0 /* not supported */
+  99:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 100:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 101:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* CONFIG_NATIVE_WINDOWS */
+ 102:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 103:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef _MSC_VER
+ 104:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define inline __inline
+ 105:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 106:..\..\..\..\wpa_supplicant\src\utils/common.h **** #undef vsnprintf
+ 107:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define vsnprintf _vsnprintf
+ 108:..\..\..\..\wpa_supplicant\src\utils/common.h **** #undef close
+ 109:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define close closesocket
+ 110:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* _MSC_VER */
+ 111:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 112:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 113:..\..\..\..\wpa_supplicant\src\utils/common.h **** /* Define platform specific integer types */
+ 114:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 115:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef _MSC_VER
+ 116:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT64 u64;
+ 117:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT32 u32;
+ 118:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT16 u16;
+ 119:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT8 u8;
+ 120:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT64 s64;
+ 121:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT32 s32;
+ 122:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT16 s16;
+ 123:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT8 s8;
+ 124:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_TYPES_DEFINED
+ 125:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* _MSC_VER */
+ 126:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 127:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef __vxworks
+ 128:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef unsigned long long u64;
+ 129:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT32 u32;
+ 130:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT16 u16;
+ 131:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT8 u8;
+ 132:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef long long s64;
+ 133:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT32 s32;
+ 134:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT16 s16;
+ 135:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT8 s8;
+ 136:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_TYPES_DEFINED
+ 137:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __vxworks */
+ 138:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 139:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef WPA_TYPES_DEFINED
+ 140:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef CONFIG_USE_INTTYPES_H
+ 141:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <inttypes.h>
+ 142:..\..\..\..\wpa_supplicant\src\utils/common.h **** #else
+ 143:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <stdint.h>
+ 144:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 145:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef uint64_t u64;
+ 146:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef uint32_t u32;
+ 147:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef uint16_t u16;
+ 148:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef uint8_t u8;
+ 149:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int64_t s64;
+ 150:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int32_t s32;
+ 151:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int16_t s16;
+ 152:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int8_t s8;
+ 153:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_TYPES_DEFINED
+ 154:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* !WPA_TYPES_DEFINED */
+ 155:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 156:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 157:..\..\..\..\wpa_supplicant\src\utils/common.h **** /* Define platform specific byte swapping macros */
+ 158:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 159:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if defined(__CYGWIN__) || defined(CONFIG_NATIVE_WINDOWS)
+ 160:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 161:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned short wpa_swap_16(unsigned short v)
+ 162:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 163:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 8) | (v >> 8);
+ 164:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 165:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 166:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned int wpa_swap_32(unsigned int v)
+ 167:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 168:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 24) | ((v & 0xff00) << 8) |
+ 169:..\..\..\..\wpa_supplicant\src\utils/common.h **** 		((v & 0xff0000) >> 8) | (v >> 24);
+ 170:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 171:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 172:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host16(n) (n)
+ 173:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le16(n) (n)
+ 174:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host16(n) wpa_swap_16(n)
+ 175:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be16(n) wpa_swap_16(n)
+ 176:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host32(n) (n)
+ 177:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le32(n) (n)
+ 178:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host32(n) wpa_swap_32(n)
+ 179:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be32(n) wpa_swap_32(n)
+ 180:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le64(n) (n)
+ 181:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 182:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_BYTE_SWAP_DEFINED
+ 183:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 184:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __CYGWIN__ || CONFIG_NATIVE_WINDOWS */
+ 185:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 186:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 187:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef WPA_BYTE_SWAP_DEFINED
+ 188:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 189:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef __BYTE_ORDER
+ 190:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef __LITTLE_ENDIAN
+ 191:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef __BIG_ENDIAN
+ 192:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __LITTLE_ENDIAN 1234
+ 193:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BIG_ENDIAN 4321
+ 194:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if defined(sparc)
+ 195:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER __BIG_ENDIAN
+ 196:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 197:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __BIG_ENDIAN */
+ 198:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __LITTLE_ENDIAN */
+ 199:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __BYTE_ORDER */
+ 200:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 201:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if __BYTE_ORDER == __LITTLE_ENDIAN
+ 202:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host16(n) ((__force u16) (le16) (n))
+ 203:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le16(n) ((__force le16) (u16) (n))
+ 204:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host16(n) bswap_16((__force u16) (be16) (n))
+ 205:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be16(n) ((__force be16) bswap_16((n)))
+ 206:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host32(n) ((__force u32) (le32) (n))
+ 207:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le32(n) ((__force le32) (u32) (n))
+ 208:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host32(n) bswap_32((__force u32) (be32) (n))
+ 209:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be32(n) ((__force be32) bswap_32((n)))
+ 210:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host64(n) ((__force u64) (le64) (n))
+ 211:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le64(n) ((__force le64) (u64) (n))
+ 212:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host64(n) bswap_64((__force u64) (be64) (n))
+ 213:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be64(n) ((__force be64) bswap_64((n)))
+ 214:..\..\..\..\wpa_supplicant\src\utils/common.h **** #elif __BYTE_ORDER == __BIG_ENDIAN
+ 215:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host16(n) bswap_16(n)
+ 216:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le16(n) bswap_16(n)
+ 217:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host16(n) (n)
+ 218:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be16(n) (n)
+ 219:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host32(n) bswap_32(n)
+ 220:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le32(n) bswap_32(n)
+ 221:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host32(n) (n)
+ 222:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be32(n) (n)
+ 223:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host64(n) bswap_64(n)
+ 224:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le64(n) bswap_64(n)
+ 225:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host64(n) (n)
+ 226:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be64(n) (n)
+ 227:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef WORDS_BIGENDIAN
+ 228:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WORDS_BIGENDIAN
+ 229:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 230:..\..\..\..\wpa_supplicant\src\utils/common.h **** #else
+ 231:..\..\..\..\wpa_supplicant\src\utils/common.h **** #error Could not determine CPU byte order
+ 232:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 233:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 234:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_BYTE_SWAP_DEFINED
+ 235:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* !WPA_BYTE_SWAP_DEFINED */
+ 236:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 237:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 238:..\..\..\..\wpa_supplicant\src\utils/common.h **** /* Macros for handling unaligned memory accesses */
+ 239:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 240:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline u16 WPA_GET_BE16(const u8 *a)
+ 241:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 242:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return (a[0] << 8) | a[1];
+ 243:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 244:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 245:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline void WPA_PUT_BE16(u8 *a, u16 val)
+ 246:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 247:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[0] = val >> 8;
+ 248:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = val & 0xff;
+ 249:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 250:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 251:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline u16 WPA_GET_LE16(const u8 *a)
+ 252:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 253:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return (a[1] << 8) | a[0];
+ 254:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 255:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 256:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline void WPA_PUT_LE16(u8 *a, u16 val)
+ 257:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 258:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = val >> 8;
+  97              		.loc 2 258 2
+ 259:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[0] = val & 0xff;
+  98              		.loc 2 259 2
+  99              		.loc 2 259 7 is_stmt 0
+ 100 003e 23162101 		sh	s2,12(sp)
+ 101              	.LVL7:
+ 102              	.LBE8:
+ 103              	.LBE7:
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	pos = 0;
+ 104              		.loc 1 76 2 is_stmt 1
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	while (pos < buf_len) {
+ 105              		.loc 1 77 2
+ 106 0042 93FB09FE 		andi	s7,s3,-32
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	pos = 0;
+ 107              		.loc 1 76 6 is_stmt 0
+ 108 0046 0144     		li	s0,0
+ 109              	.LVL8:
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	size_t pos, plen;
+ 110              		.loc 1 58 6
+ 111 0048 054A     		li	s4,1
+ 112              	.LVL9:
+ 113              	.L2:
+ 114              		.loc 1 77 8 is_stmt 1
+ 115 004a 63763407 		bgeu	s0,s3,.L7
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		plen = buf_len - pos;
+ 116              		.loc 1 78 3
+ 117              	.LBB9:
+ 118              	.LBB10:
+ 119              		.loc 2 259 7 is_stmt 0
+ 120 004e 23144101 		sh	s4,8(sp)
+ 121 0052 338C8940 		sub	s8,s3,s0
+ 122              	.LVL10:
+ 123              	.LBE10:
+ 124              	.LBE9:
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		WPA_PUT_LE16(counter_le, counter);
+ 125              		.loc 1 79 3 is_stmt 1
+ 126              	.LBB12:
+ 127              	.LBB11:
+ 258:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[0] = val & 0xff;
+ 128              		.loc 2 258 2
+ 129              		.loc 2 259 2
+ 130              	.LBE11:
+ 131              	.LBE12:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		if (plen >= SHA256_MAC_LEN) {
+ 132              		.loc 1 80 3
+ 133              		.loc 1 80 6 is_stmt 0
+ 134 0056 630B7403 		beq	s0,s7,.L3
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			if (hmac_sha256_vector(key, key_len, 4, addr, len,
+ 135              		.loc 1 81 4 is_stmt 1
+ 136              		.loc 1 81 8 is_stmt 0
+ 137 005a B3878400 		add	a5,s1,s0
+ 138 005e 1810     		addi	a4,sp,32
+ 139 0060 1408     		addi	a3,sp,16
+ 140 0062 1146     		li	a2,4
+ 141 0064 DA85     		mv	a1,s6
+ 142 0066 5685     		mv	a0,s5
+ 143 0068 97000000 		call	hmac_sha256_vector
+ 143      E7800000 
+ 144              	.LVL11:
+ 145              		.loc 1 81 7
+ 146 0070 63580500 		bge	a0,zero,.L4
+ 147              	.L6:
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 					       &buf[pos]) < 0)
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 				return -1;
+ 148              		.loc 1 83 12
+ 149 0074 7D55     		li	a0,-1
+ 150              	.LVL12:
+ 151              	.L1:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			pos += SHA256_MAC_LEN;
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		} else {
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			if (hmac_sha256_vector(key, key_len, 4, addr, len,
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 					       hash) < 0)
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 				return -1;
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			os_memcpy(&buf[pos], hash, plen);
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			pos += plen;
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			break;
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		}
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		counter++;
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	}
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	/*
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	 * Mask out unused bits in the last octet if it does not use all the
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	 * bits.
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	 */
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	if (buf_len_bits % 8) {
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		u8 mask = 0xff << (8 - buf_len_bits % 8);
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		buf[pos - 1] &= mask;
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	}
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	forced_memzero(hash, sizeof(hash));
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	return 0;
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** }
+ 152              		.loc 1 108 1
+ 153 0076 6161     		addi	sp,sp,80
+ 154              		.cfi_remember_state
+ 155              		.cfi_def_cfa_offset 0
+ 156 0078 17030000 		tail	__riscv_restore_9
+ 156      67000300 
+ 157              		.cfi_restore 24
+ 158              		.cfi_restore 23
+ 159              		.cfi_restore 22
+ 160              		.cfi_restore 21
+ 161              		.cfi_restore 20
+ 162              		.cfi_restore 19
+ 163              		.cfi_restore 18
+ 164              		.cfi_restore 9
+ 165              		.cfi_restore 8
+ 166              		.cfi_restore 1
+ 167              		.cfi_def_cfa_offset -48
+ 168              	.LVL13:
+ 169              	.L4:
+ 170              		.cfi_restore_state
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			pos += SHA256_MAC_LEN;
+ 171              		.loc 1 84 4 is_stmt 1
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	}
+ 172              		.loc 1 93 10 is_stmt 0
+ 173 0080 050A     		addi	s4,s4,1
+ 174              	.LVL14:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			pos += SHA256_MAC_LEN;
+ 175              		.loc 1 84 8
+ 176 0082 13040402 		addi	s0,s0,32
+ 177              	.LVL15:
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	}
+ 178              		.loc 1 93 3 is_stmt 1
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	}
+ 179              		.loc 1 93 10 is_stmt 0
+ 180 0086 334A0A08 		zext.h	s4,s4
+ 181              	.LVL16:
+ 182 008a C1B7     		j	.L2
+ 183              	.L3:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 					       hash) < 0)
+ 184              		.loc 1 86 4 is_stmt 1
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 					       hash) < 0)
+ 185              		.loc 1 86 8 is_stmt 0
+ 186 008c 1C18     		addi	a5,sp,48
+ 187 008e 1810     		addi	a4,sp,32
+ 188 0090 1408     		addi	a3,sp,16
+ 189 0092 1146     		li	a2,4
+ 190 0094 DA85     		mv	a1,s6
+ 191 0096 5685     		mv	a0,s5
+ 192 0098 97000000 		call	hmac_sha256_vector
+ 192      E7800000 
+ 193              	.LVL17:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 					       hash) < 0)
+ 194              		.loc 1 86 7
+ 195 00a0 E34A05FC 		blt	a0,zero,.L6
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			pos += plen;
+ 196              		.loc 1 89 4 is_stmt 1
+ 197 00a4 33858400 		add	a0,s1,s0
+ 198 00a8 6286     		mv	a2,s8
+ 199 00aa 0C18     		addi	a1,sp,48
+ 200 00ac 97000000 		call	os_memcpy
+ 200      E7800000 
+ 201              	.LVL18:
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			break;
+ 202              		.loc 1 90 4
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		}
+ 203              		.loc 1 91 4
+ 204 00b4 4E84     		mv	s0,s3
+ 205              	.LVL19:
+ 206              	.L7:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		u8 mask = 0xff << (8 - buf_len_bits % 8);
+ 207              		.loc 1 100 2
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		u8 mask = 0xff << (8 - buf_len_bits % 8);
+ 208              		.loc 1 100 19 is_stmt 0
+ 209 00b6 13797900 		andi	s2,s2,7
+ 210              	.LVL20:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		u8 mask = 0xff << (8 - buf_len_bits % 8);
+ 211              		.loc 1 100 5
+ 212 00ba 63010902 		beq	s2,zero,.L9
+ 213              	.LBB13:
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		buf[pos - 1] &= mask;
+ 214              		.loc 1 101 3 is_stmt 1
+ 215              	.LVL21:
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	}
+ 216              		.loc 1 102 3
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	}
+ 217              		.loc 1 102 16 is_stmt 0
+ 218 00be 7D14     		addi	s0,s0,-1
+ 219              	.LVL22:
+ 220 00c0 2694     		add	s0,s1,s0
+ 221              	.LVL23:
+ 222 00c2 83470400 		lbu	a5,0(s0)
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		buf[pos - 1] &= mask;
+ 223              		.loc 1 101 24
+ 224 00c6 2148     		li	a6,8
+ 225 00c8 33082841 		sub	a6,a6,s2
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 		buf[pos - 1] &= mask;
+ 226              		.loc 1 101 18
+ 227 00cc 1309F00F 		li	s2,255
+ 228              	.LVL24:
+ 229 00d0 33190901 		sll	s2,s2,a6
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	}
+ 230              		.loc 1 102 16
+ 231 00d4 3379F900 		and	s2,s2,a5
+ 232 00d8 23002401 		sb	s2,0(s0)
+ 233              	.LVL25:
+ 234              	.L9:
+ 235              	.LBE13:
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 
+ 236              		.loc 1 105 2 is_stmt 1
+ 237 00dc 0818     		addi	a0,sp,48
+ 238 00de 93050002 		li	a1,32
+ 239 00e2 97000000 		call	forced_memzero
+ 239      E7800000 
+ 240              	.LVL26:
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** }
+ 241              		.loc 1 107 2
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** }
+ 242              		.loc 1 107 9 is_stmt 0
+ 243 00ea 0145     		li	a0,0
+ 244 00ec 69B7     		j	.L1
+ 245              		.cfi_endproc
+ 246              	.LFE72:
+ 248              		.section	.text.sha256_prf,"ax",@progbits
+ 249              		.align	1
+ 250              		.globl	sha256_prf
+ 252              	sha256_prf:
+ 253              	.LFB71:
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 	return sha256_prf_bits(key, key_len, label, data, data_len, buf,
+ 254              		.loc 1 32 1 is_stmt 1
+ 255              		.cfi_startproc
+ 256              	.LVL27:
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			       buf_len * 8);
+ 257              		.loc 1 33 2
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-prf.c **** 			       buf_len * 8);
+ 258              		.loc 1 33 9 is_stmt 0
+ 259 0000 0E08     		slli	a6,a6,3
+ 260              	.LVL28:
+ 261 0002 17030000 		tail	sha256_prf_bits
+ 261      67000300 
+ 262              	.LVL29:
+ 263              		.cfi_endproc
+ 264              	.LFE71:
+ 266              		.text
+ 267              	.Letext0:
+ 268              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 269              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 270              		.file 5 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 271              		.file 6 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/os.h"
+ 272              		.file 7 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sha256-prf.c
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:13     .text.sha256_prf_bits:0000000000000000 sha256_prf_bits
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:17     .text.sha256_prf_bits:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:19     .text.sha256_prf_bits:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:20     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:21     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:22     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:23     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:24     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:25     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:26     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:27     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:28     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:29     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:30     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:33     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:34     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:35     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:36     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:37     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:38     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:39     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:40     .text.sha256_prf_bits:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:41     .text.sha256_prf_bits:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:43     .text.sha256_prf_bits:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:45     .text.sha256_prf_bits:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:50     .text.sha256_prf_bits:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:53     .text.sha256_prf_bits:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:57     .text.sha256_prf_bits:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:59     .text.sha256_prf_bits:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:61     .text.sha256_prf_bits:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:63     .text.sha256_prf_bits:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:65     .text.sha256_prf_bits:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:67     .text.sha256_prf_bits:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:70     .text.sha256_prf_bits:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:73     .text.sha256_prf_bits:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:74     .text.sha256_prf_bits:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:75     .text.sha256_prf_bits:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:76     .text.sha256_prf_bits:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:77     .text.sha256_prf_bits:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:79     .text.sha256_prf_bits:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:81     .text.sha256_prf_bits:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:83     .text.sha256_prf_bits:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:85     .text.sha256_prf_bits:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:87     .text.sha256_prf_bits:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:88     .text.sha256_prf_bits:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:89     .text.sha256_prf_bits:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:90     .text.sha256_prf_bits:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:92     .text.sha256_prf_bits:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:97     .text.sha256_prf_bits:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:98     .text.sha256_prf_bits:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:99     .text.sha256_prf_bits:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:100    .text.sha256_prf_bits:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:105    .text.sha256_prf_bits:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:106    .text.sha256_prf_bits:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:108    .text.sha256_prf_bits:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:111    .text.sha256_prf_bits:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:115    .text.sha256_prf_bits:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:119    .text.sha256_prf_bits:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:120    .text.sha256_prf_bits:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:128    .text.sha256_prf_bits:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:129    .text.sha256_prf_bits:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:132    .text.sha256_prf_bits:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:133    .text.sha256_prf_bits:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:134    .text.sha256_prf_bits:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:136    .text.sha256_prf_bits:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:137    .text.sha256_prf_bits:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:146    .text.sha256_prf_bits:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:149    .text.sha256_prf_bits:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:153    .text.sha256_prf_bits:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:154    .text.sha256_prf_bits:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:155    .text.sha256_prf_bits:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:157    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:158    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:159    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:160    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:161    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:162    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:163    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:164    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:165    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:166    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:167    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:170    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:172    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:173    .text.sha256_prf_bits:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:176    .text.sha256_prf_bits:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:179    .text.sha256_prf_bits:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:180    .text.sha256_prf_bits:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:185    .text.sha256_prf_bits:000000000000008c .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:186    .text.sha256_prf_bits:000000000000008c .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:195    .text.sha256_prf_bits:00000000000000a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:197    .text.sha256_prf_bits:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:203    .text.sha256_prf_bits:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:204    .text.sha256_prf_bits:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:208    .text.sha256_prf_bits:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:209    .text.sha256_prf_bits:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:212    .text.sha256_prf_bits:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:216    .text.sha256_prf_bits:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:217    .text.sha256_prf_bits:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:218    .text.sha256_prf_bits:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:224    .text.sha256_prf_bits:00000000000000c6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:227    .text.sha256_prf_bits:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:231    .text.sha256_prf_bits:00000000000000d4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:237    .text.sha256_prf_bits:00000000000000dc .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:242    .text.sha256_prf_bits:00000000000000ea .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:243    .text.sha256_prf_bits:00000000000000ea .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:245    .text.sha256_prf_bits:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:252    .text.sha256_prf:0000000000000000 sha256_prf
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:255    .text.sha256_prf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:257    .text.sha256_prf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:258    .text.sha256_prf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:259    .text.sha256_prf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:263    .text.sha256_prf:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:248    .text.sha256_prf_bits:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:266    .text.sha256_prf:000000000000000a .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:206    .text.sha256_prf_bits:00000000000000b6 .L7
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:183    .text.sha256_prf_bits:000000000000008c .L3
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:169    .text.sha256_prf_bits:0000000000000080 .L4
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:113    .text.sha256_prf_bits:000000000000004a .L2
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:147    .text.sha256_prf_bits:0000000000000074 .L6
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:234    .text.sha256_prf_bits:00000000000000dc .L9
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:151    .text.sha256_prf_bits:0000000000000076 .L1
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:892    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1696   .debug_str:0000000000000178 .LASF35
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1718   .debug_str:00000000000002d3 .LASF36
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1690   .debug_str:00000000000000d0 .LASF37
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1638   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1652   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1658   .debug_str:0000000000000017 .LASF2
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1702   .debug_str:0000000000000280 .LASF0
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1724   .debug_str:0000000000000375 .LASF1
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1656   .debug_str:000000000000000d .LASF3
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1682   .debug_str:00000000000000a3 .LASF4
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1698   .debug_str:0000000000000271 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1692   .debug_str:0000000000000162 .LASF6
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1666   .debug_str:000000000000003c .LASF7
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1722   .debug_str:000000000000036c .LASF8
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1684   .debug_str:00000000000000b1 .LASF9
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1710   .debug_str:000000000000029f .LASF10
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1678   .debug_str:000000000000007f .LASF11
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1704   .debug_str:000000000000028d .LASF12
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1706   .debug_str:0000000000000292 .LASF13
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1716   .debug_str:00000000000002ca .LASF14
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1730   .debug_str:0000000000000392 .LASF15
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1670   .debug_str:0000000000000054 .LASF29
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:14     .text.sha256_prf_bits:0000000000000000 .LFB72
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:246    .text.sha256_prf_bits:00000000000000ee .LFE72
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1309   .debug_loc:0000000000000000 .LLST0
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1720   .debug_str:0000000000000364 .LASF16
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1320   .debug_loc:000000000000001e .LLST1
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1728   .debug_str:000000000000038c .LASF17
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1331   .debug_loc:000000000000003c .LLST2
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1668   .debug_str:000000000000004f .LASF18
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1345   .debug_loc:000000000000005d .LLST3
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1672   .debug_str:0000000000000064 .LASF19
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1363   .debug_loc:0000000000000089 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1386   .debug_loc:00000000000000c1 .LLST5
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1654   .debug_str:0000000000000000 .LASF20
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1397   .debug_loc:00000000000000df .LLST6
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1676   .debug_str:0000000000000077 .LASF21
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1426   .debug_loc:0000000000000124 .LLST7
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1442   .debug_loc:000000000000014e .LLST8
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1662   .debug_str:0000000000000028 .LASF22
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1472   .debug_loc:000000000000019b .LLST9
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1708   .debug_str:000000000000029a .LASF23
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1686   .debug_str:00000000000000c3 .LASF24
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1694   .debug_str:000000000000016d .LASF25
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1714   .debug_str:00000000000002c0 .LASF26
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1688   .debug_str:00000000000000c8 .LASF27
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:213    .text.sha256_prf_bits:00000000000000be .LBB13
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:235    .text.sha256_prf_bits:00000000000000dc .LBE13
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1700   .debug_str:000000000000027b .LASF28
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1483   .debug_loc:00000000000001b9 .LLST12
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:94     .text.sha256_prf_bits:000000000000003e .LBB7
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:103    .text.sha256_prf_bits:0000000000000042 .LBE7
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1511   .debug_loc:00000000000001e8 .LLST10
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1518   .debug_loc:00000000000001fb .LLST11
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:117    .text.sha256_prf_bits:000000000000004e .LBB9
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:68     .text.sha256_prf_bits:000000000000002e .LVL4
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:144    .text.sha256_prf_bits:0000000000000070 .LVL11
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:193    .text.sha256_prf_bits:00000000000000a0 .LVL17
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:201    .text.sha256_prf_bits:00000000000000b4 .LVL18
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:240    .text.sha256_prf_bits:00000000000000ea .LVL26
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1726   .debug_str:0000000000000381 .LASF30
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:253    .text.sha256_prf:0000000000000000 .LFB71
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:264    .text.sha256_prf:000000000000000a .LFE71
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1525   .debug_loc:000000000000020e .LLST13
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1539   .debug_loc:000000000000022f .LLST14
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1553   .debug_loc:0000000000000250 .LLST15
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1567   .debug_loc:0000000000000271 .LLST16
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1581   .debug_loc:0000000000000292 .LLST17
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1595   .debug_loc:00000000000002b3 .LLST18
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1609   .debug_loc:00000000000002d4 .LLST19
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:262    .text.sha256_prf:000000000000000a .LVL29
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1680   .debug_str:0000000000000096 .LASF38
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1674   .debug_str:000000000000006d .LASF31
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1712   .debug_str:00000000000002ad .LASF32
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1660   .debug_str:000000000000001e .LASF33
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:1664   .debug_str:000000000000002d .LASF34
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:18     .text.sha256_prf_bits:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:48     .text.sha256_prf_bits:0000000000000012 .LVL2
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:112    .text.sha256_prf_bits:000000000000004a .LVL9
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:109    .text.sha256_prf_bits:0000000000000048 .LVL8
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:51     .text.sha256_prf_bits:0000000000000014 .LVL3
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:150    .text.sha256_prf_bits:0000000000000076 .LVL12
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:168    .text.sha256_prf_bits:0000000000000080 .LVL13
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:210    .text.sha256_prf_bits:00000000000000ba .LVL20
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:32     .text.sha256_prf_bits:0000000000000008 .LVL1
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:174    .text.sha256_prf_bits:0000000000000082 .LVL14
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:181    .text.sha256_prf_bits:000000000000008a .LVL16
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:101    .text.sha256_prf_bits:0000000000000042 .LVL7
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:205    .text.sha256_prf_bits:00000000000000b6 .LVL19
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:219    .text.sha256_prf_bits:00000000000000c0 .LVL22
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:221    .text.sha256_prf_bits:00000000000000c2 .LVL23
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:122    .text.sha256_prf_bits:0000000000000056 .LVL10
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:215    .text.sha256_prf_bits:00000000000000be .LVL21
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:228    .text.sha256_prf_bits:00000000000000d0 .LVL24
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:233    .text.sha256_prf_bits:00000000000000dc .LVL25
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:93     .text.sha256_prf_bits:000000000000003e .LVL6
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:256    .text.sha256_prf:0000000000000000 .LVL27
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:260    .text.sha256_prf:0000000000000002 .LVL28
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:274    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:124    .text.sha256_prf_bits:0000000000000056 .LBE9
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:126    .text.sha256_prf_bits:0000000000000056 .LBB12
+C:\Users\stapi\AppData\Local\Temp\cctThC6K.s:131    .text.sha256_prf_bits:0000000000000056 .LBE12
+
+UNDEFINED SYMBOLS
+__riscv_save_9
+os_strlen
+hmac_sha256_vector
+__riscv_restore_9
+os_memcpy
+forced_memzero

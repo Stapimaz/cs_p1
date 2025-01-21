@@ -1,0 +1,1777 @@
+   1              		.file	"MQTTPacket.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.bufchar,"ax",@progbits
+  10              		.align	1
+  11              		.globl	bufchar
+  13              	bufchar:
+  14              	.LFB4:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Copyright (C) 2015-2018 Alibaba Group Holding Limited
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** #include "MQTTPacket.h"
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** #include <string.h>
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Encodes the message length according to the MQTT algorithm
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param buf the buffer into which the encoded data is written
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param length the length to be encoded
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @return the number of bytes written to buffer
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int MQTTPacket_encode(unsigned char *buf, int length)
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int rc = 0;
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     do {
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         char d = length % 128;
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         length /= 128;
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         /* if there are more digits to encode, set the top bit of this digit */
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         if (length > 0) {
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             d |= 0x80;
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         }
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         buf[rc++] = d;
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } while (length > 0);
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return rc;
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Decodes the message length according to the MQTT algorithm
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param getcharfn pointer to function to read the next character from the data source
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param value the decoded length returned
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @return the number of bytes read from the socket
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int MQTTPacket_decode(int (*getcharfn)(unsigned char *, int), int *value)
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     unsigned char c;
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int multiplier = 1;
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = 0;
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** #define MAX_NO_OF_REMAINING_LENGTH_BYTES 4
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     *value = 0;
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     do {
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         int rc = MQTTPACKET_READ_ERROR;
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         if (++len > MAX_NO_OF_REMAINING_LENGTH_BYTES) {
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             rc = MQTTPACKET_READ_ERROR; /* bad data */
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             goto exit;
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         }
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rc = (*getcharfn)(&c, 1);
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         if (rc != 1) {
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             goto exit;
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         }
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         *value += (c & 127) * multiplier;
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         multiplier *= 128;
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } while ((c & 128) != 0);
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** exit:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return len;
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int MQTTPacket_len(int rem_len)
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     rem_len += 1; /* header byte */
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     /* now remaining_length field */
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     if (rem_len < 128) {
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 1;
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else if (rem_len < 16384) {
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 2;
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else if (rem_len < 2097151) {
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 3;
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else {
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 4;
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return rem_len;
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** static unsigned char *bufptr;
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int bufchar(unsigned char *c, int count)
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+  16              		.loc 1 86 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int i;
+  19              		.loc 1 87 5
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     for (i = 0; i < count; ++i) {
+  20              		.loc 1 89 5
+  21 0000 B7070000 		lui	a5,%hi(.LANCHOR0)
+  22 0004 03A70700 		lw	a4,%lo(.LANCHOR0)(a5)
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int i;
+  23              		.loc 1 86 1 is_stmt 0
+  24 0008 2A86     		mv	a2,a0
+  25              		.loc 1 89 12
+  26 000a 8146     		li	a3,0
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int i;
+  27              		.loc 1 86 1
+  28 000c 2E85     		mv	a0,a1
+  29              	.LVL1:
+  30 000e 93870700 		addi	a5,a5,%lo(.LANCHOR0)
+  31              		.loc 1 89 5
+  32 0012 8145     		li	a1,0
+  33              	.LVL2:
+  34              	.L2:
+  35              		.loc 1 89 17 is_stmt 1 discriminator 1
+  36              		.loc 1 89 5 is_stmt 0 discriminator 1
+  37 0014 63C9A600 		blt	a3,a0,.L3
+  38 0018 8146     		li	a3,0
+  39              	.LVL3:
+  40 001a B366D50A 		max	a3,a0,a3
+  41 001e 3697     		add	a4,a4,a3
+  42 0020 91C1     		beq	a1,zero,.L4
+  43 0022 98C3     		sw	a4,0(a5)
+  44              	.L4:
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         *c = *bufptr++;
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return count;
+  45              		.loc 1 92 5 is_stmt 1
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+  46              		.loc 1 93 1 is_stmt 0
+  47 0024 8280     		ret
+  48              	.LVL4:
+  49              	.L3:
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         *c = *bufptr++;
+  50              		.loc 1 90 9 is_stmt 1 discriminator 3
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         *c = *bufptr++;
+  51              		.loc 1 90 14 is_stmt 0 discriminator 3
+  52 0026 B305D700 		add	a1,a4,a3
+  53 002a 83C50500 		lbu	a1,0(a1)
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         *c = *bufptr++;
+  54              		.loc 1 89 28 discriminator 3
+  55 002e 8506     		addi	a3,a3,1
+  56              	.LVL5:
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         *c = *bufptr++;
+  57              		.loc 1 90 12 discriminator 3
+  58 0030 2300B600 		sb	a1,0(a2)
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         *c = *bufptr++;
+  59              		.loc 1 89 28 is_stmt 1 discriminator 3
+  60              	.LVL6:
+  61 0034 8545     		li	a1,1
+  62 0036 F9BF     		j	.L2
+  63              		.cfi_endproc
+  64              	.LFE4:
+  66              		.section	.text.MQTTPacket_encode,"ax",@progbits
+  67              		.align	1
+  68              		.globl	MQTTPacket_encode
+  70              	MQTTPacket_encode:
+  71              	.LFB1:
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int rc = 0;
+  72              		.loc 1 16 1
+  73              		.cfi_startproc
+  74              	.LVL7:
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  75              		.loc 1 17 5
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int rc = 0;
+  76              		.loc 1 16 1 is_stmt 0
+  77 0000 2A87     		mv	a4,a0
+  78              	.LBB2:
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         length /= 128;
+  79              		.loc 1 20 25
+  80 0002 13080008 		li	a6,128
+  81              	.LBE2:
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  82              		.loc 1 17 9
+  83 0006 0145     		li	a0,0
+  84              	.LVL8:
+  85              	.LBB3:
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             d |= 0x80;
+  86              		.loc 1 23 12
+  87 0008 9306F007 		li	a3,127
+  88              	.LVL9:
+  89              	.L10:
+  90              	.LBE3:
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         char d = length % 128;
+  91              		.loc 1 19 5 is_stmt 1
+  92              	.LBB4:
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         length /= 128;
+  93              		.loc 1 20 9
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         length /= 128;
+  94              		.loc 1 20 25 is_stmt 0
+  95 000c B3E70503 		rem	a5,a1,a6
+  96 0010 2E86     		mv	a2,a1
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         length /= 128;
+  97              		.loc 1 20 14
+  98 0012 93974760 		sext.b	a5,a5
+  99              	.LVL10:
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         /* if there are more digits to encode, set the top bit of this digit */
+ 100              		.loc 1 21 9 is_stmt 1
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         /* if there are more digits to encode, set the top bit of this digit */
+ 101              		.loc 1 21 16 is_stmt 0
+ 102 0016 B3C50503 		div	a1,a1,a6
+ 103              	.LVL11:
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             d |= 0x80;
+ 104              		.loc 1 23 9 is_stmt 1
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             d |= 0x80;
+ 105              		.loc 1 23 12 is_stmt 0
+ 106 001a 63D4C600 		ble	a2,a3,.L9
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         }
+ 107              		.loc 1 24 13 is_stmt 1
+ 108              	.LVL12:
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         }
+ 109              		.loc 1 24 15 is_stmt 0
+ 110 001e 93E707F8 		ori	a5,a5,-128
+ 111              	.LVL13:
+ 112              	.L9:
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } while (length > 0);
+ 113              		.loc 1 26 9 is_stmt 1
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } while (length > 0);
+ 114              		.loc 1 26 15 is_stmt 0
+ 115 0022 0505     		addi	a0,a0,1
+ 116              	.LVL14:
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } while (length > 0);
+ 117              		.loc 1 26 19
+ 118 0024 B308A700 		add	a7,a4,a0
+ 119 0028 A38FF8FE 		sb	a5,-1(a7)
+ 120              	.LBE4:
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return rc;
+ 121              		.loc 1 27 13 is_stmt 1
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return rc;
+ 122              		.loc 1 27 5 is_stmt 0
+ 123 002c E3C0C6FE 		bgt	a2,a3,.L10
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 124              		.loc 1 28 5 is_stmt 1
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 125              		.loc 1 29 1 is_stmt 0
+ 126 0030 8280     		ret
+ 127              		.cfi_endproc
+ 128              	.LFE1:
+ 130              		.section	.text.MQTTPacket_decode,"ax",@progbits
+ 131              		.align	1
+ 132              		.globl	MQTTPacket_decode
+ 134              	MQTTPacket_decode:
+ 135              	.LFB2:
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     unsigned char c;
+ 136              		.loc 1 39 1 is_stmt 1
+ 137              		.cfi_startproc
+ 138              	.LVL15:
+ 139 0000 17030000 		call	t0,__riscv_save_5
+ 139      E7020300 
+ 140              		.cfi_offset 20, -24
+ 141              		.cfi_offset 19, -20
+ 142              		.cfi_offset 18, -16
+ 143              		.cfi_offset 9, -12
+ 144              		.cfi_offset 8, -8
+ 145              		.cfi_offset 1, -4
+ 146              		.cfi_def_cfa_offset 32
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int multiplier = 1;
+ 147              		.loc 1 40 5
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = 0;
+ 148              		.loc 1 41 5
+ 149              	.LVL16:
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** #define MAX_NO_OF_REMAINING_LENGTH_BYTES 4
+ 150              		.loc 1 42 5
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     do {
+ 151              		.loc 1 45 5
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     unsigned char c;
+ 152              		.loc 1 39 1 is_stmt 0
+ 153 0008 4111     		addi	sp,sp,-16
+ 154              		.cfi_def_cfa_offset 48
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     unsigned char c;
+ 155              		.loc 1 39 1
+ 156 000a AA89     		mv	s3,a0
+ 157 000c 2E84     		mv	s0,a1
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     do {
+ 158              		.loc 1 45 12
+ 159 000e 23A00500 		sw	zero,0(a1)
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** #define MAX_NO_OF_REMAINING_LENGTH_BYTES 4
+ 160              		.loc 1 42 9
+ 161 0012 8144     		li	s1,0
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = 0;
+ 162              		.loc 1 41 9
+ 163 0014 0549     		li	s2,1
+ 164              	.LBB5:
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             rc = MQTTPACKET_READ_ERROR; /* bad data */
+ 165              		.loc 1 49 12
+ 166 0016 154A     		li	s4,5
+ 167              	.LVL17:
+ 168              	.L14:
+ 169              	.LBE5:
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         int rc = MQTTPACKET_READ_ERROR;
+ 170              		.loc 1 46 5 is_stmt 1
+ 171              	.LBB6:
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 172              		.loc 1 47 9
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             rc = MQTTPACKET_READ_ERROR; /* bad data */
+ 173              		.loc 1 49 9
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             rc = MQTTPACKET_READ_ERROR; /* bad data */
+ 174              		.loc 1 49 12 is_stmt 0
+ 175 0018 8504     		addi	s1,s1,1
+ 176              	.LVL18:
+ 177 001a 63864403 		beq	s1,s4,.L12
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         if (rc != 1) {
+ 178              		.loc 1 53 9 is_stmt 1
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         if (rc != 1) {
+ 179              		.loc 1 53 15 is_stmt 0
+ 180 001e 8545     		li	a1,1
+ 181 0020 1305F100 		addi	a0,sp,15
+ 182 0024 8299     		jalr	s3
+ 183              	.LVL19:
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             goto exit;
+ 184              		.loc 1 54 9 is_stmt 1
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             goto exit;
+ 185              		.loc 1 54 12 is_stmt 0
+ 186 0026 8547     		li	a5,1
+ 187 0028 631FF500 		bne	a0,a5,.L12
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         multiplier *= 128;
+ 188              		.loc 1 57 9 is_stmt 1
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         multiplier *= 128;
+ 189              		.loc 1 57 22 is_stmt 0
+ 190 002c 8347F100 		lbu	a5,15(sp)
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         multiplier *= 128;
+ 191              		.loc 1 57 16
+ 192 0030 1840     		lw	a4,0(s0)
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         multiplier *= 128;
+ 193              		.loc 1 57 22
+ 194 0032 93F6F707 		andi	a3,a5,127
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         multiplier *= 128;
+ 195              		.loc 1 57 16
+ 196 0036 7F9726C5 		maddr32	a4, a3, s2
+ 197 003a 18C0     		sw	a4,0(s0)
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } while ((c & 128) != 0);
+ 198              		.loc 1 58 9 is_stmt 1
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } while ((c & 128) != 0);
+ 199              		.loc 1 58 20 is_stmt 0
+ 200 003c 1E09     		slli	s2,s2,7
+ 201              	.LVL20:
+ 202              	.LBE6:
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** exit:
+ 203              		.loc 1 59 13 is_stmt 1
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** exit:
+ 204              		.loc 1 59 5 is_stmt 0
+ 205 003e 93974760 		sext.b	a5,a5
+ 206 0042 E3CB07FC 		blt	a5,zero,.L14
+ 207              	.L13:
+ 208              	.LVL21:
+ 209              	.L12:
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 210              		.loc 1 62 1
+ 211 0046 2685     		mv	a0,s1
+ 212 0048 4101     		addi	sp,sp,16
+ 213              		.cfi_def_cfa_offset 0
+ 214 004a 17030000 		tail	__riscv_restore_5
+ 214      67000300 
+ 215              		.cfi_restore 20
+ 216              		.cfi_restore 19
+ 217              		.cfi_restore 18
+ 218              		.cfi_restore 9
+ 219              		.cfi_restore 8
+ 220              		.cfi_restore 1
+ 221              		.cfi_def_cfa_offset -32
+ 222              		.cfi_endproc
+ 223              	.LFE2:
+ 225              		.section	.text.MQTTPacket_len,"ax",@progbits
+ 226              		.align	1
+ 227              		.globl	MQTTPacket_len
+ 229              	MQTTPacket_len:
+ 230              	.LFB3:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     rem_len += 1; /* header byte */
+ 231              		.loc 1 66 1 is_stmt 1
+ 232              		.cfi_startproc
+ 233              	.LVL22:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 234              		.loc 1 67 5
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 235              		.loc 1 67 13 is_stmt 0
+ 236 0000 93061500 		addi	a3,a0,1
+ 237              	.LVL23:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 1;
+ 238              		.loc 1 70 5 is_stmt 1
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 1;
+ 239              		.loc 1 70 8 is_stmt 0
+ 240 0004 1307F007 		li	a4,127
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     rem_len += 1; /* header byte */
+ 241              		.loc 1 66 1
+ 242 0008 AA87     		mv	a5,a0
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 1;
+ 243              		.loc 1 70 8
+ 244 000a 6344D700 		bgt	a3,a4,.L18
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else if (rem_len < 16384) {
+ 245              		.loc 1 71 9 is_stmt 1
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else if (rem_len < 16384) {
+ 246              		.loc 1 71 17 is_stmt 0
+ 247 000e 0905     		addi	a0,a0,2
+ 248              	.LVL24:
+ 249 0010 8280     		ret
+ 250              	.LVL25:
+ 251              	.L18:
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 2;
+ 252              		.loc 1 72 12 is_stmt 1
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 2;
+ 253              		.loc 1 72 15 is_stmt 0
+ 254 0012 1167     		li	a4,16384
+ 255 0014 63D4E600 		bge	a3,a4,.L20
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else if (rem_len < 2097151) {
+ 256              		.loc 1 73 9 is_stmt 1
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else if (rem_len < 2097151) {
+ 257              		.loc 1 73 17 is_stmt 0
+ 258 0018 0D05     		addi	a0,a0,3
+ 259              	.LVL26:
+ 260 001a 8280     		ret
+ 261              	.LVL27:
+ 262              	.L20:
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 3;
+ 263              		.loc 1 74 12 is_stmt 1
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 3;
+ 264              		.loc 1 74 15 is_stmt 0
+ 265 001c 37072000 		li	a4,2097152
+ 266 0020 7917     		addi	a4,a4,-2
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+ 267              		.loc 1 77 17
+ 268 0022 1505     		addi	a0,a0,5
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rem_len += 3;
+ 269              		.loc 1 74 15
+ 270 0024 6344D700 		bgt	a3,a4,.L17
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else {
+ 271              		.loc 1 75 9 is_stmt 1
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else {
+ 272              		.loc 1 75 17 is_stmt 0
+ 273 0028 13854700 		addi	a0,a5,4
+ 274              	.LVL28:
+ 275              	.L17:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 276              		.loc 1 80 1
+ 277 002c 8280     		ret
+ 278              		.cfi_endproc
+ 279              	.LFE3:
+ 281              		.section	.text.MQTTPacket_decodeBuf,"ax",@progbits
+ 282              		.align	1
+ 283              		.globl	MQTTPacket_decodeBuf
+ 285              	MQTTPacket_decodeBuf:
+ 286              	.LFB5:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int MQTTPacket_decodeBuf(unsigned char *buf, int *value)
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 287              		.loc 1 97 1 is_stmt 1
+ 288              		.cfi_startproc
+ 289              	.LVL29:
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     bufptr = buf;
+ 290              		.loc 1 98 5
+ 291              		.loc 1 98 12 is_stmt 0
+ 292 0000 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 293 0004 23A0A700 		sw	a0,%lo(.LANCHOR0)(a5)
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return MQTTPacket_decode(bufchar, value);
+ 294              		.loc 1 99 5 is_stmt 1
+ 295              		.loc 1 99 12 is_stmt 0
+ 296 0008 37050000 		lui	a0,%hi(bufchar)
+ 297              	.LVL30:
+ 298 000c 13050500 		addi	a0,a0,%lo(bufchar)
+ 299 0010 17030000 		tail	MQTTPacket_decode
+ 299      67000300 
+ 300              	.LVL31:
+ 301              		.cfi_endproc
+ 302              	.LFE5:
+ 304              		.section	.text.readInt,"ax",@progbits
+ 305              		.align	1
+ 306              		.globl	readInt
+ 308              	readInt:
+ 309              	.LFB6:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Calculates an integer from two bytes read from the input buffer
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param pptr pointer to the input buffer - incremented by the number of bytes used & returned
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @return the integer value calculated
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int readInt(unsigned char **pptr)
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 310              		.loc 1 109 1 is_stmt 1
+ 311              		.cfi_startproc
+ 312              	.LVL32:
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     unsigned char *ptr = *pptr;
+ 313              		.loc 1 110 5
+ 314              		.loc 1 110 20 is_stmt 0
+ 315 0000 1C41     		lw	a5,0(a0)
+ 316              	.LVL33:
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = 256 * (*ptr) + (*(ptr + 1));
+ 317              		.loc 1 111 5 is_stmt 1
+ 318              		.loc 1 111 22 is_stmt 0
+ 319 0002 03C70700 		lbu	a4,0(a5)
+ 320              		.loc 1 111 31
+ 321 0006 83C61700 		lbu	a3,1(a5)
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     *pptr += 2;
+ 322              		.loc 1 112 11
+ 323 000a 8907     		addi	a5,a5,2
+ 324              	.LVL34:
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = 256 * (*ptr) + (*(ptr + 1));
+ 325              		.loc 1 111 19
+ 326 000c 2207     		slli	a4,a4,8
+ 327              	.LVL35:
+ 328              		.loc 1 112 5 is_stmt 1
+ 329              		.loc 1 112 11 is_stmt 0
+ 330 000e 1CC1     		sw	a5,0(a0)
+ 331              	.LVL36:
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return len;
+ 332              		.loc 1 113 5 is_stmt 1
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 333              		.loc 1 114 1 is_stmt 0
+ 334 0010 3305D700 		add	a0,a4,a3
+ 335              	.LVL37:
+ 336 0014 8280     		ret
+ 337              		.cfi_endproc
+ 338              	.LFE6:
+ 340              		.section	.text.readChar,"ax",@progbits
+ 341              		.align	1
+ 342              		.globl	readChar
+ 344              	readChar:
+ 345              	.LFB7:
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Reads one character from the input buffer.
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param pptr pointer to the input buffer - incremented by the number of bytes used & returned
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @return the character read
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** char readChar(unsigned char **pptr)
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 346              		.loc 1 123 1 is_stmt 1
+ 347              		.cfi_startproc
+ 348              	.LVL38:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     char c = **pptr;
+ 349              		.loc 1 124 5
+ 350              		.loc 1 124 15 is_stmt 0
+ 351 0000 1841     		lw	a4,0(a0)
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     char c = **pptr;
+ 352              		.loc 1 123 1
+ 353 0002 AA87     		mv	a5,a0
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     (*pptr)++;
+ 354              		.loc 1 125 12
+ 355 0004 0507     		addi	a4,a4,1
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     char c = **pptr;
+ 356              		.loc 1 124 10
+ 357 0006 0305F7FF 		lb	a0,-1(a4)
+ 358              	.LVL39:
+ 359              		.loc 1 125 5 is_stmt 1
+ 360              		.loc 1 125 12 is_stmt 0
+ 361 000a 98C3     		sw	a4,0(a5)
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return c;
+ 362              		.loc 1 126 5 is_stmt 1
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 363              		.loc 1 127 1 is_stmt 0
+ 364 000c 8280     		ret
+ 365              		.cfi_endproc
+ 366              	.LFE7:
+ 368              		.section	.text.writeChar,"ax",@progbits
+ 369              		.align	1
+ 370              		.globl	writeChar
+ 372              	writeChar:
+ 373              	.LFB8:
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Writes one character to an output buffer.
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param pptr pointer to the output buffer - incremented by the number of bytes used & returned
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param c the character to write
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** void writeChar(unsigned char **pptr, char c)
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 374              		.loc 1 136 1 is_stmt 1
+ 375              		.cfi_startproc
+ 376              	.LVL40:
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     **pptr = c;
+ 377              		.loc 1 137 5
+ 378              		.loc 1 137 6 is_stmt 0
+ 379 0000 1C41     		lw	a5,0(a0)
+ 380              		.loc 1 137 12
+ 381 0002 2380B700 		sb	a1,0(a5)
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     (*pptr)++;
+ 382              		.loc 1 138 5 is_stmt 1
+ 383              		.loc 1 138 12 is_stmt 0
+ 384 0006 1C41     		lw	a5,0(a0)
+ 385 0008 8507     		addi	a5,a5,1
+ 386 000a 1CC1     		sw	a5,0(a0)
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 387              		.loc 1 139 1
+ 388 000c 8280     		ret
+ 389              		.cfi_endproc
+ 390              	.LFE8:
+ 392              		.section	.text.writeInt,"ax",@progbits
+ 393              		.align	1
+ 394              		.globl	writeInt
+ 396              	writeInt:
+ 397              	.LFB9:
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Writes an integer as 2 bytes to an output buffer.
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param pptr pointer to the output buffer - incremented by the number of bytes used & returned
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param anInt the integer to write
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** void writeInt(unsigned char **pptr, int anInt)
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 398              		.loc 1 148 1 is_stmt 1
+ 399              		.cfi_startproc
+ 400              	.LVL41:
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     **pptr = (unsigned char)(anInt / 256);
+ 401              		.loc 1 149 5
+ 402              		.loc 1 149 36 is_stmt 0
+ 403 0000 13070010 		li	a4,256
+ 404 0004 B3C6E502 		div	a3,a1,a4
+ 405              		.loc 1 149 6
+ 406 0008 1C41     		lw	a5,0(a0)
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     (*pptr)++;
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     **pptr = (unsigned char)(anInt % 256);
+ 407              		.loc 1 151 36
+ 408 000a B3E5E502 		rem	a1,a1,a4
+ 409              	.LVL42:
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     **pptr = (unsigned char)(anInt / 256);
+ 410              		.loc 1 149 14
+ 411 000e 2380D700 		sb	a3,0(a5)
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     (*pptr)++;
+ 412              		.loc 1 150 5 is_stmt 1
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     (*pptr)++;
+ 413              		.loc 1 150 6 is_stmt 0
+ 414 0012 1C41     		lw	a5,0(a0)
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     (*pptr)++;
+ 415              		.loc 1 150 12
+ 416 0014 93861700 		addi	a3,a5,1
+ 417 0018 14C1     		sw	a3,0(a0)
+ 418              		.loc 1 151 5 is_stmt 1
+ 419              		.loc 1 151 14 is_stmt 0
+ 420 001a A380B700 		sb	a1,1(a5)
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     (*pptr)++;
+ 421              		.loc 1 152 5 is_stmt 1
+ 422              		.loc 1 152 12 is_stmt 0
+ 423 001e 1C41     		lw	a5,0(a0)
+ 424 0020 8507     		addi	a5,a5,1
+ 425 0022 1CC1     		sw	a5,0(a0)
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 426              		.loc 1 153 1
+ 427 0024 8280     		ret
+ 428              		.cfi_endproc
+ 429              	.LFE9:
+ 431              		.section	.text.writeCString,"ax",@progbits
+ 432              		.align	1
+ 433              		.globl	writeCString
+ 435              	writeCString:
+ 436              	.LFB10:
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Writes a "UTF" string to an output buffer.  Converts C string to length-delimited.
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param pptr pointer to the output buffer - incremented by the number of bytes used & returned
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param string the C string to write
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** void writeCString(unsigned char **pptr, const char *string)
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 437              		.loc 1 162 1 is_stmt 1
+ 438              		.cfi_startproc
+ 439              	.LVL43:
+ 440 0000 17030000 		call	t0,__riscv_save_3
+ 440      E7020300 
+ 441              		.cfi_offset 18, -16
+ 442              		.cfi_offset 9, -12
+ 443              		.cfi_offset 8, -8
+ 444              		.cfi_offset 1, -4
+ 445              		.cfi_def_cfa_offset 16
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = strlen(string);
+ 446              		.loc 1 163 5
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = strlen(string);
+ 447              		.loc 1 162 1 is_stmt 0
+ 448 0008 2A84     		mv	s0,a0
+ 449              		.loc 1 163 15
+ 450 000a 2E85     		mv	a0,a1
+ 451              	.LVL44:
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = strlen(string);
+ 452              		.loc 1 162 1
+ 453 000c 2E89     		mv	s2,a1
+ 454              		.loc 1 163 15
+ 455 000e 97000000 		call	strlen
+ 455      E7800000 
+ 456              	.LVL45:
+ 457 0016 AA84     		mv	s1,a0
+ 458              	.LVL46:
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     writeInt(pptr, len);
+ 459              		.loc 1 164 5 is_stmt 1
+ 460 0018 AA85     		mv	a1,a0
+ 461 001a 2285     		mv	a0,s0
+ 462 001c 97000000 		call	writeInt
+ 462      E7800000 
+ 463              	.LVL47:
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     memcpy(*pptr, string, len);
+ 464              		.loc 1 165 5
+ 465 0024 0840     		lw	a0,0(s0)
+ 466 0026 2686     		mv	a2,s1
+ 467 0028 CA85     		mv	a1,s2
+ 468 002a 97000000 		call	memcpy
+ 468      E7800000 
+ 469              	.LVL48:
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     *pptr += len;
+ 470              		.loc 1 166 5
+ 471              		.loc 1 166 11 is_stmt 0
+ 472 0032 0840     		lw	a0,0(s0)
+ 473 0034 2695     		add	a0,a0,s1
+ 474 0036 08C0     		sw	a0,0(s0)
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 475              		.loc 1 167 1
+ 476 0038 17030000 		tail	__riscv_restore_3
+ 476      67000300 
+ 477              		.cfi_restore 18
+ 478              		.cfi_restore 9
+ 479              		.cfi_restore 8
+ 480              		.cfi_restore 1
+ 481              		.cfi_def_cfa_offset 0
+ 482              		.cfi_endproc
+ 483              	.LFE10:
+ 485              		.section	.text.getLenStringLen,"ax",@progbits
+ 486              		.align	1
+ 487              		.globl	getLenStringLen
+ 489              	getLenStringLen:
+ 490              	.LFB11:
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int getLenStringLen(char *ptr)
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 491              		.loc 1 171 1 is_stmt 1
+ 492              		.cfi_startproc
+ 493              	.LVL49:
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = 256 * ((unsigned char)(*ptr)) + (unsigned char)(*(ptr + 1));
+ 494              		.loc 1 172 5
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return len;
+ 495              		.loc 1 173 5
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = 256 * ((unsigned char)(*ptr)) + (unsigned char)(*(ptr + 1));
+ 496              		.loc 1 172 22 is_stmt 0
+ 497 0000 83470500 		lbu	a5,0(a0)
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = 256 * ((unsigned char)(*ptr)) + (unsigned char)(*(ptr + 1));
+ 498              		.loc 1 172 47
+ 499 0004 03451500 		lbu	a0,1(a0)
+ 500              	.LVL50:
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int len = 256 * ((unsigned char)(*ptr)) + (unsigned char)(*(ptr + 1));
+ 501              		.loc 1 172 19
+ 502 0008 A207     		slli	a5,a5,8
+ 503              	.LVL51:
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 504              		.loc 1 174 1
+ 505 000a 3E95     		add	a0,a5,a0
+ 506              	.LVL52:
+ 507 000c 8280     		ret
+ 508              		.cfi_endproc
+ 509              	.LFE11:
+ 511              		.section	.text.writeMQTTString,"ax",@progbits
+ 512              		.align	1
+ 513              		.globl	writeMQTTString
+ 515              	writeMQTTString:
+ 516              	.LFB12:
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** void writeMQTTString(unsigned char **pptr, MQTTString mqttstring)
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 517              		.loc 1 178 1 is_stmt 1
+ 518              		.cfi_startproc
+ 519              	.LVL53:
+ 520 0000 17030000 		call	t0,__riscv_save_3
+ 520      E7020300 
+ 521              		.cfi_offset 18, -16
+ 522              		.cfi_offset 9, -12
+ 523              		.cfi_offset 8, -8
+ 524              		.cfi_offset 1, -4
+ 525              		.cfi_def_cfa_offset 16
+ 526              	.LVL54:
+ 527 0008 03A94500 		lw	s2,4(a1)
+ 528              	.LVL55:
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     if (mqttstring.lenstring.len > 0) {
+ 529              		.loc 1 179 5
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     if (mqttstring.lenstring.len > 0) {
+ 530              		.loc 1 178 1 is_stmt 0
+ 531 000c 2E84     		mv	s0,a1
+ 532              		.loc 1 179 8
+ 533 000e 63562003 		ble	s2,zero,.L32
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         writeInt(pptr, mqttstring.lenstring.len);
+ 534              		.loc 1 180 9
+ 535 0012 CA85     		mv	a1,s2
+ 536              	.LVL56:
+ 537 0014 AA84     		mv	s1,a0
+ 538              		.loc 1 180 9 is_stmt 1
+ 539 0016 97000000 		call	writeInt
+ 539      E7800000 
+ 540              	.LVL57:
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         memcpy(*pptr, mqttstring.lenstring.data, mqttstring.lenstring.len);
+ 541              		.loc 1 181 9
+ 542 001e 0C44     		lw	a1,8(s0)
+ 543 0020 8840     		lw	a0,0(s1)
+ 544 0022 4A86     		mv	a2,s2
+ 545 0024 97000000 		call	memcpy
+ 545      E7800000 
+ 546              	.LVL58:
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         *pptr += mqttstring.lenstring.len;
+ 547              		.loc 1 182 9
+ 548              		.loc 1 182 15 is_stmt 0
+ 549 002c 9C40     		lw	a5,0(s1)
+ 550 002e CA97     		add	a5,a5,s2
+ 551 0030 9CC0     		sw	a5,0(s1)
+ 552              	.LVL59:
+ 553              	.L31:
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else if (mqttstring.cstring) {
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         writeCString(pptr, mqttstring.cstring);
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else {
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         writeInt(pptr, 0);
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 554              		.loc 1 188 1
+ 555 0032 17030000 		tail	__riscv_restore_3
+ 555      67000300 
+ 556              		.cfi_remember_state
+ 557              		.cfi_restore 18
+ 558              		.cfi_restore 9
+ 559              		.cfi_restore 8
+ 560              		.cfi_restore 1
+ 561              		.cfi_def_cfa_offset 0
+ 562              	.LVL60:
+ 563              	.L32:
+ 564              		.cfi_restore_state
+ 565 003a 8C41     		lw	a1,0(a1)
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else if (mqttstring.cstring) {
+ 566              		.loc 1 183 12 is_stmt 1
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else if (mqttstring.cstring) {
+ 567              		.loc 1 183 15 is_stmt 0
+ 568 003c 91C5     		beq	a1,zero,.L34
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else {
+ 569              		.loc 1 184 9 is_stmt 1
+ 570 003e 97000000 		call	writeCString
+ 570      E7800000 
+ 571              	.LVL61:
+ 572 0046 F5B7     		j	.L31
+ 573              	.LVL62:
+ 574              	.L34:
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+ 575              		.loc 1 186 9
+ 576 0048 8145     		li	a1,0
+ 577 004a 97000000 		call	writeInt
+ 577      E7800000 
+ 578              	.LVL63:
+ 579              		.loc 1 188 1 is_stmt 0
+ 580 0052 C5B7     		j	.L31
+ 581              		.cfi_endproc
+ 582              	.LFE12:
+ 584              		.section	.text.readMQTTLenString,"ax",@progbits
+ 585              		.align	1
+ 586              		.globl	readMQTTLenString
+ 588              	readMQTTLenString:
+ 589              	.LFB13:
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param mqttstring the MQTTString structure into which the data is to be read
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param pptr pointer to the output buffer - incremented by the number of bytes used & returned
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param enddata pointer to the end of the data: do not read beyond
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @return 1 if successful, 0 if not
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int readMQTTLenString(MQTTString *mqttstring, unsigned char **pptr, unsigned char *enddata)
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 590              		.loc 1 198 1 is_stmt 1
+ 591              		.cfi_startproc
+ 592              	.LVL64:
+ 593 0000 17030000 		call	t0,__riscv_save_3
+ 593      E7020300 
+ 594              		.cfi_offset 18, -16
+ 595              		.cfi_offset 9, -12
+ 596              		.cfi_offset 8, -8
+ 597              		.cfi_offset 1, -4
+ 598              		.cfi_def_cfa_offset 16
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int rc = 0;
+ 599              		.loc 1 199 5
+ 600              	.LVL65:
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     /* the first two bytes are the length of the string */
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     if (enddata - (*pptr) > 1) { /* enough length to read the integer? */
+ 601              		.loc 1 202 5
+ 602              		.loc 1 202 17 is_stmt 0
+ 603 0008 9C41     		lw	a5,0(a1)
+ 604              		.loc 1 202 8
+ 605 000a 0547     		li	a4,1
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int rc = 0;
+ 606              		.loc 1 198 1
+ 607 000c AA84     		mv	s1,a0
+ 608              		.loc 1 202 17
+ 609 000e B307F640 		sub	a5,a2,a5
+ 610              		.loc 1 202 8
+ 611 0012 6349F700 		bgt	a5,a4,.L37
+ 612              	.LVL66:
+ 613              	.L39:
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int rc = 0;
+ 614              		.loc 1 199 9
+ 615 0016 0145     		li	a0,0
+ 616              	.LVL67:
+ 617              	.L38:
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         mqttstring->lenstring.len = readInt(pptr); /* increments pptr to point past length */
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         if (&(*pptr)[mqttstring->lenstring.len] <= enddata) {
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             mqttstring->lenstring.data = (char *)*pptr;
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             *pptr += mqttstring->lenstring.len;
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             rc = 1;
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         }
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     mqttstring->cstring = NULL;
+ 618              		.loc 1 210 5 is_stmt 1
+ 619              		.loc 1 210 25 is_stmt 0
+ 620 0018 23A00400 		sw	zero,0(s1)
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return rc;
+ 621              		.loc 1 211 5 is_stmt 1
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 622              		.loc 1 212 1 is_stmt 0
+ 623 001c 17030000 		tail	__riscv_restore_3
+ 623      67000300 
+ 624              		.cfi_remember_state
+ 625              		.cfi_restore 18
+ 626              		.cfi_restore 9
+ 627              		.cfi_restore 8
+ 628              		.cfi_restore 1
+ 629              		.cfi_def_cfa_offset 0
+ 630              	.LVL68:
+ 631              	.L37:
+ 632              		.cfi_restore_state
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         mqttstring->lenstring.len = readInt(pptr); /* increments pptr to point past length */
+ 633              		.loc 1 203 37
+ 634 0024 2E85     		mv	a0,a1
+ 635 0026 2E84     		mv	s0,a1
+ 636 0028 3289     		mv	s2,a2
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         mqttstring->lenstring.len = readInt(pptr); /* increments pptr to point past length */
+ 637              		.loc 1 203 9 is_stmt 1
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         mqttstring->lenstring.len = readInt(pptr); /* increments pptr to point past length */
+ 638              		.loc 1 203 37 is_stmt 0
+ 639 002a 97000000 		call	readInt
+ 639      E7800000 
+ 640              	.LVL69:
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             mqttstring->lenstring.data = (char *)*pptr;
+ 641              		.loc 1 204 15
+ 642 0032 1840     		lw	a4,0(s0)
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         if (&(*pptr)[mqttstring->lenstring.len] <= enddata) {
+ 643              		.loc 1 203 35
+ 644 0034 C8C0     		sw	a0,4(s1)
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             mqttstring->lenstring.data = (char *)*pptr;
+ 645              		.loc 1 204 9 is_stmt 1
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             mqttstring->lenstring.data = (char *)*pptr;
+ 646              		.loc 1 204 13 is_stmt 0
+ 647 0036 B307A700 		add	a5,a4,a0
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             mqttstring->lenstring.data = (char *)*pptr;
+ 648              		.loc 1 204 12
+ 649 003a E36EF9FC 		bgtu	a5,s2,.L39
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             *pptr += mqttstring->lenstring.len;
+ 650              		.loc 1 205 13 is_stmt 1
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             *pptr += mqttstring->lenstring.len;
+ 651              		.loc 1 205 40 is_stmt 0
+ 652 003e 98C4     		sw	a4,8(s1)
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             rc = 1;
+ 653              		.loc 1 206 13 is_stmt 1
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****             rc = 1;
+ 654              		.loc 1 206 19 is_stmt 0
+ 655 0040 1CC0     		sw	a5,0(s0)
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         }
+ 656              		.loc 1 207 13 is_stmt 1
+ 657              	.LVL70:
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         }
+ 658              		.loc 1 207 16 is_stmt 0
+ 659 0042 0545     		li	a0,1
+ 660 0044 D1BF     		j	.L38
+ 661              		.cfi_endproc
+ 662              	.LFE13:
+ 664              		.section	.text.MQTTstrlen,"ax",@progbits
+ 665              		.align	1
+ 666              		.globl	MQTTstrlen
+ 668              	MQTTstrlen:
+ 669              	.LFB14:
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Return the length of the MQTTstring - C string if there is one, otherwise the length delimited s
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param mqttstring the string to return the length of
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @return the length of the string
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int MQTTstrlen(MQTTString mqttstring)
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 670              		.loc 1 221 1 is_stmt 1
+ 671              		.cfi_startproc
+ 672 0000 AA87     		mv	a5,a0
+ 673 0002 0841     		lw	a0,0(a0)
+ 674              	.LVL71:
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int rc = 0;
+ 675              		.loc 1 222 5
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     if (mqttstring.cstring) {
+ 676              		.loc 1 224 5
+ 677              		.loc 1 224 8 is_stmt 0
+ 678 0004 09C5     		beq	a0,zero,.L42
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rc = strlen(mqttstring.cstring);
+ 679              		.loc 1 225 9 is_stmt 1
+ 680              		.loc 1 225 14 is_stmt 0
+ 681 0006 17030000 		tail	strlen
+ 681      67000300 
+ 682              	.LVL72:
+ 683              	.L42:
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else {
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         rc = mqttstring.lenstring.len;
+ 684              		.loc 1 227 9 is_stmt 1
+ 685              		.loc 1 227 12 is_stmt 0
+ 686 000e C843     		lw	a0,4(a5)
+ 687              	.LVL73:
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return rc;
+ 688              		.loc 1 229 5 is_stmt 1
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 689              		.loc 1 230 1 is_stmt 0
+ 690 0010 8280     		ret
+ 691              		.cfi_endproc
+ 692              	.LFE14:
+ 694              		.section	.text.MQTTPacket_equals,"ax",@progbits
+ 695              		.align	1
+ 696              		.globl	MQTTPacket_equals
+ 698              	MQTTPacket_equals:
+ 699              	.LFB15:
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** /**
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * Compares an MQTTString to a C string
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param a the MQTTString to compare
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @param bptr the C string to compare
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  * @return int - equal or not
+ 238:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****  */
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** int MQTTPacket_equals(MQTTString *a, char *bptr)
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** {
+ 700              		.loc 1 240 1 is_stmt 1
+ 701              		.cfi_startproc
+ 702              	.LVL74:
+ 703 0000 17030000 		call	t0,__riscv_save_2
+ 703      E7020300 
+ 704              		.cfi_offset 9, -12
+ 705              		.cfi_offset 8, -8
+ 706              		.cfi_offset 1, -4
+ 707              		.cfi_def_cfa_offset 16
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int alen = 0,
+ 708              		.loc 1 241 5
+ 709              	.LVL75:
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         blen = 0;
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     char *aptr;
+ 710              		.loc 1 243 5
+ 244:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** #if !(WITH_MQTT_ZIP_TOPIC)
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     if (a->cstring) {
+ 711              		.loc 1 245 5
+ 712              		.loc 1 245 10 is_stmt 0
+ 713 0008 0041     		lw	s0,0(a0)
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int alen = 0,
+ 714              		.loc 1 240 1
+ 715 000a 4111     		addi	sp,sp,-16
+ 716              		.cfi_def_cfa_offset 32
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     int alen = 0,
+ 717              		.loc 1 240 1
+ 718 000c AE84     		mv	s1,a1
+ 719              		.loc 1 245 8
+ 720 000e 1DCC     		beq	s0,zero,.L49
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         aptr = a->cstring;
+ 721              		.loc 1 246 9 is_stmt 1
+ 722              	.LVL76:
+ 247:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         alen = strlen(a->cstring);
+ 723              		.loc 1 247 9
+ 724              		.loc 1 247 16 is_stmt 0
+ 725 0010 2285     		mv	a0,s0
+ 726              	.LVL77:
+ 727 0012 97000000 		call	strlen
+ 727      E7800000 
+ 728              	.LVL78:
+ 729 001a 2A86     		mv	a2,a0
+ 730              	.LVL79:
+ 731              	.L50:
+ 248:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     } else {
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         aptr = a->lenstring.data;
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         alen = a->lenstring.len;
+ 251:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     blen = strlen(bptr);
+ 732              		.loc 1 252 12
+ 733 001c 2685     		mv	a0,s1
+ 734 001e 32C6     		sw	a2,12(sp)
+ 735              	.LVL80:
+ 736              		.loc 1 252 5 is_stmt 1
+ 737              		.loc 1 252 12 is_stmt 0
+ 738 0020 97000000 		call	strlen
+ 738      E7800000 
+ 739              	.LVL81:
+ 253:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** #else
+ 254:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     aptr = a->lenstring.data;
+ 255:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     alen = a->lenstring.len;
+ 256:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     blen = alen;
+ 257:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** #endif
+ 258:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     return (alen == blen) && (memcmp(aptr, bptr, alen) == 0);
+ 740              		.loc 1 258 27
+ 741 0028 3246     		lw	a2,12(sp)
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** #else
+ 742              		.loc 1 252 12
+ 743 002a AA87     		mv	a5,a0
+ 744              	.LVL82:
+ 745              		.loc 1 258 5 is_stmt 1
+ 746              		.loc 1 258 27 is_stmt 0
+ 747 002c 0145     		li	a0,0
+ 748              	.LVL83:
+ 749 002e 631AF600 		bne	a2,a5,.L48
+ 750              		.loc 1 258 31 discriminator 1
+ 751 0032 A685     		mv	a1,s1
+ 752 0034 2285     		mv	a0,s0
+ 753 0036 97000000 		call	memcmp
+ 753      E7800000 
+ 754              	.LVL84:
+ 755              		.loc 1 258 27 discriminator 1
+ 756 003e 13351500 		seqz	a0,a0
+ 757              	.L48:
+ 259:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** 
+ 260:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c **** }
+ 758              		.loc 1 260 1
+ 759 0042 4101     		addi	sp,sp,16
+ 760              		.cfi_remember_state
+ 761              		.cfi_def_cfa_offset 0
+ 762              	.LVL85:
+ 763 0044 17030000 		tail	__riscv_restore_2
+ 763      67000300 
+ 764              		.cfi_restore 9
+ 765              		.cfi_restore 8
+ 766              		.cfi_restore 1
+ 767              		.cfi_def_cfa_offset -16
+ 768              	.LVL86:
+ 769              	.L49:
+ 770              		.cfi_restore_state
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         alen = a->lenstring.len;
+ 771              		.loc 1 249 9 is_stmt 1
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****         alen = a->lenstring.len;
+ 772              		.loc 1 249 14 is_stmt 0
+ 773 004c 0045     		lw	s0,8(a0)
+ 774              	.LVL87:
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+ 775              		.loc 1 250 9 is_stmt 1
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/protocol/mqtt/MQTTPacket\MQTTPacket.c ****     }
+ 776              		.loc 1 250 14 is_stmt 0
+ 777 004e 5041     		lw	a2,4(a0)
+ 778              	.LVL88:
+ 779 0050 F1B7     		j	.L50
+ 780              		.cfi_endproc
+ 781              	.LFE15:
+ 783              		.section	.sbss.bufptr,"aw",@nobits
+ 784              		.align	2
+ 785              		.set	.LANCHOR0,. + 0
+ 788              	bufptr:
+ 789 0000 00000000 		.zero	4
+ 790              		.text
+ 791              	.Letext0:
+ 792              		.file 2 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+ 793              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 794              		.file 4 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 MQTTPacket.c
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:13     .text.bufchar:0000000000000000 bufchar
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:17     .text.bufchar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:19     .text.bufchar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:20     .text.bufchar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:21     .text.bufchar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:24     .text.bufchar:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:26     .text.bufchar:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:28     .text.bufchar:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:32     .text.bufchar:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:36     .text.bufchar:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:37     .text.bufchar:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:46     .text.bufchar:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:47     .text.bufchar:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:51     .text.bufchar:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:52     .text.bufchar:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:55     .text.bufchar:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:58     .text.bufchar:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:61     .text.bufchar:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:63     .text.bufchar:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:70     .text.MQTTPacket_encode:0000000000000000 MQTTPacket_encode
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:73     .text.MQTTPacket_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:75     .text.MQTTPacket_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:76     .text.MQTTPacket_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:77     .text.MQTTPacket_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:80     .text.MQTTPacket_encode:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:83     .text.MQTTPacket_encode:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:87     .text.MQTTPacket_encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:93     .text.MQTTPacket_encode:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:94     .text.MQTTPacket_encode:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:95     .text.MQTTPacket_encode:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:98     .text.MQTTPacket_encode:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:101    .text.MQTTPacket_encode:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:102    .text.MQTTPacket_encode:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:105    .text.MQTTPacket_encode:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:106    .text.MQTTPacket_encode:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:109    .text.MQTTPacket_encode:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:110    .text.MQTTPacket_encode:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:114    .text.MQTTPacket_encode:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:115    .text.MQTTPacket_encode:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:118    .text.MQTTPacket_encode:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:122    .text.MQTTPacket_encode:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:123    .text.MQTTPacket_encode:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:125    .text.MQTTPacket_encode:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:126    .text.MQTTPacket_encode:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:127    .text.MQTTPacket_encode:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:134    .text.MQTTPacket_decode:0000000000000000 MQTTPacket_decode
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:137    .text.MQTTPacket_decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:139    .text.MQTTPacket_decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:140    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:141    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:142    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:143    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:144    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:145    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:146    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:148    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:150    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:151    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:152    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:153    .text.MQTTPacket_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:154    .text.MQTTPacket_decode:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:156    .text.MQTTPacket_decode:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:159    .text.MQTTPacket_decode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:161    .text.MQTTPacket_decode:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:163    .text.MQTTPacket_decode:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:166    .text.MQTTPacket_decode:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:172    .text.MQTTPacket_decode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:173    .text.MQTTPacket_decode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:174    .text.MQTTPacket_decode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:175    .text.MQTTPacket_decode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:179    .text.MQTTPacket_decode:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:180    .text.MQTTPacket_decode:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:185    .text.MQTTPacket_decode:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:186    .text.MQTTPacket_decode:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:189    .text.MQTTPacket_decode:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:190    .text.MQTTPacket_decode:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:192    .text.MQTTPacket_decode:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:194    .text.MQTTPacket_decode:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:196    .text.MQTTPacket_decode:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:199    .text.MQTTPacket_decode:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:200    .text.MQTTPacket_decode:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:204    .text.MQTTPacket_decode:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:205    .text.MQTTPacket_decode:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:211    .text.MQTTPacket_decode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:213    .text.MQTTPacket_decode:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:215    .text.MQTTPacket_decode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:216    .text.MQTTPacket_decode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:217    .text.MQTTPacket_decode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:218    .text.MQTTPacket_decode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:219    .text.MQTTPacket_decode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:220    .text.MQTTPacket_decode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:221    .text.MQTTPacket_decode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:222    .text.MQTTPacket_decode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:229    .text.MQTTPacket_len:0000000000000000 MQTTPacket_len
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:232    .text.MQTTPacket_len:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:234    .text.MQTTPacket_len:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:235    .text.MQTTPacket_len:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:236    .text.MQTTPacket_len:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:239    .text.MQTTPacket_len:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:240    .text.MQTTPacket_len:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:242    .text.MQTTPacket_len:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:244    .text.MQTTPacket_len:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:246    .text.MQTTPacket_len:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:247    .text.MQTTPacket_len:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:253    .text.MQTTPacket_len:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:254    .text.MQTTPacket_len:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:257    .text.MQTTPacket_len:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:258    .text.MQTTPacket_len:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:264    .text.MQTTPacket_len:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:265    .text.MQTTPacket_len:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:268    .text.MQTTPacket_len:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:270    .text.MQTTPacket_len:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:272    .text.MQTTPacket_len:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:273    .text.MQTTPacket_len:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:277    .text.MQTTPacket_len:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:278    .text.MQTTPacket_len:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:285    .text.MQTTPacket_decodeBuf:0000000000000000 MQTTPacket_decodeBuf
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:288    .text.MQTTPacket_decodeBuf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:290    .text.MQTTPacket_decodeBuf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:291    .text.MQTTPacket_decodeBuf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:292    .text.MQTTPacket_decodeBuf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:295    .text.MQTTPacket_decodeBuf:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:296    .text.MQTTPacket_decodeBuf:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:301    .text.MQTTPacket_decodeBuf:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:308    .text.readInt:0000000000000000 readInt
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:311    .text.readInt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:313    .text.readInt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:314    .text.readInt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:315    .text.readInt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:318    .text.readInt:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:319    .text.readInt:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:321    .text.readInt:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:323    .text.readInt:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:326    .text.readInt:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:329    .text.readInt:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:330    .text.readInt:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:333    .text.readInt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:334    .text.readInt:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:337    .text.readInt:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:344    .text.readChar:0000000000000000 readChar
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:347    .text.readChar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:349    .text.readChar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:350    .text.readChar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:351    .text.readChar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:353    .text.readChar:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:355    .text.readChar:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:357    .text.readChar:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:360    .text.readChar:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:361    .text.readChar:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:363    .text.readChar:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:364    .text.readChar:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:365    .text.readChar:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:372    .text.writeChar:0000000000000000 writeChar
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:375    .text.writeChar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:377    .text.writeChar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:378    .text.writeChar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:379    .text.writeChar:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:381    .text.writeChar:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:383    .text.writeChar:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:384    .text.writeChar:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:388    .text.writeChar:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:389    .text.writeChar:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:396    .text.writeInt:0000000000000000 writeInt
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:399    .text.writeInt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:401    .text.writeInt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:402    .text.writeInt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:403    .text.writeInt:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:406    .text.writeInt:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:408    .text.writeInt:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:411    .text.writeInt:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:413    .text.writeInt:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:414    .text.writeInt:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:416    .text.writeInt:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:419    .text.writeInt:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:420    .text.writeInt:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:422    .text.writeInt:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:423    .text.writeInt:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:427    .text.writeInt:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:428    .text.writeInt:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:435    .text.writeCString:0000000000000000 writeCString
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:438    .text.writeCString:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:440    .text.writeCString:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:441    .text.writeCString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:442    .text.writeCString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:443    .text.writeCString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:444    .text.writeCString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:445    .text.writeCString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:447    .text.writeCString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:448    .text.writeCString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:450    .text.writeCString:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:453    .text.writeCString:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:455    .text.writeCString:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:460    .text.writeCString:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:465    .text.writeCString:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:471    .text.writeCString:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:472    .text.writeCString:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:476    .text.writeCString:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:477    .text.writeCString:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:478    .text.writeCString:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:479    .text.writeCString:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:480    .text.writeCString:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:481    .text.writeCString:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:482    .text.writeCString:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:489    .text.getLenStringLen:0000000000000000 getLenStringLen
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:492    .text.getLenStringLen:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:494    .text.getLenStringLen:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:495    .text.getLenStringLen:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:496    .text.getLenStringLen:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:497    .text.getLenStringLen:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:499    .text.getLenStringLen:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:502    .text.getLenStringLen:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:505    .text.getLenStringLen:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:508    .text.getLenStringLen:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:515    .text.writeMQTTString:0000000000000000 writeMQTTString
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:518    .text.writeMQTTString:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:520    .text.writeMQTTString:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:521    .text.writeMQTTString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:522    .text.writeMQTTString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:523    .text.writeMQTTString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:524    .text.writeMQTTString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:525    .text.writeMQTTString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:530    .text.writeMQTTString:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:531    .text.writeMQTTString:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:533    .text.writeMQTTString:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:535    .text.writeMQTTString:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:539    .text.writeMQTTString:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:542    .text.writeMQTTString:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:548    .text.writeMQTTString:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:549    .text.writeMQTTString:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:555    .text.writeMQTTString:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:556    .text.writeMQTTString:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:557    .text.writeMQTTString:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:558    .text.writeMQTTString:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:559    .text.writeMQTTString:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:560    .text.writeMQTTString:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:561    .text.writeMQTTString:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:564    .text.writeMQTTString:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:567    .text.writeMQTTString:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:568    .text.writeMQTTString:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:570    .text.writeMQTTString:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:576    .text.writeMQTTString:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:580    .text.writeMQTTString:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:581    .text.writeMQTTString:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:588    .text.readMQTTLenString:0000000000000000 readMQTTLenString
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:591    .text.readMQTTLenString:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:593    .text.readMQTTLenString:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:594    .text.readMQTTLenString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:595    .text.readMQTTLenString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:596    .text.readMQTTLenString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:597    .text.readMQTTLenString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:598    .text.readMQTTLenString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:601    .text.readMQTTLenString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:602    .text.readMQTTLenString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:603    .text.readMQTTLenString:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:605    .text.readMQTTLenString:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:607    .text.readMQTTLenString:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:609    .text.readMQTTLenString:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:611    .text.readMQTTLenString:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:615    .text.readMQTTLenString:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:619    .text.readMQTTLenString:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:620    .text.readMQTTLenString:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:622    .text.readMQTTLenString:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:623    .text.readMQTTLenString:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:624    .text.readMQTTLenString:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:625    .text.readMQTTLenString:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:626    .text.readMQTTLenString:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:627    .text.readMQTTLenString:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:628    .text.readMQTTLenString:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:629    .text.readMQTTLenString:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:632    .text.readMQTTLenString:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:634    .text.readMQTTLenString:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:638    .text.readMQTTLenString:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:639    .text.readMQTTLenString:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:642    .text.readMQTTLenString:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:644    .text.readMQTTLenString:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:646    .text.readMQTTLenString:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:647    .text.readMQTTLenString:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:649    .text.readMQTTLenString:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:651    .text.readMQTTLenString:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:652    .text.readMQTTLenString:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:654    .text.readMQTTLenString:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:655    .text.readMQTTLenString:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:658    .text.readMQTTLenString:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:659    .text.readMQTTLenString:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:661    .text.readMQTTLenString:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:668    .text.MQTTstrlen:0000000000000000 MQTTstrlen
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:671    .text.MQTTstrlen:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:672    .text.MQTTstrlen:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:676    .text.MQTTstrlen:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:677    .text.MQTTstrlen:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:678    .text.MQTTstrlen:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:680    .text.MQTTstrlen:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:681    .text.MQTTstrlen:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:685    .text.MQTTstrlen:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:686    .text.MQTTstrlen:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:689    .text.MQTTstrlen:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:690    .text.MQTTstrlen:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:691    .text.MQTTstrlen:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:698    .text.MQTTPacket_equals:0000000000000000 MQTTPacket_equals
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:701    .text.MQTTPacket_equals:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:703    .text.MQTTPacket_equals:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:704    .text.MQTTPacket_equals:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:705    .text.MQTTPacket_equals:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:706    .text.MQTTPacket_equals:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:707    .text.MQTTPacket_equals:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:710    .text.MQTTPacket_equals:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:711    .text.MQTTPacket_equals:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:712    .text.MQTTPacket_equals:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:713    .text.MQTTPacket_equals:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:715    .text.MQTTPacket_equals:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:716    .text.MQTTPacket_equals:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:718    .text.MQTTPacket_equals:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:720    .text.MQTTPacket_equals:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:723    .text.MQTTPacket_equals:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:724    .text.MQTTPacket_equals:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:725    .text.MQTTPacket_equals:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:733    .text.MQTTPacket_equals:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:737    .text.MQTTPacket_equals:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:738    .text.MQTTPacket_equals:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:741    .text.MQTTPacket_equals:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:743    .text.MQTTPacket_equals:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:746    .text.MQTTPacket_equals:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:747    .text.MQTTPacket_equals:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:751    .text.MQTTPacket_equals:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:756    .text.MQTTPacket_equals:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:759    .text.MQTTPacket_equals:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:760    .text.MQTTPacket_equals:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:761    .text.MQTTPacket_equals:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:764    .text.MQTTPacket_equals:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:765    .text.MQTTPacket_equals:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:766    .text.MQTTPacket_equals:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:767    .text.MQTTPacket_equals:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:770    .text.MQTTPacket_equals:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:772    .text.MQTTPacket_equals:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:773    .text.MQTTPacket_equals:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:776    .text.MQTTPacket_equals:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:777    .text.MQTTPacket_equals:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:780    .text.MQTTPacket_equals:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:785    .sbss.bufptr:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:788    .sbss.bufptr:0000000000000000 bufptr
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:66     .text.bufchar:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:130    .text.MQTTPacket_encode:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:225    .text.MQTTPacket_decode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:281    .text.MQTTPacket_len:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:304    .text.MQTTPacket_decodeBuf:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:340    .text.readInt:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:368    .text.readChar:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:392    .text.writeChar:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:431    .text.writeInt:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:485    .text.writeCString:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:511    .text.getLenStringLen:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:584    .text.writeMQTTString:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:664    .text.readMQTTLenString:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:694    .text.MQTTstrlen:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:783    .text.MQTTPacket_equals:0000000000000052 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:49     .text.bufchar:0000000000000026 .L3
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:44     .text.bufchar:0000000000000024 .L4
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:34     .text.bufchar:0000000000000014 .L2
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:112    .text.MQTTPacket_encode:0000000000000022 .L9
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:89     .text.MQTTPacket_encode:000000000000000c .L10
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:209    .text.MQTTPacket_decode:0000000000000046 .L12
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:168    .text.MQTTPacket_decode:0000000000000018 .L14
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:251    .text.MQTTPacket_len:0000000000000012 .L18
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:262    .text.MQTTPacket_len:000000000000001c .L20
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:275    .text.MQTTPacket_len:000000000000002c .L17
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:563    .text.writeMQTTString:000000000000003a .L32
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:574    .text.writeMQTTString:0000000000000048 .L34
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:553    .text.writeMQTTString:0000000000000032 .L31
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:631    .text.readMQTTLenString:0000000000000024 .L37
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:613    .text.readMQTTLenString:0000000000000016 .L39
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:617    .text.readMQTTLenString:0000000000000018 .L38
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:683    .text.MQTTstrlen:000000000000000e .L42
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:769    .text.MQTTPacket_equals:000000000000004c .L49
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:757    .text.MQTTPacket_equals:0000000000000042 .L48
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:731    .text.MQTTPacket_equals:000000000000001c .L50
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:1670   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3071   .debug_str:0000000000000398 .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2973   .debug_str:0000000000000045 .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3019   .debug_str:00000000000001fe .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2911   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2959   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3003   .debug_str:00000000000001a2 .LASF54
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2961   .debug_str:0000000000000000 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2981   .debug_str:000000000000011b .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3017   .debug_str:00000000000001e5 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2999   .debug_str:000000000000018e .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3041   .debug_str:000000000000030e .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3011   .debug_str:00000000000001c8 .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3053   .debug_str:000000000000034b .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3049   .debug_str:0000000000000336 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3031   .debug_str:00000000000002d4 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2977   .debug_str:00000000000000fa .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3023   .debug_str:00000000000002a0 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3015   .debug_str:00000000000001d2 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2985   .debug_str:000000000000013f .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3045   .debug_str:0000000000000327 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2989   .debug_str:0000000000000154 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3005   .debug_str:00000000000001a9 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2983   .debug_str:0000000000000131 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2979   .debug_str:0000000000000104 .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3073   .debug_str:000000000000047f .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3057   .debug_str:0000000000000355 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:699    .text.MQTTPacket_equals:0000000000000000 .LFB15
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:781    .text.MQTTPacket_equals:0000000000000052 .LFE15
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2160   .debug_loc:0000000000000000 .LLST32
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3067   .debug_str:0000000000000386 .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2178   .debug_loc:000000000000002c .LLST33
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3055   .debug_str:0000000000000350 .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2189   .debug_loc:000000000000004a .LLST34
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3009   .debug_str:00000000000001c3 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2220   .debug_loc:0000000000000098 .LLST35
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2967   .debug_str:0000000000000031 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2241   .debug_loc:00000000000000ce .LLST36
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:728    .text.MQTTPacket_equals:000000000000001a .LVL78
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:739    .text.MQTTPacket_equals:0000000000000028 .LVL81
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:754    .text.MQTTPacket_equals:000000000000003e .LVL84
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3043   .debug_str:000000000000031c .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:669    .text.MQTTstrlen:0000000000000000 .LFB14
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:692    .text.MQTTstrlen:0000000000000012 .LFE14
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3075   .debug_str:0000000000000486 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2252   .debug_loc:00000000000000ec .LLST30
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2280   .debug_loc:0000000000000122 .LLST31
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:682    .text.MQTTstrlen:000000000000000e .LVL72
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2975   .debug_str:00000000000000e8 .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:589    .text.readMQTTLenString:0000000000000000 .LFB13
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:662    .text.readMQTTLenString:0000000000000046 .LFE13
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2292   .debug_loc:0000000000000141 .LLST26
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3013   .debug_str:00000000000001cd .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2303   .debug_loc:000000000000015f .LLST27
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3007   .debug_str:00000000000001bb .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2325   .debug_loc:0000000000000196 .LLST28
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2347   .debug_loc:00000000000001cd .LLST29
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:640    .text.readMQTTLenString:0000000000000032 .LVL69
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3029   .debug_str:00000000000002c4 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:516    .text.writeMQTTString:0000000000000000 .LFB12
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:582    .text.writeMQTTString:0000000000000054 .LFE12
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2369   .debug_loc:0000000000000204 .LLST24
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2409   .debug_loc:0000000000000262 .LLST25
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:540    .text.writeMQTTString:000000000000001e .LVL57
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:546    .text.writeMQTTString:000000000000002c .LVL58
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:571    .text.writeMQTTString:0000000000000046 .LVL61
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:578    .text.writeMQTTString:0000000000000052 .LVL63
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3025   .debug_str:00000000000002ab .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:490    .text.getLenStringLen:0000000000000000 .LFB11
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:509    .text.getLenStringLen:000000000000000e .LFE11
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2445   .debug_loc:00000000000002a0 .LLST22
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2459   .debug_loc:00000000000002c1 .LLST23
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3069   .debug_str:000000000000038b .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:436    .text.writeCString:0000000000000000 .LFB10
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:483    .text.writeCString:0000000000000040 .LFE10
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2524   .debug_loc:0000000000000323 .LLST20
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2969   .debug_str:0000000000000036 .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2535   .debug_loc:0000000000000341 .LLST21
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:456    .text.writeCString:0000000000000016 .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:463    .text.writeCString:0000000000000024 .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:469    .text.writeCString:0000000000000032 .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2987   .debug_str:000000000000014b .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:397    .text.writeInt:0000000000000000 .LFB9
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:429    .text.writeInt:0000000000000026 .LFE9
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3061   .debug_str:000000000000036e .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2546   .debug_loc:000000000000035f .LLST19
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3063   .debug_str:0000000000000374 .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:373    .text.writeChar:0000000000000000 .LFB8
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:390    .text.writeChar:000000000000000e .LFE8
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3027   .debug_str:00000000000002bb .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:345    .text.readChar:0000000000000000 .LFB7
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:366    .text.readChar:000000000000000e .LFE7
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2560   .debug_loc:0000000000000380 .LLST18
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2971   .debug_str:000000000000003d .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:309    .text.readInt:0000000000000000 .LFB6
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:338    .text.readInt:0000000000000016 .LFE6
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2571   .debug_loc:000000000000039e .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2585   .debug_loc:00000000000003bf .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2603   .debug_loc:00000000000003eb .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3035   .debug_str:00000000000002e7 .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:286    .text.MQTTPacket_decodeBuf:0000000000000000 .LFB5
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:302    .text.MQTTPacket_decodeBuf:0000000000000018 .LFE5
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2619   .debug_loc:000000000000040e .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2997   .debug_str:0000000000000188 .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2638   .debug_loc:000000000000043e .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:300    .text.MQTTPacket_decodeBuf:0000000000000018 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3065   .debug_str:000000000000037e .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:14     .text.bufchar:0000000000000000 .LFB4
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:64     .text.bufchar:0000000000000038 .LFE4
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2652   .debug_loc:000000000000045f .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2963   .debug_str:000000000000001c .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2663   .debug_loc:000000000000047d .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2674   .debug_loc:000000000000049b .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2965   .debug_str:0000000000000022 .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:230    .text.MQTTPacket_len:0000000000000000 .LFB3
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:279    .text.MQTTPacket_len:000000000000002e .LFE3
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3037   .debug_str:00000000000002fc .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2700   .debug_loc:00000000000004dd .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2991   .debug_str:000000000000015d .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:135    .text.MQTTPacket_decode:0000000000000000 .LFB2
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:223    .text.MQTTPacket_decode:0000000000000052 .LFE2
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3039   .debug_str:0000000000000304 .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2727   .debug_loc:0000000000000527 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2738   .debug_loc:0000000000000545 .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3033   .debug_str:00000000000002dc .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2749   .debug_loc:0000000000000563 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2761   .debug_loc:0000000000000582 .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3047   .debug_str:0000000000000331 .LASF55
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:207    .text.MQTTPacket_decode:0000000000000046 .L13
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2773   .debug_loc:00000000000005a1 .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:183    .text.MQTTPacket_decode:0000000000000026 .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2995   .debug_str:0000000000000176 .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:71     .text.MQTTPacket_encode:0000000000000000 .LFB1
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:128    .text.MQTTPacket_encode:0000000000000032 .LFE1
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2786   .debug_loc:00000000000005c1 .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3051   .debug_str:0000000000000344 .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2797   .debug_loc:00000000000005df .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2808   .debug_loc:00000000000005fd .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2820   .debug_loc:000000000000061c .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3001   .debug_str:000000000000019b .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3059   .debug_str:0000000000000367 .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:2993   .debug_str:000000000000016f .LASF56
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:3021   .debug_str:000000000000028f .LASF57
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:702    .text.MQTTPacket_equals:0000000000000000 .LVL74
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:726    .text.MQTTPacket_equals:0000000000000012 .LVL77
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:768    .text.MQTTPacket_equals:000000000000004c .LVL86
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:709    .text.MQTTPacket_equals:0000000000000008 .LVL75
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:730    .text.MQTTPacket_equals:000000000000001c .LVL79
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:735    .text.MQTTPacket_equals:0000000000000020 .LVL80
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:762    .text.MQTTPacket_equals:0000000000000044 .LVL85
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:778    .text.MQTTPacket_equals:0000000000000050 .LVL88
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:744    .text.MQTTPacket_equals:000000000000002c .LVL82
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:748    .text.MQTTPacket_equals:000000000000002e .LVL83
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:722    .text.MQTTPacket_equals:0000000000000010 .LVL76
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:774    .text.MQTTPacket_equals:000000000000004e .LVL87
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:674    .text.MQTTstrlen:0000000000000004 .LVL71
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:687    .text.MQTTstrlen:0000000000000010 .LVL73
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:592    .text.readMQTTLenString:0000000000000000 .LVL64
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:612    .text.readMQTTLenString:0000000000000016 .LVL66
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:630    .text.readMQTTLenString:0000000000000024 .LVL68
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:600    .text.readMQTTLenString:0000000000000008 .LVL65
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:616    .text.readMQTTLenString:0000000000000018 .LVL67
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:657    .text.readMQTTLenString:0000000000000042 .LVL70
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:519    .text.writeMQTTString:0000000000000000 .LVL53
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:552    .text.writeMQTTString:0000000000000032 .LVL59
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:562    .text.writeMQTTString:000000000000003a .LVL60
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:573    .text.writeMQTTString:0000000000000048 .LVL62
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:526    .text.writeMQTTString:0000000000000008 .LVL54
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:528    .text.writeMQTTString:000000000000000c .LVL55
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:536    .text.writeMQTTString:0000000000000014 .LVL56
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:493    .text.getLenStringLen:0000000000000000 .LVL49
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:500    .text.getLenStringLen:0000000000000008 .LVL50
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:503    .text.getLenStringLen:000000000000000a .LVL51
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:506    .text.getLenStringLen:000000000000000c .LVL52
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:439    .text.writeCString:0000000000000000 .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:451    .text.writeCString:000000000000000c .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:400    .text.writeInt:0000000000000000 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:409    .text.writeInt:000000000000000e .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:348    .text.readChar:0000000000000000 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:358    .text.readChar:000000000000000a .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:312    .text.readInt:0000000000000000 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:335    .text.readInt:0000000000000014 .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:316    .text.readInt:0000000000000002 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:324    .text.readInt:000000000000000c .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:331    .text.readInt:0000000000000010 .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:327    .text.readInt:000000000000000e .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:289    .text.MQTTPacket_decodeBuf:0000000000000000 .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:297    .text.MQTTPacket_decodeBuf:000000000000000c .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:18     .text.bufchar:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:29     .text.bufchar:000000000000000e .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:33     .text.bufchar:0000000000000014 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:39     .text.bufchar:000000000000001a .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:48     .text.bufchar:0000000000000026 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:56     .text.bufchar:0000000000000030 .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:60     .text.bufchar:0000000000000034 .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:233    .text.MQTTPacket_len:0000000000000000 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:237    .text.MQTTPacket_len:0000000000000004 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:248    .text.MQTTPacket_len:0000000000000010 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:250    .text.MQTTPacket_len:0000000000000012 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:259    .text.MQTTPacket_len:000000000000001a .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:261    .text.MQTTPacket_len:000000000000001c .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:274    .text.MQTTPacket_len:000000000000002c .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:138    .text.MQTTPacket_decode:0000000000000000 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:167    .text.MQTTPacket_decode:0000000000000018 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:149    .text.MQTTPacket_decode:0000000000000008 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:208    .text.MQTTPacket_decode:0000000000000046 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:74     .text.MQTTPacket_encode:0000000000000000 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:84     .text.MQTTPacket_encode:0000000000000008 .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:103    .text.MQTTPacket_encode:000000000000001a .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:88     .text.MQTTPacket_encode:000000000000000c .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:99     .text.MQTTPacket_encode:0000000000000016 .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:108    .text.MQTTPacket_encode:000000000000001e .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:111    .text.MQTTPacket_encode:0000000000000022 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:796    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:78     .text.MQTTPacket_encode:0000000000000002 .LBB2
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:81     .text.MQTTPacket_encode:0000000000000006 .LBE2
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:85     .text.MQTTPacket_encode:0000000000000008 .LBB3
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:90     .text.MQTTPacket_encode:000000000000000c .LBE3
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:92     .text.MQTTPacket_encode:000000000000000c .LBB4
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:120    .text.MQTTPacket_encode:000000000000002c .LBE4
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:164    .text.MQTTPacket_decode:0000000000000016 .LBB5
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:169    .text.MQTTPacket_decode:0000000000000018 .LBE5
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:171    .text.MQTTPacket_decode:0000000000000018 .LBB6
+C:\Users\stapi\AppData\Local\Temp\ccMZ23EK.s:202    .text.MQTTPacket_decode:000000000000003e .LBE6
+
+UNDEFINED SYMBOLS
+__riscv_save_5
+__riscv_restore_5
+__riscv_save_3
+strlen
+memcpy
+__riscv_restore_3
+__riscv_save_2
+memcmp
+__riscv_restore_2

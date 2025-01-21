@@ -1,0 +1,642 @@
+   1              		.file	"crypto_internal-rsa.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.crypto_public_key_import,"ax",@progbits
+  10              		.align	1
+  11              		.globl	crypto_public_key_import
+  13              	crypto_public_key_import:
+  14              	.LFB71:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c ****  * Crypto wrapper for internal crypto implementation - RSA parts
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c ****  * Copyright (c) 2006-2009, Jouni Malinen <j@w1.fi>
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c ****  *
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c ****  * This software may be distributed under the terms of the BSD license.
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c ****  * See README for more details.
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c ****  */
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** #include "includes.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** #include "common.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** #include "crypto.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** #include "tls/rsa.h"
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** #include "tls/pkcs1.h"
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** #include "tls/pkcs8.h"
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** /* Stub structures; these are just typecast to struct crypto_rsa_key */
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** struct crypto_public_key;
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** struct crypto_private_key;
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** struct crypto_public_key * crypto_public_key_import(const u8 *key, size_t len)
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+  16              		.loc 1 23 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return (struct crypto_public_key *)
+  19              		.loc 1 24 2
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		crypto_rsa_import_public_key(key, len);
+  20              		.loc 1 25 3 is_stmt 0
+  21 0000 17030000 		tail	crypto_rsa_import_public_key
+  21      67000300 
+  22              	.LVL1:
+  23              		.cfi_endproc
+  24              	.LFE71:
+  26              		.section	.text.crypto_public_key_import_parts,"ax",@progbits
+  27              		.align	1
+  28              		.globl	crypto_public_key_import_parts
+  30              	crypto_public_key_import_parts:
+  31              	.LFB72:
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** }
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** struct crypto_public_key *
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** crypto_public_key_import_parts(const u8 *n, size_t n_len,
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 			       const u8 *e, size_t e_len)
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+  32              		.loc 1 32 1 is_stmt 1
+  33              		.cfi_startproc
+  34              	.LVL2:
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return (struct crypto_public_key *)
+  35              		.loc 1 33 2
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		crypto_rsa_import_public_key_parts(n, n_len, e, e_len);
+  36              		.loc 1 34 3 is_stmt 0
+  37 0000 17030000 		tail	crypto_rsa_import_public_key_parts
+  37      67000300 
+  38              	.LVL3:
+  39              		.cfi_endproc
+  40              	.LFE72:
+  42              		.section	.rodata.crypto_private_key_import.str1.4,"aMS",@progbits,1
+  43              		.align	2
+  44              	.LC0:
+  45 0000 54727969 		.string	"Trying to parse PKCS #1 encoded RSA private key"
+  45      6E672074 
+  45      6F207061 
+  45      72736520 
+  45      504B4353 
+  46              		.section	.text.crypto_private_key_import,"ax",@progbits
+  47              		.align	1
+  48              		.globl	crypto_private_key_import
+  50              	crypto_private_key_import:
+  51              	.LFB73:
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** }
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** struct crypto_private_key * crypto_private_key_import(const u8 *key,
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 						      size_t len,
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 						      const char *passwd)
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+  52              		.loc 1 41 1 is_stmt 1
+  53              		.cfi_startproc
+  54              	.LVL4:
+  55 0000 17030000 		call	t0,__riscv_save_2
+  55      E7020300 
+  56              		.cfi_offset 9, -12
+  57              		.cfi_offset 8, -8
+  58              		.cfi_offset 1, -4
+  59              		.cfi_def_cfa_offset 16
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	struct crypto_private_key *res;
+  60              		.loc 1 42 2
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	/* First, check for possible PKCS #8 encoding */
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	res = pkcs8_key_import(key, len);
+  61              		.loc 1 45 2
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	struct crypto_private_key *res;
+  62              		.loc 1 41 1 is_stmt 0
+  63 0008 4111     		addi	sp,sp,-16
+  64              		.cfi_def_cfa_offset 32
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	struct crypto_private_key *res;
+  65              		.loc 1 41 1
+  66 000a 2A84     		mv	s0,a0
+  67 000c AE84     		mv	s1,a1
+  68 000e 32C6     		sw	a2,12(sp)
+  69              		.loc 1 45 8
+  70 0010 97000000 		call	pkcs8_key_import
+  70      E7800000 
+  71              	.LVL5:
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	if (res)
+  72              		.loc 1 46 2 is_stmt 1
+  73              		.loc 1 46 5 is_stmt 0
+  74 0018 15E1     		bne	a0,zero,.L5
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		return res;
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	if (passwd) {
+  75              		.loc 1 49 2 is_stmt 1
+  76              		.loc 1 49 5 is_stmt 0
+  77 001a 3246     		lw	a2,12(sp)
+  78 001c 0DE6     		bne	a2,zero,.L7
+  79              	.L8:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		/* Try to parse as encrypted PKCS #8 */
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		res = pkcs8_enc_key_import(key, len, passwd);
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		if (res)
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 			return res;
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	}
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	/* Not PKCS#8, so try to import PKCS #1 encoded RSA private key */
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	wpa_printf(MSG_DEBUG, "Trying to parse PKCS #1 encoded RSA private "
+  80              		.loc 1 57 2 is_stmt 1
+  81 001e B7050000 		lui	a1,%hi(.LC0)
+  82 0022 93850500 		addi	a1,a1,%lo(.LC0)
+  83 0026 0945     		li	a0,2
+  84              	.LVL6:
+  85 0028 97000000 		call	wpa_printf
+  85      E7800000 
+  86              	.LVL7:
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		   "key");
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return (struct crypto_private_key *)
+  87              		.loc 1 59 2
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		crypto_rsa_import_private_key(key, len);
+  88              		.loc 1 60 3 is_stmt 0
+  89 0030 A685     		mv	a1,s1
+  90 0032 2285     		mv	a0,s0
+  91 0034 97000000 		call	crypto_rsa_import_private_key
+  91      E7800000 
+  92              	.LVL8:
+  93              	.L5:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** }
+  94              		.loc 1 61 1
+  95 003c 4101     		addi	sp,sp,16
+  96              		.cfi_remember_state
+  97              		.cfi_def_cfa_offset 0
+  98              	.LVL9:
+  99 003e 17030000 		tail	__riscv_restore_2
+  99      67000300 
+ 100              		.cfi_restore 9
+ 101              		.cfi_restore 8
+ 102              		.cfi_restore 1
+ 103              		.cfi_def_cfa_offset -16
+ 104              	.LVL10:
+ 105              	.L7:
+ 106              		.cfi_restore_state
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		if (res)
+ 107              		.loc 1 51 3 is_stmt 1
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 		if (res)
+ 108              		.loc 1 51 9 is_stmt 0
+ 109 0046 A685     		mv	a1,s1
+ 110 0048 2285     		mv	a0,s0
+ 111              	.LVL11:
+ 112 004a 97000000 		call	pkcs8_enc_key_import
+ 112      E7800000 
+ 113              	.LVL12:
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 			return res;
+ 114              		.loc 1 52 3 is_stmt 1
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 			return res;
+ 115              		.loc 1 52 6 is_stmt 0
+ 116 0052 6DF5     		bne	a0,zero,.L5
+ 117 0054 E9B7     		j	.L8
+ 118              		.cfi_endproc
+ 119              	.LFE73:
+ 121              		.section	.text.crypto_public_key_from_cert,"ax",@progbits
+ 122              		.align	1
+ 123              		.globl	crypto_public_key_from_cert
+ 125              	crypto_public_key_from_cert:
+ 126              	.LFB74:
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** struct crypto_public_key * crypto_public_key_from_cert(const u8 *buf,
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 						       size_t len)
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+ 127              		.loc 1 66 1 is_stmt 1
+ 128              		.cfi_startproc
+ 129              	.LVL13:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	/* No X.509 support in crypto_internal.c */
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return NULL;
+ 130              		.loc 1 68 2
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** }
+ 131              		.loc 1 69 1 is_stmt 0
+ 132 0000 0145     		li	a0,0
+ 133              	.LVL14:
+ 134 0002 8280     		ret
+ 135              		.cfi_endproc
+ 136              	.LFE74:
+ 138              		.section	.text.crypto_public_key_encrypt_pkcs1_v15,"ax",@progbits
+ 139              		.align	1
+ 140              		.globl	crypto_public_key_encrypt_pkcs1_v15
+ 142              	crypto_public_key_encrypt_pkcs1_v15:
+ 143              	.LFB75:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** int crypto_public_key_encrypt_pkcs1_v15(struct crypto_public_key *key,
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 					const u8 *in, size_t inlen,
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 					u8 *out, size_t *outlen)
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+ 144              		.loc 1 75 1 is_stmt 1
+ 145              		.cfi_startproc
+ 146              	.LVL15:
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return pkcs1_encrypt(2, (struct crypto_rsa_key *) key,
+ 147              		.loc 1 76 2
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return pkcs1_encrypt(2, (struct crypto_rsa_key *) key,
+ 148              		.loc 1 75 1 is_stmt 0
+ 149 0000 B687     		mv	a5,a3
+ 150              		.loc 1 76 9
+ 151 0002 3A88     		mv	a6,a4
+ 152 0004 AE86     		mv	a3,a1
+ 153              	.LVL16:
+ 154 0006 3287     		mv	a4,a2
+ 155              	.LVL17:
+ 156 0008 AA85     		mv	a1,a0
+ 157              	.LVL18:
+ 158 000a 0146     		li	a2,0
+ 159              	.LVL19:
+ 160 000c 0945     		li	a0,2
+ 161              	.LVL20:
+ 162 000e 17030000 		tail	pkcs1_encrypt
+ 162      67000300 
+ 163              	.LVL21:
+ 164              		.cfi_endproc
+ 165              	.LFE75:
+ 167              		.section	.text.crypto_private_key_decrypt_pkcs1_v15,"ax",@progbits
+ 168              		.align	1
+ 169              		.globl	crypto_private_key_decrypt_pkcs1_v15
+ 171              	crypto_private_key_decrypt_pkcs1_v15:
+ 172              	.LFB76:
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 			     0, in, inlen, out, outlen);
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** }
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** int crypto_private_key_decrypt_pkcs1_v15(struct crypto_private_key *key,
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 					 const u8 *in, size_t inlen,
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 					 u8 *out, size_t *outlen)
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+ 173              		.loc 1 84 1 is_stmt 1
+ 174              		.cfi_startproc
+ 175              	.LVL22:
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return pkcs1_v15_private_key_decrypt((struct crypto_rsa_key *) key,
+ 176              		.loc 1 85 2
+ 177              		.loc 1 85 9 is_stmt 0
+ 178 0000 17030000 		tail	pkcs1_v15_private_key_decrypt
+ 178      67000300 
+ 179              	.LVL23:
+ 180              		.cfi_endproc
+ 181              	.LFE76:
+ 183              		.section	.text.crypto_private_key_sign_pkcs1,"ax",@progbits
+ 184              		.align	1
+ 185              		.globl	crypto_private_key_sign_pkcs1
+ 187              	crypto_private_key_sign_pkcs1:
+ 188              	.LFB77:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 					     in, inlen, out, outlen);
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** }
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** int crypto_private_key_sign_pkcs1(struct crypto_private_key *key,
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 				  const u8 *in, size_t inlen,
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 				  u8 *out, size_t *outlen)
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+ 189              		.loc 1 93 1 is_stmt 1
+ 190              		.cfi_startproc
+ 191              	.LVL24:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return pkcs1_encrypt(1, (struct crypto_rsa_key *) key,
+ 192              		.loc 1 94 2
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return pkcs1_encrypt(1, (struct crypto_rsa_key *) key,
+ 193              		.loc 1 93 1 is_stmt 0
+ 194 0000 B687     		mv	a5,a3
+ 195              		.loc 1 94 9
+ 196 0002 3A88     		mv	a6,a4
+ 197 0004 AE86     		mv	a3,a1
+ 198              	.LVL25:
+ 199 0006 3287     		mv	a4,a2
+ 200              	.LVL26:
+ 201 0008 AA85     		mv	a1,a0
+ 202              	.LVL27:
+ 203 000a 0546     		li	a2,1
+ 204              	.LVL28:
+ 205 000c 0545     		li	a0,1
+ 206              	.LVL29:
+ 207 000e 17030000 		tail	pkcs1_encrypt
+ 207      67000300 
+ 208              	.LVL30:
+ 209              		.cfi_endproc
+ 210              	.LFE77:
+ 212              		.section	.text.crypto_public_key_free,"ax",@progbits
+ 213              		.align	1
+ 214              		.globl	crypto_public_key_free
+ 216              	crypto_public_key_free:
+ 217              	.LFB78:
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 			     1, in, inlen, out, outlen);
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** }
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** void crypto_public_key_free(struct crypto_public_key *key)
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+ 218              		.loc 1 100 1 is_stmt 1
+ 219              		.cfi_startproc
+ 220              	.LVL31:
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	crypto_rsa_free((struct crypto_rsa_key *) key);
+ 221              		.loc 1 101 2
+ 222 0000 17030000 		tail	crypto_rsa_free
+ 222      67000300 
+ 223              	.LVL32:
+ 224              		.cfi_endproc
+ 225              	.LFE78:
+ 227              		.section	.text.crypto_private_key_free,"ax",@progbits
+ 228              		.align	1
+ 229              		.globl	crypto_private_key_free
+ 231              	crypto_private_key_free:
+ 232              	.LFB82:
+ 233              		.cfi_startproc
+ 234 0000 17030000 		tail	crypto_rsa_free
+ 234      67000300 
+ 235              		.cfi_endproc
+ 236              	.LFE82:
+ 238              		.section	.text.crypto_public_key_decrypt_pkcs1,"ax",@progbits
+ 239              		.align	1
+ 240              		.globl	crypto_public_key_decrypt_pkcs1
+ 242              	crypto_public_key_decrypt_pkcs1:
+ 243              	.LFB80:
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** }
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** void crypto_private_key_free(struct crypto_private_key *key)
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	crypto_rsa_free((struct crypto_rsa_key *) key);
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** }
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** int crypto_public_key_decrypt_pkcs1(struct crypto_public_key *key,
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 				    const u8 *crypt, size_t crypt_len,
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 				    u8 *plain, size_t *plain_len)
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** {
+ 244              		.loc 1 114 1
+ 245              		.cfi_startproc
+ 246              	.LVL33:
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\crypto_internal-rsa.c **** 	return pkcs1_decrypt_public_key((struct crypto_rsa_key *) key,
+ 247              		.loc 1 115 2
+ 248              		.loc 1 115 9 is_stmt 0
+ 249 0000 17030000 		tail	pkcs1_decrypt_public_key
+ 249      67000300 
+ 250              	.LVL34:
+ 251              		.cfi_endproc
+ 252              	.LFE80:
+ 254              		.text
+ 255              	.Letext0:
+ 256              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 257              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 258              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 259              		.file 5 "..\\..\\..\\..\\wpa_supplicant\\src/tls/pkcs1.h"
+ 260              		.file 6 "..\\..\\..\\..\\wpa_supplicant\\src/tls/pkcs8.h"
+ 261              		.file 7 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/wpa_debug.h"
+ 262              		.file 8 "..\\..\\..\\..\\wpa_supplicant\\src/tls/rsa.h"
+ 263              		.file 9 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/common.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 crypto_internal-rsa.c
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:13     .text.crypto_public_key_import:0000000000000000 crypto_public_key_import
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:17     .text.crypto_public_key_import:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:19     .text.crypto_public_key_import:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:20     .text.crypto_public_key_import:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:21     .text.crypto_public_key_import:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:23     .text.crypto_public_key_import:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:30     .text.crypto_public_key_import_parts:0000000000000000 crypto_public_key_import_parts
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:33     .text.crypto_public_key_import_parts:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:35     .text.crypto_public_key_import_parts:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:36     .text.crypto_public_key_import_parts:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:37     .text.crypto_public_key_import_parts:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:39     .text.crypto_public_key_import_parts:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:50     .text.crypto_private_key_import:0000000000000000 crypto_private_key_import
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:53     .text.crypto_private_key_import:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:55     .text.crypto_private_key_import:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:56     .text.crypto_private_key_import:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:57     .text.crypto_private_key_import:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:58     .text.crypto_private_key_import:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:59     .text.crypto_private_key_import:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:61     .text.crypto_private_key_import:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:62     .text.crypto_private_key_import:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:63     .text.crypto_private_key_import:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:64     .text.crypto_private_key_import:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:66     .text.crypto_private_key_import:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:70     .text.crypto_private_key_import:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:73     .text.crypto_private_key_import:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:74     .text.crypto_private_key_import:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:76     .text.crypto_private_key_import:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:77     .text.crypto_private_key_import:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:81     .text.crypto_private_key_import:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:88     .text.crypto_private_key_import:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:89     .text.crypto_private_key_import:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:95     .text.crypto_private_key_import:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:96     .text.crypto_private_key_import:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:97     .text.crypto_private_key_import:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:100    .text.crypto_private_key_import:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:101    .text.crypto_private_key_import:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:102    .text.crypto_private_key_import:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:103    .text.crypto_private_key_import:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:106    .text.crypto_private_key_import:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:108    .text.crypto_private_key_import:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:109    .text.crypto_private_key_import:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:115    .text.crypto_private_key_import:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:116    .text.crypto_private_key_import:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:118    .text.crypto_private_key_import:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:125    .text.crypto_public_key_from_cert:0000000000000000 crypto_public_key_from_cert
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:128    .text.crypto_public_key_from_cert:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:130    .text.crypto_public_key_from_cert:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:131    .text.crypto_public_key_from_cert:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:132    .text.crypto_public_key_from_cert:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:135    .text.crypto_public_key_from_cert:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:142    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000000 crypto_public_key_encrypt_pkcs1_v15
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:145    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:147    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:148    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:149    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:151    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:164    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:171    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000000 crypto_private_key_decrypt_pkcs1_v15
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:174    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:176    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:177    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:178    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:180    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:187    .text.crypto_private_key_sign_pkcs1:0000000000000000 crypto_private_key_sign_pkcs1
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:190    .text.crypto_private_key_sign_pkcs1:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:192    .text.crypto_private_key_sign_pkcs1:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:193    .text.crypto_private_key_sign_pkcs1:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:194    .text.crypto_private_key_sign_pkcs1:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:196    .text.crypto_private_key_sign_pkcs1:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:209    .text.crypto_private_key_sign_pkcs1:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:216    .text.crypto_public_key_free:0000000000000000 crypto_public_key_free
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:219    .text.crypto_public_key_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:221    .text.crypto_public_key_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:222    .text.crypto_public_key_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:224    .text.crypto_public_key_free:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:231    .text.crypto_private_key_free:0000000000000000 crypto_private_key_free
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:233    .text.crypto_private_key_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:235    .text.crypto_private_key_free:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:242    .text.crypto_public_key_decrypt_pkcs1:0000000000000000 crypto_public_key_decrypt_pkcs1
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:245    .text.crypto_public_key_decrypt_pkcs1:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:247    .text.crypto_public_key_decrypt_pkcs1:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:248    .text.crypto_public_key_decrypt_pkcs1:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:249    .text.crypto_public_key_decrypt_pkcs1:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:251    .text.crypto_public_key_decrypt_pkcs1:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:26     .text.crypto_public_key_import:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:42     .text.crypto_public_key_import_parts:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:121    .text.crypto_private_key_import:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:138    .text.crypto_public_key_from_cert:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:167    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:183    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:212    .text.crypto_private_key_sign_pkcs1:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:227    .text.crypto_public_key_free:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:254    .text.crypto_public_key_decrypt_pkcs1:0000000000000008 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:44     .rodata.crypto_private_key_import.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:93     .text.crypto_private_key_import:000000000000003c .L5
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:105    .text.crypto_private_key_import:0000000000000046 .L7
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:79     .text.crypto_private_key_import:000000000000001e .L8
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1127   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2074   .debug_str:00000000000001c7 .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2122   .debug_str:0000000000000422 .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2050   .debug_str:0000000000000072 .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2012   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2034   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2048   .debug_str:000000000000006b .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2114   .debug_str:00000000000003f3 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2108   .debug_str:00000000000003ca .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2094   .debug_str:0000000000000341 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2102   .debug_str:000000000000038b .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2046   .debug_str:0000000000000061 .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2116   .debug_str:0000000000000400 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2086   .debug_str:000000000000031b .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2132   .debug_str:0000000000000512 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2078   .debug_str:00000000000002d9 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2110   .debug_str:00000000000003d6 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2118   .debug_str:0000000000000413 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2066   .debug_str:0000000000000185 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2124   .debug_str:00000000000004bc .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2080   .debug_str:00000000000002e7 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2038   .debug_str:000000000000001d .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2084   .debug_str:0000000000000311 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2090   .debug_str:0000000000000332 .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2054   .debug_str:000000000000011e .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2120   .debug_str:0000000000000418 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2136   .debug_str:000000000000052e .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:243    .text.crypto_public_key_decrypt_pkcs1:0000000000000000 .LFB80
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:252    .text.crypto_public_key_decrypt_pkcs1:0000000000000008 .LFE80
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1492   .debug_loc:0000000000000000 .LLST27
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2092   .debug_str:000000000000033b .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1506   .debug_loc:0000000000000021 .LLST28
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2100   .debug_str:0000000000000381 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1520   .debug_loc:0000000000000042 .LLST29
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2112   .debug_str:00000000000003ed .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1534   .debug_loc:0000000000000063 .LLST30
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2134   .debug_str:0000000000000524 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1548   .debug_loc:0000000000000084 .LLST31
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:250    .text.crypto_public_key_decrypt_pkcs1:0000000000000008 .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2106   .debug_str:00000000000003b8 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2096   .debug_str:000000000000034b .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2040   .debug_str:0000000000000029 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2130   .debug_str:00000000000004fb .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2098   .debug_str:0000000000000363 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:188    .text.crypto_private_key_sign_pkcs1:0000000000000000 .LFB77
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:210    .text.crypto_private_key_sign_pkcs1:0000000000000016 .LFE77
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1562   .debug_loc:00000000000000a5 .LLST21
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1580   .debug_loc:00000000000000d1 .LLST22
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2068   .debug_str:000000000000018d .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1598   .debug_loc:00000000000000fd .LLST23
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1616   .debug_loc:0000000000000129 .LLST24
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2044   .debug_str:000000000000005a .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1634   .debug_loc:0000000000000155 .LLST25
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:208    .text.crypto_private_key_sign_pkcs1:0000000000000016 .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2060   .debug_str:0000000000000140 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:172    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000000 .LFB76
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:181    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000008 .LFE76
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1652   .debug_loc:0000000000000181 .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1666   .debug_loc:00000000000001a2 .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1680   .debug_loc:00000000000001c3 .LLST18
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1694   .debug_loc:00000000000001e4 .LLST19
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1708   .debug_loc:0000000000000205 .LLST20
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:179    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000008 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2126   .debug_str:00000000000004c2 .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:143    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000000 .LFB75
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:165    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000016 .LFE75
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1722   .debug_loc:0000000000000226 .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1740   .debug_loc:0000000000000252 .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1758   .debug_loc:000000000000027e .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1776   .debug_loc:00000000000002aa .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1794   .debug_loc:00000000000002d6 .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:163    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000016 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2082   .debug_str:00000000000002f5 .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:126    .text.crypto_public_key_from_cert:0000000000000000 .LFB74
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:136    .text.crypto_public_key_from_cert:0000000000000004 .LFE74
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1812   .debug_loc:0000000000000302 .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2052   .debug_str:0000000000000104 .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:51     .text.crypto_private_key_import:0000000000000000 .LFB73
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:119    .text.crypto_private_key_import:0000000000000056 .LFE73
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1826   .debug_loc:0000000000000323 .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1837   .debug_loc:0000000000000341 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2064   .debug_str:000000000000017e .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1848   .debug_loc:000000000000035f .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1870   .debug_loc:0000000000000396 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:71     .text.crypto_private_key_import:0000000000000018 .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:86     .text.crypto_private_key_import:0000000000000030 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:92     .text.crypto_private_key_import:000000000000003c .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:113    .text.crypto_private_key_import:0000000000000052 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2104   .debug_str:0000000000000399 .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:31     .text.crypto_public_key_import_parts:0000000000000000 .LFB72
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:40     .text.crypto_public_key_import_parts:0000000000000008 .LFE72
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1885   .debug_loc:00000000000003bf .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2056   .debug_str:000000000000012a .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1899   .debug_loc:00000000000003e0 .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1913   .debug_loc:0000000000000401 .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2140   .debug_str:000000000000056c .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1927   .debug_loc:0000000000000422 .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:38     .text.crypto_public_key_import_parts:0000000000000008 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2062   .debug_str:0000000000000165 .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:14     .text.crypto_public_key_import:0000000000000000 .LFB71
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:24     .text.crypto_public_key_import:0000000000000008 .LFE71
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1941   .debug_loc:0000000000000443 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1955   .debug_loc:0000000000000464 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:22     .text.crypto_public_key_import:0000000000000008 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:217    .text.crypto_public_key_free:0000000000000000 .LFB78
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:225    .text.crypto_public_key_free:0000000000000008 .LFE78
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:1969   .debug_loc:0000000000000485 .LLST26
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:223    .text.crypto_public_key_free:0000000000000008 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2076   .debug_str:00000000000002c0 .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2088   .debug_str:0000000000000324 .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2138   .debug_str:000000000000054e .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2072   .debug_str:00000000000001b6 .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2142   .debug_str:0000000000000572 .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2042   .debug_str:000000000000003c .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2128   .debug_str:00000000000004e6 .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2070   .debug_str:0000000000000193 .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2036   .debug_str:0000000000000000 .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:2058   .debug_str:0000000000000130 .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:246    .text.crypto_public_key_decrypt_pkcs1:0000000000000000 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:191    .text.crypto_private_key_sign_pkcs1:0000000000000000 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:206    .text.crypto_private_key_sign_pkcs1:000000000000000e .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:202    .text.crypto_private_key_sign_pkcs1:000000000000000a .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:204    .text.crypto_private_key_sign_pkcs1:000000000000000c .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:198    .text.crypto_private_key_sign_pkcs1:0000000000000006 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:200    .text.crypto_private_key_sign_pkcs1:0000000000000008 .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:175    .text.crypto_private_key_decrypt_pkcs1_v15:0000000000000000 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:146    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000000 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:161    .text.crypto_public_key_encrypt_pkcs1_v15:000000000000000e .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:157    .text.crypto_public_key_encrypt_pkcs1_v15:000000000000000a .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:159    .text.crypto_public_key_encrypt_pkcs1_v15:000000000000000c .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:153    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000006 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:155    .text.crypto_public_key_encrypt_pkcs1_v15:0000000000000008 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:129    .text.crypto_public_key_from_cert:0000000000000000 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:133    .text.crypto_public_key_from_cert:0000000000000002 .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:54     .text.crypto_private_key_import:0000000000000000 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:98     .text.crypto_private_key_import:000000000000003e .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:104    .text.crypto_private_key_import:0000000000000046 .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:84     .text.crypto_private_key_import:0000000000000028 .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:111    .text.crypto_private_key_import:000000000000004a .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:34     .text.crypto_public_key_import_parts:0000000000000000 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:18     .text.crypto_public_key_import:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:220    .text.crypto_public_key_free:0000000000000000 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccNWb3f8.s:265    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+crypto_rsa_import_public_key
+crypto_rsa_import_public_key_parts
+__riscv_save_2
+pkcs8_key_import
+wpa_printf
+crypto_rsa_import_private_key
+__riscv_restore_2
+pkcs8_enc_key_import
+pkcs1_encrypt
+pkcs1_v15_private_key_decrypt
+crypto_rsa_free
+pkcs1_decrypt_public_key

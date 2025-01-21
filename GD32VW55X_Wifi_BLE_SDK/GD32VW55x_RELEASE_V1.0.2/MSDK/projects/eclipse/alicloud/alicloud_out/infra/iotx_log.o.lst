@@ -1,0 +1,2088 @@
+   1              		.file	"iotx_log.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.rodata.LITE_syslog_routine.str1.4,"aMS",@progbits,1
+  10              		.align	2
+  11              	.LC0:
+  12 0000 1B00     		.string	"\033"
+  13 0002 0000     		.align	2
+  14              	.LC1:
+  15 0004 25732573 		.string	"%s%s"
+  15      00
+  16 0009 000000   		.align	2
+  17              	.LC2:
+  18 000c 5B25735D 		.string	"[%s](%u) %s(%d): "
+  18      28257529 
+  18      20257328 
+  18      2564293A 
+  18      2000
+  19 001e 0000     		.align	2
+  20              	.LC3:
+  21 0020 257300   		.string	"%s"
+  22 0023 00       		.align	2
+  23              	.LC4:
+  24 0024 202E2E2E 		.string	" ..."
+  24      00
+  25 0029 000000   		.align	2
+  26              	.LC5:
+  27 002c 0D0A00   		.string	"\r\n"
+  28 002f 00       		.align	2
+  29              	.LC6:
+  30 0030 1B5B306D 		.string	"\033[0m"
+  30      00
+  31              		.section	.text.LITE_syslog_routine,"ax",@progbits
+  32              		.align	1
+  33              		.globl	LITE_syslog_routine
+  35              	LITE_syslog_routine:
+  36              	.LFB20:
+  37              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****  * Copyright (C) 2015-2018 Alibaba Group Holding Limited
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****  */
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** /* 31, red. 32, green. 33, yellow. 34, blue. 35, magenta. 36, cyan. 37, white. */
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** char *lvl_color[] = {
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     "[0m", "[1;31m", "[1;31m", "[1;35m", "[1;33m", "[1;36m", "[1;37m"
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** };
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #ifdef BUILD_AOS 
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #include "aos/log.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** extern unsigned int aos_log_level;
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** int LITE_get_loglevel(void)
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** {
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     return aos_log_level;
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** void LITE_set_loglevel(int pri)
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** {
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     aos_set_log_level((aos_log_level_t)pri);
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #else
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #include "iotx_log_internal.h"
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** static log_client logcb = {
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     .name       = "linkkit",
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     .priority   = LOG_INFO_LEVEL,
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     .text_buf   = {0}
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** };
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** static char *lvl_names[] = {
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     "non", "crt", "err", "wrn", "inf", "dbg", "flw"
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** };
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** void LITE_syslog_routine(char *m, const char *f, const int l, const int level, const char *fmt, va_
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** {
+  38              		.loc 1 41 1
+  39              		.cfi_startproc
+  40              	.LVL0:
+  41 0000 17030000 		call	t0,__riscv_save_6
+  41      E7020300 
+  42              		.cfi_offset 21, -28
+  43              		.cfi_offset 20, -24
+  44              		.cfi_offset 19, -20
+  45              		.cfi_offset 18, -16
+  46              		.cfi_offset 9, -12
+  47              		.cfi_offset 8, -8
+  48              		.cfi_offset 1, -4
+  49              		.cfi_def_cfa_offset 32
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     char       *tmpbuf = logcb.text_buf;
+  50              		.loc 1 42 5
+  51              	.LVL1:
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     char       *o = tmpbuf;
+  52              		.loc 1 43 5
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     int         truncated = 0;
+  53              		.loc 1 44 5
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (LITE_get_loglevel() < level || level < LOG_NONE_LEVEL) {
+  54              		.loc 1 46 5
+  55              	.LBB18:
+  56              	.LBB19:
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         return;
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #if !defined(_WIN32)
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s%s", "\033", lvl_color[level]);
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf(LOG_PREFIX_FMT, lvl_names[level], (unsigned)HAL_UptimeMs(), f, l);
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #endif  /* #if !defined(_WIN32) */
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     memset(tmpbuf, 0, sizeof(logcb.text_buf));
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     o = tmpbuf;
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     o += LITE_vsnprintf(o, LOG_MSG_MAXLEN + 1, fmt, *params);
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (o - tmpbuf > LOG_MSG_MAXLEN) {
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         o = tmpbuf + strlen(tmpbuf);
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         truncated = 1;
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (strlen(tmpbuf) == LOG_MSG_MAXLEN) {
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         truncated = 1;
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s", tmpbuf);
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (truncated) {
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf(" ...");
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (tmpbuf[strlen(tmpbuf) - 1] != '\n') {
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("\r\n");
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #if !defined(_WIN32)
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s", "\033[0m");
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #endif  /* #if !defined(_WIN32) */
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     return;
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** void LITE_syslog(char *m, const char *f, const int l, const int level, const char *fmt, ...)
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** {
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     va_list ap;
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     va_start(ap, fmt);
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_syslog_routine(m, f, l, level, fmt, &ap);
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     va_end(ap);
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** int LITE_get_loglevel(void)
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** {
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     return logcb.priority;
+  57              		.loc 1 94 5
+  58              		.loc 1 94 17 is_stmt 0
+  59 0008 B7040000 		lui	s1,%hi(.LANCHOR0)
+  60              	.LBE19:
+  61              	.LBE18:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     char       *tmpbuf = logcb.text_buf;
+  62              		.loc 1 41 1
+  63 000c 3E8A     		mv	s4,a5
+  64              	.LBB21:
+  65              	.LBB20:
+  66              		.loc 1 94 17
+  67 000e 93870400 		addi	a5,s1,%lo(.LANCHOR0)
+  68              	.LVL2:
+  69              	.LBE20:
+  70              	.LBE21:
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         return;
+  71              		.loc 1 46 8
+  72 0012 9C47     		lw	a5,8(a5)
+  73 0014 63CAD710 		blt	a5,a3,.L1
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         return;
+  74              		.loc 1 46 37 discriminator 1
+  75 0018 63C80610 		blt	a3,zero,.L1
+  76              	.LBB22:
+  77              	.LBB23:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf(LOG_PREFIX_FMT, lvl_names[level], (unsigned)HAL_UptimeMs(), f, l);
+  78              		.loc 1 51 5
+  79 001c 37050000 		lui	a0,%hi(.LANCHOR1)
+  80              	.LVL3:
+  81 0020 13942600 		slli	s0,a3,2
+  82 0024 13050500 		addi	a0,a0,%lo(.LANCHOR1)
+  83 0028 2295     		add	a0,a0,s0
+  84 002a B28A     		mv	s5,a2
+  85 002c 1041     		lw	a2,0(a0)
+  86              	.LVL4:
+  87 002e 2E89     		mv	s2,a1
+  88 0030 37050000 		lui	a0,%hi(.LC1)
+  89 0034 B7050000 		lui	a1,%hi(.LC0)
+  90              	.LVL5:
+  91 0038 93850500 		addi	a1,a1,%lo(.LC0)
+  92 003c 13050500 		addi	a0,a0,%lo(.LC1)
+  93 0040 BA89     		mv	s3,a4
+  94 0042 97000000 		call	HAL_Printf
+  94      E7800000 
+  95              	.LVL6:
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #endif  /* #if !defined(_WIN32) */
+  96              		.loc 1 52 5
+  97 004a 37050000 		lui	a0,%hi(.LANCHOR2)
+  98 004e 13050500 		addi	a0,a0,%lo(.LANCHOR2)
+  99 0052 2A94     		add	s0,a0,s0
+ 100 0054 0040     		lw	s0,0(s0)
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #endif  /* #if !defined(_WIN32) */
+ 101              		.loc 1 52 61
+ 102 0056 97000000 		call	HAL_UptimeMs
+ 102      E7800000 
+ 103              	.LVL7:
+ 104 005e 2A86     		mv	a2,a0
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #endif  /* #if !defined(_WIN32) */
+ 105              		.loc 1 52 5
+ 106 0060 37050000 		lui	a0,%hi(.LC2)
+ 107 0064 5687     		mv	a4,s5
+ 108 0066 CA86     		mv	a3,s2
+ 109 0068 A285     		mv	a1,s0
+ 110 006a 13050500 		addi	a0,a0,%lo(.LC2)
+ 111 006e 93840400 		addi	s1,s1,%lo(.LANCHOR0)
+ 112              	.LVL8:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf(LOG_PREFIX_FMT, lvl_names[level], (unsigned)HAL_UptimeMs(), f, l);
+ 113              		.loc 1 51 5 is_stmt 1
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #endif  /* #if !defined(_WIN32) */
+ 114              		.loc 1 52 5
+ 115 0072 97000000 		call	HAL_Printf
+ 115      E7800000 
+ 116              	.LVL9:
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 117              		.loc 1 55 5
+ 118 007a 1389C400 		addi	s2,s1,12
+ 119              	.LVL10:
+ 120 007e 13060010 		li	a2,256
+ 121 0082 8145     		li	a1,0
+ 122 0084 4A85     		mv	a0,s2
+ 123 0086 97000000 		call	memset
+ 123      E7800000 
+ 124              	.LVL11:
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     o += LITE_vsnprintf(o, LOG_MSG_MAXLEN + 1, fmt, *params);
+ 125              		.loc 1 57 5
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 126              		.loc 1 58 5
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 127              		.loc 1 58 10 is_stmt 0
+ 128 008e 83260A00 		lw	a3,0(s4)
+ 129 0092 4E86     		mv	a2,s3
+ 130 0094 93050010 		li	a1,256
+ 131 0098 4A85     		mv	a0,s2
+ 132 009a 97000000 		call	HAL_Vsnprintf
+ 132      E7800000 
+ 133              	.LVL12:
+ 134 00a2 2A84     		mv	s0,a0
+ 135              	.LVL13:
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         o = tmpbuf + strlen(tmpbuf);
+ 136              		.loc 1 60 5 is_stmt 1
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         truncated = 1;
+ 137              		.loc 1 64 5
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         truncated = 1;
+ 138              		.loc 1 64 9 is_stmt 0
+ 139 00a4 4A85     		mv	a0,s2
+ 140 00a6 97000000 		call	strlen
+ 140      E7800000 
+ 141              	.LVL14:
+ 142 00ae B7090000 		lui	s3,%hi(.LANCHOR0+12)
+ 143              	.LVL15:
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         truncated = 1;
+ 144              		.loc 1 64 8
+ 145 00b2 9307F00F 		li	a5,255
+ 146 00b6 9389C900 		addi	s3,s3,%lo(.LANCHOR0+12)
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 147              		.loc 1 65 19
+ 148 00ba 054A     		li	s4,1
+ 149              	.LVL16:
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         truncated = 1;
+ 150              		.loc 1 64 8
+ 151 00bc 6306F500 		beq	a0,a5,.L3
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         o = tmpbuf + strlen(tmpbuf);
+ 152              		.loc 1 60 8
+ 153 00c0 13240410 		slti	s0,s0,256
+ 154              	.LVL17:
+ 155 00c4 134A1400 		xori	s4,s0,1
+ 156              	.L3:
+ 157              	.LVL18:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (truncated) {
+ 158              		.loc 1 68 5 is_stmt 1
+ 159 00c8 37090000 		lui	s2,%hi(.LC3)
+ 160 00cc CE85     		mv	a1,s3
+ 161 00ce 13050900 		addi	a0,s2,%lo(.LC3)
+ 162 00d2 97000000 		call	HAL_Printf
+ 162      E7800000 
+ 163              	.LVL19:
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf(" ...");
+ 164              		.loc 1 69 5
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf(" ...");
+ 165              		.loc 1 69 8 is_stmt 0
+ 166 00da 630A0A00 		beq	s4,zero,.L4
+ 167              	.LVL20:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 168              		.loc 1 70 9 is_stmt 1
+ 169 00de 37050000 		lui	a0,%hi(.LC4)
+ 170 00e2 13050500 		addi	a0,a0,%lo(.LC4)
+ 171 00e6 97000000 		call	HAL_Printf
+ 171      E7800000 
+ 172              	.LVL21:
+ 173              	.L4:
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("\r\n");
+ 174              		.loc 1 73 5
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("\r\n");
+ 175              		.loc 1 73 16 is_stmt 0
+ 176 00ee 4E85     		mv	a0,s3
+ 177 00f0 97000000 		call	strlen
+ 177      E7800000 
+ 178              	.LVL22:
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("\r\n");
+ 179              		.loc 1 73 15
+ 180 00f8 AA94     		add	s1,s1,a0
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("\r\n");
+ 181              		.loc 1 73 8
+ 182 00fa A947     		li	a5,10
+ 183 00fc 0387B400 		lb	a4,11(s1)
+ 184 0100 630AF700 		beq	a4,a5,.L5
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 185              		.loc 1 74 9 is_stmt 1
+ 186 0104 37050000 		lui	a0,%hi(.LC5)
+ 187 0108 13050500 		addi	a0,a0,%lo(.LC5)
+ 188 010c 97000000 		call	HAL_Printf
+ 188      E7800000 
+ 189              	.LVL23:
+ 190              	.L5:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #endif  /* #if !defined(_WIN32) */
+ 191              		.loc 1 78 5
+ 192 0114 B7050000 		lui	a1,%hi(.LC6)
+ 193 0118 93850500 		addi	a1,a1,%lo(.LC6)
+ 194 011c 13050900 		addi	a0,s2,%lo(.LC3)
+ 195 0120 97000000 		call	HAL_Printf
+ 195      E7800000 
+ 196              	.LVL24:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 197              		.loc 1 80 5
+ 198              	.L1:
+ 199              	.LBE23:
+ 200              	.LBE22:
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 201              		.loc 1 81 1 is_stmt 0
+ 202 0128 17030000 		tail	__riscv_restore_6
+ 202      67000300 
+ 203              		.cfi_restore 21
+ 204              		.cfi_restore 20
+ 205              		.cfi_restore 19
+ 206              		.cfi_restore 18
+ 207              		.cfi_restore 9
+ 208              		.cfi_restore 8
+ 209              		.cfi_restore 1
+ 210              		.cfi_def_cfa_offset 0
+ 211              		.cfi_endproc
+ 212              	.LFE20:
+ 214              		.section	.text.LITE_syslog,"ax",@progbits
+ 215              		.align	1
+ 216              		.globl	LITE_syslog
+ 218              	LITE_syslog:
+ 219              	.LFB21:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     va_list ap;
+ 220              		.loc 1 84 1 is_stmt 1
+ 221              		.cfi_startproc
+ 222              	.LVL25:
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 223              		.loc 1 85 5
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_syslog_routine(m, f, l, level, fmt, &ap);
+ 224              		.loc 1 87 5
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     va_list ap;
+ 225              		.loc 1 84 1 is_stmt 0
+ 226 0000 7971     		addi	sp,sp,-48
+ 227              		.cfi_def_cfa_offset 48
+ 228 0002 3ED2     		sw	a5,36(sp)
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_syslog_routine(m, f, l, level, fmt, &ap);
+ 229              		.loc 1 87 5
+ 230 0004 5C10     		addi	a5,sp,36
+ 231 0006 3EC6     		sw	a5,12(sp)
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     va_end(ap);
+ 232              		.loc 1 88 5 is_stmt 1
+ 233 0008 7C00     		addi	a5,sp,12
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     va_list ap;
+ 234              		.loc 1 84 1 is_stmt 0
+ 235 000a 06CE     		sw	ra,28(sp)
+ 236              		.cfi_offset 1, -20
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     va_list ap;
+ 237              		.loc 1 84 1
+ 238 000c 42D4     		sw	a6,40(sp)
+ 239 000e 46D6     		sw	a7,44(sp)
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     va_end(ap);
+ 240              		.loc 1 88 5
+ 241 0010 97000000 		call	LITE_syslog_routine
+ 241      E7800000 
+ 242              	.LVL26:
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 243              		.loc 1 89 5 is_stmt 1
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 244              		.loc 1 90 1 is_stmt 0
+ 245 0018 F240     		lw	ra,28(sp)
+ 246              		.cfi_restore 1
+ 247 001a 4561     		addi	sp,sp,48
+ 248              		.cfi_def_cfa_offset 0
+ 249 001c 8280     		jr	ra
+ 250              		.cfi_endproc
+ 251              	.LFE21:
+ 253              		.section	.text.LITE_get_loglevel,"ax",@progbits
+ 254              		.align	1
+ 255              		.globl	LITE_get_loglevel
+ 257              	LITE_get_loglevel:
+ 258              	.LFB22:
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     return logcb.priority;
+ 259              		.loc 1 93 1 is_stmt 1
+ 260              		.cfi_startproc
+ 261              		.loc 1 94 5
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 262              		.loc 1 95 1 is_stmt 0
+ 263 0000 B7070000 		lui	a5,%hi(.LANCHOR0+8)
+ 264 0004 03A58700 		lw	a0,%lo(.LANCHOR0+8)(a5)
+ 265 0008 8280     		ret
+ 266              		.cfi_endproc
+ 267              	.LFE22:
+ 269              		.section	.text.LITE_set_loglevel,"ax",@progbits
+ 270              		.align	1
+ 271              		.globl	LITE_set_loglevel
+ 273              	LITE_set_loglevel:
+ 274              	.LFB23:
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** void LITE_set_loglevel(int pri)
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** {
+ 275              		.loc 1 98 1 is_stmt 1
+ 276              		.cfi_startproc
+ 277              	.LVL27:
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     logcb.priority = pri;
+ 278              		.loc 1 99 5
+ 279              		.loc 1 99 20 is_stmt 0
+ 280 0000 B7070000 		lui	a5,%hi(.LANCHOR0+8)
+ 281 0004 23A4A700 		sw	a0,%lo(.LANCHOR0+8)(a5)
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #if WITH_MEM_STATS
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     void **mutex = LITE_get_mem_mutex();
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (pri != LOG_NONE_LEVEL) {
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (*mutex == NULL) {
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             *mutex = HAL_MutexCreate();
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             if (*mutex == NULL) {
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 LITE_printf("\nCreate memStats mutex error\n");
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             }
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     else if (*mutex != NULL){
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         HAL_MutexDestroy(*mutex);
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         *mutex = NULL;
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #endif
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 282              		.loc 1 116 1
+ 283 0008 8280     		ret
+ 284              		.cfi_endproc
+ 285              	.LFE23:
+ 287              		.section	.rodata.log_multi_line_internal.str1.4,"aMS",@progbits,1
+ 288              		.align	2
+ 289              	.LC7:
+ 290 0000 5B25735D 		.string	"[%s] %s(%d): %s (Length: %d Bytes)\r\n"
+ 290      20257328 
+ 290      2564293A 
+ 290      20257320 
+ 290      284C656E 
+ 291 0025 000000   		.align	2
+ 292              	.LC8:
+ 293 0028 25732000 		.string	"%s "
+ 294              		.align	2
+ 295              	.LC9:
+ 296 002c 256300   		.string	"%c"
+ 297              		.section	.text.log_multi_line_internal,"ax",@progbits
+ 298              		.align	1
+ 299              		.globl	log_multi_line_internal
+ 301              	log_multi_line_internal:
+ 302              	.LFB25:
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** void LITE_rich_hexdump(const char *f, const int l,
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                        const int level,
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                        const char *buf_str,
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                        const void *buf_ptr,
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                        const int buf_len)
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** {
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (LITE_get_loglevel() < level) {
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         return;
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s%s", "\033", lvl_color[level]);
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf(LOG_PREFIX_FMT, lvl_names[level], (unsigned)HAL_UptimeMs(), f, l);
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("HEXDUMP %s @ %p[%d]\r\n", buf_str, buf_ptr, buf_len);
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_hexdump(buf_str, buf_ptr, buf_len);
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s", "\033[0m");
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     return;
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** int log_multi_line_internal(const char *f, const int l,
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                             const char *title, int level, char *payload, const char *mark)
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** {
+ 303              		.loc 1 139 1 is_stmt 1
+ 304              		.cfi_startproc
+ 305              	.LVL28:
+ 306 0000 17030000 		call	t0,__riscv_save_9
+ 306      E7020300 
+ 307              		.cfi_offset 24, -40
+ 308              		.cfi_offset 23, -36
+ 309              		.cfi_offset 22, -32
+ 310              		.cfi_offset 21, -28
+ 311              		.cfi_offset 20, -24
+ 312              		.cfi_offset 19, -20
+ 313              		.cfi_offset 18, -16
+ 314              		.cfi_offset 9, -12
+ 315              		.cfi_offset 8, -8
+ 316              		.cfi_offset 1, -4
+ 317              		.cfi_def_cfa_offset 48
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     const char     *pos;
+ 318              		.loc 1 140 5
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     const char     *endl;
+ 319              		.loc 1 141 5
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     int             i;
+ 320              		.loc 1 142 5
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (LITE_get_loglevel() < level) {
+ 321              		.loc 1 144 5
+ 322              	.LBB24:
+ 323              	.LBB25:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 324              		.loc 1 94 5
+ 325              	.LBE25:
+ 326              	.LBE24:
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     const char     *pos;
+ 327              		.loc 1 139 1 is_stmt 0
+ 328 0008 BE89     		mv	s3,a5
+ 329              	.LBB27:
+ 330              	.LBB26:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 331              		.loc 1 94 17
+ 332 000a B7070000 		lui	a5,%hi(.LANCHOR0+8)
+ 333              	.LVL29:
+ 334 000e 83A48700 		lw	s1,%lo(.LANCHOR0+8)(a5)
+ 335              	.LBE26:
+ 336              	.LBE27:
+ 337              		.loc 1 144 8
+ 338 0012 63CBD40C 		bgt	a3,s1,.L27
+ 339 0016 2A89     		mv	s2,a0
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         return 1;
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("[%s] %s(%d): %s (Length: %d Bytes)\r\n",
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 lvl_names[LITE_get_loglevel()], f, l, title, (int)strlen(payload));
+ 340              		.loc 1 149 67
+ 341 0018 3A85     		mv	a0,a4
+ 342              	.LVL30:
+ 343 001a 2E8A     		mv	s4,a1
+ 344 001c B28A     		mv	s5,a2
+ 345 001e 3A84     		mv	s0,a4
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 lvl_names[LITE_get_loglevel()], f, l, title, (int)strlen(payload));
+ 346              		.loc 1 148 5 is_stmt 1
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 347              		.loc 1 94 5
+ 348              		.loc 1 149 67 is_stmt 0
+ 349 0020 97000000 		call	strlen
+ 349      E7800000 
+ 350              	.LVL31:
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 lvl_names[LITE_get_loglevel()], f, l, title, (int)strlen(payload));
+ 351              		.loc 1 148 5
+ 352 0028 37070000 		lui	a4,%hi(.LANCHOR2)
+ 353 002c 13070700 		addi	a4,a4,%lo(.LANCHOR2)
+ 354 0030 B3C4E420 		sh2add	s1,s1,a4
+ 355 0034 8C40     		lw	a1,0(s1)
+ 356              		.loc 1 149 67
+ 357 0036 AA87     		mv	a5,a0
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 lvl_names[LITE_get_loglevel()], f, l, title, (int)strlen(payload));
+ 358              		.loc 1 148 5
+ 359 0038 37050000 		lui	a0,%hi(.LC7)
+ 360 003c 5687     		mv	a4,s5
+ 361 003e D286     		mv	a3,s4
+ 362 0040 4A86     		mv	a2,s2
+ 363 0042 13050500 		addi	a0,a0,%lo(.LC7)
+ 364 0046 97000000 		call	HAL_Printf
+ 364      E7800000 
+ 365              	.LVL32:
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     pos = payload;
+ 366              		.loc 1 151 5 is_stmt 1
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     while (pos && *pos) {
+ 367              		.loc 1 152 5
+ 368              		.loc 1 152 11
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("%s ", mark);
+ 369              		.loc 1 153 9 is_stmt 0
+ 370 004e B70A0000 		lui	s5,%hi(.LC8)
+ 371              	.LVL33:
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (*pos == '\r') {
+ 372              		.loc 1 155 12
+ 373 0052 354B     		li	s6,13
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("\r\n");
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             pos += 2;
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             continue;
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         endl = strchr(pos + 1, '\r');
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (endl == NULL) {
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             endl = pos;
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             do {
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 ++endl;
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             } while (*endl);
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         for (i = 0; i < endl - pos; ++i) {
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("%c", pos[i]);
+ 374              		.loc 1 170 13
+ 375 0054 B70B0000 		lui	s7,%hi(.LC9)
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("\r\n");
+ 376              		.loc 1 172 9
+ 377 0058 370A0000 		lui	s4,%hi(.LC5)
+ 378              	.LVL34:
+ 379              	.L17:
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("%s ", mark);
+ 380              		.loc 1 152 16 discriminator 1
+ 381 005c 83070400 		lb	a5,0(s0)
+ 382 0060 A5C3     		beq	a5,zero,.L26
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 383              		.loc 1 153 9 is_stmt 1
+ 384 0062 CE85     		mv	a1,s3
+ 385 0064 13850A00 		addi	a0,s5,%lo(.LC8)
+ 386 0068 97000000 		call	HAL_Printf
+ 386      E7800000 
+ 387              	.LVL35:
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("\r\n");
+ 388              		.loc 1 155 9
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("\r\n");
+ 389              		.loc 1 155 12 is_stmt 0
+ 390 0070 83070400 		lb	a5,0(s0)
+ 391 0074 639A6701 		bne	a5,s6,.L18
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             pos += 2;
+ 392              		.loc 1 156 13 is_stmt 1
+ 393 0078 13050A00 		addi	a0,s4,%lo(.LC5)
+ 394 007c 97000000 		call	HAL_Printf
+ 394      E7800000 
+ 395              	.LVL36:
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             continue;
+ 396              		.loc 1 157 13
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             continue;
+ 397              		.loc 1 157 17 is_stmt 0
+ 398 0084 0904     		addi	s0,s0,2
+ 399              	.LVL37:
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 400              		.loc 1 158 13 is_stmt 1
+ 401 0086 D9BF     		j	.L17
+ 402              	.L18:
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (endl == NULL) {
+ 403              		.loc 1 161 9
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (endl == NULL) {
+ 404              		.loc 1 161 16 is_stmt 0
+ 405 0088 B545     		li	a1,13
+ 406 008a 13051400 		addi	a0,s0,1
+ 407 008e 97000000 		call	strchr
+ 407      E7800000 
+ 408              	.LVL38:
+ 409 0096 AA84     		mv	s1,a0
+ 410              	.LVL39:
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             endl = pos;
+ 411              		.loc 1 162 9 is_stmt 1
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             endl = pos;
+ 412              		.loc 1 162 12 is_stmt 0
+ 413 0098 11E5     		bne	a0,zero,.L20
+ 414 009a A284     		mv	s1,s0
+ 415              	.LVL40:
+ 416              	.L21:
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 ++endl;
+ 417              		.loc 1 164 13 is_stmt 1 discriminator 1
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             } while (*endl);
+ 418              		.loc 1 165 17 discriminator 1
+ 419 009c 8504     		addi	s1,s1,1
+ 420              	.LVL41:
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 421              		.loc 1 166 21 discriminator 1
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 422              		.loc 1 166 13 is_stmt 0 discriminator 1
+ 423 009e 83870400 		lb	a5,0(s1)
+ 424 00a2 EDFF     		bne	a5,zero,.L21
+ 425              	.L20:
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("%c", pos[i]);
+ 426              		.loc 1 169 9 is_stmt 1
+ 427              	.LVL42:
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("%c", pos[i]);
+ 428              		.loc 1 169 16 is_stmt 0
+ 429 00a4 0149     		li	s2,0
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("%c", pos[i]);
+ 430              		.loc 1 169 30
+ 431 00a6 338C8440 		sub	s8,s1,s0
+ 432              	.LVL43:
+ 433              	.L22:
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("%c", pos[i]);
+ 434              		.loc 1 169 21 is_stmt 1 discriminator 1
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("%c", pos[i]);
+ 435              		.loc 1 169 9 is_stmt 0 discriminator 1
+ 436 00aa 63408903 		bgt	s8,s2,.L23
+ 437              		.loc 1 172 9 is_stmt 1
+ 438 00ae 13050A00 		addi	a0,s4,%lo(.LC5)
+ 439 00b2 97000000 		call	HAL_Printf
+ 439      E7800000 
+ 440              	.LVL44:
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         pos = *endl ? endl + 2 : 0;
+ 441              		.loc 1 174 9
+ 442              		.loc 1 174 32 is_stmt 0
+ 443 00ba 83870400 		lb	a5,0(s1)
+ 444 00be 95E3     		bne	a5,zero,.L24
+ 445              	.LVL45:
+ 446              	.L26:
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     return 0;
+ 447              		.loc 1 177 12
+ 448 00c0 0145     		li	a0,0
+ 449              	.LVL46:
+ 450              	.L15:
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 451              		.loc 1 178 1
+ 452 00c2 17030000 		tail	__riscv_restore_9
+ 452      67000300 
+ 453              		.cfi_remember_state
+ 454              		.cfi_restore 24
+ 455              		.cfi_restore 23
+ 456              		.cfi_restore 22
+ 457              		.cfi_restore 21
+ 458              		.cfi_restore 20
+ 459              		.cfi_restore 19
+ 460              		.cfi_restore 18
+ 461              		.cfi_restore 9
+ 462              		.cfi_restore 8
+ 463              		.cfi_restore 1
+ 464              		.cfi_def_cfa_offset 0
+ 465              	.LVL47:
+ 466              	.L23:
+ 467              		.cfi_restore_state
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 468              		.loc 1 170 13 is_stmt 1 discriminator 3
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 469              		.loc 1 170 34 is_stmt 0 discriminator 3
+ 470 00ca B3072401 		add	a5,s0,s2
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 471              		.loc 1 170 13 discriminator 3
+ 472 00ce 13850B00 		addi	a0,s7,%lo(.LC9)
+ 473 00d2 83850700 		lb	a1,0(a5)
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("%c", pos[i]);
+ 474              		.loc 1 169 37 discriminator 3
+ 475 00d6 0509     		addi	s2,s2,1
+ 476              	.LVL48:
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 477              		.loc 1 170 13 discriminator 3
+ 478 00d8 97000000 		call	HAL_Printf
+ 478      E7800000 
+ 479              	.LVL49:
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("%c", pos[i]);
+ 480              		.loc 1 169 37 is_stmt 1 discriminator 3
+ 481 00e0 E9B7     		j	.L22
+ 482              	.L24:
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 483              		.loc 1 174 32 is_stmt 0 discriminator 1
+ 484 00e2 13842400 		addi	s0,s1,2
+ 485              	.LVL50:
+ 486 00e6 9DBF     		j	.L17
+ 487              	.LVL51:
+ 488              	.L27:
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 489              		.loc 1 145 16
+ 490 00e8 0545     		li	a0,1
+ 491              	.LVL52:
+ 492 00ea E1BF     		j	.L15
+ 493              		.cfi_endproc
+ 494              	.LFE25:
+ 496              		.section	.rodata.LITE_hexdump.str1.4,"aMS",@progbits,1
+ 497              		.align	2
+ 498              	.LC10:
+ 499 0000 7C202573 		.string	"| %s: (len=%d) |\r\n"
+ 499      3A20286C 
+ 499      656E3D25 
+ 499      6429207C 
+ 499      0D0A00
+ 500 0013 00       		.align	2
+ 501              	.LC11:
+ 502 0014 2B00     		.string	"+"
+ 503 0016 0000     		.align	2
+ 504              	.LC12:
+ 505 0018 2D00     		.string	"-"
+ 506 001a 0000     		.align	2
+ 507              	.LC13:
+ 508 001c 2B2D2D2D 		.string	"+---------------------------------------------------------------------"
+ 508      2D2D2D2D 
+ 508      2D2D2D2D 
+ 508      2D2D2D2D 
+ 508      2D2D2D2D 
+ 509 0063 00       		.align	2
+ 510              	.LC14:
+ 511 0064 25730D0A 		.string	"%s\r\n"
+ 511      00
+ 512 0069 000000   		.align	2
+ 513              	.LC15:
+ 514 006c 7C202530 		.string	"| %08X: "
+ 514      38583A20 
+ 514      00
+ 515 0075 000000   		.align	2
+ 516              	.LC16:
+ 517 0078 25303258 		.string	"%02X"
+ 517      00
+ 518 007d 000000   		.align	2
+ 519              	.LC17:
+ 520 0080 2000     		.string	" "
+ 521 0082 0000     		.align	2
+ 522              	.LC18:
+ 523 0084 20257300 		.string	" %s"
+ 524              		.section	.text.LITE_hexdump,"ax",@progbits
+ 525              		.align	1
+ 526              		.globl	LITE_hexdump
+ 528              	LITE_hexdump:
+ 529              	.LFB26:
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** #define LITE_HEXDUMP_DRAWLINE(start_mark, len, end_mark)    \
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     do { \
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         int                     i; \
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         \
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("%s", start_mark); \
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         for(i = 0; i < len; ++i) { LITE_printf("-"); } \
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("%s", end_mark); \
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("\r\n"); \
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         \
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     } while(0)
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** int LITE_hexdump(const char *title, const void *buff, const int len)
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** {
+ 530              		.loc 1 192 1 is_stmt 1
+ 531              		.cfi_startproc
+ 532              	.LVL53:
+ 533 0000 17030000 		call	t0,__riscv_save_12
+ 533      E7020300 
+ 534              		.cfi_offset 27, -52
+ 535              		.cfi_offset 26, -48
+ 536              		.cfi_offset 25, -44
+ 537              		.cfi_offset 24, -40
+ 538              		.cfi_offset 23, -36
+ 539              		.cfi_offset 22, -32
+ 540              		.cfi_offset 21, -28
+ 541              		.cfi_offset 20, -24
+ 542              		.cfi_offset 19, -20
+ 543              		.cfi_offset 18, -16
+ 544              		.cfi_offset 9, -12
+ 545              		.cfi_offset 8, -8
+ 546              		.cfi_offset 1, -4
+ 547              		.cfi_def_cfa_offset 64
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     int                     i, j, written;
+ 548              		.loc 1 193 5
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     unsigned char           ascii[20] = {0};
+ 549              		.loc 1 194 5
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     int                     i, j, written;
+ 550              		.loc 1 192 1 is_stmt 0
+ 551 0008 5971     		addi	sp,sp,-112
+ 552              		.cfi_def_cfa_offset 176
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     int                     i, j, written;
+ 553              		.loc 1 192 1
+ 554 000a 2AC6     		sw	a0,12(sp)
+ 555 000c 3289     		mv	s2,a2
+ 556 000e 2E84     		mv	s0,a1
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     char                    header[64] = {0};
+ 557              		.loc 1 195 29
+ 558 0010 1306C003 		li	a2,60
+ 559              	.LVL54:
+ 560 0014 8145     		li	a1,0
+ 561              	.LVL55:
+ 562 0016 4818     		addi	a0,sp,52
+ 563              	.LVL56:
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     unsigned char           ascii[20] = {0};
+ 564              		.loc 1 194 29
+ 565 0018 02CE     		sw	zero,28(sp)
+ 566 001a 02D0     		sw	zero,32(sp)
+ 567 001c 02D2     		sw	zero,36(sp)
+ 568 001e 02D4     		sw	zero,40(sp)
+ 569 0020 02D6     		sw	zero,44(sp)
+ 570              		.loc 1 195 5 is_stmt 1
+ 571              		.loc 1 195 29 is_stmt 0
+ 572 0022 02D8     		sw	zero,48(sp)
+ 573 0024 97000000 		call	memset
+ 573      E7800000 
+ 574              	.LVL57:
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     unsigned char          *buf = (unsigned char *)buff;
+ 575              		.loc 1 196 5 is_stmt 1
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_snprintf(header, sizeof(header), "| %s: (len=%d) |\r\n", title, (int)len);
+ 576              		.loc 1 198 5
+ 577 002c B246     		lw	a3,12(sp)
+ 578 002e 37060000 		lui	a2,%hi(.LC10)
+ 579 0032 4A87     		mv	a4,s2
+ 580 0034 13060600 		addi	a2,a2,%lo(.LC10)
+ 581 0038 93050004 		li	a1,64
+ 582 003c 0818     		addi	a0,sp,48
+ 583 003e 97000000 		call	HAL_Snprintf
+ 583      E7800000 
+ 584              	.LVL58:
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_HEXDUMP_DRAWLINE("+", strlen(header) - 4, "+");
+ 585              		.loc 1 200 5
+ 586              	.LBB28:
+ 587              		.loc 1 200 5
+ 588              		.loc 1 200 5
+ 589 0046 B7090000 		lui	s3,%hi(.LC11)
+ 590 004a B7040000 		lui	s1,%hi(.LC3)
+ 591 004e 93850900 		addi	a1,s3,%lo(.LC11)
+ 592 0052 13850400 		addi	a0,s1,%lo(.LC3)
+ 593 0056 97000000 		call	HAL_Printf
+ 593      E7800000 
+ 594              	.LVL59:
+ 595              		.loc 1 200 5
+ 596 005e 014A     		li	s4,0
+ 597 0060 B70A0000 		lui	s5,%hi(.LC12)
+ 598              	.LVL60:
+ 599              	.L31:
+ 600              		.loc 1 200 5 discriminator 1
+ 601 0064 0818     		addi	a0,sp,48
+ 602 0066 97000000 		call	strlen
+ 602      E7800000 
+ 603              	.LVL61:
+ 604 006e 7115     		addi	a0,a0,-4
+ 605 0070 636FAA06 		bgtu	a0,s4,.L32
+ 606              		.loc 1 200 5 discriminator 4
+ 607 0074 93850900 		addi	a1,s3,%lo(.LC11)
+ 608 0078 13850400 		addi	a0,s1,%lo(.LC3)
+ 609 007c 97000000 		call	HAL_Printf
+ 609      E7800000 
+ 610              	.LVL62:
+ 611              		.loc 1 200 5 discriminator 4
+ 612 0084 B70A0000 		lui	s5,%hi(.LC5)
+ 613 0088 13850A00 		addi	a0,s5,%lo(.LC5)
+ 614 008c 97000000 		call	HAL_Printf
+ 614      E7800000 
+ 615              	.LVL63:
+ 616              	.LBE28:
+ 617              		.loc 1 200 5 discriminator 4
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s", header);
+ 618              		.loc 1 201 5 discriminator 4
+ 619 0094 13850400 		addi	a0,s1,%lo(.LC3)
+ 620 0098 0C18     		addi	a1,sp,48
+ 621 009a 97000000 		call	HAL_Printf
+ 621      E7800000 
+ 622              	.LVL64:
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s\r\n", HEXDUMP_SEP_LINE);
+ 623              		.loc 1 202 5 discriminator 4
+ 624 00a2 370A0000 		lui	s4,%hi(.LC13)
+ 625              	.LVL65:
+ 626 00a6 B7090000 		lui	s3,%hi(.LC14)
+ 627 00aa 93050A00 		addi	a1,s4,%lo(.LC13)
+ 628 00ae 13850900 		addi	a0,s3,%lo(.LC14)
+ 629 00b2 97000000 		call	HAL_Printf
+ 629      E7800000 
+ 630              	.LVL66:
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     written = 0;
+ 631              		.loc 1 204 5 discriminator 4
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     for (i = 0; i < len; ++ i) {
+ 632              		.loc 1 205 5 discriminator 4
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     for (i = 0; i < len; ++ i) {
+ 633              		.loc 1 204 13 is_stmt 0 discriminator 4
+ 634 00ba 014C     		li	s8,0
+ 635              		.loc 1 205 12 discriminator 4
+ 636 00bc 8144     		li	s1,0
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (i % 16 == 0) {
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("| %08X: ", (unsigned int)(i + (long)buff));
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             written += 8;
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_printf("%02X", buf[i]);
+ 637              		.loc 1 211 9 discriminator 4
+ 638 00be B70C0000 		lui	s9,%hi(.LC16)
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         written += 2;
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (i % 2 == 1) {
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf(" ");
+ 639              		.loc 1 215 13 discriminator 4
+ 640 00c2 B70B0000 		lui	s7,%hi(.LC17)
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             written += 1;
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         LITE_snprintf((char *)ascii + i % 16, (1 + 1), "%c", ((buf[i] >= ' ' && buf[i] <= '~') ?  b
+ 641              		.loc 1 218 9 discriminator 4
+ 642 00c6 370D0000 		lui	s10,%hi(.LC9)
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (((i + 1) % 16 == 0) || (i == len - 1)) {
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             for (j = 0; j < 48 - written; ++j) {
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 LITE_printf(" ");
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             }
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf(" %s", ascii);
+ 643              		.loc 1 225 13 discriminator 4
+ 644 00ca B70D0000 		lui	s11,%hi(.LC18)
+ 645              	.LVL67:
+ 646              	.L33:
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (i % 16 == 0) {
+ 647              		.loc 1 205 17 is_stmt 1 discriminator 1
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         if (i % 16 == 0) {
+ 648              		.loc 1 205 5 is_stmt 0 discriminator 1
+ 649 00ce 63C82403 		blt	s1,s2,.L42
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("\r\n");
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             written = 0;
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             memset(ascii, 0, sizeof(ascii));
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     }
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s\r\n", HEXDUMP_SEP_LINE);
+ 650              		.loc 1 232 5 is_stmt 1
+ 651 00d2 13850900 		addi	a0,s3,%lo(.LC14)
+ 652 00d6 93050A00 		addi	a1,s4,%lo(.LC13)
+ 653 00da 97000000 		call	HAL_Printf
+ 653      E7800000 
+ 654              	.LVL68:
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     return 0;
+ 655              		.loc 1 234 5
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 656              		.loc 1 235 1 is_stmt 0
+ 657 00e2 0145     		li	a0,0
+ 658 00e4 6561     		addi	sp,sp,112
+ 659              		.cfi_remember_state
+ 660              		.cfi_def_cfa_offset 0
+ 661              	.LVL69:
+ 662 00e6 17030000 		tail	__riscv_restore_12
+ 662      67000300 
+ 663              		.cfi_restore 27
+ 664              		.cfi_restore 26
+ 665              		.cfi_restore 25
+ 666              		.cfi_restore 24
+ 667              		.cfi_restore 23
+ 668              		.cfi_restore 22
+ 669              		.cfi_restore 21
+ 670              		.cfi_restore 20
+ 671              		.cfi_restore 19
+ 672              		.cfi_restore 18
+ 673              		.cfi_restore 9
+ 674              		.cfi_restore 8
+ 675              		.cfi_restore 1
+ 676              		.cfi_def_cfa_offset -64
+ 677              	.LVL70:
+ 678              	.L32:
+ 679              		.cfi_restore_state
+ 680              	.LBB29:
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s", header);
+ 681              		.loc 1 200 5 is_stmt 1 discriminator 3
+ 682 00ee 13850A00 		addi	a0,s5,%lo(.LC12)
+ 683 00f2 97000000 		call	HAL_Printf
+ 683      E7800000 
+ 684              	.LVL71:
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("%s", header);
+ 685              		.loc 1 200 5 discriminator 3
+ 686 00fa 050A     		addi	s4,s4,1
+ 687              	.LVL72:
+ 688 00fc A5B7     		j	.L31
+ 689              	.LVL73:
+ 690              	.L42:
+ 691              	.LBE29:
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("| %08X: ", (unsigned int)(i + (long)buff));
+ 692              		.loc 1 206 9
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("| %08X: ", (unsigned int)(i + (long)buff));
+ 693              		.loc 1 206 20 is_stmt 0
+ 694 00fe 13FBF400 		andi	s6,s1,15
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("| %08X: ", (unsigned int)(i + (long)buff));
+ 695              		.loc 1 206 12
+ 696 0102 631C0B00 		bne	s6,zero,.L34
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             written += 8;
+ 697              		.loc 1 207 13 is_stmt 1
+ 698 0106 B7070000 		lui	a5,%hi(.LC15)
+ 699 010a A285     		mv	a1,s0
+ 700 010c 13850700 		addi	a0,a5,%lo(.LC15)
+ 701 0110 97000000 		call	HAL_Printf
+ 701      E7800000 
+ 702              	.LVL74:
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 703              		.loc 1 208 13
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 704              		.loc 1 208 21 is_stmt 0
+ 705 0118 210C     		addi	s8,s8,8
+ 706              	.LVL75:
+ 707              	.L34:
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         written += 2;
+ 708              		.loc 1 211 9 is_stmt 1
+ 709 011a 83450400 		lbu	a1,0(s0)
+ 710 011e 13850C00 		addi	a0,s9,%lo(.LC16)
+ 711 0122 97000000 		call	HAL_Printf
+ 711      E7800000 
+ 712              	.LVL76:
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 713              		.loc 1 212 9
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf(" ");
+ 714              		.loc 1 214 9
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf(" ");
+ 715              		.loc 1 214 15 is_stmt 0
+ 716 012a 13F71400 		andi	a4,s1,1
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf(" ");
+ 717              		.loc 1 214 12
+ 718 012e 39E7     		bne	a4,zero,.L35
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 719              		.loc 1 212 17
+ 720 0130 090C     		addi	s8,s8,2
+ 721              	.LVL77:
+ 722              	.L36:
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 723              		.loc 1 218 9 is_stmt 1
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 724              		.loc 1 218 67 is_stmt 0
+ 725 0132 83460400 		lbu	a3,0(s0)
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 726              		.loc 1 218 9
+ 727 0136 7C08     		addi	a5,sp,28
+ 728 0138 1306E005 		li	a2,94
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 729              		.loc 1 218 78
+ 730 013c 138706FE 		addi	a4,a3,-32
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 731              		.loc 1 218 9
+ 732 0140 1377F70F 		andi	a4,a4,0xff
+ 733 0144 33856701 		add	a0,a5,s6
+ 734 0148 6374E600 		bleu	a4,a2,.L37
+ 735 014c 9306E002 		li	a3,46
+ 736              	.L37:
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 737              		.loc 1 218 9 discriminator 4
+ 738 0150 13060D00 		addi	a2,s10,%lo(.LC9)
+ 739 0154 8945     		li	a1,2
+ 740 0156 97000000 		call	HAL_Snprintf
+ 740      E7800000 
+ 741              	.LVL78:
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             for (j = 0; j < 48 - written; ++j) {
+ 742              		.loc 1 220 9 is_stmt 1 discriminator 4
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             for (j = 0; j < 48 - written; ++j) {
+ 743              		.loc 1 220 17 is_stmt 0 discriminator 4
+ 744 015e 138B1400 		addi	s6,s1,1
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             for (j = 0; j < 48 - written; ++j) {
+ 745              		.loc 1 220 27 discriminator 4
+ 746 0162 1377FB00 		andi	a4,s6,15
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             for (j = 0; j < 48 - written; ++j) {
+ 747              		.loc 1 220 12 discriminator 4
+ 748 0166 09C7     		beq	a4,zero,.L45
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             for (j = 0; j < 48 - written; ++j) {
+ 749              		.loc 1 220 46 discriminator 1
+ 750 0168 1307F9FF 		addi	a4,s2,-1
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             for (j = 0; j < 48 - written; ++j) {
+ 751              		.loc 1 220 33 discriminator 1
+ 752 016c 631C9704 		bne	a4,s1,.L39
+ 753              	.L45:
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 LITE_printf(" ");
+ 754              		.loc 1 221 32
+ 755 0170 13070003 		li	a4,48
+ 756 0174 8144     		li	s1,0
+ 757              	.LVL79:
+ 758 0176 330C8741 		sub	s8,a4,s8
+ 759              	.LVL80:
+ 760 017a 05A0     		j	.L40
+ 761              	.LVL81:
+ 762              	.L35:
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             written += 1;
+ 763              		.loc 1 215 13 is_stmt 1
+ 764 017c 13850B00 		addi	a0,s7,%lo(.LC17)
+ 765 0180 97000000 		call	HAL_Printf
+ 765      E7800000 
+ 766              	.LVL82:
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 767              		.loc 1 216 13
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 768              		.loc 1 216 21 is_stmt 0
+ 769 0188 0D0C     		addi	s8,s8,3
+ 770              	.LVL83:
+ 771 018a 65B7     		j	.L36
+ 772              	.LVL84:
+ 773              	.L41:
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             }
+ 774              		.loc 1 222 17 is_stmt 1 discriminator 3
+ 775 018c 13850B00 		addi	a0,s7,%lo(.LC17)
+ 776 0190 97000000 		call	HAL_Printf
+ 776      E7800000 
+ 777              	.LVL85:
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 LITE_printf(" ");
+ 778              		.loc 1 221 43 discriminator 3
+ 779 0198 8504     		addi	s1,s1,1
+ 780              	.LVL86:
+ 781              	.L40:
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 LITE_printf(" ");
+ 782              		.loc 1 221 25 discriminator 1
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****                 LITE_printf(" ");
+ 783              		.loc 1 221 13 is_stmt 0 discriminator 1
+ 784 019a E3C984FF 		bgt	s8,s1,.L41
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             LITE_printf("\r\n");
+ 785              		.loc 1 225 13 is_stmt 1
+ 786 019e 6C08     		addi	a1,sp,28
+ 787 01a0 13850D00 		addi	a0,s11,%lo(.LC18)
+ 788 01a4 97000000 		call	HAL_Printf
+ 788      E7800000 
+ 789              	.LVL87:
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 790              		.loc 1 226 13
+ 791 01ac 13850A00 		addi	a0,s5,%lo(.LC5)
+ 792 01b0 97000000 		call	HAL_Printf
+ 792      E7800000 
+ 793              	.LVL88:
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             memset(ascii, 0, sizeof(ascii));
+ 794              		.loc 1 228 13
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 795              		.loc 1 229 13
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             memset(ascii, 0, sizeof(ascii));
+ 796              		.loc 1 228 21 is_stmt 0
+ 797 01b8 014C     		li	s8,0
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         }
+ 798              		.loc 1 229 13
+ 799 01ba 02CE     		sw	zero,28(sp)
+ 800 01bc 02D0     		sw	zero,32(sp)
+ 801 01be 02D2     		sw	zero,36(sp)
+ 802 01c0 02D4     		sw	zero,40(sp)
+ 803 01c2 02D6     		sw	zero,44(sp)
+ 804              	.LVL89:
+ 805              	.L39:
+ 806 01c4 0504     		addi	s0,s0,1
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****             for (j = 0; j < 48 - written; ++j) {
+ 807              		.loc 1 220 17 discriminator 1
+ 808 01c6 DA84     		mv	s1,s6
+ 809 01c8 19B7     		j	.L33
+ 810              		.cfi_endproc
+ 811              	.LFE26:
+ 813              		.section	.rodata.LITE_rich_hexdump.str1.4,"aMS",@progbits,1
+ 814              		.align	2
+ 815              	.LC19:
+ 816 0000 48455844 		.string	"HEXDUMP %s @ %p[%d]\r\n"
+ 816      554D5020 
+ 816      25732040 
+ 816      2025705B 
+ 816      25645D0D 
+ 817              		.section	.text.LITE_rich_hexdump,"ax",@progbits
+ 818              		.align	1
+ 819              		.globl	LITE_rich_hexdump
+ 821              	LITE_rich_hexdump:
+ 822              	.LFB24:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (LITE_get_loglevel() < level) {
+ 823              		.loc 1 123 1 is_stmt 1
+ 824              		.cfi_startproc
+ 825              	.LVL90:
+ 826 0000 17030000 		call	t0,__riscv_save_6
+ 826      E7020300 
+ 827              		.cfi_offset 21, -28
+ 828              		.cfi_offset 20, -24
+ 829              		.cfi_offset 19, -20
+ 830              		.cfi_offset 18, -16
+ 831              		.cfi_offset 9, -12
+ 832              		.cfi_offset 8, -8
+ 833              		.cfi_offset 1, -4
+ 834              		.cfi_def_cfa_offset 32
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         return;
+ 835              		.loc 1 124 5
+ 836              	.LBB30:
+ 837              	.LBB31:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 838              		.loc 1 94 5
+ 839              	.LBE31:
+ 840              	.LBE30:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     if (LITE_get_loglevel() < level) {
+ 841              		.loc 1 123 1 is_stmt 0
+ 842 0008 BE89     		mv	s3,a5
+ 843              	.LBB33:
+ 844              	.LBB32:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 845              		.loc 1 94 17
+ 846 000a B7070000 		lui	a5,%hi(.LANCHOR0+8)
+ 847              	.LVL91:
+ 848              	.LBE32:
+ 849              	.LBE33:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****         return;
+ 850              		.loc 1 124 8
+ 851 000e 83A78700 		lw	a5,%lo(.LANCHOR0+8)(a5)
+ 852 0012 63CFC708 		blt	a5,a2,.L47
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf(LOG_PREFIX_FMT, lvl_names[level], (unsigned)HAL_UptimeMs(), f, l);
+ 853              		.loc 1 128 5
+ 854 0016 37080000 		lui	a6,%hi(.LANCHOR1)
+ 855 001a 13142600 		slli	s0,a2,2
+ 856 001e 13080800 		addi	a6,a6,%lo(.LANCHOR1)
+ 857 0022 2298     		add	a6,a6,s0
+ 858 0024 03260800 		lw	a2,0(a6)
+ 859              	.LVL92:
+ 860 0028 2A8A     		mv	s4,a0
+ 861 002a AE8A     		mv	s5,a1
+ 862 002c 37050000 		lui	a0,%hi(.LC1)
+ 863              	.LVL93:
+ 864 0030 B7050000 		lui	a1,%hi(.LC0)
+ 865              	.LVL94:
+ 866 0034 93850500 		addi	a1,a1,%lo(.LC0)
+ 867 0038 13050500 		addi	a0,a0,%lo(.LC1)
+ 868 003c B684     		mv	s1,a3
+ 869 003e 3A89     		mv	s2,a4
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf(LOG_PREFIX_FMT, lvl_names[level], (unsigned)HAL_UptimeMs(), f, l);
+ 870              		.loc 1 128 5 is_stmt 1
+ 871 0040 97000000 		call	HAL_Printf
+ 871      E7800000 
+ 872              	.LVL95:
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("HEXDUMP %s @ %p[%d]\r\n", buf_str, buf_ptr, buf_len);
+ 873              		.loc 1 129 5
+ 874 0048 37080000 		lui	a6,%hi(.LANCHOR2)
+ 875 004c 13080800 		addi	a6,a6,%lo(.LANCHOR2)
+ 876 0050 4294     		add	s0,a6,s0
+ 877 0052 0040     		lw	s0,0(s0)
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("HEXDUMP %s @ %p[%d]\r\n", buf_str, buf_ptr, buf_len);
+ 878              		.loc 1 129 61 is_stmt 0
+ 879 0054 97000000 		call	HAL_UptimeMs
+ 879      E7800000 
+ 880              	.LVL96:
+ 881 005c 2A86     		mv	a2,a0
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_printf("HEXDUMP %s @ %p[%d]\r\n", buf_str, buf_ptr, buf_len);
+ 882              		.loc 1 129 5
+ 883 005e 37050000 		lui	a0,%hi(.LC2)
+ 884 0062 5687     		mv	a4,s5
+ 885 0064 D286     		mv	a3,s4
+ 886 0066 A285     		mv	a1,s0
+ 887 0068 13050500 		addi	a0,a0,%lo(.LC2)
+ 888 006c 97000000 		call	HAL_Printf
+ 888      E7800000 
+ 889              	.LVL97:
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     LITE_hexdump(buf_str, buf_ptr, buf_len);
+ 890              		.loc 1 130 5 is_stmt 1
+ 891 0074 37050000 		lui	a0,%hi(.LC19)
+ 892 0078 CE86     		mv	a3,s3
+ 893 007a 4A86     		mv	a2,s2
+ 894 007c A685     		mv	a1,s1
+ 895 007e 13050500 		addi	a0,a0,%lo(.LC19)
+ 896 0082 97000000 		call	HAL_Printf
+ 896      E7800000 
+ 897              	.LVL98:
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 898              		.loc 1 131 5
+ 899 008a CA85     		mv	a1,s2
+ 900 008c 4E86     		mv	a2,s3
+ 901 008e 2685     		mv	a0,s1
+ 902 0090 97000000 		call	LITE_hexdump
+ 902      E7800000 
+ 903              	.LVL99:
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c ****     return;
+ 904              		.loc 1 133 5
+ 905 0098 B7050000 		lui	a1,%hi(.LC6)
+ 906 009c 37050000 		lui	a0,%hi(.LC3)
+ 907 00a0 93850500 		addi	a1,a1,%lo(.LC6)
+ 908 00a4 13050500 		addi	a0,a0,%lo(.LC3)
+ 909 00a8 97000000 		call	HAL_Printf
+ 909      E7800000 
+ 910              	.LVL100:
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** }
+ 911              		.loc 1 134 5
+ 912              	.L47:
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/log\iotx_log.c **** 
+ 913              		.loc 1 135 1 is_stmt 0
+ 914 00b0 17030000 		tail	__riscv_restore_6
+ 914      67000300 
+ 915              		.cfi_restore 21
+ 916              		.cfi_restore 20
+ 917              		.cfi_restore 19
+ 918              		.cfi_restore 18
+ 919              		.cfi_restore 9
+ 920              		.cfi_restore 8
+ 921              		.cfi_restore 1
+ 922              		.cfi_def_cfa_offset 0
+ 923              		.cfi_endproc
+ 924              	.LFE24:
+ 926              		.section	.rodata.str1.4,"aMS",@progbits,1
+ 927              		.align	2
+ 928              	.LC20:
+ 929 0000 6E6F6E00 		.string	"non"
+ 930              		.align	2
+ 931              	.LC21:
+ 932 0004 63727400 		.string	"crt"
+ 933              		.align	2
+ 934              	.LC22:
+ 935 0008 65727200 		.string	"err"
+ 936              		.align	2
+ 937              	.LC23:
+ 938 000c 77726E00 		.string	"wrn"
+ 939              		.align	2
+ 940              	.LC24:
+ 941 0010 696E6600 		.string	"inf"
+ 942              		.align	2
+ 943              	.LC25:
+ 944 0014 64626700 		.string	"dbg"
+ 945              		.align	2
+ 946              	.LC26:
+ 947 0018 666C7700 		.string	"flw"
+ 948              		.globl	lvl_color
+ 949              		.align	2
+ 950              	.LC27:
+ 951 001c 5B306D00 		.string	"[0m"
+ 952              		.align	2
+ 953              	.LC28:
+ 954 0020 5B313B33 		.string	"[1;31m"
+ 954      316D00
+ 955 0027 00       		.align	2
+ 956              	.LC29:
+ 957 0028 5B313B33 		.string	"[1;35m"
+ 957      356D00
+ 958 002f 00       		.align	2
+ 959              	.LC30:
+ 960 0030 5B313B33 		.string	"[1;33m"
+ 960      336D00
+ 961 0037 00       		.align	2
+ 962              	.LC31:
+ 963 0038 5B313B33 		.string	"[1;36m"
+ 963      366D00
+ 964 003f 00       		.align	2
+ 965              	.LC32:
+ 966 0040 5B313B33 		.string	"[1;37m"
+ 966      376D00
+ 967              		.section	.data.logcb,"aw"
+ 968              		.align	2
+ 969              		.set	.LANCHOR0,. + 0
+ 972              	logcb:
+ 973 0000 6C696E6B 		.string	"linkkit"
+ 973      6B697400 
+ 974 0008 04000000 		.word	4
+ 975 000c 00       		.string	""
+ 976 000d 00       		.string	""
+ 977 000e 00000000 		.zero	254
+ 977      00000000 
+ 977      00000000 
+ 977      00000000 
+ 977      00000000 
+ 978              		.section	.data.lvl_color,"aw"
+ 979              		.align	2
+ 980              		.set	.LANCHOR1,. + 0
+ 983              	lvl_color:
+ 984 0000 00000000 		.word	.LC27
+ 985 0004 00000000 		.word	.LC28
+ 986 0008 00000000 		.word	.LC28
+ 987 000c 00000000 		.word	.LC29
+ 988 0010 00000000 		.word	.LC30
+ 989 0014 00000000 		.word	.LC31
+ 990 0018 00000000 		.word	.LC32
+ 991              		.section	.rodata.lvl_names,"a"
+ 992              		.align	2
+ 993              		.set	.LANCHOR2,. + 0
+ 996              	lvl_names:
+ 997 0000 00000000 		.word	.LC20
+ 998 0004 00000000 		.word	.LC21
+ 999 0008 00000000 		.word	.LC22
+ 1000 000c 00000000 		.word	.LC23
+ 1001 0010 00000000 		.word	.LC24
+ 1002 0014 00000000 		.word	.LC25
+ 1003 0018 00000000 		.word	.LC26
+ 1004              		.text
+ 1005              	.Letext0:
+ 1006              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 1007              		.file 3 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+ 1008              		.file 4 "..\\..\\..\\..\\cloud\\alicloud\\include/iot_import.h"
+ 1009              		.file 5 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 1010              		.file 6 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 iotx_log.c
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:35     .text.LITE_syslog_routine:0000000000000000 LITE_syslog_routine
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:39     .text.LITE_syslog_routine:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:41     .text.LITE_syslog_routine:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:42     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:43     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:44     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:45     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:46     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:47     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:48     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:49     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:52     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:53     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:54     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:57     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:58     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:59     .text.LITE_syslog_routine:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:63     .text.LITE_syslog_routine:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:67     .text.LITE_syslog_routine:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:72     .text.LITE_syslog_routine:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:75     .text.LITE_syslog_routine:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:79     .text.LITE_syslog_routine:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:97     .text.LITE_syslog_routine:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:102    .text.LITE_syslog_routine:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:106    .text.LITE_syslog_routine:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:114    .text.LITE_syslog_routine:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:115    .text.LITE_syslog_routine:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:118    .text.LITE_syslog_routine:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:126    .text.LITE_syslog_routine:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:127    .text.LITE_syslog_routine:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:128    .text.LITE_syslog_routine:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:137    .text.LITE_syslog_routine:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:138    .text.LITE_syslog_routine:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:139    .text.LITE_syslog_routine:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:145    .text.LITE_syslog_routine:00000000000000b2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:148    .text.LITE_syslog_routine:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:151    .text.LITE_syslog_routine:00000000000000bc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:153    .text.LITE_syslog_routine:00000000000000c0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:159    .text.LITE_syslog_routine:00000000000000c8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:165    .text.LITE_syslog_routine:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:166    .text.LITE_syslog_routine:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:169    .text.LITE_syslog_routine:00000000000000de .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:175    .text.LITE_syslog_routine:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:176    .text.LITE_syslog_routine:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:180    .text.LITE_syslog_routine:00000000000000f8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:182    .text.LITE_syslog_routine:00000000000000fa .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:186    .text.LITE_syslog_routine:0000000000000104 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:192    .text.LITE_syslog_routine:0000000000000114 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:201    .text.LITE_syslog_routine:0000000000000128 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:202    .text.LITE_syslog_routine:0000000000000128 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:203    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:204    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:205    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:206    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:207    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:208    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:209    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:210    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:211    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:218    .text.LITE_syslog:0000000000000000 LITE_syslog
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:221    .text.LITE_syslog:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:223    .text.LITE_syslog:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:224    .text.LITE_syslog:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:225    .text.LITE_syslog:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:226    .text.LITE_syslog:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:227    .text.LITE_syslog:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:230    .text.LITE_syslog:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:233    .text.LITE_syslog:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:235    .text.LITE_syslog:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:236    .text.LITE_syslog:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:238    .text.LITE_syslog:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:241    .text.LITE_syslog:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:244    .text.LITE_syslog:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:245    .text.LITE_syslog:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:246    .text.LITE_syslog:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:248    .text.LITE_syslog:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:250    .text.LITE_syslog:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:257    .text.LITE_get_loglevel:0000000000000000 LITE_get_loglevel
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:260    .text.LITE_get_loglevel:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:261    .text.LITE_get_loglevel:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:262    .text.LITE_get_loglevel:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:263    .text.LITE_get_loglevel:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:266    .text.LITE_get_loglevel:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:273    .text.LITE_set_loglevel:0000000000000000 LITE_set_loglevel
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:276    .text.LITE_set_loglevel:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:278    .text.LITE_set_loglevel:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:279    .text.LITE_set_loglevel:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:280    .text.LITE_set_loglevel:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:283    .text.LITE_set_loglevel:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:284    .text.LITE_set_loglevel:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:301    .text.log_multi_line_internal:0000000000000000 log_multi_line_internal
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:304    .text.log_multi_line_internal:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:306    .text.log_multi_line_internal:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:307    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:308    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:309    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:310    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:311    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:312    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:313    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:314    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:315    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:316    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:317    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:319    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:320    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:321    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:324    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:327    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:328    .text.log_multi_line_internal:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:332    .text.log_multi_line_internal:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:338    .text.log_multi_line_internal:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:341    .text.log_multi_line_internal:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:347    .text.log_multi_line_internal:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:348    .text.log_multi_line_internal:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:349    .text.log_multi_line_internal:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:352    .text.log_multi_line_internal:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:357    .text.log_multi_line_internal:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:359    .text.log_multi_line_internal:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:367    .text.log_multi_line_internal:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:368    .text.log_multi_line_internal:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:369    .text.log_multi_line_internal:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:370    .text.log_multi_line_internal:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:373    .text.log_multi_line_internal:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:375    .text.log_multi_line_internal:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:377    .text.log_multi_line_internal:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:381    .text.log_multi_line_internal:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:384    .text.log_multi_line_internal:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:389    .text.log_multi_line_internal:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:390    .text.log_multi_line_internal:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:393    .text.log_multi_line_internal:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:397    .text.log_multi_line_internal:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:398    .text.log_multi_line_internal:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:401    .text.log_multi_line_internal:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:404    .text.log_multi_line_internal:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:405    .text.log_multi_line_internal:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:412    .text.log_multi_line_internal:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:413    .text.log_multi_line_internal:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:418    .text.log_multi_line_internal:000000000000009c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:419    .text.log_multi_line_internal:000000000000009c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:422    .text.log_multi_line_internal:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:423    .text.log_multi_line_internal:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:428    .text.log_multi_line_internal:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:429    .text.log_multi_line_internal:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:431    .text.log_multi_line_internal:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:435    .text.log_multi_line_internal:00000000000000aa .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:436    .text.log_multi_line_internal:00000000000000aa .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:438    .text.log_multi_line_internal:00000000000000ae .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:442    .text.log_multi_line_internal:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:443    .text.log_multi_line_internal:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:448    .text.log_multi_line_internal:00000000000000c0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:452    .text.log_multi_line_internal:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:453    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:454    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:455    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:456    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:457    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:458    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:459    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:460    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:461    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:462    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:463    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:464    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:467    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:469    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:470    .text.log_multi_line_internal:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:472    .text.log_multi_line_internal:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:475    .text.log_multi_line_internal:00000000000000d6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:478    .text.log_multi_line_internal:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:481    .text.log_multi_line_internal:00000000000000e0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:484    .text.log_multi_line_internal:00000000000000e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:490    .text.log_multi_line_internal:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:493    .text.log_multi_line_internal:00000000000000ec .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:528    .text.LITE_hexdump:0000000000000000 LITE_hexdump
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:531    .text.LITE_hexdump:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:533    .text.LITE_hexdump:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:534    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:535    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:536    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:537    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:538    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:539    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:540    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:541    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:542    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:543    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:544    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:545    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:546    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:547    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:549    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:550    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:551    .text.LITE_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:552    .text.LITE_hexdump:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:554    .text.LITE_hexdump:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:558    .text.LITE_hexdump:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:565    .text.LITE_hexdump:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:571    .text.LITE_hexdump:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:572    .text.LITE_hexdump:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:576    .text.LITE_hexdump:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:577    .text.LITE_hexdump:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:587    .text.LITE_hexdump:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:588    .text.LITE_hexdump:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:589    .text.LITE_hexdump:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:596    .text.LITE_hexdump:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:601    .text.LITE_hexdump:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:607    .text.LITE_hexdump:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:612    .text.LITE_hexdump:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:618    .text.LITE_hexdump:0000000000000094 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:619    .text.LITE_hexdump:0000000000000094 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:624    .text.LITE_hexdump:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:632    .text.LITE_hexdump:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:633    .text.LITE_hexdump:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:634    .text.LITE_hexdump:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:636    .text.LITE_hexdump:00000000000000bc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:638    .text.LITE_hexdump:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:640    .text.LITE_hexdump:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:642    .text.LITE_hexdump:00000000000000c6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:644    .text.LITE_hexdump:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:648    .text.LITE_hexdump:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:649    .text.LITE_hexdump:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:651    .text.LITE_hexdump:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:656    .text.LITE_hexdump:00000000000000e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:657    .text.LITE_hexdump:00000000000000e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:659    .text.LITE_hexdump:00000000000000e6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:660    .text.LITE_hexdump:00000000000000e6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:663    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:664    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:665    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:666    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:667    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:668    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:669    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:670    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:671    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:672    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:673    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:674    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:675    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:676    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:679    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:682    .text.LITE_hexdump:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:686    .text.LITE_hexdump:00000000000000fa .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:693    .text.LITE_hexdump:00000000000000fe .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:694    .text.LITE_hexdump:00000000000000fe .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:696    .text.LITE_hexdump:0000000000000102 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:698    .text.LITE_hexdump:0000000000000106 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:704    .text.LITE_hexdump:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:705    .text.LITE_hexdump:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:709    .text.LITE_hexdump:000000000000011a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:714    .text.LITE_hexdump:000000000000012a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:715    .text.LITE_hexdump:000000000000012a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:716    .text.LITE_hexdump:000000000000012a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:718    .text.LITE_hexdump:000000000000012e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:720    .text.LITE_hexdump:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:724    .text.LITE_hexdump:0000000000000132 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:725    .text.LITE_hexdump:0000000000000132 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:727    .text.LITE_hexdump:0000000000000136 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:730    .text.LITE_hexdump:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:732    .text.LITE_hexdump:0000000000000140 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:738    .text.LITE_hexdump:0000000000000150 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:743    .text.LITE_hexdump:000000000000015e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:744    .text.LITE_hexdump:000000000000015e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:746    .text.LITE_hexdump:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:748    .text.LITE_hexdump:0000000000000166 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:750    .text.LITE_hexdump:0000000000000168 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:752    .text.LITE_hexdump:000000000000016c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:755    .text.LITE_hexdump:0000000000000170 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:764    .text.LITE_hexdump:000000000000017c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:768    .text.LITE_hexdump:0000000000000188 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:769    .text.LITE_hexdump:0000000000000188 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:775    .text.LITE_hexdump:000000000000018c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:779    .text.LITE_hexdump:0000000000000198 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:783    .text.LITE_hexdump:000000000000019a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:784    .text.LITE_hexdump:000000000000019a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:786    .text.LITE_hexdump:000000000000019e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:791    .text.LITE_hexdump:00000000000001ac .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:795    .text.LITE_hexdump:00000000000001b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:796    .text.LITE_hexdump:00000000000001b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:797    .text.LITE_hexdump:00000000000001b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:799    .text.LITE_hexdump:00000000000001ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:808    .text.LITE_hexdump:00000000000001c6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:810    .text.LITE_hexdump:00000000000001ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:821    .text.LITE_rich_hexdump:0000000000000000 LITE_rich_hexdump
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:824    .text.LITE_rich_hexdump:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:826    .text.LITE_rich_hexdump:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:827    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:828    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:829    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:830    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:831    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:832    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:833    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:834    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:838    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:841    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:842    .text.LITE_rich_hexdump:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:846    .text.LITE_rich_hexdump:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:851    .text.LITE_rich_hexdump:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:854    .text.LITE_rich_hexdump:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:871    .text.LITE_rich_hexdump:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:874    .text.LITE_rich_hexdump:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:879    .text.LITE_rich_hexdump:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:883    .text.LITE_rich_hexdump:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:891    .text.LITE_rich_hexdump:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:899    .text.LITE_rich_hexdump:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:905    .text.LITE_rich_hexdump:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:913    .text.LITE_rich_hexdump:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:914    .text.LITE_rich_hexdump:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:915    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:916    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:917    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:918    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:919    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:920    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:921    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:922    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:923    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:983    .data.lvl_color:0000000000000000 lvl_color
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:969    .data.logcb:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:972    .data.logcb:0000000000000000 logcb
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:980    .data.lvl_color:0000000000000000 .LANCHOR1
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:993    .rodata.lvl_names:0000000000000000 .LANCHOR2
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:996    .rodata.lvl_names:0000000000000000 lvl_names
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:214    .text.LITE_syslog_routine:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:253    .text.LITE_syslog:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:269    .text.LITE_get_loglevel:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:287    .text.LITE_set_loglevel:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:496    .text.log_multi_line_internal:00000000000000ec .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:813    .text.LITE_hexdump:00000000000001ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:926    .text.LITE_rich_hexdump:00000000000000b8 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:14     .rodata.LITE_syslog_routine.str1.4:0000000000000004 .LC1
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:11     .rodata.LITE_syslog_routine.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:17     .rodata.LITE_syslog_routine.str1.4:000000000000000c .LC2
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:20     .rodata.LITE_syslog_routine.str1.4:0000000000000020 .LC3
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:23     .rodata.LITE_syslog_routine.str1.4:0000000000000024 .LC4
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:26     .rodata.LITE_syslog_routine.str1.4:000000000000002c .LC5
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:29     .rodata.LITE_syslog_routine.str1.4:0000000000000030 .LC6
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:198    .text.LITE_syslog_routine:0000000000000128 .L1
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:156    .text.LITE_syslog_routine:00000000000000c8 .L3
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:173    .text.LITE_syslog_routine:00000000000000ee .L4
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:190    .text.LITE_syslog_routine:0000000000000114 .L5
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:289    .rodata.log_multi_line_internal.str1.4:0000000000000000 .LC7
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:292    .rodata.log_multi_line_internal.str1.4:0000000000000028 .LC8
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:295    .rodata.log_multi_line_internal.str1.4:000000000000002c .LC9
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:488    .text.log_multi_line_internal:00000000000000e8 .L27
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:446    .text.log_multi_line_internal:00000000000000c0 .L26
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:402    .text.log_multi_line_internal:0000000000000088 .L18
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:379    .text.log_multi_line_internal:000000000000005c .L17
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:425    .text.log_multi_line_internal:00000000000000a4 .L20
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:416    .text.log_multi_line_internal:000000000000009c .L21
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:466    .text.log_multi_line_internal:00000000000000ca .L23
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:482    .text.log_multi_line_internal:00000000000000e2 .L24
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:433    .text.log_multi_line_internal:00000000000000aa .L22
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:450    .text.log_multi_line_internal:00000000000000c2 .L15
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:498    .rodata.LITE_hexdump.str1.4:0000000000000000 .LC10
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:501    .rodata.LITE_hexdump.str1.4:0000000000000014 .LC11
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:504    .rodata.LITE_hexdump.str1.4:0000000000000018 .LC12
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:507    .rodata.LITE_hexdump.str1.4:000000000000001c .LC13
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:510    .rodata.LITE_hexdump.str1.4:0000000000000064 .LC14
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:516    .rodata.LITE_hexdump.str1.4:0000000000000078 .LC16
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:519    .rodata.LITE_hexdump.str1.4:0000000000000080 .LC17
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:522    .rodata.LITE_hexdump.str1.4:0000000000000084 .LC18
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:513    .rodata.LITE_hexdump.str1.4:000000000000006c .LC15
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:678    .text.LITE_hexdump:00000000000000ee .L32
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:690    .text.LITE_hexdump:00000000000000fe .L42
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:599    .text.LITE_hexdump:0000000000000064 .L31
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:707    .text.LITE_hexdump:000000000000011a .L34
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:762    .text.LITE_hexdump:000000000000017c .L35
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:736    .text.LITE_hexdump:0000000000000150 .L37
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:753    .text.LITE_hexdump:0000000000000170 .L45
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:805    .text.LITE_hexdump:00000000000001c4 .L39
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:781    .text.LITE_hexdump:000000000000019a .L40
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:722    .text.LITE_hexdump:0000000000000132 .L36
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:773    .text.LITE_hexdump:000000000000018c .L41
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:646    .text.LITE_hexdump:00000000000000ce .L33
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:815    .rodata.LITE_rich_hexdump.str1.4:0000000000000000 .LC19
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:912    .text.LITE_rich_hexdump:00000000000000b0 .L47
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:950    .rodata.str1.4:000000000000001c .LC27
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:953    .rodata.str1.4:0000000000000020 .LC28
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:956    .rodata.str1.4:0000000000000028 .LC29
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:959    .rodata.str1.4:0000000000000030 .LC30
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:962    .rodata.str1.4:0000000000000038 .LC31
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:965    .rodata.str1.4:0000000000000040 .LC32
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:928    .rodata.str1.4:0000000000000000 .LC20
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:931    .rodata.str1.4:0000000000000004 .LC21
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:934    .rodata.str1.4:0000000000000008 .LC22
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:937    .rodata.str1.4:000000000000000c .LC23
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:940    .rodata.str1.4:0000000000000010 .LC24
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:943    .rodata.str1.4:0000000000000014 .LC25
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:946    .rodata.str1.4:0000000000000018 .LC26
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:2424   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3909   .debug_str:00000000000001ab .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3881   .debug_str:000000000000001a .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3905   .debug_str:0000000000000110 .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3831   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3873   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3937   .debug_str:000000000000034a .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3947   .debug_str:0000000000000380 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3907   .debug_str:00000000000001a1 .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3931   .debug_str:0000000000000322 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3927   .debug_str:000000000000030d .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3883   .debug_str:00000000000000ac .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3943   .debug_str:0000000000000364 .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3915   .debug_str:00000000000002b2 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3955   .debug_str:00000000000003a1 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3911   .debug_str:0000000000000292 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3933   .debug_str:000000000000032e .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3969   .debug_str:00000000000003e4 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3957   .debug_str:00000000000003b3 .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3893   .debug_str:00000000000000d6 .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3959   .debug_str:00000000000003c5 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3967   .debug_str:00000000000003df .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3879   .debug_str:0000000000000011 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3945   .debug_str:0000000000000377 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3885   .debug_str:00000000000000b6 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3941   .debug_str:000000000000035e .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3877   .debug_str:0000000000000007 .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3925   .debug_str:0000000000000300 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:529    .text.LITE_hexdump:0000000000000000 .LFB26
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:811    .text.LITE_hexdump:00000000000001ca .LFE26
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3901   .debug_str:00000000000000fc .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3083   .debug_loc:0000000000000000 .LLST27
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3889   .debug_str:00000000000000c9 .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3105   .debug_loc:000000000000003a .LLST28
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3134   .debug_loc:000000000000007f .LLST29
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3145   .debug_loc:000000000000009d .LLST30
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3177   .debug_loc:00000000000000ec .LLST31
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3887   .debug_str:00000000000000c1 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3184   .debug_loc:00000000000000ff .LLST32
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3965   .debug_str:00000000000003d9 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3875   .debug_str:0000000000000000 .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3225   .debug_loc:0000000000000165 .LLST33
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3250   .debug_loc:000000000000019f .LLST34
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:594    .text.LITE_hexdump:000000000000005e .LVL59
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:603    .text.LITE_hexdump:000000000000006e .LVL61
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:610    .text.LITE_hexdump:0000000000000084 .LVL62
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:615    .text.LITE_hexdump:0000000000000094 .LVL63
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:684    .text.LITE_hexdump:00000000000000fa .LVL71
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:574    .text.LITE_hexdump:000000000000002c .LVL57
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:584    .text.LITE_hexdump:0000000000000046 .LVL58
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:622    .text.LITE_hexdump:00000000000000a2 .LVL64
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:630    .text.LITE_hexdump:00000000000000ba .LVL66
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:654    .text.LITE_hexdump:00000000000000e2 .LVL68
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:702    .text.LITE_hexdump:0000000000000118 .LVL74
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:712    .text.LITE_hexdump:000000000000012a .LVL76
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:741    .text.LITE_hexdump:000000000000015e .LVL78
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:766    .text.LITE_hexdump:0000000000000188 .LVL82
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:777    .text.LITE_hexdump:0000000000000198 .LVL85
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:789    .text.LITE_hexdump:00000000000001ac .LVL87
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:793    .text.LITE_hexdump:00000000000001b8 .LVL88
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3919   .debug_str:00000000000002cd .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:302    .text.log_multi_line_internal:0000000000000000 .LFB25
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:494    .text.log_multi_line_internal:00000000000000ec .LFE25
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3266   .debug_loc:00000000000001c9 .LLST18
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3295   .debug_loc:000000000000020e .LLST19
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3317   .debug_loc:0000000000000245 .LLST20
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3961   .debug_str:00000000000003cc .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3339   .debug_loc:000000000000027c .LLST21
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3977   .debug_str:000000000000041c .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3357   .debug_loc:00000000000002a8 .LLST22
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3935   .debug_str:0000000000000345 .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3379   .debug_loc:00000000000002df .LLST23
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3390   .debug_loc:00000000000002fd .LLST24
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3899   .debug_str:00000000000000f7 .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3401   .debug_loc:000000000000031b .LLST25
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3412   .debug_loc:0000000000000339 .LLST26
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:322    .text.log_multi_line_internal:0000000000000008 .LBB24
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:350    .text.log_multi_line_internal:0000000000000028 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:365    .text.log_multi_line_internal:000000000000004e .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:387    .text.log_multi_line_internal:0000000000000070 .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:395    .text.log_multi_line_internal:0000000000000084 .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:408    .text.log_multi_line_internal:0000000000000096 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:440    .text.log_multi_line_internal:00000000000000ba .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:479    .text.log_multi_line_internal:00000000000000e0 .LVL49
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3917   .debug_str:00000000000002bb .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:822    .text.LITE_rich_hexdump:0000000000000000 .LFB24
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:924    .text.LITE_rich_hexdump:00000000000000b8 .LFE24
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3438   .debug_loc:000000000000037b .LLST35
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3456   .debug_loc:00000000000003a7 .LLST36
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3474   .debug_loc:00000000000003d3 .LLST37
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3891   .debug_str:00000000000000ce .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3488   .debug_loc:00000000000003f4 .LLST38
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3897   .debug_str:00000000000000ef .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3506   .debug_loc:0000000000000420 .LLST39
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3951   .debug_str:000000000000038c .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3524   .debug_loc:000000000000044c .LLST40
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:836    .text.LITE_rich_hexdump:0000000000000008 .LBB30
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:872    .text.LITE_rich_hexdump:0000000000000048 .LVL95
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:880    .text.LITE_rich_hexdump:000000000000005c .LVL96
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:889    .text.LITE_rich_hexdump:0000000000000074 .LVL97
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:897    .text.LITE_rich_hexdump:000000000000008a .LVL98
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:903    .text.LITE_rich_hexdump:0000000000000098 .LVL99
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:910    .text.LITE_rich_hexdump:00000000000000b0 .LVL100
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3913   .debug_str:00000000000002a0 .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:274    .text.LITE_set_loglevel:0000000000000000 .LFB23
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:285    .text.LITE_set_loglevel:000000000000000a .LFE23
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3975   .debug_str:000000000000040a .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3971   .debug_str:00000000000003f3 .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:219    .text.LITE_syslog:0000000000000000 .LFB21
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:251    .text.LITE_syslog:000000000000001e .LFE21
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3535   .debug_loc:000000000000046a .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3549   .debug_loc:000000000000048b .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3563   .debug_loc:00000000000004ac .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3577   .debug_loc:00000000000004cd .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3591   .debug_loc:00000000000004ee .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:242    .text.LITE_syslog:0000000000000018 .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3921   .debug_str:00000000000002e5 .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3923   .debug_str:00000000000002f9 .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3939   .debug_str:0000000000000357 .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3979   .debug_str:0000000000000424 .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:36     .text.LITE_syslog_routine:0000000000000000 .LFB20
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:212    .text.LITE_syslog_routine:0000000000000130 .LFE20
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3605   .debug_loc:000000000000050f .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3619   .debug_loc:0000000000000530 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3637   .debug_loc:000000000000055c .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3655   .debug_loc:0000000000000588 .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3669   .debug_loc:00000000000005a9 .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3687   .debug_loc:00000000000005d5 .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:55     .text.LITE_syslog_routine:0000000000000008 .LBB18
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:76     .text.LITE_syslog_routine:000000000000001c .LBB22
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:200    .text.LITE_syslog_routine:0000000000000128 .LBE22
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3705   .debug_loc:0000000000000601 .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3715   .debug_loc:0000000000000617 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3729   .debug_loc:0000000000000638 .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3743   .debug_loc:0000000000000659 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3750   .debug_loc:000000000000066c .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3764   .debug_loc:000000000000068d .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3782   .debug_loc:00000000000006b8 .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:95     .text.LITE_syslog_routine:000000000000004a .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:103    .text.LITE_syslog_routine:000000000000005e .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:116    .text.LITE_syslog_routine:000000000000007a .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:124    .text.LITE_syslog_routine:000000000000008e .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:133    .text.LITE_syslog_routine:00000000000000a2 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:141    .text.LITE_syslog_routine:00000000000000ae .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:163    .text.LITE_syslog_routine:00000000000000da .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:172    .text.LITE_syslog_routine:00000000000000ee .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:178    .text.LITE_syslog_routine:00000000000000f8 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:189    .text.LITE_syslog_routine:0000000000000114 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:196    .text.LITE_syslog_routine:0000000000000128 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:258    .text.LITE_get_loglevel:0000000000000000 .LFB22
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:267    .text.LITE_get_loglevel:000000000000000a .LFE22
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3973   .debug_str:00000000000003ff .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3949   .debug_str:0000000000000385 .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3963   .debug_str:00000000000003d2 .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3895   .debug_str:00000000000000de .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3953   .debug_str:0000000000000394 .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3929   .debug_str:000000000000031b .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3981   .debug_str:000000000000042e .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:3903   .debug_str:0000000000000102 .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:532    .text.LITE_hexdump:0000000000000000 .LVL53
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:563    .text.LITE_hexdump:0000000000000018 .LVL56
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:661    .text.LITE_hexdump:00000000000000e6 .LVL69
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:677    .text.LITE_hexdump:00000000000000ee .LVL70
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:561    .text.LITE_hexdump:0000000000000016 .LVL55
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:645    .text.LITE_hexdump:00000000000000ce .LVL67
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:689    .text.LITE_hexdump:00000000000000fe .LVL73
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:559    .text.LITE_hexdump:0000000000000014 .LVL54
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:757    .text.LITE_hexdump:0000000000000176 .LVL79
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:761    .text.LITE_hexdump:000000000000017c .LVL81
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:772    .text.LITE_hexdump:000000000000018c .LVL84
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:804    .text.LITE_hexdump:00000000000001c4 .LVL89
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:721    .text.LITE_hexdump:0000000000000132 .LVL77
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:759    .text.LITE_hexdump:000000000000017a .LVL80
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:770    .text.LITE_hexdump:000000000000018a .LVL83
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:598    .text.LITE_hexdump:0000000000000064 .LVL60
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:625    .text.LITE_hexdump:00000000000000a6 .LVL65
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:305    .text.log_multi_line_internal:0000000000000000 .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:342    .text.log_multi_line_internal:000000000000001a .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:378    .text.log_multi_line_internal:000000000000005c .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:487    .text.log_multi_line_internal:00000000000000e8 .LVL51
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:491    .text.log_multi_line_internal:00000000000000ea .LVL52
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:371    .text.log_multi_line_internal:0000000000000052 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:333    .text.log_multi_line_internal:000000000000000e .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:449    .text.log_multi_line_internal:00000000000000c2 .LVL46
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:465    .text.log_multi_line_internal:00000000000000ca .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:410    .text.log_multi_line_internal:0000000000000098 .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:445    .text.log_multi_line_internal:00000000000000c0 .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:427    .text.log_multi_line_internal:00000000000000a4 .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:432    .text.log_multi_line_internal:00000000000000aa .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:476    .text.log_multi_line_internal:00000000000000d8 .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:825    .text.LITE_rich_hexdump:0000000000000000 .LVL90
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:863    .text.LITE_rich_hexdump:0000000000000030 .LVL93
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:865    .text.LITE_rich_hexdump:0000000000000034 .LVL94
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:859    .text.LITE_rich_hexdump:0000000000000028 .LVL92
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:847    .text.LITE_rich_hexdump:000000000000000e .LVL91
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:222    .text.LITE_syslog:0000000000000000 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:40     .text.LITE_syslog_routine:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:80     .text.LITE_syslog_routine:0000000000000020 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:90     .text.LITE_syslog_routine:0000000000000038 .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:119    .text.LITE_syslog_routine:000000000000007e .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:86     .text.LITE_syslog_routine:000000000000002e .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:143    .text.LITE_syslog_routine:00000000000000b2 .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:68     .text.LITE_syslog_routine:0000000000000012 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:149    .text.LITE_syslog_routine:00000000000000bc .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:112    .text.LITE_syslog_routine:0000000000000072 .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:135    .text.LITE_syslog_routine:00000000000000a4 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:154    .text.LITE_syslog_routine:00000000000000c4 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:157    .text.LITE_syslog_routine:00000000000000c8 .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:167    .text.LITE_syslog_routine:00000000000000de .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:1012   .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:61     .text.LITE_syslog_routine:000000000000000c .LBE18
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:64     .text.LITE_syslog_routine:000000000000000e .LBB21
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:70     .text.LITE_syslog_routine:0000000000000012 .LBE21
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:326    .text.log_multi_line_internal:0000000000000008 .LBE24
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:329    .text.log_multi_line_internal:000000000000000a .LBB27
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:336    .text.log_multi_line_internal:0000000000000012 .LBE27
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:586    .text.LITE_hexdump:0000000000000046 .LBB28
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:616    .text.LITE_hexdump:0000000000000094 .LBE28
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:680    .text.LITE_hexdump:00000000000000ee .LBB29
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:691    .text.LITE_hexdump:00000000000000fe .LBE29
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:840    .text.LITE_rich_hexdump:0000000000000008 .LBE30
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:843    .text.LITE_rich_hexdump:000000000000000a .LBB33
+C:\Users\stapi\AppData\Local\Temp\ccvOAGiE.s:849    .text.LITE_rich_hexdump:000000000000000e .LBE33
+
+UNDEFINED SYMBOLS
+__riscv_save_6
+HAL_Printf
+HAL_UptimeMs
+memset
+HAL_Vsnprintf
+strlen
+__riscv_restore_6
+__riscv_save_9
+strchr
+__riscv_restore_9
+__riscv_save_12
+HAL_Snprintf
+__riscv_restore_12

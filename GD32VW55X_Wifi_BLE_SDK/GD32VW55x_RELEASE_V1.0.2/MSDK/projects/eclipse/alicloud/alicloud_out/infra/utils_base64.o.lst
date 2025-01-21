@@ -1,0 +1,1556 @@
+   1              		.file	"utils_base64.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.rodata.utils_base64encode.str1.4,"aMS",@progbits,1
+  10              		.align	2
+  11              	.LC0:
+  12 0000 5B657272 		.string	"[err] "
+  12      5D2000
+  13 0007 00       		.align	2
+  14              	.LC1:
+  15 0008 706F696E 		.string	"pointer of encodedData is NULL!"
+  15      74657220 
+  15      6F662065 
+  15      6E636F64 
+  15      65644461 
+  16              		.align	2
+  17              	.LC2:
+  18 0028 0D0A00   		.string	"\r\n"
+  19 002b 00       		.align	2
+  20              	.LC3:
+  21 002c 74686520 		.string	"the length of output memory is not enough!"
+  21      6C656E67 
+  21      7468206F 
+  21      66206F75 
+  21      74707574 
+  22              		.section	.text.utils_base64encode,"ax",@progbits
+  23              		.align	1
+  24              		.globl	utils_base64encode
+  26              	utils_base64encode:
+  27              	.LFB21:
+  28              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****  * Copyright (C) 2015-2018 Alibaba Group Holding Limited
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****  */
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** #include <stdint.h>
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** #include <stdlib.h>
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** #include "iot_import.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** #include "iot_export.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** #include "iotx_utils_internal.h"
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** #include "utils_base64.h"
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** static int8_t g_encodingTable[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                                    'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                                    'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                                    'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                                    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                                    'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                                    'w', 'x', 'y', 'z', '0', '1', '2', '3',
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                                    '4', '5', '6', '7', '8', '9', '+', '/'
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                                   };
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** static int8_t g_decodingTable[256];
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** static int32_t g_modTable[] = { 0, 2, 1 };
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** static void build_decoding_table()
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** {
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     static int32_t signal = 0;
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     int32_t i = 0;
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     if (signal != 0) {
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return;
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     for (i = 0; i < 64; i++) {
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         g_decodingTable[(uint8_t) g_encodingTable[i]] = i;
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     signal = 1;
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     return;
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** }
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** iotx_err_t utils_base64encode(const uint8_t *data, uint32_t inputLength, uint32_t outputLenMax,
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                               uint8_t *encodedData, uint32_t *outputLength)
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** {
+  29              		.loc 1 49 1
+  30              		.cfi_startproc
+  31              	.LVL0:
+  32 0000 17030000 		call	t0,__riscv_save_0
+  32      E7020300 
+  33              		.cfi_offset 1, -4
+  34              		.cfi_def_cfa_offset 16
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     uint32_t i = 0;
+  35              		.loc 1 50 5
+  36              	.LVL1:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     uint32_t j = 0;
+  37              		.loc 1 51 5
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     if (NULL == encodedData) {
+  38              		.loc 1 53 5
+  39              		.loc 1 53 8 is_stmt 0
+  40 0008 95EE     		bne	a3,zero,.L2
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         utils_err("pointer of encodedData is NULL!");
+  41              		.loc 1 54 9 is_stmt 1
+  42              		.loc 1 54 9
+  43 000a 37050000 		lui	a0,%hi(.LC0)
+  44              	.LVL2:
+  45 000e 13050500 		addi	a0,a0,%lo(.LC0)
+  46 0012 97000000 		call	HAL_Printf
+  46      E7800000 
+  47              	.LVL3:
+  48              		.loc 1 54 9
+  49 001a 37050000 		lui	a0,%hi(.LC1)
+  50 001e 13050500 		addi	a0,a0,%lo(.LC1)
+  51              	.L14:
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     *outputLength = 4 * ((inputLength + 2) / 3);
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     if (outputLenMax < *outputLength) {
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         utils_err("the length of output memory is not enough!");
+  52              		.loc 1 61 9 is_stmt 0
+  53 0022 97000000 		call	HAL_Printf
+  53      E7800000 
+  54              	.LVL4:
+  55              		.loc 1 61 9 is_stmt 1
+  56 002a 37050000 		lui	a0,%hi(.LC2)
+  57 002e 13050500 		addi	a0,a0,%lo(.LC2)
+  58 0032 97000000 		call	HAL_Printf
+  58      E7800000 
+  59              	.LVL5:
+  60              		.loc 1 61 9
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+  61              		.loc 1 62 9
+  62              		.loc 1 62 16 is_stmt 0
+  63 003a 7D55     		li	a0,-1
+  64              	.LVL6:
+  65              	.L1:
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     for (i = 0, j = 0; i < inputLength;) {
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_a = i < inputLength ? (uint8_t) data[i++] : 0;
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_b = i < inputLength ? (uint8_t) data[i++] : 0;
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_c = i < inputLength ? (uint8_t) data[i++] : 0;
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t triple = (octet_a << 0x10) + (octet_b << 0x08) + octet_c;
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 3 * 6) & 0x3F];
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 2 * 6) & 0x3F];
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 1 * 6) & 0x3F];
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 0 * 6) & 0x3F];
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     for (i = 0; i < g_modTable[inputLength % 3]; i++) {
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[*outputLength - 1 - i] = '=';
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     return SUCCESS_RETURN;
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** }
+  66              		.loc 1 83 1
+  67 003c 17030000 		tail	__riscv_restore_0
+  67      67000300 
+  68              		.cfi_remember_state
+  69              		.cfi_restore 1
+  70              		.cfi_def_cfa_offset 0
+  71              	.LVL7:
+  72              	.L2:
+  73              		.cfi_restore_state
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  74              		.loc 1 58 5 is_stmt 1
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  75              		.loc 1 58 39 is_stmt 0
+  76 0044 93872500 		addi	a5,a1,2
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  77              		.loc 1 58 44
+  78 0048 0D48     		li	a6,3
+  79 004a B3D70703 		divu	a5,a5,a6
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  80              		.loc 1 58 23
+  81 004e 8A07     		slli	a5,a5,2
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  82              		.loc 1 58 19
+  83 0050 1CC3     		sw	a5,0(a4)
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         utils_err("the length of output memory is not enough!");
+  84              		.loc 1 60 5 is_stmt 1
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         utils_err("the length of output memory is not enough!");
+  85              		.loc 1 60 8 is_stmt 0
+  86 0052 636BF602 		bgtu	a5,a2,.L4
+  87              	.LBB2:
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 2 * 6) & 0x3F];
+  88              		.loc 1 72 43
+  89 0056 37030000 		lui	t1,%hi(.LANCHOR0)
+  90 005a B688     		mv	a7,a3
+  91              	.LBE2:
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_a = i < inputLength ? (uint8_t) data[i++] : 0;
+  92              		.loc 1 65 12
+  93 005c 0146     		li	a2,0
+  94              	.LVL8:
+  95              	.LBB3:
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 2 * 6) & 0x3F];
+  96              		.loc 1 72 43
+  97 005e 13030300 		addi	t1,t1,%lo(.LANCHOR0)
+  98              	.LVL9:
+  99              	.L5:
+ 100              	.LBE3:
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_a = i < inputLength ? (uint8_t) data[i++] : 0;
+ 101              		.loc 1 65 24 is_stmt 1 discriminator 1
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_a = i < inputLength ? (uint8_t) data[i++] : 0;
+ 102              		.loc 1 65 5 is_stmt 0 discriminator 1
+ 103 0062 6360B604 		bltu	a2,a1,.L7
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[*outputLength - 1 - i] = '=';
+ 104              		.loc 1 78 44
+ 105 0066 8D47     		li	a5,3
+ 106 0068 B3F5F502 		remu	a1,a1,a5
+ 107              	.LVL10:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[*outputLength - 1 - i] = '=';
+ 108              		.loc 1 78 31
+ 109 006c B7070000 		lui	a5,%hi(.LANCHOR1)
+ 110 0070 93870700 		addi	a5,a5,%lo(.LANCHOR1)
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[*outputLength - 1 - i] = '=';
+ 111              		.loc 1 78 12
+ 112 0074 0146     		li	a2,0
+ 113              	.LVL11:
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 114              		.loc 1 79 44
+ 115 0076 1305D003 		li	a0,61
+ 116              	.LVL12:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[*outputLength - 1 - i] = '=';
+ 117              		.loc 1 78 31
+ 118 007a B3C5F520 		sh2add	a1,a1,a5
+ 119 007e 8C41     		lw	a1,0(a1)
+ 120              	.L8:
+ 121              	.LVL13:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[*outputLength - 1 - i] = '=';
+ 122              		.loc 1 78 17 is_stmt 1 discriminator 1
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[*outputLength - 1 - i] = '=';
+ 123              		.loc 1 78 5 is_stmt 0 discriminator 1
+ 124 0080 6390C50A 		bne	a1,a2,.L9
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** }
+ 125              		.loc 1 82 12
+ 126 0084 0145     		li	a0,0
+ 127 0086 5DBF     		j	.L1
+ 128              	.LVL14:
+ 129              	.L4:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+ 130              		.loc 1 61 9 is_stmt 1
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+ 131              		.loc 1 61 9
+ 132 0088 37050000 		lui	a0,%hi(.LC0)
+ 133              	.LVL15:
+ 134 008c 13050500 		addi	a0,a0,%lo(.LC0)
+ 135 0090 97000000 		call	HAL_Printf
+ 135      E7800000 
+ 136              	.LVL16:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+ 137              		.loc 1 61 9
+ 138 0098 37050000 		lui	a0,%hi(.LC3)
+ 139 009c 13050500 		addi	a0,a0,%lo(.LC3)
+ 140 00a0 49B7     		j	.L14
+ 141              	.LVL17:
+ 142              	.L7:
+ 143              	.LBB4:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_b = i < inputLength ? (uint8_t) data[i++] : 0;
+ 144              		.loc 1 66 9 discriminator 1
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_b = i < inputLength ? (uint8_t) data[i++] : 0;
+ 145              		.loc 1 66 60 is_stmt 0 discriminator 1
+ 146 00a2 B307C500 		add	a5,a0,a2
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_b = i < inputLength ? (uint8_t) data[i++] : 0;
+ 147              		.loc 1 66 62 discriminator 1
+ 148 00a6 13081600 		addi	a6,a2,1
+ 149              	.LVL18:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_b = i < inputLength ? (uint8_t) data[i++] : 0;
+ 150              		.loc 1 66 66 discriminator 1
+ 151 00aa 83C70700 		lbu	a5,0(a5)
+ 152              	.LVL19:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_c = i < inputLength ? (uint8_t) data[i++] : 0;
+ 153              		.loc 1 67 9 is_stmt 1 discriminator 1
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_c = i < inputLength ? (uint8_t) data[i++] : 0;
+ 154              		.loc 1 67 66 is_stmt 0 discriminator 1
+ 155 00ae 6374B806 		bleu	a1,a6,.L10
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_c = i < inputLength ? (uint8_t) data[i++] : 0;
+ 156              		.loc 1 67 60 discriminator 1
+ 157 00b2 2A98     		add	a6,a0,a6
+ 158              	.LVL20:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_c = i < inputLength ? (uint8_t) data[i++] : 0;
+ 159              		.loc 1 67 62 discriminator 1
+ 160 00b4 130E2600 		addi	t3,a2,2
+ 161              	.LVL21:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_c = i < inputLength ? (uint8_t) data[i++] : 0;
+ 162              		.loc 1 67 66 discriminator 1
+ 163 00b8 834E0800 		lbu	t4,0(a6)
+ 164              	.LVL22:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 165              		.loc 1 68 9 is_stmt 1 discriminator 1
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 166              		.loc 1 68 66 is_stmt 0 discriminator 1
+ 167 00bc 6370BE06 		bleu	a1,t3,.L11
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 168              		.loc 1 68 60 discriminator 1
+ 169 00c0 2A9E     		add	t3,a0,t3
+ 170              	.LVL23:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 171              		.loc 1 68 62 discriminator 1
+ 172 00c2 13083600 		addi	a6,a2,3
+ 173              	.LVL24:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 174              		.loc 1 68 66 discriminator 1
+ 175 00c6 03460E00 		lbu	a2,0(t3)
+ 176              	.LVL25:
+ 177              	.L6:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 178              		.loc 1 70 9 is_stmt 1 discriminator 4
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 179              		.loc 1 70 36 is_stmt 0 discriminator 4
+ 180 00ca C207     		slli	a5,a5,16
+ 181              	.LVL26:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 182              		.loc 1 70 56 discriminator 4
+ 183 00cc A20E     		slli	t4,t4,8
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 184              		.loc 1 70 45 discriminator 4
+ 185 00ce F697     		add	a5,a5,t4
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 186              		.loc 1 70 18 discriminator 4
+ 187 00d0 3E96     		add	a2,a5,a2
+ 188              	.LVL27:
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 2 * 6) & 0x3F];
+ 189              		.loc 1 72 9 is_stmt 1 discriminator 4
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 2 * 6) & 0x3F];
+ 190              		.loc 1 72 52 is_stmt 0 discriminator 4
+ 191 00d2 13DE2701 		srli	t3,a5,18
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 1 * 6) & 0x3F];
+ 192              		.loc 1 73 52 discriminator 4
+ 193 00d6 B183     		srli	a5,a5,12
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 1 * 6) & 0x3F];
+ 194              		.loc 1 73 62 discriminator 4
+ 195 00d8 93F7F703 		andi	a5,a5,63
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 1 * 6) & 0x3F];
+ 196              		.loc 1 73 43 discriminator 4
+ 197 00dc 9A97     		add	a5,t1,a5
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 1 * 6) & 0x3F];
+ 198              		.loc 1 73 26 discriminator 4
+ 199 00de 83C70700 		lbu	a5,0(a5)
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 2 * 6) & 0x3F];
+ 200              		.loc 1 72 43 discriminator 4
+ 201 00e2 1A9E     		add	t3,t1,t3
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 2 * 6) & 0x3F];
+ 202              		.loc 1 72 26 discriminator 4
+ 203 00e4 034E0E00 		lbu	t3,0(t3)
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 1 * 6) & 0x3F];
+ 204              		.loc 1 73 26 discriminator 4
+ 205 00e8 A380F800 		sb	a5,1(a7)
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 0 * 6) & 0x3F];
+ 206              		.loc 1 74 52 discriminator 4
+ 207 00ec 93576600 		srli	a5,a2,6
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 0 * 6) & 0x3F];
+ 208              		.loc 1 74 62 discriminator 4
+ 209 00f0 93F7F703 		andi	a5,a5,63
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 0 * 6) & 0x3F];
+ 210              		.loc 1 74 43 discriminator 4
+ 211 00f4 9A97     		add	a5,t1,a5
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 0 * 6) & 0x3F];
+ 212              		.loc 1 74 26 discriminator 4
+ 213 00f6 83C70700 		lbu	a5,0(a5)
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 214              		.loc 1 75 62 discriminator 4
+ 215 00fa 1376F603 		andi	a2,a2,63
+ 216              	.LVL28:
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 217              		.loc 1 75 43 discriminator 4
+ 218 00fe 1A96     		add	a2,t1,a2
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 0 * 6) & 0x3F];
+ 219              		.loc 1 74 26 discriminator 4
+ 220 0100 2381F800 		sb	a5,2(a7)
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 221              		.loc 1 75 26 discriminator 4
+ 222 0104 83470600 		lbu	a5,0(a2)
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 2 * 6) & 0x3F];
+ 223              		.loc 1 72 26 discriminator 4
+ 224 0108 2380C801 		sb	t3,0(a7)
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 1 * 6) & 0x3F];
+ 225              		.loc 1 73 9 is_stmt 1 discriminator 4
+ 226              	.LVL29:
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[j++] = g_encodingTable[(triple >> 0 * 6) & 0x3F];
+ 227              		.loc 1 74 9 discriminator 4
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 228              		.loc 1 75 9 discriminator 4
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 229              		.loc 1 75 26 is_stmt 0 discriminator 4
+ 230 010c 4286     		mv	a2,a6
+ 231 010e A381F800 		sb	a5,3(a7)
+ 232 0112 9108     		addi	a7,a7,4
+ 233              	.LVL30:
+ 234 0114 B9B7     		j	.L5
+ 235              	.LVL31:
+ 236              	.L10:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         uint32_t octet_c = i < inputLength ? (uint8_t) data[i++] : 0;
+ 237              		.loc 1 67 66
+ 238 0116 814E     		li	t4,0
+ 239              	.L13:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 240              		.loc 1 68 66
+ 241 0118 0146     		li	a2,0
+ 242 011a 45BF     		j	.L6
+ 243              	.LVL32:
+ 244              	.L11:
+ 245 011c 7288     		mv	a6,t3
+ 246 011e EDBF     		j	.L13
+ 247              	.LVL33:
+ 248              	.L9:
+ 249              	.LBE4:
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 250              		.loc 1 79 9 is_stmt 1 discriminator 3
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 251              		.loc 1 79 39 is_stmt 0 discriminator 3
+ 252 0120 1C43     		lw	a5,0(a4)
+ 253 0122 FD17     		addi	a5,a5,-1
+ 254 0124 918F     		sub	a5,a5,a2
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 255              		.loc 1 79 44 discriminator 3
+ 256 0126 B697     		add	a5,a3,a5
+ 257 0128 2380A700 		sb	a0,0(a5)
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[*outputLength - 1 - i] = '=';
+ 258              		.loc 1 78 50 is_stmt 1 discriminator 3
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         encodedData[*outputLength - 1 - i] = '=';
+ 259              		.loc 1 78 51 is_stmt 0 discriminator 3
+ 260 012c 0506     		addi	a2,a2,1
+ 261              	.LVL34:
+ 262 012e 89BF     		j	.L8
+ 263              		.cfi_endproc
+ 264              	.LFE21:
+ 266              		.section	.rodata.utils_base64decode.str1.4,"aMS",@progbits,1
+ 267              		.align	2
+ 268              	.LC4:
+ 269 0000 74686520 		.string	"the input length is error!"
+ 269      696E7075 
+ 269      74206C65 
+ 269      6E677468 
+ 269      20697320 
+ 270              		.section	.text.utils_base64decode,"ax",@progbits
+ 271              		.align	1
+ 272              		.globl	utils_base64decode
+ 274              	utils_base64decode:
+ 275              	.LFB22:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** iotx_err_t utils_base64decode(const uint8_t *data, uint32_t inputLength, uint32_t outputLenMax,
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****                               uint8_t *decodedData, uint32_t *outputLength)
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** {
+ 276              		.loc 1 87 1 is_stmt 1
+ 277              		.cfi_startproc
+ 278              	.LVL35:
+ 279 0000 17030000 		call	t0,__riscv_save_0
+ 279      E7020300 
+ 280              		.cfi_offset 1, -4
+ 281              		.cfi_def_cfa_offset 16
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     uint32_t i = 0;
+ 282              		.loc 1 88 5
+ 283              	.LVL36:
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     uint32_t j = 0;
+ 284              		.loc 1 89 5
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     build_decoding_table();
+ 285              		.loc 1 91 5
+ 286              	.LBB7:
+ 287              	.LBB8:
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     int32_t i = 0;
+ 288              		.loc 1 32 5
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 289              		.loc 1 33 5
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return;
+ 290              		.loc 1 35 5
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return;
+ 291              		.loc 1 35 16 is_stmt 0
+ 292 0008 37080000 		lui	a6,%hi(.LANCHOR2)
+ 293 000c 83270800 		lw	a5,%lo(.LANCHOR2)(a6)
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return;
+ 294              		.loc 1 35 8
+ 295 0010 95EB     		bne	a5,zero,.L16
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 296              		.loc 1 40 55
+ 297 0012 37030000 		lui	t1,%hi(.LANCHOR3)
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 298              		.loc 1 40 50
+ 299 0016 370E0000 		lui	t3,%hi(.LANCHOR0)
+ 300 001a 13080800 		addi	a6,a6,%lo(.LANCHOR2)
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 301              		.loc 1 40 55
+ 302 001e 13030300 		addi	t1,t1,%lo(.LANCHOR3)
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 303              		.loc 1 40 50
+ 304 0022 130E0E00 		addi	t3,t3,%lo(.LANCHOR0)
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         g_decodingTable[(uint8_t) g_encodingTable[i]] = i;
+ 305              		.loc 1 39 5
+ 306 0026 930E0004 		li	t4,64
+ 307              	.LVL37:
+ 308              	.L17:
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 309              		.loc 1 40 9 is_stmt 1
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 310              		.loc 1 40 50 is_stmt 0
+ 311 002a B308FE00 		add	a7,t3,a5
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 312              		.loc 1 40 25
+ 313 002e 83C80800 		lbu	a7,0(a7)
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 314              		.loc 1 40 55
+ 315 0032 9A98     		add	a7,t1,a7
+ 316 0034 2380F800 		sb	a5,0(a7)
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         g_decodingTable[(uint8_t) g_encodingTable[i]] = i;
+ 317              		.loc 1 39 25 is_stmt 1
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         g_decodingTable[(uint8_t) g_encodingTable[i]] = i;
+ 318              		.loc 1 39 26 is_stmt 0
+ 319 0038 8507     		addi	a5,a5,1
+ 320              	.LVL38:
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         g_decodingTable[(uint8_t) g_encodingTable[i]] = i;
+ 321              		.loc 1 39 17 is_stmt 1
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         g_decodingTable[(uint8_t) g_encodingTable[i]] = i;
+ 322              		.loc 1 39 5 is_stmt 0
+ 323 003a E398D7FF 		bne	a5,t4,.L17
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     return;
+ 324              		.loc 1 43 5 is_stmt 1
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     return;
+ 325              		.loc 1 43 12 is_stmt 0
+ 326 003e 8547     		li	a5,1
+ 327              	.LVL39:
+ 328 0040 2320F800 		sw	a5,0(a6)
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** }
+ 329              		.loc 1 44 5 is_stmt 1
+ 330              	.L16:
+ 331              	.LBE8:
+ 332              	.LBE7:
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     if (inputLength % 4 != 0) {
+ 333              		.loc 1 93 5
+ 334              		.loc 1 93 21 is_stmt 0
+ 335 0044 93F73500 		andi	a5,a1,3
+ 336              		.loc 1 93 8
+ 337 0048 95CF     		beq	a5,zero,.L18
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         utils_err("the input length is error!");
+ 338              		.loc 1 94 9 is_stmt 1
+ 339              		.loc 1 94 9
+ 340 004a 37050000 		lui	a0,%hi(.LC0)
+ 341              	.LVL40:
+ 342 004e 13050500 		addi	a0,a0,%lo(.LC0)
+ 343 0052 97000000 		call	HAL_Printf
+ 343      E7800000 
+ 344              	.LVL41:
+ 345              		.loc 1 94 9
+ 346 005a 37050000 		lui	a0,%hi(.LC4)
+ 347 005e 13050500 		addi	a0,a0,%lo(.LC4)
+ 348              	.L38:
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     *outputLength = inputLength / 4 * 3;
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     if (data[inputLength - 1] == '=') {
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         (*outputLength)--;
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     if (data[inputLength - 2] == '=') {
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         (*outputLength)--;
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     if (outputLenMax < *outputLength) {
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         utils_err("the length of output memory is not enough!");
+ 349              		.loc 1 110 9 is_stmt 0
+ 350 0062 97000000 		call	HAL_Printf
+ 350      E7800000 
+ 351              	.LVL42:
+ 352              		.loc 1 110 9 is_stmt 1
+ 353 006a 37050000 		lui	a0,%hi(.LC2)
+ 354 006e 13050500 		addi	a0,a0,%lo(.LC2)
+ 355 0072 97000000 		call	HAL_Printf
+ 355      E7800000 
+ 356              	.LVL43:
+ 357              		.loc 1 110 9
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+ 358              		.loc 1 111 9
+ 359              		.loc 1 111 16 is_stmt 0
+ 360 007a 7D55     		li	a0,-1
+ 361              	.LVL44:
+ 362              	.L15:
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     uint32_t sextet_a = 0;
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     uint32_t sextet_b = 0;
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     uint32_t sextet_c = 0;
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     uint32_t sextet_d = 0;
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     uint32_t triple = 0;
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     for (i = 0, j = 0; i < inputLength;) {
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_a = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_b = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_c = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_d = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         triple = (sextet_a << 3 * 6) + (sextet_b << 2 * 6) + (sextet_c << 1 * 6) + (sextet_d << 0 *
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         if (j < *outputLength) {
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 2 * 8) & 0xFF;
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         if (j < *outputLength) {
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 1 * 8) & 0xFF;
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         if (j < *outputLength) {
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 0 * 8) & 0xFF;
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     return SUCCESS_RETURN;
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** }
+ 363              		.loc 1 142 1
+ 364 007c 17030000 		tail	__riscv_restore_0
+ 364      67000300 
+ 365              		.cfi_remember_state
+ 366              		.cfi_restore 1
+ 367              		.cfi_def_cfa_offset 0
+ 368              	.LVL45:
+ 369              	.L18:
+ 370              		.cfi_restore_state
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 371              		.loc 1 98 5 is_stmt 1
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 372              		.loc 1 98 37 is_stmt 0
+ 373 0084 0D48     		li	a6,3
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 374              		.loc 1 98 33
+ 375 0086 93D72500 		srli	a5,a1,2
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 376              		.loc 1 98 37
+ 377 008a B3870703 		mul	a5,a5,a6
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         (*outputLength)--;
+ 378              		.loc 1 101 13
+ 379 008e 3308B500 		add	a6,a0,a1
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         (*outputLength)--;
+ 380              		.loc 1 101 8
+ 381 0092 9308D003 		li	a7,61
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 382              		.loc 1 98 19
+ 383 0096 1CC3     		sw	a5,0(a4)
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         (*outputLength)--;
+ 384              		.loc 1 101 5 is_stmt 1
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         (*outputLength)--;
+ 385              		.loc 1 101 8 is_stmt 0
+ 386 0098 0343F8FF 		lbu	t1,-1(a6)
+ 387 009c 63141301 		bne	t1,a7,.L20
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 388              		.loc 1 102 9 is_stmt 1
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 389              		.loc 1 102 24 is_stmt 0
+ 390 00a0 FD17     		addi	a5,a5,-1
+ 391 00a2 1CC3     		sw	a5,0(a4)
+ 392              	.L20:
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         (*outputLength)--;
+ 393              		.loc 1 105 5 is_stmt 1
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         (*outputLength)--;
+ 394              		.loc 1 105 8 is_stmt 0
+ 395 00a4 0348E8FF 		lbu	a6,-2(a6)
+ 396 00a8 9307D003 		li	a5,61
+ 397 00ac 6315F800 		bne	a6,a5,.L21
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 398              		.loc 1 106 9 is_stmt 1
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****     }
+ 399              		.loc 1 106 24 is_stmt 0
+ 400 00b0 1C43     		lw	a5,0(a4)
+ 401 00b2 FD17     		addi	a5,a5,-1
+ 402 00b4 1CC3     		sw	a5,0(a4)
+ 403              	.L21:
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         utils_err("the length of output memory is not enough!");
+ 404              		.loc 1 109 5 is_stmt 1
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         utils_err("the length of output memory is not enough!");
+ 405              		.loc 1 109 8 is_stmt 0
+ 406 00b6 1C43     		lw	a5,0(a4)
+ 407 00b8 6360F602 		bgtu	a5,a2,.L22
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_b = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 408              		.loc 1 121 62
+ 409 00bc 370E0000 		lui	t3,%hi(.LANCHOR3)
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         utils_err("the length of output memory is not enough!");
+ 410              		.loc 1 109 8
+ 411 00c0 2A88     		mv	a6,a0
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_a = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 412              		.loc 1 120 19
+ 413 00c2 8148     		li	a7,0
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_b = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 414              		.loc 1 121 45
+ 415 00c4 930ED003 		li	t4,61
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_b = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 416              		.loc 1 121 62
+ 417 00c8 130E0E00 		addi	t3,t3,%lo(.LANCHOR3)
+ 418              	.LVL46:
+ 419              	.L23:
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_a = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 420              		.loc 1 120 24 is_stmt 1 discriminator 1
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_a = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 421              		.loc 1 120 5 is_stmt 0 discriminator 1
+ 422 00cc B307A840 		sub	a5,a6,a0
+ 423 00d0 63E1B702 		bltu	a5,a1,.L30
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** }
+ 424              		.loc 1 141 12
+ 425 00d4 0145     		li	a0,0
+ 426              	.LVL47:
+ 427 00d6 5DB7     		j	.L15
+ 428              	.LVL48:
+ 429              	.L22:
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+ 430              		.loc 1 110 9 is_stmt 1
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+ 431              		.loc 1 110 9
+ 432 00d8 37050000 		lui	a0,%hi(.LC0)
+ 433              	.LVL49:
+ 434 00dc 13050500 		addi	a0,a0,%lo(.LC0)
+ 435 00e0 97000000 		call	HAL_Printf
+ 435      E7800000 
+ 436              	.LVL50:
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         return FAIL_RETURN;
+ 437              		.loc 1 110 9
+ 438 00e8 37050000 		lui	a0,%hi(.LC3)
+ 439 00ec 13050500 		addi	a0,a0,%lo(.LC3)
+ 440 00f0 8DBF     		j	.L38
+ 441              	.LVL51:
+ 442              	.L30:
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_b = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 443              		.loc 1 121 9
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_b = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 444              		.loc 1 121 24 is_stmt 0
+ 445 00f2 83470800 		lbu	a5,0(a6)
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_b = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 446              		.loc 1 121 45
+ 447 00f6 0146     		li	a2,0
+ 448 00f8 6385D701 		beq	a5,t4,.L24
+ 449              	.LVL52:
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_b = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 450              		.loc 1 121 62 discriminator 2
+ 451 00fc F297     		add	a5,t3,a5
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_b = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 452              		.loc 1 121 45 discriminator 2
+ 453 00fe 03860700 		lb	a2,0(a5)
+ 454              	.LVL53:
+ 455              	.L24:
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_c = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 456              		.loc 1 122 9 is_stmt 1 discriminator 4
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_c = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 457              		.loc 1 122 24 is_stmt 0 discriminator 4
+ 458 0102 03431800 		lbu	t1,1(a6)
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_c = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 459              		.loc 1 122 45 discriminator 4
+ 460 0106 8147     		li	a5,0
+ 461 0108 6305D301 		beq	t1,t4,.L25
+ 462              	.LVL54:
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_c = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 463              		.loc 1 122 62 discriminator 2
+ 464 010c 7293     		add	t1,t3,t1
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_c = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 465              		.loc 1 122 45 discriminator 2
+ 466 010e 83070300 		lb	a5,0(t1)
+ 467              	.LVL55:
+ 468              	.L25:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_d = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 469              		.loc 1 123 9 is_stmt 1 discriminator 4
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_d = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 470              		.loc 1 123 24 is_stmt 0 discriminator 4
+ 471 0112 034F2800 		lbu	t5,2(a6)
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_d = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 472              		.loc 1 123 45 discriminator 4
+ 473 0116 0143     		li	t1,0
+ 474 0118 6305DF01 		beq	t5,t4,.L26
+ 475              	.LVL56:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_d = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 476              		.loc 1 123 62 discriminator 2
+ 477 011c 729F     		add	t5,t3,t5
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         sextet_d = data[i] == '=' ? 0 & i++ : g_decodingTable[data[i++]];
+ 478              		.loc 1 123 45 discriminator 2
+ 479 011e 03030F00 		lb	t1,0(t5)
+ 480              	.LVL57:
+ 481              	.L26:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 482              		.loc 1 124 9 is_stmt 1 discriminator 4
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 483              		.loc 1 124 24 is_stmt 0 discriminator 4
+ 484 0122 034F3800 		lbu	t5,3(a6)
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 485              		.loc 1 124 45 discriminator 4
+ 486 0126 814F     		li	t6,0
+ 487 0128 6305DF01 		beq	t5,t4,.L27
+ 488              	.LVL58:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 489              		.loc 1 124 62 discriminator 2
+ 490 012c 729F     		add	t5,t3,t5
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 491              		.loc 1 124 45 discriminator 2
+ 492 012e 830F0F00 		lb	t6,0(t5)
+ 493              	.LVL59:
+ 494              	.L27:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 495              		.loc 1 126 9 is_stmt 1 discriminator 4
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 2 * 8) & 0xFF;
+ 496              		.loc 1 128 9 discriminator 4
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 2 * 8) & 0xFF;
+ 497              		.loc 1 128 12 is_stmt 0 discriminator 4
+ 498 0132 032F0700 		lw	t5,0(a4)
+ 499 0136 63F6E805 		bleu	t5,a7,.L35
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 500              		.loc 1 126 28
+ 501 013a 4A06     		slli	a2,a2,18
+ 502              	.LVL60:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 503              		.loc 1 126 50
+ 504 013c B207     		slli	a5,a5,12
+ 505              	.LVL61:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 506              		.loc 1 126 38
+ 507 013e B297     		add	a5,a2,a5
+ 508              	.LVL62:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 509              		.loc 1 126 72
+ 510 0140 1A03     		slli	t1,t1,6
+ 511              	.LVL63:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 512              		.loc 1 126 60
+ 513 0142 9A97     		add	a5,a5,t1
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 514              		.loc 1 126 16
+ 515 0144 FE97     		add	a5,a5,t6
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 516              		.loc 1 129 13 is_stmt 1
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 517              		.loc 1 129 30 is_stmt 0
+ 518 0146 33861601 		add	a2,a3,a7
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 519              		.loc 1 129 40
+ 520 014a 13DF0701 		srli	t5,a5,16
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 521              		.loc 1 129 30
+ 522 014e 2300E601 		sb	t5,0(a2)
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 1 * 8) & 0xFF;
+ 523              		.loc 1 132 12
+ 524 0152 1043     		lw	a2,0(a4)
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 525              		.loc 1 129 26
+ 526 0154 13831800 		addi	t1,a7,1
+ 527              	.LVL64:
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 1 * 8) & 0xFF;
+ 528              		.loc 1 132 9 is_stmt 1
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 1 * 8) & 0xFF;
+ 529              		.loc 1 132 12 is_stmt 0
+ 530 0158 6376C302 		bleu	a2,t1,.L28
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 531              		.loc 1 133 13 is_stmt 1
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 532              		.loc 1 133 30 is_stmt 0
+ 533 015c 3693     		add	t1,a3,t1
+ 534              	.LVL65:
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 535              		.loc 1 133 40
+ 536 015e 13DF8700 		srli	t5,a5,8
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 537              		.loc 1 133 30
+ 538 0162 2300E301 		sb	t5,0(t1)
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 0 * 8) & 0xFF;
+ 539              		.loc 1 136 12
+ 540 0166 03230700 		lw	t1,0(a4)
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 541              		.loc 1 133 26
+ 542 016a 13862800 		addi	a2,a7,2
+ 543              	.LVL66:
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 0 * 8) & 0xFF;
+ 544              		.loc 1 136 9 is_stmt 1
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 0 * 8) & 0xFF;
+ 545              		.loc 1 136 12 is_stmt 0
+ 546 016e 63776600 		bleu	t1,a2,.L29
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 547              		.loc 1 137 13 is_stmt 1
+ 548              	.LVL67:
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 549              		.loc 1 137 30 is_stmt 0
+ 550 0172 3696     		add	a2,a3,a2
+ 551 0174 2300F600 		sb	a5,0(a2)
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 552              		.loc 1 137 26
+ 553 0178 13863800 		addi	a2,a7,3
+ 554              	.LVL68:
+ 555              	.L29:
+ 556 017c 1108     		addi	a6,a6,4
+ 557              	.LVL69:
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****         }
+ 558              		.loc 1 137 26 discriminator 1
+ 559 017e B288     		mv	a7,a2
+ 560 0180 B1B7     		j	.L23
+ 561              	.LVL70:
+ 562              	.L35:
+ 563 0182 4683     		mv	t1,a7
+ 564              	.LVL71:
+ 565              	.L28:
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c ****             decodedData[j++] = (triple >> 0 * 8) & 0xFF;
+ 566              		.loc 1 136 9 is_stmt 1
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/digest\utils_base64.c **** 
+ 567              		.loc 1 124 45 is_stmt 0
+ 568 0184 1A86     		mv	a2,t1
+ 569 0186 DDBF     		j	.L29
+ 570              		.cfi_endproc
+ 571              	.LFE22:
+ 573              		.section	.bss.g_decodingTable,"aw",@nobits
+ 574              		.align	2
+ 575              		.set	.LANCHOR3,. + 0
+ 578              	g_decodingTable:
+ 579 0000 00000000 		.zero	256
+ 579      00000000 
+ 579      00000000 
+ 579      00000000 
+ 579      00000000 
+ 580              		.section	.rodata.g_encodingTable,"a"
+ 581              		.align	2
+ 582              		.set	.LANCHOR0,. + 0
+ 585              	g_encodingTable:
+ 586 0000 41424344 		.ascii	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567"
+ 586      45464748 
+ 586      494A4B4C 
+ 586      4D4E4F50 
+ 586      51525354 
+ 587 003c 38392B2F 		.ascii	"89+/"
+ 588              		.section	.rodata.g_modTable,"a"
+ 589              		.align	2
+ 590              		.set	.LANCHOR1,. + 0
+ 593              	g_modTable:
+ 594 0000 00000000 		.word	0
+ 595 0004 02000000 		.word	2
+ 596 0008 01000000 		.word	1
+ 597              		.section	.sbss.signal.0,"aw",@nobits
+ 598              		.align	2
+ 599              		.set	.LANCHOR2,. + 0
+ 602              	signal.0:
+ 603 0000 00000000 		.zero	4
+ 604              		.text
+ 605              	.Letext0:
+ 606              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 607              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 608              		.file 4 "..\\..\\..\\..\\cloud\\alicloud\\include/exports/iot_export_errno.h"
+ 609              		.file 5 "..\\..\\..\\..\\cloud\\alicloud\\include/iot_import.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 utils_base64.c
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:26     .text.utils_base64encode:0000000000000000 utils_base64encode
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:30     .text.utils_base64encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:32     .text.utils_base64encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:33     .text.utils_base64encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:34     .text.utils_base64encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:37     .text.utils_base64encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:38     .text.utils_base64encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:39     .text.utils_base64encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:40     .text.utils_base64encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:42     .text.utils_base64encode:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:43     .text.utils_base64encode:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:49     .text.utils_base64encode:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:53     .text.utils_base64encode:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:56     .text.utils_base64encode:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:61     .text.utils_base64encode:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:62     .text.utils_base64encode:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:63     .text.utils_base64encode:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:67     .text.utils_base64encode:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:68     .text.utils_base64encode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:69     .text.utils_base64encode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:70     .text.utils_base64encode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:73     .text.utils_base64encode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:75     .text.utils_base64encode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:76     .text.utils_base64encode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:78     .text.utils_base64encode:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:81     .text.utils_base64encode:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:83     .text.utils_base64encode:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:85     .text.utils_base64encode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:86     .text.utils_base64encode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:89     .text.utils_base64encode:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:93     .text.utils_base64encode:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:97     .text.utils_base64encode:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:102    .text.utils_base64encode:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:103    .text.utils_base64encode:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:105    .text.utils_base64encode:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:109    .text.utils_base64encode:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:112    .text.utils_base64encode:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:115    .text.utils_base64encode:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:118    .text.utils_base64encode:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:123    .text.utils_base64encode:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:124    .text.utils_base64encode:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:126    .text.utils_base64encode:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:131    .text.utils_base64encode:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:132    .text.utils_base64encode:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:138    .text.utils_base64encode:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:145    .text.utils_base64encode:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:146    .text.utils_base64encode:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:148    .text.utils_base64encode:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:151    .text.utils_base64encode:00000000000000aa .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:154    .text.utils_base64encode:00000000000000ae .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:155    .text.utils_base64encode:00000000000000ae .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:157    .text.utils_base64encode:00000000000000b2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:160    .text.utils_base64encode:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:163    .text.utils_base64encode:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:166    .text.utils_base64encode:00000000000000bc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:167    .text.utils_base64encode:00000000000000bc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:169    .text.utils_base64encode:00000000000000c0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:172    .text.utils_base64encode:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:175    .text.utils_base64encode:00000000000000c6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:179    .text.utils_base64encode:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:180    .text.utils_base64encode:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:183    .text.utils_base64encode:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:185    .text.utils_base64encode:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:187    .text.utils_base64encode:00000000000000d0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:190    .text.utils_base64encode:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:191    .text.utils_base64encode:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:193    .text.utils_base64encode:00000000000000d6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:195    .text.utils_base64encode:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:197    .text.utils_base64encode:00000000000000dc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:199    .text.utils_base64encode:00000000000000de .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:201    .text.utils_base64encode:00000000000000e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:203    .text.utils_base64encode:00000000000000e4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:205    .text.utils_base64encode:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:207    .text.utils_base64encode:00000000000000ec .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:209    .text.utils_base64encode:00000000000000f0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:211    .text.utils_base64encode:00000000000000f4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:213    .text.utils_base64encode:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:215    .text.utils_base64encode:00000000000000fa .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:218    .text.utils_base64encode:00000000000000fe .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:220    .text.utils_base64encode:0000000000000100 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:222    .text.utils_base64encode:0000000000000104 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:224    .text.utils_base64encode:0000000000000108 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:227    .text.utils_base64encode:000000000000010c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:228    .text.utils_base64encode:000000000000010c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:229    .text.utils_base64encode:000000000000010c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:230    .text.utils_base64encode:000000000000010c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:238    .text.utils_base64encode:0000000000000116 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:241    .text.utils_base64encode:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:251    .text.utils_base64encode:0000000000000120 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:252    .text.utils_base64encode:0000000000000120 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:256    .text.utils_base64encode:0000000000000126 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:259    .text.utils_base64encode:000000000000012c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:260    .text.utils_base64encode:000000000000012c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:263    .text.utils_base64encode:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:274    .text.utils_base64decode:0000000000000000 utils_base64decode
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:277    .text.utils_base64decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:279    .text.utils_base64decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:280    .text.utils_base64decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:281    .text.utils_base64decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:284    .text.utils_base64decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:285    .text.utils_base64decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:288    .text.utils_base64decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:289    .text.utils_base64decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:290    .text.utils_base64decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:291    .text.utils_base64decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:292    .text.utils_base64decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:295    .text.utils_base64decode:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:297    .text.utils_base64decode:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:299    .text.utils_base64decode:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:302    .text.utils_base64decode:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:304    .text.utils_base64decode:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:306    .text.utils_base64decode:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:310    .text.utils_base64decode:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:311    .text.utils_base64decode:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:313    .text.utils_base64decode:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:315    .text.utils_base64decode:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:318    .text.utils_base64decode:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:319    .text.utils_base64decode:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:322    .text.utils_base64decode:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:323    .text.utils_base64decode:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:325    .text.utils_base64decode:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:326    .text.utils_base64decode:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:333    .text.utils_base64decode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:334    .text.utils_base64decode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:335    .text.utils_base64decode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:337    .text.utils_base64decode:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:339    .text.utils_base64decode:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:340    .text.utils_base64decode:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:346    .text.utils_base64decode:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:350    .text.utils_base64decode:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:353    .text.utils_base64decode:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:358    .text.utils_base64decode:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:359    .text.utils_base64decode:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:360    .text.utils_base64decode:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:364    .text.utils_base64decode:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:365    .text.utils_base64decode:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:366    .text.utils_base64decode:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:367    .text.utils_base64decode:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:370    .text.utils_base64decode:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:372    .text.utils_base64decode:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:373    .text.utils_base64decode:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:375    .text.utils_base64decode:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:377    .text.utils_base64decode:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:379    .text.utils_base64decode:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:381    .text.utils_base64decode:0000000000000092 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:383    .text.utils_base64decode:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:385    .text.utils_base64decode:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:386    .text.utils_base64decode:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:389    .text.utils_base64decode:00000000000000a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:390    .text.utils_base64decode:00000000000000a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:394    .text.utils_base64decode:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:395    .text.utils_base64decode:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:399    .text.utils_base64decode:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:400    .text.utils_base64decode:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:405    .text.utils_base64decode:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:406    .text.utils_base64decode:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:409    .text.utils_base64decode:00000000000000bc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:411    .text.utils_base64decode:00000000000000c0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:413    .text.utils_base64decode:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:415    .text.utils_base64decode:00000000000000c4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:417    .text.utils_base64decode:00000000000000c8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:421    .text.utils_base64decode:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:422    .text.utils_base64decode:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:425    .text.utils_base64decode:00000000000000d4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:431    .text.utils_base64decode:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:432    .text.utils_base64decode:00000000000000d8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:438    .text.utils_base64decode:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:444    .text.utils_base64decode:00000000000000f2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:445    .text.utils_base64decode:00000000000000f2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:447    .text.utils_base64decode:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:451    .text.utils_base64decode:00000000000000fc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:453    .text.utils_base64decode:00000000000000fe .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:457    .text.utils_base64decode:0000000000000102 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:458    .text.utils_base64decode:0000000000000102 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:460    .text.utils_base64decode:0000000000000106 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:464    .text.utils_base64decode:000000000000010c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:466    .text.utils_base64decode:000000000000010e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:470    .text.utils_base64decode:0000000000000112 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:471    .text.utils_base64decode:0000000000000112 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:473    .text.utils_base64decode:0000000000000116 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:477    .text.utils_base64decode:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:479    .text.utils_base64decode:000000000000011e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:483    .text.utils_base64decode:0000000000000122 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:484    .text.utils_base64decode:0000000000000122 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:486    .text.utils_base64decode:0000000000000126 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:490    .text.utils_base64decode:000000000000012c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:492    .text.utils_base64decode:000000000000012e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:496    .text.utils_base64decode:0000000000000132 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:497    .text.utils_base64decode:0000000000000132 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:498    .text.utils_base64decode:0000000000000132 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:501    .text.utils_base64decode:000000000000013a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:504    .text.utils_base64decode:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:507    .text.utils_base64decode:000000000000013e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:510    .text.utils_base64decode:0000000000000140 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:513    .text.utils_base64decode:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:515    .text.utils_base64decode:0000000000000144 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:517    .text.utils_base64decode:0000000000000146 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:518    .text.utils_base64decode:0000000000000146 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:520    .text.utils_base64decode:000000000000014a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:522    .text.utils_base64decode:000000000000014e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:524    .text.utils_base64decode:0000000000000152 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:526    .text.utils_base64decode:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:529    .text.utils_base64decode:0000000000000158 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:530    .text.utils_base64decode:0000000000000158 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:532    .text.utils_base64decode:000000000000015c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:533    .text.utils_base64decode:000000000000015c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:536    .text.utils_base64decode:000000000000015e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:538    .text.utils_base64decode:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:540    .text.utils_base64decode:0000000000000166 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:542    .text.utils_base64decode:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:545    .text.utils_base64decode:000000000000016e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:546    .text.utils_base64decode:000000000000016e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:549    .text.utils_base64decode:0000000000000172 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:550    .text.utils_base64decode:0000000000000172 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:553    .text.utils_base64decode:0000000000000178 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:559    .text.utils_base64decode:000000000000017e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:567    .text.utils_base64decode:0000000000000184 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:568    .text.utils_base64decode:0000000000000184 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:570    .text.utils_base64decode:0000000000000188 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:575    .bss.g_decodingTable:0000000000000000 .LANCHOR3
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:578    .bss.g_decodingTable:0000000000000000 g_decodingTable
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:582    .rodata.g_encodingTable:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:585    .rodata.g_encodingTable:0000000000000000 g_encodingTable
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:590    .rodata.g_modTable:0000000000000000 .LANCHOR1
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:593    .rodata.g_modTable:0000000000000000 g_modTable
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:599    .sbss.signal.0:0000000000000000 .LANCHOR2
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:602    .sbss.signal.0:0000000000000000 signal.0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:266    .text.utils_base64encode:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:573    .text.utils_base64decode:0000000000000188 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:11     .rodata.utils_base64encode.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:14     .rodata.utils_base64encode.str1.4:0000000000000008 .LC1
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:17     .rodata.utils_base64encode.str1.4:0000000000000028 .LC2
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:20     .rodata.utils_base64encode.str1.4:000000000000002c .LC3
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:72     .text.utils_base64encode:0000000000000044 .L2
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:129    .text.utils_base64encode:0000000000000088 .L4
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:142    .text.utils_base64encode:00000000000000a2 .L7
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:248    .text.utils_base64encode:0000000000000120 .L9
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:65     .text.utils_base64encode:000000000000003c .L1
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:51     .text.utils_base64encode:0000000000000022 .L14
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:236    .text.utils_base64encode:0000000000000116 .L10
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:244    .text.utils_base64encode:000000000000011c .L11
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:99     .text.utils_base64encode:0000000000000062 .L5
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:177    .text.utils_base64encode:00000000000000ca .L6
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:239    .text.utils_base64encode:0000000000000118 .L13
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:120    .text.utils_base64encode:0000000000000080 .L8
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:268    .rodata.utils_base64decode.str1.4:0000000000000000 .LC4
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:330    .text.utils_base64decode:0000000000000044 .L16
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:308    .text.utils_base64decode:000000000000002a .L17
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:369    .text.utils_base64decode:0000000000000084 .L18
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:392    .text.utils_base64decode:00000000000000a4 .L20
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:403    .text.utils_base64decode:00000000000000b6 .L21
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:429    .text.utils_base64decode:00000000000000d8 .L22
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:442    .text.utils_base64decode:00000000000000f2 .L30
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:362    .text.utils_base64decode:000000000000007c .L15
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:348    .text.utils_base64decode:0000000000000062 .L38
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:455    .text.utils_base64decode:0000000000000102 .L24
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:468    .text.utils_base64decode:0000000000000112 .L25
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:481    .text.utils_base64decode:0000000000000122 .L26
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:494    .text.utils_base64decode:0000000000000132 .L27
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:562    .text.utils_base64decode:0000000000000182 .L35
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:565    .text.utils_base64decode:0000000000000184 .L28
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:555    .text.utils_base64decode:000000000000017c .L29
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:419    .text.utils_base64decode:00000000000000cc .L23
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:1659   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3288   .debug_str:000000000000159c .LASF227
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3150   .debug_str:0000000000000e92 .LASF228
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3034   .debug_str:000000000000084b .LASF229
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2840   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2856   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2910   .debug_str:0000000000000265 .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2924   .debug_str:000000000000030b .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2878   .debug_str:00000000000000c8 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3148   .debug_str:0000000000000e84 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3158   .debug_str:0000000000000f7b .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3024   .debug_str:00000000000007cf .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3220   .debug_str:0000000000001254 .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2946   .debug_str:000000000000043f .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3222   .debug_str:000000000000125e .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3012   .debug_str:000000000000074f .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2998   .debug_str:0000000000000695 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2934   .debug_str:000000000000038e .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3002   .debug_str:00000000000006cb .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3240   .debug_str:0000000000001332 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3266   .debug_str:000000000000147a .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3146   .debug_str:0000000000000e7c .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3184   .debug_str:00000000000010bd .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3200   .debug_str:0000000000001172 .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2876   .debug_str:00000000000000b7 .LASF230
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2956   .debug_str:00000000000004ac .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3176   .debug_str:0000000000001046 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3204   .debug_str:000000000000118b .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3136   .debug_str:0000000000000e2c .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3086   .debug_str:0000000000000b96 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2892   .debug_str:000000000000017b .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3056   .debug_str:0000000000000a14 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3262   .debug_str:0000000000001452 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3322   .debug_str:000000000000184b .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2996   .debug_str:0000000000000686 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2980   .debug_str:00000000000005ba .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3106   .debug_str:0000000000000c8d .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2976   .debug_str:0000000000000591 .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3250   .debug_str:00000000000013a0 .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2880   .debug_str:00000000000000d2 .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2882   .debug_str:00000000000000ea .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3292   .debug_str:00000000000016a2 .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3316   .debug_str:00000000000017e3 .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2942   .debug_str:00000000000003f7 .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2926   .debug_str:0000000000000317 .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3306   .debug_str:000000000000175e .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3020   .debug_str:00000000000007a8 .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3058   .debug_str:0000000000000a23 .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2952   .debug_str:000000000000047d .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2948   .debug_str:0000000000000448 .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3254   .debug_str:00000000000013de .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3280   .debug_str:0000000000001530 .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3210   .debug_str:00000000000011dc .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2938   .debug_str:00000000000003c5 .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3076   .debug_str:0000000000000b17 .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3244   .debug_str:000000000000134a .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3162   .debug_str:0000000000000f9f .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2896   .debug_str:00000000000001ae .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2932   .debug_str:0000000000000370 .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3190   .debug_str:00000000000010ea .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3296   .debug_str:00000000000016d5 .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3224   .debug_str:0000000000001269 .LASF54
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2992   .debug_str:0000000000000645 .LASF55
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3004   .debug_str:00000000000006d8 .LASF56
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3122   .debug_str:0000000000000d5b .LASF57
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2900   .debug_str:00000000000001ed .LASF58
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3274   .debug_str:00000000000014e5 .LASF59
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3308   .debug_str:000000000000177e .LASF60
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3264   .debug_str:0000000000001463 .LASF61
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2904   .debug_str:000000000000022a .LASF62
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2972   .debug_str:0000000000000561 .LASF63
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3108   .debug_str:0000000000000ca4 .LASF64
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3048   .debug_str:00000000000009ab .LASF65
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2902   .debug_str:000000000000020f .LASF66
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3304   .debug_str:0000000000001746 .LASF67
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2966   .debug_str:000000000000052a .LASF68
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3278   .debug_str:0000000000001515 .LASF69
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3294   .debug_str:00000000000016bd .LASF70
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2984   .debug_str:00000000000005e2 .LASF71
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3290   .debug_str:0000000000001683 .LASF72
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3226   .debug_str:0000000000001287 .LASF73
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3094   .debug_str:0000000000000bfc .LASF74
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3166   .debug_str:0000000000000fd3 .LASF75
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3010   .debug_str:000000000000072f .LASF76
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3080   .debug_str:0000000000000b51 .LASF77
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3054   .debug_str:00000000000009f5 .LASF78
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3174   .debug_str:0000000000001031 .LASF79
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3172   .debug_str:0000000000001019 .LASF80
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3044   .debug_str:0000000000000977 .LASF81
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3110   .debug_str:0000000000000cbd .LASF82
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3196   .debug_str:000000000000113b .LASF83
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3282   .debug_str:000000000000154e .LASF84
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3016   .debug_str:0000000000000782 .LASF85
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3040   .debug_str:0000000000000926 .LASF86
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2986   .debug_str:00000000000005fe .LASF87
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3036   .debug_str:00000000000008dc .LASF88
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3152   .debug_str:0000000000000f31 .LASF89
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2860   .debug_str:0000000000000026 .LASF90
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2874   .debug_str:0000000000000097 .LASF91
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3134   .debug_str:0000000000000e0d .LASF92
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3084   .debug_str:0000000000000b82 .LASF93
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2906   .debug_str:0000000000000242 .LASF94
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3160   .debug_str:0000000000000f85 .LASF95
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3104   .debug_str:0000000000000c74 .LASF96
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2868   .debug_str:000000000000005a .LASF97
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3236   .debug_str:0000000000001300 .LASF98
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3320   .debug_str:000000000000182c .LASF99
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2982   .debug_str:00000000000005c9 .LASF100
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3268   .debug_str:0000000000001482 .LASF101
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3072   .debug_str:0000000000000af0 .LASF102
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3050   .debug_str:00000000000009c5 .LASF103
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2928   .debug_str:000000000000033d .LASF104
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2944   .debug_str:000000000000041e .LASF105
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2916   .debug_str:00000000000002a6 .LASF106
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3038   .debug_str:0000000000000904 .LASF107
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3182   .debug_str:000000000000109e .LASF108
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2954   .debug_str:0000000000000496 .LASF109
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3164   .debug_str:0000000000000fba .LASF110
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3128   .debug_str:0000000000000da9 .LASF111
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3008   .debug_str:000000000000070e .LASF112
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2962   .debug_str:00000000000004e8 .LASF113
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3248   .debug_str:0000000000001382 .LASF114
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3078   .debug_str:0000000000000b33 .LASF115
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3238   .debug_str:000000000000131a .LASF116
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2974   .debug_str:000000000000057d .LASF117
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3062   .debug_str:0000000000000a56 .LASF118
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3030   .debug_str:0000000000000816 .LASF119
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3170   .debug_str:0000000000000ffe .LASF120
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3318   .debug_str:0000000000001814 .LASF121
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3246   .debug_str:000000000000136a .LASF122
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3272   .debug_str:00000000000014c8 .LASF123
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3312   .debug_str:00000000000017b2 .LASF124
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3218   .debug_str:0000000000001237 .LASF125
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2950   .debug_str:000000000000045f .LASF126
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3270   .debug_str:00000000000014a0 .LASF127
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3000   .debug_str:00000000000006a3 .LASF128
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3006   .debug_str:00000000000006f6 .LASF129
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3314   .debug_str:00000000000017c8 .LASF130
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2940   .debug_str:00000000000003d6 .LASF131
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3300   .debug_str:000000000000170f .LASF132
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3180   .debug_str:0000000000001077 .LASF133
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3310   .debug_str:000000000000179a .LASF134
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3060   .debug_str:0000000000000a36 .LASF135
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3098   .debug_str:0000000000000c2c .LASF136
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3186   .debug_str:00000000000010c6 .LASF137
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3206   .debug_str:00000000000011a2 .LASF138
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3178   .debug_str:0000000000001058 .LASF139
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3100   .debug_str:0000000000000c47 .LASF140
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3114   .debug_str:0000000000000ce3 .LASF141
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3302   .debug_str:000000000000172f .LASF142
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3258   .debug_str:000000000000141b .LASF143
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3082   .debug_str:0000000000000b6b .LASF144
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3234   .debug_str:00000000000012e9 .LASF145
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2936   .debug_str:00000000000003a5 .LASF146
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3014   .debug_str:0000000000000761 .LASF147
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2960   .debug_str:00000000000004ce .LASF148
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3198   .debug_str:000000000000115e .LASF149
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3208   .debug_str:00000000000011bd .LASF150
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3064   .debug_str:0000000000000a76 .LASF151
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2894   .debug_str:000000000000018d .LASF152
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3124   .debug_str:0000000000000d79 .LASF153
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3026   .debug_str:00000000000007e2 .LASF154
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3132   .debug_str:0000000000000de9 .LASF155
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2884   .debug_str:000000000000010c .LASF156
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3070   .debug_str:0000000000000ace .LASF157
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2890   .debug_str:000000000000015b .LASF158
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2994   .debug_str:0000000000000664 .LASF159
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3154   .debug_str:0000000000000f4d .LASF160
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3068   .debug_str:0000000000000aad .LASF161
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3256   .debug_str:00000000000013f8 .LASF162
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3066   .debug_str:0000000000000a8c .LASF163
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2886   .debug_str:000000000000012d .LASF164
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3260   .debug_str:0000000000001432 .LASF165
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2858   .debug_str:0000000000000000 .LASF166
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2920   .debug_str:00000000000002d2 .LASF167
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2964   .debug_str:0000000000000500 .LASF168
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3228   .debug_str:00000000000012ab .LASF169
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3202   .debug_str:0000000000001177 .LASF170
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2898   .debug_str:00000000000001c7 .LASF171
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3138   .debug_str:0000000000000e45 .LASF172
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2914   .debug_str:0000000000000283 .LASF173
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3252   .debug_str:00000000000013b8 .LASF174
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3298   .debug_str:00000000000016ec .LASF175
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3216   .debug_str:0000000000001221 .LASF176
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3052   .debug_str:00000000000009dd .LASF177
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3032   .debug_str:000000000000082e .LASF178
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3130   .debug_str:0000000000000dc1 .LASF179
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3286   .debug_str:000000000000157b .LASF180
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2922   .debug_str:00000000000002ed .LASF181
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3192   .debug_str:0000000000001104 .LASF182
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3276   .debug_str:00000000000014f8 .LASF183
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3088   .debug_str:0000000000000ba7 .LASF184
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3168   .debug_str:0000000000000ff1 .LASF185
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3212   .debug_str:00000000000011f7 .LASF186
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3156   .debug_str:0000000000000f6e .LASF187
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2872   .debug_str:0000000000000083 .LASF188
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3042   .debug_str:0000000000000944 .LASF189
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3092   .debug_str:0000000000000bcf .LASF190
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3120   .debug_str:0000000000000d29 .LASF191
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3096   .debug_str:0000000000000c1b .LASF192
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3116   .debug_str:0000000000000d01 .LASF193
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3028   .debug_str:0000000000000805 .LASF194
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2918   .debug_str:00000000000002c1 .LASF195
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2970   .debug_str:0000000000000551 .LASF196
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3242   .debug_str:0000000000001339 .LASF197
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2990   .debug_str:000000000000062b .LASF198
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3194   .debug_str:000000000000112a .LASF199
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2978   .debug_str:00000000000005af .LASF200
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2930   .debug_str:000000000000035e .LASF201
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3046   .debug_str:000000000000099a .LASF202
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3126   .debug_str:0000000000000d9d .LASF203
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2870   .debug_str:0000000000000074 .LASF204
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3090   .debug_str:0000000000000bc4 .LASF205
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2968   .debug_str:000000000000054a .LASF206
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3214   .debug_str:0000000000001211 .LASF207
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3102   .debug_str:0000000000000c64 .LASF208
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2958   .debug_str:00000000000004c3 .LASF209
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3230   .debug_str:00000000000012ca .LASF220
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:275    .text.utils_base64decode:0000000000000000 .LFB22
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:571    .text.utils_base64decode:0000000000000188 .LFE22
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3022   .debug_str:00000000000007ca .LASF210
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2015   .debug_loc:0000000000000000 .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3232   .debug_str:00000000000012dd .LASF211
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2055   .debug_loc:000000000000005e .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3284   .debug_str:000000000000156e .LASF212
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2084   .debug_loc:00000000000000a3 .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2908   .debug_str:0000000000000259 .LASF213
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2120   .debug_loc:00000000000000f6 .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3074   .debug_str:0000000000000b0a .LASF214
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2149   .debug_loc:000000000000013b .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2178   .debug_loc:0000000000000180 .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2288   .debug_loc:0000000000000247 .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3140   .debug_str:0000000000000e61 .LASF215
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2346   .debug_loc:00000000000002da .LLST18
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3142   .debug_str:0000000000000e6a .LASF216
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2357   .debug_loc:00000000000002f8 .LLST19
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3144   .debug_str:0000000000000e73 .LASF217
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2368   .debug_loc:0000000000000316 .LLST20
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3112   .debug_str:0000000000000cda .LASF218
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3018   .debug_str:00000000000007a1 .LASF219
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2379   .debug_loc:0000000000000334 .LLST21
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:286    .text.utils_base64decode:0000000000000008 .LBB7
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:332    .text.utils_base64decode:0000000000000044 .LBE7
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2460   .debug_loc:00000000000003a6 .LLST22
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:344    .text.utils_base64decode:000000000000005a .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:351    .text.utils_base64decode:000000000000006a .LVL42
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:356    .text.utils_base64decode:000000000000007a .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:436    .text.utils_base64decode:00000000000000e8 .LVL50
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3118   .debug_str:0000000000000d16 .LASF221
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:27     .text.utils_base64encode:0000000000000000 .LFB21
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:264    .text.utils_base64encode:0000000000000130 .LFE21
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2472   .debug_loc:00000000000003c5 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2519   .debug_loc:0000000000000431 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2566   .debug_loc:000000000000049d .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2988   .debug_str:000000000000061f .LASF222
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2602   .debug_loc:00000000000004f0 .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2631   .debug_loc:0000000000000535 .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2660   .debug_loc:000000000000057a .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2722   .debug_loc:0000000000000618 .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2862   .debug_str:0000000000000042 .LASF223
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2789   .debug_loc:0000000000000698 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2864   .debug_str:000000000000004a .LASF224
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2800   .debug_loc:00000000000006b6 .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2866   .debug_str:0000000000000052 .LASF225
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2811   .debug_loc:00000000000006d4 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2818   .debug_loc:00000000000006e7 .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:47     .text.utils_base64encode:000000000000001a .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:54     .text.utils_base64encode:000000000000002a .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:59     .text.utils_base64encode:000000000000003a .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:136    .text.utils_base64encode:0000000000000098 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2912   .debug_str:000000000000026e .LASF231
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:3188   .debug_str:00000000000010e3 .LASF226
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:2888   .debug_str:0000000000000150 .LASF232
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:278    .text.utils_base64decode:0000000000000000 .LVL35
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:341    .text.utils_base64decode:000000000000004e .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:368    .text.utils_base64decode:0000000000000084 .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:426    .text.utils_base64decode:00000000000000d6 .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:428    .text.utils_base64decode:00000000000000d8 .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:433    .text.utils_base64decode:00000000000000dc .LVL49
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:441    .text.utils_base64decode:00000000000000f2 .LVL51
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:418    .text.utils_base64decode:00000000000000cc .LVL46
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:283    .text.utils_base64decode:0000000000000008 .LVL36
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:361    .text.utils_base64decode:000000000000007c .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:449    .text.utils_base64decode:00000000000000fc .LVL52
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:462    .text.utils_base64decode:000000000000010c .LVL54
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:475    .text.utils_base64decode:000000000000011c .LVL56
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:488    .text.utils_base64decode:000000000000012c .LVL58
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:557    .text.utils_base64decode:000000000000017e .LVL69
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:561    .text.utils_base64decode:0000000000000182 .LVL70
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:527    .text.utils_base64decode:0000000000000158 .LVL64
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:534    .text.utils_base64decode:000000000000015e .LVL65
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:543    .text.utils_base64decode:000000000000016e .LVL66
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:548    .text.utils_base64decode:0000000000000172 .LVL67
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:554    .text.utils_base64decode:000000000000017c .LVL68
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:564    .text.utils_base64decode:0000000000000184 .LVL71
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:454    .text.utils_base64decode:0000000000000102 .LVL53
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:502    .text.utils_base64decode:000000000000013c .LVL60
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:467    .text.utils_base64decode:0000000000000112 .LVL55
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:505    .text.utils_base64decode:000000000000013e .LVL61
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:480    .text.utils_base64decode:0000000000000122 .LVL57
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:511    .text.utils_base64decode:0000000000000142 .LVL63
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:493    .text.utils_base64decode:0000000000000132 .LVL59
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:508    .text.utils_base64decode:0000000000000140 .LVL62
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:307    .text.utils_base64decode:000000000000002a .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:327    .text.utils_base64decode:0000000000000040 .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:31     .text.utils_base64encode:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:44     .text.utils_base64encode:000000000000000e .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:71     .text.utils_base64encode:0000000000000044 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:116    .text.utils_base64encode:000000000000007a .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:128    .text.utils_base64encode:0000000000000088 .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:133    .text.utils_base64encode:000000000000008c .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:141    .text.utils_base64encode:00000000000000a2 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:247    .text.utils_base64encode:0000000000000120 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:107    .text.utils_base64encode:000000000000006c .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:94     .text.utils_base64encode:000000000000005e .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:36     .text.utils_base64encode:0000000000000008 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:64     .text.utils_base64encode:000000000000003c .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:98     .text.utils_base64encode:0000000000000062 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:113    .text.utils_base64encode:0000000000000076 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:121    .text.utils_base64encode:0000000000000080 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:149    .text.utils_base64encode:00000000000000aa .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:158    .text.utils_base64encode:00000000000000b4 .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:161    .text.utils_base64encode:00000000000000b8 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:170    .text.utils_base64encode:00000000000000c2 .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:173    .text.utils_base64encode:00000000000000c6 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:243    .text.utils_base64encode:000000000000011c .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:188    .text.utils_base64encode:00000000000000d2 .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:226    .text.utils_base64encode:000000000000010c .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:233    .text.utils_base64encode:0000000000000114 .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:152    .text.utils_base64encode:00000000000000ae .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:181    .text.utils_base64encode:00000000000000cc .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:235    .text.utils_base64encode:0000000000000116 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:164    .text.utils_base64encode:00000000000000bc .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:176    .text.utils_base64encode:00000000000000ca .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:216    .text.utils_base64encode:00000000000000fe .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:611    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:87     .text.utils_base64encode:0000000000000056 .LBB2
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:91     .text.utils_base64encode:000000000000005c .LBE2
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:95     .text.utils_base64encode:000000000000005e .LBB3
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:100    .text.utils_base64encode:0000000000000062 .LBE3
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:143    .text.utils_base64encode:00000000000000a2 .LBB4
+C:\Users\stapi\AppData\Local\Temp\ccz6hu7f.s:249    .text.utils_base64encode:0000000000000120 .LBE4
+
+UNDEFINED SYMBOLS
+__riscv_save_0
+HAL_Printf
+__riscv_restore_0

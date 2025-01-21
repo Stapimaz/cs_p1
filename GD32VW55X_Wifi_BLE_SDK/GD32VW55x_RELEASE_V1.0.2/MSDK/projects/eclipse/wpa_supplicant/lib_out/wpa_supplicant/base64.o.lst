@@ -1,0 +1,1867 @@
+   1              		.file	"base64.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.base64_gen_encode,"ax",@progbits
+  10              		.align	1
+  12              	base64_gen_encode:
+  13              	.LFB432:
+  14              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * Base64 encoding/decoding (RFC1341)
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * Copyright (c) 2005-2019, Jouni Malinen <j@w1.fi>
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  *
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * This software may be distributed under the terms of the BSD license.
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * See README for more details.
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  */
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #include "includes.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #include <stdint.h>
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #include "mbedtls/base64.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #include "utils/common.h"
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #include "os.h"
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #include "base64.h"
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** static const char base64_table[65] =
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** static const char base64_url_table[65] =
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #define BASE64_PAD BIT(0)
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #define BASE64_LF BIT(1)
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** static char * base64_gen_encode(const unsigned char *src, size_t len,
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				size_t *out_len, const char *table, int add_pad)
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** {
+  15              		.loc 1 29 1
+  16              		.cfi_startproc
+  17              	.LVL0:
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	char *out, *pos;
+  18              		.loc 1 30 2
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	const unsigned char *end, *in;
+  19              		.loc 1 31 2
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	size_t olen;
+  20              		.loc 1 32 2
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	int line_len;
+  21              		.loc 1 33 2
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (len >= SIZE_MAX / 4)
+  22              		.loc 1 35 2
+  23              		.loc 1 35 5 is_stmt 0
+  24 0000 B7070040 		li	a5,1073741824
+  25 0004 F917     		addi	a5,a5,-2
+  26 0006 63F9B700 		bleu	a1,a5,.L2
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+  27              		.loc 1 36 10
+  28 000a 0145     		li	a0,0
+  29              	.LVL1:
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	olen = len * 4 / 3 + 4; /* 3-byte blocks to 4-byte */
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (add_pad & BASE64_LF)
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		olen += olen / 72; /* line feeds */
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	olen++; /* nul termination */
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (olen < len)
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL; /* integer overflow */
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	out = os_malloc(olen);
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (out == NULL)
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	end = src + len;
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	in = src;
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	pos = out;
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	line_len = 0;
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	while (end - in >= 3) {
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(in[0] >> 2) & 0x3f];
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[0] & 0x03) << 4) | (in[1] >> 4)) & 0x3f];
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[in[2] & 0x3f];
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		in += 3;
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		line_len += 4;
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if ((add_pad & BASE64_LF) && line_len >= 72) {
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = '\n';
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			line_len = 0;
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		}
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	}
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (end - in) {
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(in[0] >> 2) & 0x3f];
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (end - in == 1) {
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = table[((in[0] & 0x03) << 4) & 0x3f];
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (add_pad & BASE64_PAD)
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				*pos++ = '=';
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		} else {
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = table[(((in[0] & 0x03) << 4) |
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					(in[1] >> 4)) & 0x3f];
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = table[((in[1] & 0x0f) << 2) & 0x3f];
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		}
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (add_pad & BASE64_PAD)
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = '=';
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		line_len += 4;
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	}
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if ((add_pad & BASE64_LF) && line_len)
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = '\n';
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	*pos = '\0';
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (out_len)
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*out_len = pos - out;
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return out;
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** }
+  30              		.loc 1 87 1
+  31 000c 8280     		ret
+  32              	.LVL2:
+  33              	.L4:
+  34              		.cfi_def_cfa_offset 32
+  35              		.cfi_offset 1, -4
+  36              		.cfi_offset 8, -8
+  37              		.cfi_offset 9, -12
+  38              		.cfi_offset 18, -16
+  39              		.cfi_offset 19, -20
+  40              		.cfi_offset 20, -24
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+  41              		.loc 1 36 10
+  42 000e 0145     		li	a0,0
+  43              	.LVL3:
+  44              	.L1:
+  45              		.loc 1 87 1
+  46 0010 17030000 		tail	__riscv_restore_5
+  46      67000300 
+  47              		.cfi_restore 20
+  48              		.cfi_restore 19
+  49              		.cfi_restore 18
+  50              		.cfi_restore 9
+  51              		.cfi_restore 8
+  52              		.cfi_restore 1
+  53              		.cfi_def_cfa_offset 0
+  54              	.LVL4:
+  55              	.L2:
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	char *out, *pos;
+  56              		.loc 1 29 1
+  57 0018 17030000 		call	t0,__riscv_save_5
+  57      E7020300 
+  58              		.cfi_offset 20, -24
+  59              		.cfi_offset 19, -20
+  60              		.cfi_offset 18, -16
+  61              		.cfi_offset 9, -12
+  62              		.cfi_offset 8, -8
+  63              		.cfi_offset 1, -4
+  64              		.cfi_def_cfa_offset 32
+  65 0020 2A84     		mv	s0,a0
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	olen = len * 4 / 3 + 4; /* 3-byte blocks to 4-byte */
+  66              		.loc 1 37 17
+  67 0022 8D47     		li	a5,3
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	olen = len * 4 / 3 + 4; /* 3-byte blocks to 4-byte */
+  68              		.loc 1 37 13
+  69 0024 13952500 		slli	a0,a1,2
+  70              	.LVL5:
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	olen = len * 4 / 3 + 4; /* 3-byte blocks to 4-byte */
+  71              		.loc 1 37 17
+  72 0028 3355F502 		divu	a0,a0,a5
+  73 002c 2E8A     		mv	s4,a1
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	olen = len * 4 / 3 + 4; /* 3-byte blocks to 4-byte */
+  74              		.loc 1 37 2 is_stmt 1
+  75              	.LVL6:
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		olen += olen / 72; /* line feeds */
+  76              		.loc 1 38 2
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (olen < len)
+  77              		.loc 1 40 2
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (olen < len)
+  78              		.loc 1 40 6 is_stmt 0
+  79 002e 1505     		addi	a0,a0,5
+  80              	.LVL7:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL; /* integer overflow */
+  81              		.loc 1 41 2 is_stmt 1
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL; /* integer overflow */
+  82              		.loc 1 41 5 is_stmt 0
+  83 0030 E36FB5FC 		bgtu	a1,a0,.L4
+  84 0034 3289     		mv	s2,a2
+  85 0036 B684     		mv	s1,a3
+  86 0038 BA89     		mv	s3,a4
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (out == NULL)
+  87              		.loc 1 43 2 is_stmt 1
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (out == NULL)
+  88              		.loc 1 43 8 is_stmt 0
+  89 003a 97000000 		call	os_malloc
+  89      E7800000 
+  90              	.LVL8:
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+  91              		.loc 1 44 2 is_stmt 1
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+  92              		.loc 1 44 5 is_stmt 0
+  93 0042 71D5     		beq	a0,zero,.L4
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	in = src;
+  94              		.loc 1 47 2 is_stmt 1
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	in = src;
+  95              		.loc 1 47 6 is_stmt 0
+  96 0044 229A     		add	s4,s0,s4
+  97              	.LVL9:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	pos = out;
+  98              		.loc 1 48 2 is_stmt 1
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	line_len = 0;
+  99              		.loc 1 49 2
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	while (end - in >= 3) {
+ 100              		.loc 1 50 2
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(in[0] >> 2) & 0x3f];
+ 101              		.loc 1 51 2
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(in[0] >> 2) & 0x3f];
+ 102              		.loc 1 51 8 is_stmt 0
+ 103 0046 AA85     		mv	a1,a0
+ 104 0048 8946     		li	a3,2
+ 105              	.LVL10:
+ 106              	.L5:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(in[0] >> 2) & 0x3f];
+ 107              		.loc 1 51 8 is_stmt 1
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(in[0] >> 2) & 0x3f];
+ 108              		.loc 1 51 13 is_stmt 0
+ 109 004a 33078A40 		sub	a4,s4,s0
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(in[0] >> 2) & 0x3f];
+ 110              		.loc 1 51 8
+ 111 004e 63CAE604 		bgt	a4,a3,.L6
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(in[0] >> 2) & 0x3f];
+ 112              		.loc 1 64 2 is_stmt 1
+ 113 0052 2E88     		mv	a6,a1
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(in[0] >> 2) & 0x3f];
+ 114              		.loc 1 64 5 is_stmt 0
+ 115 0054 630E440D 		beq	s0,s4,.L7
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (end - in == 1) {
+ 116              		.loc 1 65 3 is_stmt 1
+ 117              	.LVL11:
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (end - in == 1) {
+ 118              		.loc 1 65 31 is_stmt 0
+ 119 0058 83470400 		lbu	a5,0(s0)
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = table[((in[0] & 0x03) << 4) & 0x3f];
+ 120              		.loc 1 66 6
+ 121 005c 8546     		li	a3,1
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (end - in == 1) {
+ 122              		.loc 1 65 31
+ 123 005e 8983     		srli	a5,a5,2
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (end - in == 1) {
+ 124              		.loc 1 65 17
+ 125 0060 A697     		add	a5,s1,a5
+ 126 0062 83870700 		lb	a5,0(a5)
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (end - in == 1) {
+ 127              		.loc 1 65 10
+ 128 0066 2380F500 		sb	a5,0(a1)
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = table[((in[0] & 0x03) << 4) & 0x3f];
+ 129              		.loc 1 66 3 is_stmt 1
+ 130 006a 83470400 		lbu	a5,0(s0)
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (add_pad & BASE64_PAD)
+ 131              		.loc 1 67 35 is_stmt 0
+ 132 006e 9207     		slli	a5,a5,4
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (add_pad & BASE64_PAD)
+ 133              		.loc 1 67 41
+ 134 0070 93F70703 		andi	a5,a5,48
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = table[((in[0] & 0x03) << 4) & 0x3f];
+ 135              		.loc 1 66 6
+ 136 0074 6317D708 		bne	a4,a3,.L8
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (add_pad & BASE64_PAD)
+ 137              		.loc 1 67 4 is_stmt 1
+ 138              	.LVL12:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (add_pad & BASE64_PAD)
+ 139              		.loc 1 67 18 is_stmt 0
+ 140 0078 A697     		add	a5,s1,a5
+ 141 007a 83870700 		lb	a5,0(a5)
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (add_pad & BASE64_PAD)
+ 142              		.loc 1 67 11
+ 143 007e A380F500 		sb	a5,1(a1)
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				*pos++ = '=';
+ 144              		.loc 1 68 4 is_stmt 1
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (add_pad & BASE64_PAD)
+ 145              		.loc 1 67 8 is_stmt 0
+ 146 0082 13882500 		addi	a6,a1,2
+ 147              	.LVL13:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				*pos++ = '=';
+ 148              		.loc 1 68 7
+ 149 0086 6385090A 		beq	s3,zero,.L7
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		} else {
+ 150              		.loc 1 69 5 is_stmt 1
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		} else {
+ 151              		.loc 1 69 12 is_stmt 0
+ 152 008a 9307D003 		li	a5,61
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		} else {
+ 153              		.loc 1 69 9
+ 154 008e 13883500 		addi	a6,a1,3
+ 155              	.LVL14:
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		} else {
+ 156              		.loc 1 69 12
+ 157 0092 2381F500 		sb	a5,2(a1)
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = '=';
+ 158              		.loc 1 75 3 is_stmt 1
+ 159              	.L10:
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		line_len += 4;
+ 160              		.loc 1 76 4
+ 161              	.LVL15:
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		line_len += 4;
+ 162              		.loc 1 76 11 is_stmt 0
+ 163 0096 9307D003 		li	a5,61
+ 164 009a 2300F800 		sb	a5,0(a6)
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		line_len += 4;
+ 165              		.loc 1 76 8
+ 166 009e 0508     		addi	a6,a6,1
+ 167              	.LVL16:
+ 168 00a0 41A8     		j	.L7
+ 169              	.LVL17:
+ 170              	.L6:
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[0] & 0x03) << 4) | (in[1] >> 4)) & 0x3f];
+ 171              		.loc 1 52 3 is_stmt 1
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[0] & 0x03) << 4) | (in[1] >> 4)) & 0x3f];
+ 172              		.loc 1 52 31 is_stmt 0
+ 173 00a2 83470400 		lbu	a5,0(s0)
+ 174 00a6 9105     		addi	a1,a1,4
+ 175              	.LVL18:
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		line_len += 4;
+ 176              		.loc 1 56 6
+ 177 00a8 0D04     		addi	s0,s0,3
+ 178              	.LVL19:
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[0] & 0x03) << 4) | (in[1] >> 4)) & 0x3f];
+ 179              		.loc 1 52 31
+ 180 00aa 8983     		srli	a5,a5,2
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[0] & 0x03) << 4) | (in[1] >> 4)) & 0x3f];
+ 181              		.loc 1 52 17
+ 182 00ac A697     		add	a5,s1,a5
+ 183 00ae 83870700 		lb	a5,0(a5)
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[0] & 0x03) << 4) | (in[1] >> 4)) & 0x3f];
+ 184              		.loc 1 52 10
+ 185 00b2 238EF5FE 		sb	a5,-4(a1)
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+ 186              		.loc 1 53 3 is_stmt 1
+ 187              	.LVL20:
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+ 188              		.loc 1 53 35 is_stmt 0
+ 189 00b6 8347D4FF 		lbu	a5,-3(s0)
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+ 190              		.loc 1 53 50
+ 191 00ba 0347E4FF 		lbu	a4,-2(s0)
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+ 192              		.loc 1 53 35
+ 193 00be 9207     		slli	a5,a5,4
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+ 194              		.loc 1 53 50
+ 195 00c0 1183     		srli	a4,a4,4
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+ 196              		.loc 1 53 35
+ 197 00c2 93F70703 		andi	a5,a5,48
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+ 198              		.loc 1 53 41
+ 199 00c6 D98F     		or	a5,a5,a4
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+ 200              		.loc 1 53 17
+ 201 00c8 A697     		add	a5,s1,a5
+ 202 00ca 83870700 		lb	a5,0(a5)
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[(((in[1] & 0x0f) << 2) | (in[2] >> 6)) & 0x3f];
+ 203              		.loc 1 53 10
+ 204 00ce A38EF5FE 		sb	a5,-3(a1)
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[in[2] & 0x3f];
+ 205              		.loc 1 54 3 is_stmt 1
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[in[2] & 0x3f];
+ 206              		.loc 1 54 35 is_stmt 0
+ 207 00d2 8347E4FF 		lbu	a5,-2(s0)
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[in[2] & 0x3f];
+ 208              		.loc 1 54 50
+ 209 00d6 0347F4FF 		lbu	a4,-1(s0)
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[in[2] & 0x3f];
+ 210              		.loc 1 54 35
+ 211 00da 8A07     		slli	a5,a5,2
+ 212 00dc 93F7C703 		andi	a5,a5,60
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[in[2] & 0x3f];
+ 213              		.loc 1 54 50
+ 214 00e0 1983     		srli	a4,a4,6
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[in[2] & 0x3f];
+ 215              		.loc 1 54 41
+ 216 00e2 D98F     		or	a5,a5,a4
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[in[2] & 0x3f];
+ 217              		.loc 1 54 17
+ 218 00e4 A697     		add	a5,s1,a5
+ 219 00e6 83870700 		lb	a5,0(a5)
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = table[in[2] & 0x3f];
+ 220              		.loc 1 54 10
+ 221 00ea 238FF5FE 		sb	a5,-2(a1)
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		in += 3;
+ 222              		.loc 1 55 3 is_stmt 1
+ 223              	.LVL21:
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		in += 3;
+ 224              		.loc 1 55 24 is_stmt 0
+ 225 00ee 8347F4FF 		lbu	a5,-1(s0)
+ 226 00f2 93F7F703 		andi	a5,a5,63
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		in += 3;
+ 227              		.loc 1 55 17
+ 228 00f6 A697     		add	a5,s1,a5
+ 229 00f8 83870700 		lb	a5,0(a5)
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		in += 3;
+ 230              		.loc 1 55 10
+ 231 00fc A38FF5FE 		sb	a5,-1(a1)
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		line_len += 4;
+ 232              		.loc 1 56 3 is_stmt 1
+ 233              	.LVL22:
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if ((add_pad & BASE64_LF) && line_len >= 72) {
+ 234              		.loc 1 57 3
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = '\n';
+ 235              		.loc 1 58 3
+ 236 0100 A9B7     		j	.L5
+ 237              	.LVL23:
+ 238              	.L8:
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					(in[1] >> 4)) & 0x3f];
+ 239              		.loc 1 71 4
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = table[((in[1] & 0x0f) << 2) & 0x3f];
+ 240              		.loc 1 72 13 is_stmt 0
+ 241 0102 03471400 		lbu	a4,1(s0)
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		}
+ 242              		.loc 1 73 8
+ 243 0106 13883500 		addi	a6,a1,3
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = table[((in[1] & 0x0f) << 2) & 0x3f];
+ 244              		.loc 1 72 13
+ 245 010a 1183     		srli	a4,a4,4
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					(in[1] >> 4)) & 0x3f];
+ 246              		.loc 1 71 42
+ 247 010c D98F     		or	a5,a5,a4
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					(in[1] >> 4)) & 0x3f];
+ 248              		.loc 1 71 18
+ 249 010e A697     		add	a5,s1,a5
+ 250 0110 83870700 		lb	a5,0(a5)
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					(in[1] >> 4)) & 0x3f];
+ 251              		.loc 1 71 11
+ 252 0114 A380F500 		sb	a5,1(a1)
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		}
+ 253              		.loc 1 73 4 is_stmt 1
+ 254              	.LVL24:
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		}
+ 255              		.loc 1 73 35 is_stmt 0
+ 256 0118 83471400 		lbu	a5,1(s0)
+ 257 011c 8A07     		slli	a5,a5,2
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		}
+ 258              		.loc 1 73 41
+ 259 011e 93F7C703 		andi	a5,a5,60
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		}
+ 260              		.loc 1 73 18
+ 261 0122 A697     		add	a5,s1,a5
+ 262 0124 83870700 		lb	a5,0(a5)
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		}
+ 263              		.loc 1 73 11
+ 264 0128 2381F500 		sb	a5,2(a1)
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = '=';
+ 265              		.loc 1 75 3 is_stmt 1
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = '=';
+ 266              		.loc 1 75 6 is_stmt 0
+ 267 012c E39509F6 		bne	s3,zero,.L10
+ 268              	.LVL25:
+ 269              	.L7:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*pos++ = '\n';
+ 270              		.loc 1 80 2 is_stmt 1
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (out_len)
+ 271              		.loc 1 83 2
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (out_len)
+ 272              		.loc 1 83 7 is_stmt 0
+ 273 0130 23000800 		sb	zero,0(a6)
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*out_len = pos - out;
+ 274              		.loc 1 84 2 is_stmt 1
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		*out_len = pos - out;
+ 275              		.loc 1 84 5 is_stmt 0
+ 276 0134 E30E09EC 		beq	s2,zero,.L1
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return out;
+ 277              		.loc 1 85 3 is_stmt 1
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return out;
+ 278              		.loc 1 85 18 is_stmt 0
+ 279 0138 3308A840 		sub	a6,a6,a0
+ 280              	.LVL26:
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return out;
+ 281              		.loc 1 85 12
+ 282 013c 23200901 		sw	a6,0(s2)
+ 283 0140 C1BD     		j	.L1
+ 284              		.cfi_endproc
+ 285              	.LFE432:
+ 287              		.section	.text.base64_gen_decode.constprop.0,"ax",@progbits
+ 288              		.align	1
+ 290              	base64_gen_decode.constprop.0:
+ 291              	.LFB439:
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** static unsigned char * base64_gen_decode(const char *src, size_t len,
+ 292              		.loc 1 90 24 is_stmt 1
+ 293              		.cfi_startproc
+ 294              	.LVL27:
+ 295 0000 17030000 		call	t0,__riscv_save_4
+ 295      E7020300 
+ 296              		.cfi_offset 19, -20
+ 297              		.cfi_offset 18, -16
+ 298              		.cfi_offset 9, -12
+ 299              		.cfi_offset 8, -8
+ 300              		.cfi_offset 1, -4
+ 301              		.cfi_def_cfa_offset 32
+ 302              	.LVL28:
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					 size_t *out_len, const char *table)
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** {
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	unsigned char dtable[256], *out, *pos, block[4], tmp;
+ 303              		.loc 1 93 2
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	size_t i, count, olen;
+ 304              		.loc 1 94 2
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	int pad = 0;
+ 305              		.loc 1 95 2
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	size_t extra_pad;
+ 306              		.loc 1 96 2
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	os_memset(dtable, 0x80, 256);
+ 307              		.loc 1 98 2
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					 size_t *out_len, const char *table)
+ 308              		.loc 1 90 24 is_stmt 0
+ 309 0008 6D71     		addi	sp,sp,-272
+ 310              		.cfi_def_cfa_offset 304
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					 size_t *out_len, const char *table)
+ 311              		.loc 1 90 24
+ 312 000a AA84     		mv	s1,a0
+ 313 000c AE89     		mv	s3,a1
+ 314 000e 3284     		mv	s0,a2
+ 315              		.loc 1 98 2
+ 316 0010 93050008 		li	a1,128
+ 317              	.LVL29:
+ 318 0014 13060010 		li	a2,256
+ 319              	.LVL30:
+ 320 0018 0808     		addi	a0,sp,16
+ 321              	.LVL31:
+ 322 001a 97000000 		call	os_memset
+ 322      E7800000 
+ 323              	.LVL32:
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < sizeof(base64_table) - 1; i++)
+ 324              		.loc 1 99 2 is_stmt 1
+ 325              		.loc 1 99 14
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		dtable[(unsigned char) table[i]] = (unsigned char) i;
+ 326              		.loc 1 100 31 is_stmt 0
+ 327 0022 B7060000 		lui	a3,%hi(.LANCHOR0)
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < sizeof(base64_table) - 1; i++)
+ 328              		.loc 1 99 9
+ 329 0026 8147     		li	a5,0
+ 330              		.loc 1 100 31
+ 331 0028 93860600 		addi	a3,a3,%lo(.LANCHOR0)
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < sizeof(base64_table) - 1; i++)
+ 332              		.loc 1 99 2
+ 333 002c 13060004 		li	a2,64
+ 334              	.LVL33:
+ 335              	.L25:
+ 336              		.loc 1 100 3 is_stmt 1
+ 337              		.loc 1 100 31 is_stmt 0
+ 338 0030 3387F600 		add	a4,a3,a5
+ 339              		.loc 1 100 10
+ 340 0034 03470700 		lbu	a4,0(a4)
+ 341              		.loc 1 100 36
+ 342 0038 0C0A     		addi	a1,sp,272
+ 343 003a 2E97     		add	a4,a1,a4
+ 344 003c 2300F7F0 		sb	a5,-256(a4)
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < sizeof(base64_table) - 1; i++)
+ 345              		.loc 1 99 44 is_stmt 1
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < sizeof(base64_table) - 1; i++)
+ 346              		.loc 1 99 45 is_stmt 0
+ 347 0040 8507     		addi	a5,a5,1
+ 348              	.LVL34:
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < sizeof(base64_table) - 1; i++)
+ 349              		.loc 1 99 14 is_stmt 1
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < sizeof(base64_table) - 1; i++)
+ 350              		.loc 1 99 2 is_stmt 0
+ 351 0042 E397C7FE 		bne	a5,a2,.L25
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	dtable['='] = 0;
+ 352              		.loc 1 101 2 is_stmt 1
+ 353              		.loc 1 101 14 is_stmt 0
+ 354 0046 A3060104 		sb	zero,77(sp)
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	count = 0;
+ 355              		.loc 1 103 2 is_stmt 1
+ 356              	.LVL35:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < len; i++) {
+ 357              		.loc 1 104 2
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < len; i++) {
+ 358              		.loc 1 103 8 is_stmt 0
+ 359 004a 8147     		li	a5,0
+ 360              		.loc 1 104 9
+ 361 004c 0147     		li	a4,0
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (dtable[(unsigned char) src[i]] != 0x80)
+ 362              		.loc 1 105 6
+ 363 004e 13060008 		li	a2,128
+ 364              	.LVL36:
+ 365              	.L26:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < len; i++) {
+ 366              		.loc 1 104 14 is_stmt 1
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < len; i++) {
+ 367              		.loc 1 104 2 is_stmt 0
+ 368 0052 63193701 		bne	a4,s3,.L28
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count++;
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	}
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (count == 0)
+ 369              		.loc 1 109 2 is_stmt 1
+ 370              		.loc 1 109 5 is_stmt 0
+ 371 0056 85E7     		bne	a5,zero,.L29
+ 372              	.LVL37:
+ 373              	.L47:
+ 374              	.LBB3:
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	extra_pad = (4 - count % 4) % 4;
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	olen = (count + extra_pad) / 4 * 3;
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	pos = out = os_malloc(olen);
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (out == NULL)
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	count = 0;
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < len + extra_pad; i++) {
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		unsigned char val;
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (i >= len)
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			val = '=';
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		else
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			val = src[i];
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		tmp = dtable[val];
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (tmp == 0x80)
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			continue;
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (val == '=')
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			pad++;
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		block[count] = tmp;
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		count++;
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (count == 4) {
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[0] << 2) | (block[1] >> 4);
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[1] << 4) | (block[2] >> 2);
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[2] << 6) | block[3];
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count = 0;
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (pad) {
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				if (pad == 1)
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					pos--;
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				else if (pad == 2)
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					pos -= 2;
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				else {
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					/* Invalid padding */
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					os_free(out);
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					return NULL;
+ 375              		.loc 1 147 6 is_stmt 1
+ 376              		.loc 1 147 13 is_stmt 0
+ 377 0058 0145     		li	a0,0
+ 378              	.L24:
+ 379              	.LBE3:
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				}
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				break;
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			}
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		}
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	}
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	*out_len = pos - out;
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return out;
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** }
+ 380              		.loc 1 156 1
+ 381 005a 5161     		addi	sp,sp,272
+ 382              		.cfi_remember_state
+ 383              		.cfi_def_cfa_offset 0
+ 384 005c 17030000 		tail	__riscv_restore_4
+ 384      67000300 
+ 385              		.cfi_restore 19
+ 386              		.cfi_restore 18
+ 387              		.cfi_restore 9
+ 388              		.cfi_restore 8
+ 389              		.cfi_restore 1
+ 390              		.cfi_def_cfa_offset -32
+ 391              	.LVL38:
+ 392              	.L28:
+ 393              		.cfi_restore_state
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count++;
+ 394              		.loc 1 105 3 is_stmt 1
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count++;
+ 395              		.loc 1 105 33 is_stmt 0
+ 396 0064 B386E400 		add	a3,s1,a4
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count++;
+ 397              		.loc 1 105 14
+ 398 0068 83C60600 		lbu	a3,0(a3)
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count++;
+ 399              		.loc 1 105 13
+ 400 006c 0C0A     		addi	a1,sp,272
+ 401 006e AE96     		add	a3,a1,a3
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count++;
+ 402              		.loc 1 105 6
+ 403 0070 83C606F0 		lbu	a3,-256(a3)
+ 404 0074 6383C600 		beq	a3,a2,.L27
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	}
+ 405              		.loc 1 106 4 is_stmt 1
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	}
+ 406              		.loc 1 106 9 is_stmt 0
+ 407 0078 8507     		addi	a5,a5,1
+ 408              	.LVL39:
+ 409              	.L27:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (dtable[(unsigned char) src[i]] != 0x80)
+ 410              		.loc 1 104 23 is_stmt 1
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (dtable[(unsigned char) src[i]] != 0x80)
+ 411              		.loc 1 104 24 is_stmt 0
+ 412 007a 0507     		addi	a4,a4,1
+ 413              	.LVL40:
+ 414 007c D9BF     		j	.L26
+ 415              	.L29:
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 416              		.loc 1 111 2 is_stmt 1
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 417              		.loc 1 111 30 is_stmt 0
+ 418 007e 3309F040 		neg	s2,a5
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 419              		.loc 1 111 12
+ 420 0082 13793900 		andi	s2,s2,3
+ 421              	.LVL41:
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	pos = out = os_malloc(olen);
+ 422              		.loc 1 113 2 is_stmt 1
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (out == NULL)
+ 423              		.loc 1 114 2
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	pos = out = os_malloc(olen);
+ 424              		.loc 1 113 16 is_stmt 0
+ 425 0086 CA97     		add	a5,a5,s2
+ 426              	.LVL42:
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	pos = out = os_malloc(olen);
+ 427              		.loc 1 113 29
+ 428 0088 8983     		srli	a5,a5,2
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (out == NULL)
+ 429              		.loc 1 114 14
+ 430 008a 0D45     		li	a0,3
+ 431 008c 3385A702 		mul	a0,a5,a0
+ 432              	.LVL43:
+ 433 0090 97000000 		call	os_malloc
+ 433      E7800000 
+ 434              	.LVL44:
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+ 435              		.loc 1 115 2 is_stmt 1
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+ 436              		.loc 1 115 5 is_stmt 0
+ 437 0098 61D1     		beq	a0,zero,.L47
+ 438 009a AA87     		mv	a5,a0
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	size_t extra_pad;
+ 439              		.loc 1 95 6
+ 440 009c 0148     		li	a6,0
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	for (i = 0; i < len + extra_pad; i++) {
+ 441              		.loc 1 118 8
+ 442 009e 0147     		li	a4,0
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		unsigned char val;
+ 443              		.loc 1 119 9
+ 444 00a0 0146     		li	a2,0
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		unsigned char val;
+ 445              		.loc 1 119 22
+ 446 00a2 4E99     		add	s2,s3,s2
+ 447              	.LVL45:
+ 448              	.LBB4:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		else
+ 449              		.loc 1 123 8
+ 450 00a4 9308D003 		li	a7,61
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			continue;
+ 451              		.loc 1 127 6
+ 452 00a8 13030008 		li	t1,128
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[0] << 2) | (block[1] >> 4);
+ 453              		.loc 1 134 6
+ 454 00ac 114E     		li	t3,4
+ 455              	.LVL46:
+ 456              	.L32:
+ 457              	.LBE4:
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		unsigned char val;
+ 458              		.loc 1 119 14 is_stmt 1
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		unsigned char val;
+ 459              		.loc 1 119 2 is_stmt 0
+ 460 00ae 637A2607 		bgeu	a2,s2,.L37
+ 461              	.LBB5:
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 462              		.loc 1 120 3 is_stmt 1
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			val = '=';
+ 463              		.loc 1 122 3
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		else
+ 464              		.loc 1 123 8 is_stmt 0
+ 465 00b2 9306D003 		li	a3,61
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			val = '=';
+ 466              		.loc 1 122 6
+ 467 00b6 63763601 		bleu	s3,a2,.L33
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		tmp = dtable[val];
+ 468              		.loc 1 125 4 is_stmt 1
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		tmp = dtable[val];
+ 469              		.loc 1 125 13 is_stmt 0
+ 470 00ba B386C400 		add	a3,s1,a2
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		tmp = dtable[val];
+ 471              		.loc 1 125 8
+ 472 00be 83C60600 		lbu	a3,0(a3)
+ 473              	.LVL47:
+ 474              	.L33:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (tmp == 0x80)
+ 475              		.loc 1 126 3 is_stmt 1
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (tmp == 0x80)
+ 476              		.loc 1 126 7 is_stmt 0
+ 477 00c2 0C0A     		addi	a1,sp,272
+ 478 00c4 B695     		add	a1,a1,a3
+ 479 00c6 83C505F0 		lbu	a1,-256(a1)
+ 480              	.LVL48:
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			continue;
+ 481              		.loc 1 127 3 is_stmt 1
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			continue;
+ 482              		.loc 1 127 6 is_stmt 0
+ 483 00ca 638A6506 		beq	a1,t1,.L34
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			pad++;
+ 484              		.loc 1 130 3 is_stmt 1
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			pad++;
+ 485              		.loc 1 130 6 is_stmt 0
+ 486 00ce 63931601 		bne	a3,a7,.L35
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		block[count] = tmp;
+ 487              		.loc 1 131 4 is_stmt 1
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		block[count] = tmp;
+ 488              		.loc 1 131 7 is_stmt 0
+ 489 00d2 0508     		addi	a6,a6,1
+ 490              	.LVL49:
+ 491              	.L35:
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		count++;
+ 492              		.loc 1 132 3 is_stmt 1
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		count++;
+ 493              		.loc 1 132 16 is_stmt 0
+ 494 00d4 140A     		addi	a3,sp,272
+ 495              	.LVL50:
+ 496 00d6 BA96     		add	a3,a3,a4
+ 497 00d8 238EB6EE 		sb	a1,-260(a3)
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (count == 4) {
+ 498              		.loc 1 133 3 is_stmt 1
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		if (count == 4) {
+ 499              		.loc 1 133 8 is_stmt 0
+ 500 00dc 0507     		addi	a4,a4,1
+ 501              	.LVL51:
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[0] << 2) | (block[1] >> 4);
+ 502              		.loc 1 134 3 is_stmt 1
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[0] << 2) | (block[1] >> 4);
+ 503              		.loc 1 134 6 is_stmt 0
+ 504 00de 6310C707 		bne	a4,t3,.L34
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[1] << 4) | (block[2] >> 2);
+ 505              		.loc 1 135 4 is_stmt 1
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[1] << 4) | (block[2] >> 2);
+ 506              		.loc 1 135 37 is_stmt 0
+ 507 00e2 8346D100 		lbu	a3,13(sp)
+ 508              	.LVL52:
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[1] << 4) | (block[2] >> 2);
+ 509              		.loc 1 135 19
+ 510 00e6 0347C100 		lbu	a4,12(sp)
+ 511              	.LVL53:
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[1] << 4) | (block[2] >> 2);
+ 512              		.loc 1 135 29
+ 513 00ea 93D54600 		srli	a1,a3,4
+ 514              	.LVL54:
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[1] << 4) | (block[2] >> 2);
+ 515              		.loc 1 135 23
+ 516 00ee 0A07     		slli	a4,a4,2
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[1] << 4) | (block[2] >> 2);
+ 517              		.loc 1 135 29
+ 518 00f0 4D8F     		or	a4,a4,a1
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[1] << 4) | (block[2] >> 2);
+ 519              		.loc 1 135 11
+ 520 00f2 2380E700 		sb	a4,0(a5)
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[2] << 6) | block[3];
+ 521              		.loc 1 136 4 is_stmt 1
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[2] << 6) | block[3];
+ 522              		.loc 1 136 37 is_stmt 0
+ 523 00f6 0347E100 		lbu	a4,14(sp)
+ 524              	.LVL55:
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[2] << 6) | block[3];
+ 525              		.loc 1 136 23
+ 526 00fa 9206     		slli	a3,a3,4
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[2] << 6) | block[3];
+ 527              		.loc 1 136 29
+ 528 00fc 93552700 		srli	a1,a4,2
+ 529 0100 CD8E     		or	a3,a3,a1
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count = 0;
+ 530              		.loc 1 137 29
+ 531 0102 8345F100 		lbu	a1,15(sp)
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count = 0;
+ 532              		.loc 1 137 23
+ 533 0106 1A07     		slli	a4,a4,6
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[2] << 6) | block[3];
+ 534              		.loc 1 136 11
+ 535 0108 A380D700 		sb	a3,1(a5)
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count = 0;
+ 536              		.loc 1 137 4 is_stmt 1
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count = 0;
+ 537              		.loc 1 137 29 is_stmt 0
+ 538 010c 4D8F     		or	a4,a4,a1
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count = 0;
+ 539              		.loc 1 137 11
+ 540 010e 2381E700 		sb	a4,2(a5)
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count = 0;
+ 541              		.loc 1 137 8
+ 542 0112 93863700 		addi	a3,a5,3
+ 543              	.LVL56:
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (pad) {
+ 544              		.loc 1 138 4 is_stmt 1
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				if (pad == 1)
+ 545              		.loc 1 139 4
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				if (pad == 1)
+ 546              		.loc 1 139 7 is_stmt 0
+ 547 0116 63020802 		beq	a6,zero,.L41
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					pos--;
+ 548              		.loc 1 140 5 is_stmt 1
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					pos--;
+ 549              		.loc 1 140 8 is_stmt 0
+ 550 011a 0547     		li	a4,1
+ 551 011c 6316E800 		bne	a6,a4,.L36
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[2] << 6) | block[3];
+ 552              		.loc 1 136 8
+ 553 0120 8907     		addi	a5,a5,2
+ 554              	.LVL57:
+ 555              	.L37:
+ 556              	.LBE5:
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return out;
+ 557              		.loc 1 154 2 is_stmt 1
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return out;
+ 558              		.loc 1 154 17 is_stmt 0
+ 559 0122 898F     		sub	a5,a5,a0
+ 560              	.LVL58:
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return out;
+ 561              		.loc 1 154 11
+ 562 0124 1CC0     		sw	a5,0(s0)
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** }
+ 563              		.loc 1 155 2 is_stmt 1
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** }
+ 564              		.loc 1 155 9 is_stmt 0
+ 565 0126 15BF     		j	.L24
+ 566              	.LVL59:
+ 567              	.L36:
+ 568              	.LBB6:
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					pos -= 2;
+ 569              		.loc 1 142 10 is_stmt 1
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					pos -= 2;
+ 570              		.loc 1 142 13 is_stmt 0
+ 571 0128 0947     		li	a4,2
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			*pos++ = (block[1] << 4) | (block[2] >> 2);
+ 572              		.loc 1 135 8
+ 573 012a 8507     		addi	a5,a5,1
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					pos -= 2;
+ 574              		.loc 1 142 13
+ 575 012c E30BE8FE 		beq	a6,a4,.L37
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 					return NULL;
+ 576              		.loc 1 146 6 is_stmt 1
+ 577 0130 97000000 		call	os_free
+ 577      E7800000 
+ 578              	.LVL60:
+ 579 0138 05B7     		j	.L47
+ 580              	.LVL61:
+ 581              	.L41:
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			count = 0;
+ 582              		.loc 1 137 8 is_stmt 0
+ 583 013a B687     		mv	a5,a3
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 			if (pad) {
+ 584              		.loc 1 138 10
+ 585 013c 0147     		li	a4,0
+ 586              	.LVL62:
+ 587              	.L34:
+ 588              	.LBE6:
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		unsigned char val;
+ 589              		.loc 1 119 35 is_stmt 1
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		unsigned char val;
+ 590              		.loc 1 119 36 is_stmt 0
+ 591 013e 0506     		addi	a2,a2,1
+ 592              	.LVL63:
+ 593 0140 BDB7     		j	.L32
+ 594              		.cfi_endproc
+ 595              	.LFE439:
+ 597              		.section	.text.base64_encode,"ax",@progbits
+ 598              		.align	1
+ 599              		.globl	base64_encode
+ 601              	base64_encode:
+ 602              	.LFB434:
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** /**
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * base64_encode - Base64 encode
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * @src: Data to be encoded
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * @len: Length of the data to be encoded
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * @out_len: Pointer to output length variable, or %NULL if not used
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * Returns: Allocated buffer of out_len bytes of encoded data,
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * or %NULL on failure
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  *
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * Caller is responsible for freeing the returned buffer. Returned buffer is
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * nul terminated to make it easier to use as a C string. The nul terminator is
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * not included in out_len.
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  */
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** char * base64_encode(const void *src, size_t len, size_t *out_len)
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** {
+ 603              		.loc 1 172 1 is_stmt 1
+ 604              		.cfi_startproc
+ 605              	.LVL64:
+ 606 0000 17030000 		call	t0,__riscv_save_1
+ 606      E7020300 
+ 607              		.cfi_offset 8, -8
+ 608              		.cfi_offset 1, -4
+ 609              		.cfi_def_cfa_offset 16
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #ifdef CONFIG_GDWIFI
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	char *dest = NULL;
+ 610              		.loc 1 174 2
+ 611              	.LVL65:
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	dest = (char *)os_zalloc(len);
+ 612              		.loc 1 176 2
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #ifdef CONFIG_GDWIFI
+ 613              		.loc 1 172 1 is_stmt 0
+ 614 0008 4111     		addi	sp,sp,-16
+ 615              		.cfi_def_cfa_offset 32
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #ifdef CONFIG_GDWIFI
+ 616              		.loc 1 172 1
+ 617 000a 2AC6     		sw	a0,12(sp)
+ 618              		.loc 1 176 17
+ 619 000c 2E85     		mv	a0,a1
+ 620              	.LVL66:
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #ifdef CONFIG_GDWIFI
+ 621              		.loc 1 172 1
+ 622 000e 32C4     		sw	a2,8(sp)
+ 623              		.loc 1 176 17
+ 624 0010 2EC2     		sw	a1,4(sp)
+ 625 0012 97000000 		call	os_zalloc
+ 625      E7800000 
+ 626              	.LVL67:
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (mbedtls_base64_encode((unsigned char *)dest, len, out_len, src, len)) {
+ 627              		.loc 1 177 6
+ 628 001a 1247     		lw	a4,4(sp)
+ 629 001c B246     		lw	a3,12(sp)
+ 630 001e 2246     		lw	a2,8(sp)
+ 631 0020 BA85     		mv	a1,a4
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (mbedtls_base64_encode((unsigned char *)dest, len, out_len, src, len)) {
+ 632              		.loc 1 176 17
+ 633 0022 2A84     		mv	s0,a0
+ 634              	.LVL68:
+ 635              		.loc 1 177 2 is_stmt 1
+ 636              		.loc 1 177 6 is_stmt 0
+ 637 0024 97000000 		call	mbedtls_base64_encode
+ 637      E7800000 
+ 638              	.LVL69:
+ 639              		.loc 1 177 5
+ 640 002c 19C5     		beq	a0,zero,.L48
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		os_free(dest);
+ 641              		.loc 1 178 3 is_stmt 1
+ 642 002e 2285     		mv	a0,s0
+ 643 0030 97000000 		call	os_free
+ 643      E7800000 
+ 644              	.LVL70:
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+ 645              		.loc 1 179 3
+ 646              		.loc 1 179 10 is_stmt 0
+ 647 0038 0144     		li	s0,0
+ 648              	.LVL71:
+ 649              	.L48:
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	}
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return dest;
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #else
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return base64_gen_encode(src, len, out_len, base64_table,
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 				 BASE64_PAD | BASE64_LF);
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #endif
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** }
+ 650              		.loc 1 186 1
+ 651 003a 2285     		mv	a0,s0
+ 652 003c 4101     		addi	sp,sp,16
+ 653              		.cfi_def_cfa_offset 0
+ 654              	.LVL72:
+ 655 003e 17030000 		tail	__riscv_restore_1
+ 655      67000300 
+ 656              		.cfi_restore 8
+ 657              		.cfi_restore 1
+ 658              		.cfi_def_cfa_offset -16
+ 659              		.cfi_endproc
+ 660              	.LFE434:
+ 662              		.section	.text.base64_encode_no_lf,"ax",@progbits
+ 663              		.align	1
+ 664              		.globl	base64_encode_no_lf
+ 666              	base64_encode_no_lf:
+ 667              	.LFB435:
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** char * base64_encode_no_lf(const void *src, size_t len, size_t *out_len)
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** {
+ 668              		.loc 1 190 1 is_stmt 1
+ 669              		.cfi_startproc
+ 670              	.LVL73:
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return base64_gen_encode(src, len, out_len, base64_table, BASE64_PAD);
+ 671              		.loc 1 191 2
+ 672              		.loc 1 191 9 is_stmt 0
+ 673 0000 B7060000 		lui	a3,%hi(.LANCHOR1)
+ 674 0004 0547     		li	a4,1
+ 675 0006 93860600 		addi	a3,a3,%lo(.LANCHOR1)
+ 676 000a 17030000 		tail	base64_gen_encode
+ 676      67000300 
+ 677              	.LVL74:
+ 678              		.cfi_endproc
+ 679              	.LFE435:
+ 681              		.section	.text.base64_url_encode,"ax",@progbits
+ 682              		.align	1
+ 683              		.globl	base64_url_encode
+ 685              	base64_url_encode:
+ 686              	.LFB436:
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** }
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** char * base64_url_encode(const void *src, size_t len, size_t *out_len)
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** {
+ 687              		.loc 1 196 1 is_stmt 1
+ 688              		.cfi_startproc
+ 689              	.LVL75:
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return base64_gen_encode(src, len, out_len, base64_url_table, 0);
+ 690              		.loc 1 197 2
+ 691              		.loc 1 197 9 is_stmt 0
+ 692 0000 B7060000 		lui	a3,%hi(.LANCHOR0)
+ 693 0004 0147     		li	a4,0
+ 694 0006 93860600 		addi	a3,a3,%lo(.LANCHOR0)
+ 695 000a 17030000 		tail	base64_gen_encode
+ 695      67000300 
+ 696              	.LVL76:
+ 697              		.cfi_endproc
+ 698              	.LFE436:
+ 700              		.section	.text.base64_decode,"ax",@progbits
+ 701              		.align	1
+ 702              		.globl	base64_decode
+ 704              	base64_decode:
+ 705              	.LFB437:
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** }
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** /**
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * base64_decode - Base64 decode
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * @src: Data to be decoded
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * @len: Length of the data to be decoded
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * @out_len: Pointer to output length variable
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * Returns: Allocated buffer of out_len bytes of decoded data,
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * or %NULL on failure
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  *
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  * Caller is responsible for freeing the returned buffer.
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c ****  */
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** unsigned char * base64_decode(const char *src, size_t len, size_t *out_len)
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** {
+ 706              		.loc 1 212 1 is_stmt 1
+ 707              		.cfi_startproc
+ 708              	.LVL77:
+ 709 0000 17030000 		call	t0,__riscv_save_1
+ 709      E7020300 
+ 710              		.cfi_offset 8, -8
+ 711              		.cfi_offset 1, -4
+ 712              		.cfi_def_cfa_offset 16
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #ifdef CONFIG_GDWIFI
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	unsigned char *dest = NULL;
+ 713              		.loc 1 214 2
+ 714              	.LVL78:
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	dest = (unsigned char *)os_zalloc(len);
+ 715              		.loc 1 216 2
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #ifdef CONFIG_GDWIFI
+ 716              		.loc 1 212 1 is_stmt 0
+ 717 0008 4111     		addi	sp,sp,-16
+ 718              		.cfi_def_cfa_offset 32
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #ifdef CONFIG_GDWIFI
+ 719              		.loc 1 212 1
+ 720 000a 2AC6     		sw	a0,12(sp)
+ 721              		.loc 1 216 26
+ 722 000c 2E85     		mv	a0,a1
+ 723              	.LVL79:
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #ifdef CONFIG_GDWIFI
+ 724              		.loc 1 212 1
+ 725 000e 32C4     		sw	a2,8(sp)
+ 726              		.loc 1 216 26
+ 727 0010 2EC2     		sw	a1,4(sp)
+ 728 0012 97000000 		call	os_zalloc
+ 728      E7800000 
+ 729              	.LVL80:
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (mbedtls_base64_decode(dest, len, out_len, (const unsigned char *)src, len)) {
+ 730              		.loc 1 217 6
+ 731 001a 1247     		lw	a4,4(sp)
+ 732 001c B246     		lw	a3,12(sp)
+ 733 001e 2246     		lw	a2,8(sp)
+ 734 0020 BA85     		mv	a1,a4
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	if (mbedtls_base64_decode(dest, len, out_len, (const unsigned char *)src, len)) {
+ 735              		.loc 1 216 26
+ 736 0022 2A84     		mv	s0,a0
+ 737              	.LVL81:
+ 738              		.loc 1 217 2 is_stmt 1
+ 739              		.loc 1 217 6 is_stmt 0
+ 740 0024 97000000 		call	mbedtls_base64_decode
+ 740      E7800000 
+ 741              	.LVL82:
+ 742              		.loc 1 217 5
+ 743 002c 19C5     		beq	a0,zero,.L58
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		os_free(dest);
+ 744              		.loc 1 218 3 is_stmt 1
+ 745 002e 2285     		mv	a0,s0
+ 746 0030 97000000 		call	os_free
+ 746      E7800000 
+ 747              	.LVL83:
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 		return NULL;
+ 748              		.loc 1 219 3
+ 749              		.loc 1 219 10 is_stmt 0
+ 750 0038 0144     		li	s0,0
+ 751              	.LVL84:
+ 752              	.L58:
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	}
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return dest;
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #else
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return base64_gen_decode(src, len, out_len, base64_table);
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** #endif
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** }
+ 753              		.loc 1 225 1
+ 754 003a 2285     		mv	a0,s0
+ 755 003c 4101     		addi	sp,sp,16
+ 756              		.cfi_def_cfa_offset 0
+ 757              	.LVL85:
+ 758 003e 17030000 		tail	__riscv_restore_1
+ 758      67000300 
+ 759              		.cfi_restore 8
+ 760              		.cfi_restore 1
+ 761              		.cfi_def_cfa_offset -16
+ 762              		.cfi_endproc
+ 763              	.LFE437:
+ 765              		.section	.text.base64_url_decode,"ax",@progbits
+ 766              		.align	1
+ 767              		.globl	base64_url_decode
+ 769              	base64_url_decode:
+ 770              	.LFB438:
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** unsigned char * base64_url_decode(const char *src, size_t len, size_t *out_len)
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** {
+ 771              		.loc 1 229 1 is_stmt 1
+ 772              		.cfi_startproc
+ 773              	.LVL86:
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\base64.c **** 	return base64_gen_decode(src, len, out_len, base64_url_table);
+ 774              		.loc 1 230 2
+ 775              		.loc 1 230 9 is_stmt 0
+ 776 0000 17030000 		tail	base64_gen_decode.constprop.0
+ 776      67000300 
+ 777              	.LVL87:
+ 778              		.cfi_endproc
+ 779              	.LFE438:
+ 781              		.section	.rodata.base64_table,"a"
+ 782              		.align	2
+ 783              		.set	.LANCHOR1,. + 0
+ 786              	base64_table:
+ 787 0000 41424344 		.string	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+ 787      45464748 
+ 787      494A4B4C 
+ 787      4D4E4F50 
+ 787      51525354 
+ 788              		.section	.rodata.base64_url_table,"a"
+ 789              		.align	2
+ 790              		.set	.LANCHOR0,. + 0
+ 793              	base64_url_table:
+ 794 0000 41424344 		.string	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+ 794      45464748 
+ 794      494A4B4C 
+ 794      4D4E4F50 
+ 794      51525354 
+ 795              		.text
+ 796              	.Letext0:
+ 797              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 798              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 799              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 800              		.file 5 "..\\..\\..\\..\\wpa_supplicant\\src/utils/os.h"
+ 801              		.file 6 "..\\..\\..\\..\\..\\ROM-EXPORT\\mbedtls-2.17.0-rom\\include/mbedtls/base64.h"
+ 802              		.file 7 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/memp.h"
+ 803              		.file 8 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/netif.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 base64.c
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:12     .text.base64_gen_encode:0000000000000000 base64_gen_encode
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:16     .text.base64_gen_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:18     .text.base64_gen_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:19     .text.base64_gen_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:20     .text.base64_gen_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:21     .text.base64_gen_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:22     .text.base64_gen_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:23     .text.base64_gen_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:24     .text.base64_gen_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:28     .text.base64_gen_encode:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:31     .text.base64_gen_encode:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:34     .text.base64_gen_encode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:35     .text.base64_gen_encode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:36     .text.base64_gen_encode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:37     .text.base64_gen_encode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:38     .text.base64_gen_encode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:39     .text.base64_gen_encode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:40     .text.base64_gen_encode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:42     .text.base64_gen_encode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:46     .text.base64_gen_encode:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:47     .text.base64_gen_encode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:48     .text.base64_gen_encode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:49     .text.base64_gen_encode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:50     .text.base64_gen_encode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:51     .text.base64_gen_encode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:52     .text.base64_gen_encode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:53     .text.base64_gen_encode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:57     .text.base64_gen_encode:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:58     .text.base64_gen_encode:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:59     .text.base64_gen_encode:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:60     .text.base64_gen_encode:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:61     .text.base64_gen_encode:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:62     .text.base64_gen_encode:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:63     .text.base64_gen_encode:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:64     .text.base64_gen_encode:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:67     .text.base64_gen_encode:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:69     .text.base64_gen_encode:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:72     .text.base64_gen_encode:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:76     .text.base64_gen_encode:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:77     .text.base64_gen_encode:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:78     .text.base64_gen_encode:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:79     .text.base64_gen_encode:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:82     .text.base64_gen_encode:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:83     .text.base64_gen_encode:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:88     .text.base64_gen_encode:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:89     .text.base64_gen_encode:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:92     .text.base64_gen_encode:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:93     .text.base64_gen_encode:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:95     .text.base64_gen_encode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:96     .text.base64_gen_encode:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:99     .text.base64_gen_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:100    .text.base64_gen_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:101    .text.base64_gen_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:102    .text.base64_gen_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:103    .text.base64_gen_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:108    .text.base64_gen_encode:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:109    .text.base64_gen_encode:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:111    .text.base64_gen_encode:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:113    .text.base64_gen_encode:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:115    .text.base64_gen_encode:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:118    .text.base64_gen_encode:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:119    .text.base64_gen_encode:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:121    .text.base64_gen_encode:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:123    .text.base64_gen_encode:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:125    .text.base64_gen_encode:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:128    .text.base64_gen_encode:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:130    .text.base64_gen_encode:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:132    .text.base64_gen_encode:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:134    .text.base64_gen_encode:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:136    .text.base64_gen_encode:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:139    .text.base64_gen_encode:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:140    .text.base64_gen_encode:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:143    .text.base64_gen_encode:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:145    .text.base64_gen_encode:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:146    .text.base64_gen_encode:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:149    .text.base64_gen_encode:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:151    .text.base64_gen_encode:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:152    .text.base64_gen_encode:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:154    .text.base64_gen_encode:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:157    .text.base64_gen_encode:0000000000000092 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:160    .text.base64_gen_encode:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:162    .text.base64_gen_encode:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:163    .text.base64_gen_encode:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:166    .text.base64_gen_encode:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:172    .text.base64_gen_encode:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:173    .text.base64_gen_encode:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:177    .text.base64_gen_encode:00000000000000a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:180    .text.base64_gen_encode:00000000000000aa .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:182    .text.base64_gen_encode:00000000000000ac .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:185    .text.base64_gen_encode:00000000000000b2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:188    .text.base64_gen_encode:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:189    .text.base64_gen_encode:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:191    .text.base64_gen_encode:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:193    .text.base64_gen_encode:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:195    .text.base64_gen_encode:00000000000000c0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:197    .text.base64_gen_encode:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:199    .text.base64_gen_encode:00000000000000c6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:201    .text.base64_gen_encode:00000000000000c8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:204    .text.base64_gen_encode:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:206    .text.base64_gen_encode:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:207    .text.base64_gen_encode:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:209    .text.base64_gen_encode:00000000000000d6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:211    .text.base64_gen_encode:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:214    .text.base64_gen_encode:00000000000000e0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:216    .text.base64_gen_encode:00000000000000e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:218    .text.base64_gen_encode:00000000000000e4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:221    .text.base64_gen_encode:00000000000000ea .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:224    .text.base64_gen_encode:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:225    .text.base64_gen_encode:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:228    .text.base64_gen_encode:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:231    .text.base64_gen_encode:00000000000000fc .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:234    .text.base64_gen_encode:0000000000000100 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:235    .text.base64_gen_encode:0000000000000100 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:236    .text.base64_gen_encode:0000000000000100 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:240    .text.base64_gen_encode:0000000000000102 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:241    .text.base64_gen_encode:0000000000000102 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:243    .text.base64_gen_encode:0000000000000106 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:245    .text.base64_gen_encode:000000000000010a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:247    .text.base64_gen_encode:000000000000010c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:249    .text.base64_gen_encode:000000000000010e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:252    .text.base64_gen_encode:0000000000000114 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:255    .text.base64_gen_encode:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:256    .text.base64_gen_encode:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:259    .text.base64_gen_encode:000000000000011e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:261    .text.base64_gen_encode:0000000000000122 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:264    .text.base64_gen_encode:0000000000000128 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:266    .text.base64_gen_encode:000000000000012c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:267    .text.base64_gen_encode:000000000000012c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:271    .text.base64_gen_encode:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:272    .text.base64_gen_encode:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:273    .text.base64_gen_encode:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:275    .text.base64_gen_encode:0000000000000134 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:276    .text.base64_gen_encode:0000000000000134 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:278    .text.base64_gen_encode:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:279    .text.base64_gen_encode:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:282    .text.base64_gen_encode:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:284    .text.base64_gen_encode:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:290    .text.base64_gen_decode.constprop.0:0000000000000000 base64_gen_decode.constprop.0
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:293    .text.base64_gen_decode.constprop.0:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:295    .text.base64_gen_decode.constprop.0:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:296    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:297    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:298    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:299    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:300    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:301    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:304    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:305    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:306    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:307    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:308    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:309    .text.base64_gen_decode.constprop.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:310    .text.base64_gen_decode.constprop.0:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:312    .text.base64_gen_decode.constprop.0:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:316    .text.base64_gen_decode.constprop.0:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:325    .text.base64_gen_decode.constprop.0:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:326    .text.base64_gen_decode.constprop.0:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:327    .text.base64_gen_decode.constprop.0:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:329    .text.base64_gen_decode.constprop.0:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:331    .text.base64_gen_decode.constprop.0:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:333    .text.base64_gen_decode.constprop.0:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:337    .text.base64_gen_decode.constprop.0:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:338    .text.base64_gen_decode.constprop.0:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:340    .text.base64_gen_decode.constprop.0:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:342    .text.base64_gen_decode.constprop.0:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:346    .text.base64_gen_decode.constprop.0:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:347    .text.base64_gen_decode.constprop.0:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:350    .text.base64_gen_decode.constprop.0:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:351    .text.base64_gen_decode.constprop.0:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:353    .text.base64_gen_decode.constprop.0:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:354    .text.base64_gen_decode.constprop.0:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:357    .text.base64_gen_decode.constprop.0:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:358    .text.base64_gen_decode.constprop.0:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:359    .text.base64_gen_decode.constprop.0:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:361    .text.base64_gen_decode.constprop.0:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:363    .text.base64_gen_decode.constprop.0:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:367    .text.base64_gen_decode.constprop.0:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:368    .text.base64_gen_decode.constprop.0:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:370    .text.base64_gen_decode.constprop.0:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:371    .text.base64_gen_decode.constprop.0:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:376    .text.base64_gen_decode.constprop.0:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:377    .text.base64_gen_decode.constprop.0:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:381    .text.base64_gen_decode.constprop.0:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:382    .text.base64_gen_decode.constprop.0:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:383    .text.base64_gen_decode.constprop.0:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:385    .text.base64_gen_decode.constprop.0:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:386    .text.base64_gen_decode.constprop.0:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:387    .text.base64_gen_decode.constprop.0:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:388    .text.base64_gen_decode.constprop.0:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:389    .text.base64_gen_decode.constprop.0:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:390    .text.base64_gen_decode.constprop.0:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:393    .text.base64_gen_decode.constprop.0:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:395    .text.base64_gen_decode.constprop.0:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:396    .text.base64_gen_decode.constprop.0:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:398    .text.base64_gen_decode.constprop.0:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:400    .text.base64_gen_decode.constprop.0:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:403    .text.base64_gen_decode.constprop.0:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:406    .text.base64_gen_decode.constprop.0:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:407    .text.base64_gen_decode.constprop.0:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:411    .text.base64_gen_decode.constprop.0:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:412    .text.base64_gen_decode.constprop.0:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:417    .text.base64_gen_decode.constprop.0:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:418    .text.base64_gen_decode.constprop.0:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:420    .text.base64_gen_decode.constprop.0:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:423    .text.base64_gen_decode.constprop.0:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:424    .text.base64_gen_decode.constprop.0:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:425    .text.base64_gen_decode.constprop.0:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:428    .text.base64_gen_decode.constprop.0:0000000000000088 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:430    .text.base64_gen_decode.constprop.0:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:436    .text.base64_gen_decode.constprop.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:437    .text.base64_gen_decode.constprop.0:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:440    .text.base64_gen_decode.constprop.0:000000000000009c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:442    .text.base64_gen_decode.constprop.0:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:444    .text.base64_gen_decode.constprop.0:00000000000000a0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:446    .text.base64_gen_decode.constprop.0:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:450    .text.base64_gen_decode.constprop.0:00000000000000a4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:452    .text.base64_gen_decode.constprop.0:00000000000000a8 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:454    .text.base64_gen_decode.constprop.0:00000000000000ac .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:459    .text.base64_gen_decode.constprop.0:00000000000000ae .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:460    .text.base64_gen_decode.constprop.0:00000000000000ae .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:463    .text.base64_gen_decode.constprop.0:00000000000000b2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:464    .text.base64_gen_decode.constprop.0:00000000000000b2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:465    .text.base64_gen_decode.constprop.0:00000000000000b2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:467    .text.base64_gen_decode.constprop.0:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:469    .text.base64_gen_decode.constprop.0:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:470    .text.base64_gen_decode.constprop.0:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:472    .text.base64_gen_decode.constprop.0:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:476    .text.base64_gen_decode.constprop.0:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:477    .text.base64_gen_decode.constprop.0:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:482    .text.base64_gen_decode.constprop.0:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:483    .text.base64_gen_decode.constprop.0:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:485    .text.base64_gen_decode.constprop.0:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:486    .text.base64_gen_decode.constprop.0:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:488    .text.base64_gen_decode.constprop.0:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:489    .text.base64_gen_decode.constprop.0:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:493    .text.base64_gen_decode.constprop.0:00000000000000d4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:494    .text.base64_gen_decode.constprop.0:00000000000000d4 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:499    .text.base64_gen_decode.constprop.0:00000000000000dc .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:500    .text.base64_gen_decode.constprop.0:00000000000000dc .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:503    .text.base64_gen_decode.constprop.0:00000000000000de .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:504    .text.base64_gen_decode.constprop.0:00000000000000de .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:506    .text.base64_gen_decode.constprop.0:00000000000000e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:507    .text.base64_gen_decode.constprop.0:00000000000000e2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:510    .text.base64_gen_decode.constprop.0:00000000000000e6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:513    .text.base64_gen_decode.constprop.0:00000000000000ea .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:516    .text.base64_gen_decode.constprop.0:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:518    .text.base64_gen_decode.constprop.0:00000000000000f0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:520    .text.base64_gen_decode.constprop.0:00000000000000f2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:522    .text.base64_gen_decode.constprop.0:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:523    .text.base64_gen_decode.constprop.0:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:526    .text.base64_gen_decode.constprop.0:00000000000000fa .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:528    .text.base64_gen_decode.constprop.0:00000000000000fc .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:531    .text.base64_gen_decode.constprop.0:0000000000000102 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:533    .text.base64_gen_decode.constprop.0:0000000000000106 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:535    .text.base64_gen_decode.constprop.0:0000000000000108 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:537    .text.base64_gen_decode.constprop.0:000000000000010c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:538    .text.base64_gen_decode.constprop.0:000000000000010c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:540    .text.base64_gen_decode.constprop.0:000000000000010e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:542    .text.base64_gen_decode.constprop.0:0000000000000112 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:545    .text.base64_gen_decode.constprop.0:0000000000000116 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:546    .text.base64_gen_decode.constprop.0:0000000000000116 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:547    .text.base64_gen_decode.constprop.0:0000000000000116 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:549    .text.base64_gen_decode.constprop.0:000000000000011a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:550    .text.base64_gen_decode.constprop.0:000000000000011a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:553    .text.base64_gen_decode.constprop.0:0000000000000120 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:558    .text.base64_gen_decode.constprop.0:0000000000000122 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:559    .text.base64_gen_decode.constprop.0:0000000000000122 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:562    .text.base64_gen_decode.constprop.0:0000000000000124 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:564    .text.base64_gen_decode.constprop.0:0000000000000126 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:565    .text.base64_gen_decode.constprop.0:0000000000000126 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:570    .text.base64_gen_decode.constprop.0:0000000000000128 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:571    .text.base64_gen_decode.constprop.0:0000000000000128 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:573    .text.base64_gen_decode.constprop.0:000000000000012a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:575    .text.base64_gen_decode.constprop.0:000000000000012c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:577    .text.base64_gen_decode.constprop.0:0000000000000130 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:583    .text.base64_gen_decode.constprop.0:000000000000013a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:585    .text.base64_gen_decode.constprop.0:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:590    .text.base64_gen_decode.constprop.0:000000000000013e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:591    .text.base64_gen_decode.constprop.0:000000000000013e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:594    .text.base64_gen_decode.constprop.0:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:601    .text.base64_encode:0000000000000000 base64_encode
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:604    .text.base64_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:606    .text.base64_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:607    .text.base64_encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:608    .text.base64_encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:609    .text.base64_encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:612    .text.base64_encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:613    .text.base64_encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:614    .text.base64_encode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:615    .text.base64_encode:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:617    .text.base64_encode:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:619    .text.base64_encode:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:622    .text.base64_encode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:624    .text.base64_encode:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:628    .text.base64_encode:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:633    .text.base64_encode:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:636    .text.base64_encode:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:637    .text.base64_encode:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:640    .text.base64_encode:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:642    .text.base64_encode:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:646    .text.base64_encode:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:647    .text.base64_encode:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:651    .text.base64_encode:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:653    .text.base64_encode:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:656    .text.base64_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:657    .text.base64_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:658    .text.base64_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:659    .text.base64_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:666    .text.base64_encode_no_lf:0000000000000000 base64_encode_no_lf
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:669    .text.base64_encode_no_lf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:671    .text.base64_encode_no_lf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:672    .text.base64_encode_no_lf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:673    .text.base64_encode_no_lf:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:678    .text.base64_encode_no_lf:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:685    .text.base64_url_encode:0000000000000000 base64_url_encode
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:688    .text.base64_url_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:690    .text.base64_url_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:691    .text.base64_url_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:692    .text.base64_url_encode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:697    .text.base64_url_encode:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:704    .text.base64_decode:0000000000000000 base64_decode
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:707    .text.base64_decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:709    .text.base64_decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:710    .text.base64_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:711    .text.base64_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:712    .text.base64_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:715    .text.base64_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:716    .text.base64_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:717    .text.base64_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:718    .text.base64_decode:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:720    .text.base64_decode:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:722    .text.base64_decode:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:725    .text.base64_decode:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:727    .text.base64_decode:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:731    .text.base64_decode:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:736    .text.base64_decode:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:739    .text.base64_decode:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:740    .text.base64_decode:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:743    .text.base64_decode:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:745    .text.base64_decode:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:749    .text.base64_decode:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:750    .text.base64_decode:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:754    .text.base64_decode:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:756    .text.base64_decode:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:759    .text.base64_decode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:760    .text.base64_decode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:761    .text.base64_decode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:762    .text.base64_decode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:769    .text.base64_url_decode:0000000000000000 base64_url_decode
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:772    .text.base64_url_decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:774    .text.base64_url_decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:775    .text.base64_url_decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:776    .text.base64_url_decode:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:778    .text.base64_url_decode:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:783    .rodata.base64_table:0000000000000000 .LANCHOR1
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:786    .rodata.base64_table:0000000000000000 base64_table
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:790    .rodata.base64_url_table:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:793    .rodata.base64_url_table:0000000000000000 base64_url_table
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:287    .text.base64_gen_encode:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:597    .text.base64_gen_decode.constprop.0:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:662    .text.base64_encode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:681    .text.base64_encode_no_lf:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:700    .text.base64_url_encode:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:765    .text.base64_decode:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:781    .text.base64_url_decode:0000000000000008 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:55     .text.base64_gen_encode:0000000000000018 .L2
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:33     .text.base64_gen_encode:000000000000000e .L4
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:170    .text.base64_gen_encode:00000000000000a2 .L6
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:269    .text.base64_gen_encode:0000000000000130 .L7
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:238    .text.base64_gen_encode:0000000000000102 .L8
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:106    .text.base64_gen_encode:000000000000004a .L5
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:159    .text.base64_gen_encode:0000000000000096 .L10
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:44     .text.base64_gen_encode:0000000000000010 .L1
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:335    .text.base64_gen_decode.constprop.0:0000000000000030 .L25
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:392    .text.base64_gen_decode.constprop.0:0000000000000064 .L28
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:415    .text.base64_gen_decode.constprop.0:000000000000007e .L29
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:409    .text.base64_gen_decode.constprop.0:000000000000007a .L27
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:365    .text.base64_gen_decode.constprop.0:0000000000000052 .L26
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:373    .text.base64_gen_decode.constprop.0:0000000000000058 .L47
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:555    .text.base64_gen_decode.constprop.0:0000000000000122 .L37
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:474    .text.base64_gen_decode.constprop.0:00000000000000c2 .L33
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:587    .text.base64_gen_decode.constprop.0:000000000000013e .L34
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:491    .text.base64_gen_decode.constprop.0:00000000000000d4 .L35
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:581    .text.base64_gen_decode.constprop.0:000000000000013a .L41
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:567    .text.base64_gen_decode.constprop.0:0000000000000128 .L36
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:378    .text.base64_gen_decode.constprop.0:000000000000005a .L24
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:456    .text.base64_gen_decode.constprop.0:00000000000000ae .L32
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:649    .text.base64_encode:000000000000003a .L48
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:752    .text.base64_decode:000000000000003a .L58
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:1845   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3291   .debug_str:000000000000021b .LASF58
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3287   .debug_str:0000000000000184 .LASF59
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3261   .debug_str:000000000000002f .LASF60
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3221   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3249   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3333   .debug_str:000000000000044b .LASF0
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3259   .debug_str:0000000000000028 .LASF6
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3327   .debug_str:0000000000000414 .LASF1
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3323   .debug_str:00000000000003fd .LASF2
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3257   .debug_str:000000000000001e .LASF3
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3337   .debug_str:0000000000000466 .LASF4
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3303   .debug_str:0000000000000378 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3269   .debug_str:00000000000000e7 .LASF7
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3351   .debug_str:00000000000004c6 .LASF8
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3295   .debug_str:0000000000000326 .LASF9
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3297   .debug_str:0000000000000334 .LASF10
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3341   .debug_str:0000000000000488 .LASF11
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3331   .debug_str:0000000000000442 .LASF12
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3347   .debug_str:00000000000004b6 .LASF13
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3353   .debug_str:00000000000004d8 .LASF14
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3375   .debug_str:0000000000000565 .LASF15
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3371   .debug_str:000000000000054b .LASF16
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3283   .debug_str:000000000000016a .LASF17
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3361   .debug_str:00000000000004ff .LASF18
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3251   .debug_str:0000000000000000 .LASF19
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3339   .debug_str:0000000000000479 .LASF20
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3277   .debug_str:0000000000000128 .LASF21
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3377   .debug_str:0000000000000572 .LASF22
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3367   .debug_str:0000000000000528 .LASF23
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3345   .debug_str:00000000000004a3 .LASF24
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3271   .debug_str:00000000000000f2 .LASF25
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3273   .debug_str:0000000000000107 .LASF26
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3275   .debug_str:0000000000000117 .LASF27
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3289   .debug_str:0000000000000210 .LASF28
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3253   .debug_str:000000000000000f .LASF29
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3359   .debug_str:00000000000004f0 .LASF30
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3325   .debug_str:000000000000040b .LASF31
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3301   .debug_str:0000000000000352 .LASF61
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3315   .debug_str:00000000000003b7 .LASF32
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3329   .debug_str:0000000000000420 .LASF33
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3281   .debug_str:0000000000000149 .LASF34
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3373   .debug_str:0000000000000558 .LASF35
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3309   .debug_str:0000000000000397 .LASF36
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3279   .debug_str:0000000000000137 .LASF38
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:770    .text.base64_url_decode:0000000000000000 .LFB438
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:779    .text.base64_url_decode:0000000000000008 .LFE438
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2402   .debug_loc:0000000000000000 .LLST35
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2416   .debug_loc:0000000000000021 .LLST36
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3265   .debug_str:00000000000000cb .LASF37
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2430   .debug_loc:0000000000000042 .LLST37
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:777    .text.base64_url_decode:0000000000000008 .LVL87
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3335   .debug_str:0000000000000458 .LASF39
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:705    .text.base64_decode:0000000000000000 .LFB437
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:763    .text.base64_decode:0000000000000046 .LFE437
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2444   .debug_loc:0000000000000063 .LLST31
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2461   .debug_loc:000000000000008e .LLST32
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2478   .debug_loc:00000000000000b9 .LLST33
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3255   .debug_str:0000000000000019 .LASF40
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2495   .debug_loc:00000000000000e4 .LLST34
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:729    .text.base64_decode:000000000000001a .LVL80
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:741    .text.base64_decode:000000000000002c .LVL82
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:747    .text.base64_decode:0000000000000038 .LVL83
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3365   .debug_str:0000000000000516 .LASF41
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:686    .text.base64_url_encode:0000000000000000 .LFB436
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:698    .text.base64_url_encode:0000000000000012 .LFE436
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2507   .debug_loc:0000000000000103 .LLST28
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2521   .debug_loc:0000000000000124 .LLST29
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2535   .debug_loc:0000000000000145 .LLST30
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:696    .text.base64_url_encode:0000000000000012 .LVL76
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3267   .debug_str:00000000000000d3 .LASF42
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:667    .text.base64_encode_no_lf:0000000000000000 .LFB435
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:679    .text.base64_encode_no_lf:0000000000000012 .LFE435
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2549   .debug_loc:0000000000000166 .LLST25
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2563   .debug_loc:0000000000000187 .LLST26
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2577   .debug_loc:00000000000001a8 .LLST27
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:677    .text.base64_encode_no_lf:0000000000000012 .LVL74
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3307   .debug_str:0000000000000389 .LASF43
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:602    .text.base64_encode:0000000000000000 .LFB434
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:660    .text.base64_encode:0000000000000046 .LFE434
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2591   .debug_loc:00000000000001c9 .LLST21
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2608   .debug_loc:00000000000001f4 .LLST22
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2625   .debug_loc:000000000000021f .LLST23
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2642   .debug_loc:000000000000024a .LLST24
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:626    .text.base64_encode:000000000000001a .LVL67
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:638    .text.base64_encode:000000000000002c .LVL69
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:644    .text.base64_encode:0000000000000038 .LVL70
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3293   .debug_str:0000000000000314 .LASF62
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3285   .debug_str:000000000000017e .LASF44
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3299   .debug_str:000000000000034b .LASF45
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3311   .debug_str:00000000000003a8 .LASF46
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3355   .debug_str:00000000000004e5 .LASF47
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3357   .debug_str:00000000000004eb .LASF48
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3263   .debug_str:00000000000000c1 .LASF49
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3321   .debug_str:00000000000003eb .LASF63
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:13     .text.base64_gen_encode:0000000000000000 .LFB432
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:285    .text.base64_gen_encode:0000000000000142 .LFE432
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2654   .debug_loc:0000000000000269 .LLST0
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2694   .debug_loc:00000000000002c7 .LLST1
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2727   .debug_loc:0000000000000317 .LLST2
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2749   .debug_loc:000000000000034e .LLST3
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3319   .debug_str:00000000000003e3 .LASF50
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2771   .debug_loc:0000000000000385 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2793   .debug_loc:00000000000003bc .LLST5
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2856   .debug_loc:0000000000000454 .LLST6
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2873   .debug_loc:000000000000047f .LLST7
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3313   .debug_str:00000000000003ae .LASF51
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2972   .debug_loc:0000000000000511 .LLST8
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:90     .text.base64_gen_encode:0000000000000042 .LVL8
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:291    .text.base64_gen_decode.constprop.0:0000000000000000 .LFB439
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:595    .text.base64_gen_decode.constprop.0:0000000000000142 .LFE439
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2980   .debug_loc:0000000000000525 .LLST9
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:2991   .debug_loc:0000000000000543 .LLST10
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3002   .debug_loc:0000000000000561 .LLST11
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3013   .debug_loc:000000000000057f .LLST12
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3024   .debug_loc:000000000000059d .LLST13
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3067   .debug_loc:000000000000060c .LLST14
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3074   .debug_loc:000000000000061f .LLST15
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3107   .debug_loc:0000000000000676 .LLST16
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3141   .debug_loc:00000000000006ce .LLST17
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3161   .debug_loc:00000000000006f5 .LLST18
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3182   .debug_loc:000000000000072b .LLST19
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:805    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3189   .debug_loc:000000000000073e .LLST20
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:578    .text.base64_gen_decode.constprop.0:0000000000000138 .LVL60
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:323    .text.base64_gen_decode.constprop.0:0000000000000022 .LVL32
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:434    .text.base64_gen_decode.constprop.0:0000000000000098 .LVL44
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3363   .debug_str:000000000000050c .LASF52
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3369   .debug_str:0000000000000535 .LASF53
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3305   .debug_str:0000000000000381 .LASF54
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3343   .debug_str:000000000000048d .LASF55
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3317   .debug_str:00000000000003d9 .LASF56
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:3349   .debug_str:00000000000004bc .LASF57
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:773    .text.base64_url_decode:0000000000000000 .LVL86
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:708    .text.base64_decode:0000000000000000 .LVL77
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:723    .text.base64_decode:000000000000000e .LVL79
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:757    .text.base64_decode:000000000000003e .LVL85
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:714    .text.base64_decode:0000000000000008 .LVL78
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:737    .text.base64_decode:0000000000000024 .LVL81
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:751    .text.base64_decode:000000000000003a .LVL84
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:689    .text.base64_url_encode:0000000000000000 .LVL75
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:670    .text.base64_encode_no_lf:0000000000000000 .LVL73
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:605    .text.base64_encode:0000000000000000 .LVL64
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:620    .text.base64_encode:000000000000000e .LVL66
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:654    .text.base64_encode:000000000000003e .LVL72
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:611    .text.base64_encode:0000000000000008 .LVL65
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:634    .text.base64_encode:0000000000000024 .LVL68
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:648    .text.base64_encode:000000000000003a .LVL71
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:17     .text.base64_gen_encode:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:29     .text.base64_gen_encode:000000000000000c .LVL1
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:32     .text.base64_gen_encode:000000000000000e .LVL2
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:43     .text.base64_gen_encode:0000000000000010 .LVL3
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:54     .text.base64_gen_encode:0000000000000018 .LVL4
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:70     .text.base64_gen_encode:0000000000000028 .LVL5
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:105    .text.base64_gen_encode:000000000000004a .LVL10
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:97     .text.base64_gen_encode:0000000000000046 .LVL9
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:117    .text.base64_gen_encode:0000000000000058 .LVL11
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:138    .text.base64_gen_encode:0000000000000078 .LVL12
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:147    .text.base64_gen_encode:0000000000000086 .LVL13
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:161    .text.base64_gen_encode:0000000000000096 .LVL15
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:167    .text.base64_gen_encode:00000000000000a0 .LVL16
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:169    .text.base64_gen_encode:00000000000000a2 .LVL17
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:175    .text.base64_gen_encode:00000000000000a8 .LVL18
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:187    .text.base64_gen_encode:00000000000000b6 .LVL20
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:223    .text.base64_gen_encode:00000000000000ee .LVL21
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:237    .text.base64_gen_encode:0000000000000102 .LVL23
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:254    .text.base64_gen_encode:0000000000000118 .LVL24
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:280    .text.base64_gen_encode:000000000000013c .LVL26
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:178    .text.base64_gen_encode:00000000000000aa .LVL19
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:233    .text.base64_gen_encode:0000000000000100 .LVL22
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:75     .text.base64_gen_encode:000000000000002e .LVL6
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:80     .text.base64_gen_encode:0000000000000030 .LVL7
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:294    .text.base64_gen_decode.constprop.0:0000000000000000 .LVL27
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:321    .text.base64_gen_decode.constprop.0:000000000000001a .LVL31
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:317    .text.base64_gen_decode.constprop.0:0000000000000014 .LVL29
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:319    .text.base64_gen_decode.constprop.0:0000000000000018 .LVL30
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:580    .text.base64_gen_decode.constprop.0:000000000000013a .LVL61
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:455    .text.base64_gen_decode.constprop.0:00000000000000ae .LVL46
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:508    .text.base64_gen_decode.constprop.0:00000000000000e6 .LVL52
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:524    .text.base64_gen_decode.constprop.0:00000000000000fa .LVL55
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:543    .text.base64_gen_decode.constprop.0:0000000000000116 .LVL56
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:554    .text.base64_gen_decode.constprop.0:0000000000000122 .LVL57
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:560    .text.base64_gen_decode.constprop.0:0000000000000124 .LVL58
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:566    .text.base64_gen_decode.constprop.0:0000000000000128 .LVL59
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:586    .text.base64_gen_decode.constprop.0:000000000000013e .LVL62
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:480    .text.base64_gen_decode.constprop.0:00000000000000ca .LVL48
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:514    .text.base64_gen_decode.constprop.0:00000000000000ee .LVL54
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:334    .text.base64_gen_decode.constprop.0:0000000000000030 .LVL33
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:356    .text.base64_gen_decode.constprop.0:000000000000004a .LVL35
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:364    .text.base64_gen_decode.constprop.0:0000000000000052 .LVL36
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:372    .text.base64_gen_decode.constprop.0:0000000000000058 .LVL37
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:391    .text.base64_gen_decode.constprop.0:0000000000000064 .LVL38
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:426    .text.base64_gen_decode.constprop.0:0000000000000088 .LVL42
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:511    .text.base64_gen_decode.constprop.0:00000000000000ea .LVL53
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:421    .text.base64_gen_decode.constprop.0:0000000000000086 .LVL41
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:432    .text.base64_gen_decode.constprop.0:0000000000000090 .LVL43
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:302    .text.base64_gen_decode.constprop.0:0000000000000008 .LVL28
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:447    .text.base64_gen_decode.constprop.0:00000000000000a4 .LVL45
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:473    .text.base64_gen_decode.constprop.0:00000000000000c2 .LVL47
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:495    .text.base64_gen_decode.constprop.0:00000000000000d6 .LVL50
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:374    .text.base64_gen_decode.constprop.0:0000000000000058 .LBB3
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:379    .text.base64_gen_decode.constprop.0:000000000000005a .LBE3
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:448    .text.base64_gen_decode.constprop.0:00000000000000a4 .LBB4
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:457    .text.base64_gen_decode.constprop.0:00000000000000ae .LBE4
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:461    .text.base64_gen_decode.constprop.0:00000000000000b2 .LBB5
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:556    .text.base64_gen_decode.constprop.0:0000000000000122 .LBE5
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:568    .text.base64_gen_decode.constprop.0:0000000000000128 .LBB6
+C:\Users\stapi\AppData\Local\Temp\cc1et4sP.s:588    .text.base64_gen_decode.constprop.0:000000000000013e .LBE6
+
+UNDEFINED SYMBOLS
+__riscv_restore_5
+__riscv_save_5
+os_malloc
+__riscv_save_4
+os_memset
+__riscv_restore_4
+os_free
+__riscv_save_1
+os_zalloc
+mbedtls_base64_encode
+__riscv_restore_1
+mbedtls_base64_decode

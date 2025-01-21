@@ -1,0 +1,2146 @@
+   1              		.file	"awss_crypt.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.cal_passwd.isra.0,"ax",@progbits
+  10              		.align	1
+  12              	cal_passwd.isra.0:
+  13              	.LFB71:
+  14              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****  * Copyright (C) 2015-2018 Alibaba Group Holding Limited
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****  */
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include <stdio.h>
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include <stdint.h>
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include <string.h>
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include "os.h"
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include "awss_utils.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include "sha256.h"
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include "passwd.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include "awss_log.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include "awss_wifimgr.h"
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #include "awss_crypt.h"
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #if defined(__cplusplus)  /* If this is a C++ compiler, use C linkage */
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** extern "C"
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** {
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** #endif
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** static const char *cal_passwd(void *key, void *random, void *passwd)
+  15              		.loc 1 21 20
+  16              		.cfi_startproc
+  17              	.LVL0:
+  18 0000 17030000 		call	t0,__riscv_save_4
+  18      E7020300 
+  19              		.cfi_offset 19, -20
+  20              		.cfi_offset 18, -16
+  21              		.cfi_offset 9, -12
+  22              		.cfi_offset 8, -8
+  23              		.cfi_offset 1, -4
+  24              		.cfi_def_cfa_offset 32
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** {
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint16_t key_len;
+  25              		.loc 1 23 5
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t digest[SHA256_DIGEST_SIZE + 1] = {0};
+  26              		.loc 1 24 5
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** {
+  27              		.loc 1 21 20 is_stmt 0
+  28 0008 1D71     		addi	sp,sp,-96
+  29              		.cfi_def_cfa_offset 128
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** {
+  30              		.loc 1 21 20
+  31 000a AA84     		mv	s1,a0
+  32 000c AE89     		mv	s3,a1
+  33 000e 3289     		mv	s2,a2
+  34              		.loc 1 24 13
+  35 0010 8145     		li	a1,0
+  36              	.LVL1:
+  37 0012 7546     		li	a2,29
+  38              	.LVL2:
+  39 0014 4800     		addi	a0,sp,4
+  40              	.LVL3:
+  41 0016 02C0     		sw	zero,0(sp)
+  42 0018 97000000 		call	memset
+  42      E7800000 
+  43              	.LVL4:
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t passwd_src[KEY_MAX_LEN + RANDOM_MAX_LEN + 2] = {0};
+  44              		.loc 1 25 5 is_stmt 1
+  45              		.loc 1 25 13 is_stmt 0
+  46 0020 13066003 		li	a2,54
+  47 0024 8145     		li	a1,0
+  48 0026 2810     		addi	a0,sp,40
+  49 0028 02D2     		sw	zero,36(sp)
+  50 002a 97000000 		call	memset
+  50      E7800000 
+  51              	.LVL5:
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     if (!passwd || !key || !random)
+  52              		.loc 1 27 5 is_stmt 1
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         return NULL;
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     // combine key and random, with split of comma
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     key_len = strlen(key);
+  53              		.loc 1 31 5
+  54              		.loc 1 31 15 is_stmt 0
+  55 0032 2685     		mv	a0,s1
+  56 0034 97000000 		call	strlen
+  56      E7800000 
+  57              	.LVL6:
+  58 003c 93058002 		li	a1,40
+  59              		.loc 1 31 13
+  60 0040 33440508 		zext.h	s0,a0
+  61              	.LVL7:
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     if (key_len > KEY_MAX_LEN)
+  62              		.loc 1 32 5 is_stmt 1
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         key_len = KEY_MAX_LEN;
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     memcpy(passwd_src, key, key_len);
+  63              		.loc 1 34 5 is_stmt 0
+  64 0044 4810     		addi	a0,sp,36
+  65 0046 3354B40A 		minu	s0,s0,a1
+  66              	.LVL8:
+  67              		.loc 1 34 5 is_stmt 1
+  68 004a A685     		mv	a1,s1
+  69 004c 2286     		mv	a2,s0
+  70 004e 97000000 		call	memcpy
+  70      E7800000 
+  71              	.LVL9:
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     passwd_src[key_len ++] = ',';
+  72              		.loc 1 35 5
+  73              		.loc 1 35 28 is_stmt 0
+  74 0056 9C10     		addi	a5,sp,96
+  75 0058 1307C002 		li	a4,44
+  76 005c A297     		add	a5,a5,s0
+  77 005e 2382E7FC 		sb	a4,-60(a5)
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     memcpy(passwd_src + key_len, random, RANDOM_MAX_LEN);
+  78              		.loc 1 36 5 is_stmt 1
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     passwd_src[key_len ++] = ',';
+  79              		.loc 1 35 24 is_stmt 0
+  80 0062 13051400 		addi	a0,s0,1
+  81              		.loc 1 36 5
+  82 0066 5C10     		addi	a5,sp,36
+  83 0068 CE85     		mv	a1,s3
+  84 006a 4146     		li	a2,16
+  85 006c 33450508 		zext.h	a0,a0
+  86 0070 3E95     		add	a0,a5,a0
+  87 0072 97000000 		call	memcpy
+  87      E7800000 
+  88              	.LVL10:
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     key_len += RANDOM_MAX_LEN;
+  89              		.loc 1 37 5 is_stmt 1
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     // produce digest using combination of key and random
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     SHA256_hash(passwd_src, key_len, digest);
+  90              		.loc 1 40 5
+  91 007a 0A86     		mv	a2,sp
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     key_len += RANDOM_MAX_LEN;
+  92              		.loc 1 37 13 is_stmt 0
+  93 007c 93051401 		addi	a1,s0,17
+  94              		.loc 1 40 5
+  95 0080 4810     		addi	a0,sp,36
+  96 0082 B3C50508 		zext.h	a1,a1
+  97 0086 97000000 		call	SHA256_hash
+  97      E7800000 
+  98              	.LVL11:
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     // use the first 128bits as AES-Key
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     memcpy(passwd, digest, AES128_KEY_LEN);
+  99              		.loc 1 43 5 is_stmt 1
+ 100 008e 8A85     		mv	a1,sp
+ 101 0090 4146     		li	a2,16
+ 102 0092 4A85     		mv	a0,s2
+ 103 0094 97000000 		call	memcpy
+ 103      E7800000 
+ 104              	.LVL12:
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     return passwd;
+ 105              		.loc 1 45 5
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** }
+ 106              		.loc 1 46 1 is_stmt 0
+ 107 009c 2561     		addi	sp,sp,96
+ 108              		.cfi_def_cfa_offset 0
+ 109 009e 17030000 		tail	__riscv_restore_4
+ 109      67000300 
+ 110              		.cfi_restore 19
+ 111              		.cfi_restore 18
+ 112              		.cfi_restore 9
+ 113              		.cfi_restore 8
+ 114              		.cfi_restore 1
+ 115              		.cfi_def_cfa_offset -32
+ 116              		.cfi_endproc
+ 117              	.LFE71:
+ 119              		.section	.rodata.aes_decrypt_string.str1.4,"aMS",@progbits,1
+ 120              		.align	2
+ 121              	.LC0:
+ 122 0000 73656375 		.string	"security level: %d"
+ 122      72697479 
+ 122      206C6576 
+ 122      656C3A20 
+ 122      256400
+ 123 0013 00       		.align	2
+ 124              	.LC1:
+ 125 0014 61777373 		.string	"awss"
+ 125      00
+ 126 0019 000000   		.align	2
+ 127              	.LC2:
+ 128 001c 77726F6E 		.string	"wrong security level: %d\n"
+ 128      67207365 
+ 128      63757269 
+ 128      7479206C 
+ 128      6576656C 
+ 129              		.section	.text.aes_decrypt_string,"ax",@progbits
+ 130              		.align	1
+ 131              		.globl	aes_decrypt_string
+ 133              	aes_decrypt_string:
+ 134              	.LFB65:
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** int aes_decrypt_string(char *cipher, char *plain, int len, int cipher_hex, int sec_lvl, char cbc, c
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** {
+ 135              		.loc 1 49 1 is_stmt 1
+ 136              		.cfi_startproc
+ 137              	.LVL13:
+ 138 0000 17030000 		call	t0,__riscv_save_8
+ 138      E7020300 
+ 139              		.cfi_offset 23, -36
+ 140              		.cfi_offset 22, -32
+ 141              		.cfi_offset 21, -28
+ 142              		.cfi_offset 20, -24
+ 143              		.cfi_offset 19, -20
+ 144              		.cfi_offset 18, -16
+ 145              		.cfi_offset 9, -12
+ 146              		.cfi_offset 8, -8
+ 147              		.cfi_offset 1, -4
+ 148              		.cfi_def_cfa_offset 48
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     char res = 0;
+ 149              		.loc 1 50 5
+ 150              	.LVL14:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     char decrypt = 1;
+ 151              		.loc 1 51 5
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t iv[AES128_KEY_LEN] = {0};
+ 152              		.loc 1 52 5
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     char res = 0;
+ 153              		.loc 1 49 1 is_stmt 0
+ 154 0008 B284     		mv	s1,a2
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t key[AES128_KEY_LEN] = {0};
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t random[RANDOM_MAX_LEN] = {0};
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t *decoded = (uint8_t *)os_zalloc(len + 1);
+ 155              		.loc 1 56 49
+ 156 000a 0506     		addi	a2,a2,1
+ 157              	.LVL15:
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     char res = 0;
+ 158              		.loc 1 49 1
+ 159 000c 7571     		addi	sp,sp,-144
+ 160              		.cfi_def_cfa_offset 192
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     char res = 0;
+ 161              		.loc 1 49 1
+ 162 000e AA8A     		mv	s5,a0
+ 163              	.LBB32:
+ 164              	.LBB33:
+ 165              	.LBB34:
+ 166              	.LBB35:
+ 167              		.file 2 "..\\..\\..\\..\\cloud\\alicloud\\src\\services\\dev_bind\\os/os.h"
+   1:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /*
+   2:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * Copyright (C) 2015-2018 Alibaba Group Holding Limited
+   3:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+   4:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+   5:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #ifndef __AWSS_OS_H__
+   6:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define __AWSS_OS_H__
+   7:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+   8:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #ifdef __cplusplus
+   9:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** extern "C" {
+  10:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #endif
+  11:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #include <ctype.h>
+  12:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #include "iot_import.h"
+  13:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #include "iot_export.h"
+  14:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #include "product/product.h"
+  15:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #include "platform.h"
+  16:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  17:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_os os
+  18:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+  19:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+  20:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  21:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define OS_MAX_SSID_LEN         PLATFORM_MAX_SSID_LEN
+  22:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define OS_MAX_PASSWD_LEN       PLATFORM_MAX_PASSWD_LEN
+  23:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  24:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define OS_MAC_LEN              PLATFORM_MAC_LEN
+  25:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define OS_IP_LEN               PLATFORM_IP_LEN
+  26:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define OS_ETH_ALEN             ETH_ALEN
+  27:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  28:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define OS_PRODUCT_KEY_LEN      PRODUCT_KEY_LEN
+  29:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define OS_PRODUCT_SECRET_LEN   PRODUCT_SECRET_LEN
+  30:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define OS_DEVICE_NAME_LEN      DEVICE_NAME_LEN
+  31:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define OS_DEVICE_SECRET_LEN    DEVICE_SECRET_LEN
+  32:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  33:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /***************************************** Misc Interface *****************************************
+  34:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  35:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_misc misc
+  36:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+  37:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+  38:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+  39:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief .
+  40:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+  41:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param None.
+  42:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+  43:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @verbatim
+  44:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * = 0, This platform is little endian.
+  45:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * = 1, This platform is big endian.
+  46:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @endverbatim
+  47:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+  48:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+  49:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+  50:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_is_big_endian(void)
+  51:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+  52:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     uint32_t data = 0xFF000000;
+  53:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  54:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     if (0xFF == *(uint8_t *) & data) {
+  55:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         return 1;                                    //big endian
+  56:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     }
+  57:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  58:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return 0;                                        //little endian
+  59:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+  60:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  61:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+  62:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Convert the data from byte order of current CPU(the "host") to big-endian.
+  63:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    The size of the data is 16 bits.
+  64:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+  65:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] data @n Data to be converted.
+  66:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Conversion result.
+  67:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+  68:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+  69:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+  70:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint16_t os_htobe16(uint16_t data);
+  71:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  72:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+  73:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Convert the data from host to little-endian.
+  74:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    The size of the data is 16 bits.
+  75:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+  76:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] data @n Data to be converted.
+  77:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Conversion result.
+  78:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+  79:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+  80:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+  81:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint16_t os_htole16(uint16_t data);
+  82:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  83:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+  84:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Convert the data from big-endian to host.
+  85:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    The size of the data is 16 bits.
+  86:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+  87:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] data @n Data to be converted.
+  88:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Conversion result.
+  89:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+  90:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+  91:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+  92:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint16_t os_be16toh(uint16_t data);
+  93:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+  94:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+  95:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Convert the data from little-endian to host.
+  96:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    The size of the data is 16 bits.
+  97:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+  98:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] data @n Data to be converted.
+  99:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Conversion result.
+ 100:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 101:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 102:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 103:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint16_t os_le16toh(uint16_t data);
+ 104:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 105:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 106:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Convert the data from little-endian to host.
+ 107:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    The size of the data is 32 bits.
+ 108:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 109:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] data @n Data to be converted.
+ 110:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Conversion result.
+ 111:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 112:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 113:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 114:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint32_t os_le32toh(uint32_t data);
+ 115:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 116:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 117:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Convert the data from host to big-endian.
+ 118:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    The size of the data is 64 bits.
+ 119:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 120:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] data @n Data to be converted.
+ 121:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Conversion result.
+ 122:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 123:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 124:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 125:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** //uint64_t os_htobe64(uint64_t data);
+ 126:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 127:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 128:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Convert the data from host to little-endian.
+ 129:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    The size of the data is 64 bits.
+ 130:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 131:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] data @n Data to be converted.
+ 132:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Conversion result.
+ 133:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 134:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 135:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 136:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** //uint64_t os_htole64(uint64_t data);
+ 137:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 138:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 139:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Convert the data from big-endian to host.
+ 140:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    The size of the data is 64 bits.
+ 141:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 142:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] data @n Data to be converted.
+ 143:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Conversion result.
+ 144:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 145:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 146:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 147:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** //uint64_t os_be64toh(uint64_t data);
+ 148:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 149:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 150:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Convert the data from little-endian to host.
+ 151:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    The size of the data is 64 bits.
+ 152:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 153:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] data @n Data to be converted.
+ 154:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Conversion result.
+ 155:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 156:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 157:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 158:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** //uint64_t os_le64toh(uint64_t data);
+ 159:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 160:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 161:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get unaligned 16 bits data which is big-endian and convert to host byte order.
+ 162:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 163:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] ptr @n The start address of the unaligned data.
+ 164:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Result in host byte order.
+ 165:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 166:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 167:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 168:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint16_t os_get_unaligned_be16(uint8_t *ptr);
+ 169:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 170:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 171:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get unaligned 16 bits data which is little-endian and convert to host byte order.
+ 172:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 173:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] ptr @n The start address of the unaligned data.
+ 174:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Result in host byte order.
+ 175:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 176:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 177:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 178:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint16_t os_get_unaligned_le16(uint8_t *ptr);
+ 179:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 180:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 181:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get unaligned 32 bits data which is big-endian and convert to host byte order.
+ 182:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 183:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] ptr @n The start address of the unaligned data.
+ 184:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Result in host byte order.
+ 185:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 186:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 187:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 188:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint32_t os_get_unaligned_be32(uint8_t *ptr);
+ 189:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 190:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 191:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get unaligned 32 bits data which is little-endian and convert to host byte order.
+ 192:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 193:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] ptr @n The start address of the unaligned data.
+ 194:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Result in host byte order.
+ 195:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 196:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 197:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 198:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint32_t os_get_unaligned_le32(uint8_t *ptr);
+ 199:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 200:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 201:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief sleep thread itself.
+ 202:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 203:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] ms @n the time interval for which execution is to be suspended, in milliseconds.
+ 204:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 205:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 206:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 207:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 208:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_msleep(_IN_ uint32_t ms)
+ 209:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 210:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_msleep(ms);
+ 211:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 212:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 213:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 214:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief sleep thread itself.
+ 215:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 216:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] sec @n the time interval for which execution is to be suspended, in seconds.
+ 217:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 218:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 219:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 220:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 221:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_sleep(_IN_ uint32_t sec)
+ 222:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 223:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_msleep(sec * 1000);
+ 224:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 225:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 226:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 227:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief system reboot immediately.
+ 228:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 229:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 230:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 231:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 232:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 233:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_reboot()
+ 234:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 235:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_reboot();
+ 236:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 237:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 238:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @} *///end of os_misc
+ 239:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 240:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /***************************************** mutex Interface ****************************************
+ 241:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 242:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_os_mutex mutex
+ 243:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+ 244:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 245:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 246:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 247:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Create a mutex.
+ 248:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 249:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return Mutex handle.
+ 250:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 251:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 252:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 253:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void *os_mutex_init(void)
+ 254:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 255:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_mutex_init();
+ 256:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 257:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 258:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 259:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Destroy the specified mutex object, it will free related resource.
+ 260:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 261:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] mutex @n The specified mutex.
+ 262:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 263:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 264:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 265:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 266:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_mutex_destroy(_IN_ void *mutex)
+ 267:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 268:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_mutex_destroy(mutex);
+ 269:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 270:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 271:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 272:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Waits until the specified mutex is in the signaled state.
+ 273:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 274:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] mutex @n the specified mutex.
+ 275:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 276:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 277:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 278:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 279:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_mutex_lock(_IN_ void *mutex)
+ 280:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 281:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_mutex_lock(mutex);
+ 282:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 283:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 284:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 285:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Releases ownership of the specified mutex object..
+ 286:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 287:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] mutex @n the specified mutex.
+ 288:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 289:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 290:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 291:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 292:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_mutex_unlock(_IN_ void *mutex)
+ 293:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 294:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_mutex_unlock(mutex);
+ 295:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 296:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 297:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @} */// end of os_mutex
+ 298:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 299:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /*************************************** semaphore Interface **************************************
+ 300:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 301:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_os_semaphore semaphore
+ 302:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+ 303:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 304:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 305:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 306:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Create a semaphore.
+ 307:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 308:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return semaphore handle.
+ 309:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 310:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note The recommended value of maximum count of the semaphore is 255.
+ 311:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 312:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void *os_semaphore_init(void)
+ 313:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 314:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_semaphore_init();
+ 315:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 316:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 317:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 318:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Destroy the specified semaphore object, it will free related resource.
+ 319:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 320:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] sem @n the specified sem.
+ 321:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 322:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 323:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 324:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 325:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_semaphore_destroy(_IN_ void *sem)
+ 326:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 327:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_semaphore_destroy(sem);
+ 328:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 329:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 330:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 331:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Wait until the specified mutex is in the signaled state or the time-out interval elapses.
+ 332:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 333:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] sem @n the specified semaphore.
+ 334:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] timeout_ms @n timeout interval in millisecond.
+ 335:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      If timeout_ms is OS_WAIT_INFINITE, the function will return only when the semaphore is signale
+ 336:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 337:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 338:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    =  0: The state of the specified object is signaled.
+ 339:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    =  -1: The time-out interval elapsed, and the object's state is nonsignaled.
+ 340:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 341:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 342:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 343:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 344:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_semaphore_wait(_IN_ void *sem, _IN_ uint32_t timeout_ms)
+ 345:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 346:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_semaphore_wait(sem, timeout_ms);
+ 347:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 348:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 349:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 350:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Increases the count of the specified semaphore object by 1.
+ 351:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 352:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] sem @n the specified semaphore.
+ 353:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 354:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 355:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 356:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 357:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_semaphore_post(_IN_ void *sem)
+ 358:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 359:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_semaphore_post(sem);
+ 360:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 361:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 362:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @} */// end of os_semaphore
+ 363:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 364:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**************************************** memory Interface ****************************************
+ 365:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 366:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_os_memory_manage memory
+ 367:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+ 368:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 369:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 370:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 371:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Allocates a block of size bytes of memory, returning a pointer to the beginning of the bl
+ 372:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 373:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] size @n specify block size in bytes.
+ 374:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return A pointer to the beginning of the block.
+ 375:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 376:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note Block value is indeterminate.
+ 377:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 378:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void *os_malloc(_IN_ uint32_t size)
+ 379:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 380:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_malloc(size);
+ 168              		.loc 2 380 12
+ 169 0010 3285     		mv	a0,a2
+ 170              	.LVL16:
+ 171              	.LBE35:
+ 172              	.LBE34:
+ 173              	.LBE33:
+ 174              	.LBE32:
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     char res = 0;
+ 175              		.loc 1 49 1
+ 176 0012 AE89     		mv	s3,a1
+ 177 0014 B68B     		mv	s7,a3
+ 178 0016 3A89     		mv	s2,a4
+ 179 0018 3E8B     		mv	s6,a5
+ 180 001a 428A     		mv	s4,a6
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t key[AES128_KEY_LEN] = {0};
+ 181              		.loc 1 52 13
+ 182 001c 02CE     		sw	zero,28(sp)
+ 183 001e 02D0     		sw	zero,32(sp)
+ 184 0020 02D2     		sw	zero,36(sp)
+ 185 0022 02D4     		sw	zero,40(sp)
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t random[RANDOM_MAX_LEN] = {0};
+ 186              		.loc 1 53 5 is_stmt 1
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t random[RANDOM_MAX_LEN] = {0};
+ 187              		.loc 1 53 13 is_stmt 0
+ 188 0024 02D6     		sw	zero,44(sp)
+ 189 0026 02D8     		sw	zero,48(sp)
+ 190 0028 02DA     		sw	zero,52(sp)
+ 191 002a 02DC     		sw	zero,56(sp)
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+ 192              		.loc 1 54 5 is_stmt 1
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+ 193              		.loc 1 54 13 is_stmt 0
+ 194 002c 02DE     		sw	zero,60(sp)
+ 195 002e 82C0     		sw	zero,64(sp)
+ 196 0030 82C2     		sw	zero,68(sp)
+ 197 0032 82C4     		sw	zero,72(sp)
+ 198              		.loc 1 56 5 is_stmt 1
+ 199              	.LVL17:
+ 200              	.LBB39:
+ 201              	.LBB38:
+ 381:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 382:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 383:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 384:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 385:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Deallocate memory block
+ 386:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 387:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] ptr @n Pointer to a memory block previously allocated with platform_malloc.
+ 388:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 389:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 390:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 391:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 392:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_free(_IN_ void *ptr)
+ 393:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 394:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_free(ptr);
+ 395:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 396:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 397:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 398:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Allocates a memory block with memory initialized to 0,
+ 399:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      returning a pointer to the beginning of the block.
+ 400:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 401:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] size @n specify block size in bytes.
+ 402:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return A pointer to the beginning of the block.
+ 403:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 404:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note Block value is indeterminate.
+ 405:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 406:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void *os_zalloc(uint32_t size)
+ 407:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 408:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     void *ptr = os_malloc(size);
+ 202              		.loc 2 408 5
+ 203              	.LBB37:
+ 204              	.LBB36:
+ 380:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 205              		.loc 2 380 5
+ 380:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 206              		.loc 2 380 12 is_stmt 0
+ 207 0034 32C6     		sw	a2,12(sp)
+ 208 0036 97000000 		call	HAL_Malloc
+ 208      E7800000 
+ 209              	.LVL18:
+ 210              	.LBE36:
+ 211              	.LBE37:
+ 409:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     if (ptr != NULL) {
+ 212              		.loc 2 409 5 is_stmt 1
+ 213              		.loc 2 409 8 is_stmt 0
+ 214 003e 630C0514 		beq	a0,zero,.L15
+ 410:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         memset(ptr, 0, size);
+ 215              		.loc 2 410 9
+ 216 0042 3246     		lw	a2,12(sp)
+ 217 0044 8145     		li	a1,0
+ 218 0046 2A84     		mv	s0,a0
+ 219              		.loc 2 410 9 is_stmt 1
+ 220 0048 97000000 		call	memset
+ 220      E7800000 
+ 221              	.LVL19:
+ 411:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     }
+ 412:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return ptr;
+ 222              		.loc 2 412 5
+ 223              	.LBE38:
+ 224              	.LBE39:
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     if (decoded == NULL)
+ 225              		.loc 1 57 5
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         return -1;
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     if (cipher_hex == 0) {
+ 226              		.loc 1 60 5
+ 227              		.loc 1 60 8 is_stmt 0
+ 228 0050 63900B08 		bne	s7,zero,.L5
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         /*
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****          * mobile-ap, router, dev-ap
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****          */
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         utils_str_to_hex(cipher, len, decoded, len);
+ 229              		.loc 1 64 9 is_stmt 1
+ 230 0054 A686     		mv	a3,s1
+ 231 0056 2286     		mv	a2,s0
+ 232 0058 A685     		mv	a1,s1
+ 233 005a 5685     		mv	a0,s5
+ 234 005c 97000000 		call	LITE_hexstr_convert
+ 234      E7800000 
+ 235              	.LVL20:
+ 236              	.L6:
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     } else {  // for smartconfig/wps, zconfig,
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         /*
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****          * smartconfig/wps, zconfig
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****          */
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         memcpy(decoded, cipher, len);
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     }
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     if (rand) {
+ 237              		.loc 1 72 5
+ 238              		.loc 1 72 8 is_stmt 0
+ 239 0064 63090A00 		beq	s4,zero,.L7
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         /*
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****          * smartconfig/wps uses zero
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****          * zconfig/dev-ap/mobile-ap/router uses random
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****          */
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         memcpy(random, rand, sizeof(random));
+ 240              		.loc 1 77 9 is_stmt 1
+ 241 0068 4146     		li	a2,16
+ 242 006a D285     		mv	a1,s4
+ 243 006c 6818     		addi	a0,sp,60
+ 244 006e 97000000 		call	memcpy
+ 244      E7800000 
+ 245              	.LVL21:
+ 246              	.L7:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     }
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     awss_debug("security level: %d", sec_lvl);
+ 247              		.loc 1 80 5
+ 248 0076 B70A0000 		lui	s5,%hi(.LANCHOR0)
+ 249              	.LVL22:
+ 250 007a 37070000 		lui	a4,%hi(.LC0)
+ 251 007e 370A0000 		lui	s4,%hi(.LC1)
+ 252              	.LVL23:
+ 253 0082 CA87     		mv	a5,s2
+ 254 0084 13070700 		addi	a4,a4,%lo(.LC0)
+ 255 0088 9546     		li	a3,5
+ 256 008a 13060005 		li	a2,80
+ 257 008e 93850A00 		addi	a1,s5,%lo(.LANCHOR0)
+ 258 0092 13050A00 		addi	a0,s4,%lo(.LC1)
+ 259 0096 97000000 		call	LITE_syslog
+ 259      E7800000 
+ 260              	.LVL24:
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     switch (sec_lvl) {
+ 261              		.loc 1 82 5
+ 262 009e 8D47     		li	a5,3
+ 263 00a0 6300F904 		beq	s2,a5,.L8
+ 264 00a4 9147     		li	a5,4
+ 265 00a6 6302F90C 		beq	s2,a5,.L9
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         case SEC_LVL_AES128_PRODUCT:
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         {
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             char product_sec[OS_PRODUCT_SECRET_LEN + 1] = {0};
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             os_product_get_secret(product_sec);
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             cal_passwd(product_sec, random, key);
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             memcpy(iv, random, sizeof(random));
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             break;
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         }
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         case SEC_LVL_AES128_DEVICE:
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         {
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             char dev_sec[OS_DEVICE_SECRET_LEN + 1] = {0};
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             os_device_get_secret(dev_sec);
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             cal_passwd(dev_sec, random, key);
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             memcpy(iv, random, sizeof(random));
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             break;
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         }
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         default:
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         {
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             decrypt = 0;
+ 266              		.loc 1 101 13
+ 267              	.LVL25:
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             awss_debug("wrong security level: %d\n", sec_lvl);
+ 268              		.loc 1 102 13
+ 269 00aa 37070000 		lui	a4,%hi(.LC2)
+ 270 00ae CA87     		mv	a5,s2
+ 271 00b0 13070700 		addi	a4,a4,%lo(.LC2)
+ 272 00b4 9546     		li	a3,5
+ 273 00b6 13066006 		li	a2,102
+ 274 00ba 93850A00 		addi	a1,s5,%lo(.LANCHOR0)
+ 275 00be 13050A00 		addi	a0,s4,%lo(.LC1)
+ 276 00c2 97000000 		call	LITE_syslog
+ 276      E7800000 
+ 277              	.LVL26:
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             res = -2;
+ 278              		.loc 1 103 13
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             break;
+ 279              		.loc 1 104 13
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             awss_debug("wrong security level: %d\n", sec_lvl);
+ 280              		.loc 1 101 21 is_stmt 0
+ 281 00ca 8147     		li	a5,0
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             res = -2;
+ 282              		.loc 1 103 17
+ 283 00cc 7959     		li	s2,-2
+ 284              	.LVL27:
+ 285              		.loc 1 104 13
+ 286 00ce B9A0     		j	.L11
+ 287              	.LVL28:
+ 288              	.L5:
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     }
+ 289              		.loc 1 69 9 is_stmt 1
+ 290 00d0 2686     		mv	a2,s1
+ 291 00d2 D685     		mv	a1,s5
+ 292 00d4 2285     		mv	a0,s0
+ 293 00d6 97000000 		call	memcpy
+ 293      E7800000 
+ 294              	.LVL29:
+ 295 00de 59B7     		j	.L6
+ 296              	.LVL30:
+ 297              	.L8:
+ 298              	.LBB40:
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             os_product_get_secret(product_sec);
+ 299              		.loc 1 85 13
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             os_product_get_secret(product_sec);
+ 300              		.loc 1 85 18 is_stmt 0
+ 301 00e0 1306D003 		li	a2,61
+ 302 00e4 8145     		li	a1,0
+ 303 00e6 8808     		addi	a0,sp,80
+ 304 00e8 82C6     		sw	zero,76(sp)
+ 305 00ea 97000000 		call	memset
+ 305      E7800000 
+ 306              	.LVL31:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             cal_passwd(product_sec, random, key);
+ 307              		.loc 1 86 13 is_stmt 1
+ 308              	.LBB41:
+ 309              	.LBB42:
+ 413:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 414:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 415:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @} */// end of os_memory_manage
+ 416:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 417:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**************************************** system Interface ****************************************
+ 418:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 419:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_os_system system
+ 420:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+ 421:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 422:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 423:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 424:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief check system network is ready(get ip address) or not.
+ 425:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 426:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param None.
+ 427:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return 0, net is not ready; 1, net is ready.
+ 428:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 429:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 430:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 431:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_sys_net_is_ready(void)
+ 432:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 433:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_sys_net_is_ready();
+ 434:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 435:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 436:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 437:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Retrieves the number of milliseconds that have elapsed since the system was boot.
+ 438:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 439:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param None.
+ 440:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return the number of milliseconds.
+ 441:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 442:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note Add a big offset, for easier caught time overflow bug.
+ 443:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 444:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline uint32_t os_get_time_ms(void)
+ 445:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 446:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     static uint32_t fixed_delta;
+ 447:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 448:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     if (!fixed_delta) {
+ 449:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         fixed_delta = platform_get_time_ms() - 0xFFFF0000;
+ 450:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     }
+ 451:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 452:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     /* add a big offset, for easier caught time overflow bug */
+ 453:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_get_time_ms() - fixed_delta;
+ 454:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 455:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 456:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /*
+ 457:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  These inlines deal with timer wrapping correctly. You are
+ 458:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  strongly encouraged to use them
+ 459:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  1. Because people otherwise forget
+ 460:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  2. Because if the timer wrap changes in future you won't have to
+ 461:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *     alter your code.
+ 462:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 463:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline uint32_t time_elapsed_ms_since(uint32_t start_timestamp)
+ 464:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 465:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     uint32_t now = os_get_time_ms();
+ 466:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 467:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return now - start_timestamp;
+ 468:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 469:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 470:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @} */// end of os_system
+ 471:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 472:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /****************************************** io Interface ******************************************
+ 473:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 474:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_os_io io
+ 475:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+ 476:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 477:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 478:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 479:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Writes formatted data to stream.
+ 480:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 481:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] fmt: @n String that contains the text to be written, it can optionally contain embedd
+ 482:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      that specifies how subsequent arguments are converted for output.
+ 483:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] ...: @n the variable argument list, for formatted and inserted in the resulting strin
+ 484:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 485:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 486:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 487:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 488:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define os_printf(fmt, ...) platform_printf(fmt, ## __VA_ARGS__)
+ 489:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 490:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @} */// end of os_io
+ 491:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 492:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /*************************************** wifi module Interface ************************************
+ 493:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 494:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_os_wifi_module wifi
+ 495:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+ 496:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 497:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 498:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 499:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get encrypt type for smartconfig.
+ 500:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 501:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param None.
+ 502:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return.
+ 503:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 504:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 0: open (no encrypt)
+ 505:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 1: aes256cbc with default aes-key and aes-iv
+ 506:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 2: aes128cbc with default aes-key and aes-iv
+ 507:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 3: aes128cbc with aes-key per product and aes-iv = 0
+ 508:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 4: aes128cbc with aes-key per device and aes-iv = 0
+ 509:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 5: aes128cbc with aes-key per manufacture and aes-iv = 0
+ 510:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = others: invalid
+ 511:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 512:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 513:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 514:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 515:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_get_encrypt_type(void)
+ 516:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 517:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_get_encrypt_type();
+ 518:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 519:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 520:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 521:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief    Get Security level for wifi configuration with connection.
+ 522:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *           Used for AP solution of router and App.
+ 523:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 524:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param None.
+ 525:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return The security level:
+ 526:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 527:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     3: aes128cfb with aes-key per product and aes-iv = random
+ 528:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     4: aes128cfb with aes-key per device and aes-iv = random
+ 529:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     5: aes128cfb with aes-key per manufacture and aes-iv = random
+ 530:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     others: invalid
+ 531:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 532:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 533:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 534:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_get_conn_encrypt_type(void)
+ 535:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 536:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_get_conn_encrypt_type();
+ 537:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 538:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 539:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 540:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief   Get rssi and channel of current link
+ 541:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 542:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] p_rssi: rssi value of current link
+ 543:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] p_channel: channel of current link
+ 544:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * 
+ 545:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 546:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 547:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 0: succeeded
+ 548:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = -1: failed
+ 549:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 550:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 551:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 552:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note awss use this API to get rssi and channel of current link
+ 553:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 554:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_get_conn_link_stat(int *p_rssi, int *p_channel)
+ 555:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 556:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_get_conn_link_stat(p_rssi, p_channel);
+ 557:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 558:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 559:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 560:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get WIFI MAC string with format like: XX:XX:XX:XX:XX:XX.
+ 561:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 562:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] mac_str @n Buffer for using to store wifi MAC string.
+ 563:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return A pointer to the start address of mac_str.
+ 564:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 565:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note this func will format mac address string uppercase
+ 566:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 567:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** char *os_wifi_get_mac_str(char mac_str[OS_MAC_LEN]);
+ 568:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 569:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** char *os_wifi_str2mac(char mac_str[OS_MAC_LEN], char mac[OS_ETH_ALEN]);
+ 570:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 571:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 572:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get WIFI MAC address(digital form)
+ 573:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 574:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] mac @n digital buffer to hold mac address
+ 575:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return A pointer to the start address of mac.
+ 576:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 577:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 578:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 579:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** uint8_t *os_wifi_get_mac(uint8_t mac[OS_ETH_ALEN]);
+ 580:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 581:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 582:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get WIFI IP string with format like: xx:xx:xx:xx:xx:xx,
+ 583:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    and return IP with binary form, in network byte order.
+ 584:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 585:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] ifname @n Specify the interface name.The NULL value indicates the default network int
+ 586:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] ip_str @n Buffer for using to store IP string, in numbers-and-dots notation form.
+ 587:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return IP address with binary form, in network byte order.
+ 588:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 589:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 590:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 591:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline uint32_t os_wifi_get_ip(char ip_str[OS_IP_LEN], const char *ifname)
+ 592:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 593:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_wifi_get_ip(ip_str, ifname);
+ 594:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 595:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 596:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /*************************************** awss interface ***************************************/
+ 597:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 598:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_os_awss alink wireless setup service(awss)
+ 599:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+ 600:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 601:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 602:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 603:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get timeout interval, in millisecond, of per awss.
+ 604:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 605:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param None.
+ 606:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return The timeout interval.
+ 607:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 608:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note The recommended value is 60,000ms.
+ 609:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 610:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_awss_get_timeout_interval_ms(void)
+ 611:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 612:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_awss_get_timeout_interval_ms();
+ 613:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 614:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 615:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 616:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get time length, in millisecond, of per channel scan.
+ 617:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 618:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param None.
+ 619:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return The timeout interval.
+ 620:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 621:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None. The recommended value is between 200ms and 400ms.
+ 622:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 623:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_awss_get_channelscan_interval_ms(void)
+ 624:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 625:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_awss_get_channelscan_interval_ms();
+ 626:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 627:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 628:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** typedef platform_awss_recv_80211_frame_cb_t os_awss_recv_80211_frame_cb_t;
+ 629:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 630:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Set wifi running at monitor mode,
+ 631:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    and register a callback function which will be called when wifi receive a frame.
+ 632:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 633:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] cb @n A function pointer, called back when wifi receive a frame.
+ 634:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 635:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 636:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 637:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 638:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_awss_open_monitor(os_awss_recv_80211_frame_cb_t cb)
+ 639:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 640:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_awss_open_monitor(cb);
+ 641:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 642:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 643:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 644:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Close wifi monitor mode, and set running at station mode.
+ 645:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 646:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param None.
+ 647:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 648:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 649:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 650:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 651:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_awss_close_monitor(void)
+ 652:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 653:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_awss_close_monitor();
+ 654:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 655:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 656:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 657:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @brief   开启设备热点（SoftAP模式）
+ 658:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *
+ 659:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @param[in] ssid @n 热点的ssid字符；
+ 660:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @param[in] passwd @n 热点的passwd字符；
+ 661:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @param[in] beacon_interval @n 热点的Beacon广播周期（广播间隔）；
+ 662:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @param[in] hide @n 是否是隐藏热点，hide:0, 非隐藏, 其它值：隐藏；
+ 663:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @return，
+ 664:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      @verbatim
+ 665:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         = 0: success
+ 666:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         = -1: unsupported
+ 667:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         = -2: failure with system error
+ 668:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         = -3: failure with no memory
+ 669:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         = -4: failure with invalid parameters
+ 670:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      @endverbatim
+ 671:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @Note:
+ 672:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *       1）ssid和passwd都是以'\0'结尾的字符串，如果passwd字符串的
+ 673:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *          长度为0，表示该热点采用Open模式（不加密）；
+ 674:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *       2）beacon_interval表示热点的Beacon广播间隔（或周期），单
+ 675:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *          位为毫秒，一般会采用默认100ms；
+ 676:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *       3）hide表示创建的热点是否是隐藏热点，hide=0表示非隐藏热
+ 677:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *         点，其他值表示隐藏热点；
+ 678:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   */
+ 679:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 680:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_awss_open_ap(const char *ssid, const char *passwd, int beacon_interval, int hi
+ 681:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 682:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_awss_open_ap(ssid, passwd, beacon_interval, hide);
+ 683:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 684:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 685:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 686:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @brief   关闭当前设备热点，并把设备由SoftAP模式切换到Station模式
+ 687:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *
+ 688:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @return，
+ 689:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      @verbatim
+ 690:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         = 0: success
+ 691:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         = -1: unsupported
+ 692:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         = -2: failure
+ 693:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      @endverbatim
+ 694:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   * @Note:
+ 695:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *       1）如果当前设备已经开启热点，关闭当前热点，如果当前设备正
+ 696:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *          在开热点，取消开热点的操作；
+ 697:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *       2）如果当前设备不是以Station模式（包括Station+SoftAP模式和
+ 698:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *          SoftAP模式）工作，设备必须切换到Station模式；
+ 699:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *       3）Wi-Fi状态机需要切换到初始化状态，因为接下来很可能进行
+ 700:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   *          连接某一个路由器操作；
+ 701:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****   */
+ 702:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 703:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_awss_close_ap()
+ 704:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 705:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_awss_close_ap();
+ 706:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 707:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 708:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 709:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Switch to specific wifi channel.
+ 710:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 711:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] primary_channel @n Primary channel.
+ 712:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] secondary_channel @n Auxiliary channel.
+ 713:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] bssid @n A pointer to wifi BSSID.
+ 714:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 715:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 716:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 717:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 718:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline void os_awss_switch_channel(char primary_channel, char secondary_channel, uint8_t bss
+ 719:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 720:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     platform_awss_switch_channel(primary_channel, secondary_channel, bssid);
+ 721:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 722:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 723:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 724:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Wifi AP connect function
+ 725:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 726:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] connection_timeout_ms @n AP connection timeout in ms or PLATFORM_WAIT_INFINITE
+ 727:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] ssid @n AP ssid
+ 728:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] passwd @n AP passwd
+ 729:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] auth @n optional(AWSS_AUTH_TYPE_INVALID), AP auth info
+ 730:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] encry @n optional(AWSS_ENC_TYPE_INVALID), AP encry info
+ 731:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] bssid @n optional(NULL or zero mac address), AP bssid info
+ 732:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] channel @n optional, AP channel info
+ 733:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 734:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 735:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 0: connect AP & DHCP success
+ 736:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = -1: connect AP or DHCP fail/timeout
+ 737:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 738:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 739:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 740:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 741:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_awss_connect_ap(
+ 742:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ uint32_t connection_timeout_ms,
+ 743:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ char ssid[OS_MAX_SSID_LEN],
+ 744:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ char passwd[OS_MAX_PASSWD_LEN],
+ 745:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_OPT_ enum AWSS_AUTH_TYPE auth,
+ 746:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_OPT_ enum AWSS_ENC_TYPE encry,
+ 747:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_OPT_ uint8_t bssid[ETH_ALEN],
+ 748:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_OPT_ uint8_t channel)
+ 749:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 750:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_awss_connect_ap(connection_timeout_ms, ssid, passwd,
+ 751:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****                                     auth, encry, bssid, channel);
+ 752:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 753:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 754:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define os_wifi_scan_result_cb_t    platform_wifi_scan_result_cb_t
+ 755:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 756:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 757:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief send 80211 raw frame in current channel with basic rate(1Mbps)
+ 758:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 759:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] type @n see enum platform_awss_frame_type, currently only FRAME_BEACON
+ 760:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *                      FRAME_PROBE_REQ is used
+ 761:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] buffer @n 80211 raw frame, include complete mac header & FCS field
+ 762:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] len @n 80211 raw frame length
+ 763:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 764:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 765:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    =  0, send success.
+ 766:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    = -1, send failure.
+ 767:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    = -2, unsupported.
+ 768:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 769:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 770:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note awss use this API send raw frame in wifi monitor mode & station mode
+ 771:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 772:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_wifi_send_80211_raw_frame(_IN_ enum platform_awss_frame_type type,
+ 773:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****         _IN_ uint8_t *buffer, _IN_ int len)
+ 774:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 775:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_wifi_send_80211_raw_frame(type, buffer, len);
+ 776:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 777:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 778:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 779:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief management frame handler
+ 780:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 781:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] buffer @n 80211 raw frame or ie(information element) buffer
+ 782:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] len @n buffer length
+ 783:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] buffer_type @n 0 when buffer is a 80211 frame,
+ 784:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *                          1 when buffer only contain IE info
+ 785:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return None.
+ 786:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 787:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 788:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 789:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** #define os_wifi_mgnt_frame_cb_t     platform_wifi_mgnt_frame_cb_t
+ 790:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 791:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 792:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief enable/disable filter specific management frame in wifi station mode
+ 793:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 794:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] filter_mask @n see mask macro in enum platform_awss_frame_type,
+ 795:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *                      currently only FRAME_PROBE_REQ_MASK & FRAME_BEACON_MASK is used
+ 796:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] vendor_oui @n oui can be used for precise frame match, optional
+ 797:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] callback @n see platform_wifi_mgnt_frame_cb_t, passing 80211
+ 798:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *                      frame or ie to callback. when callback is NULL
+ 799:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *                      disable sniffer feature, otherwise enable it.
+ 800:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 801:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 802:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    =  0, success
+ 803:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    = -1, fail
+ 804:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    = -2, unsupported.
+ 805:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 806:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 807:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note awss use this API to filter specific mgnt frame in wifi station mode
+ 808:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 809:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_wifi_enable_mgnt_frame_filter(
+ 810:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ uint32_t filter_mask,
+ 811:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_OPT_ uint8_t vendor_oui[3],
+ 812:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ platform_wifi_mgnt_frame_cb_t callback)
+ 813:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 814:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_wifi_enable_mgnt_frame_filter(filter_mask, vendor_oui, callback);
+ 815:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 816:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 817:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 818:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief find all the wifi AP around adapted with device.
+ 819:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 820:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] cb @n pass ssid info(scan result) to this callback one by one
+ 821:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return 0 for wifi scan is done, otherwise return -1
+ 822:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 823:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note
+ 824:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *      This API should NOT exit before the invoking for cb is finished.
+ 825:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *      This rule is something like the following :
+ 826:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *      platform_wifi_scan() is invoked...
+ 827:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *      ...
+ 828:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *      for (ap = first_ap; ap <= last_ap; ap = next_ap){
+ 829:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *          cb(ap)
+ 830:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *      }
+ 831:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *      ...
+ 832:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *      platform_wifi_scan() exit...
+ 833:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 834:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_wifi_scan(_IN_ platform_wifi_scan_result_cb_t cb)
+ 835:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 836:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_wifi_scan(cb);
+ 837:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 838:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 839:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 840:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief initialize AES struct.
+ 841:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 842:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] key:
+ 843:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] iv:
+ 844:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] dir: AES_ENCRYPTION or AES_DECRYPTION
+ 845:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return AES128_t
+ 846:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim None
+ 847:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 848:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 849:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 850:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 851:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline p_aes128_t os_aes128_init(
+ 852:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ const uint8_t *key,
+ 853:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ const uint8_t *iv,
+ 854:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ AES_DIR_t dir)
+ 855:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 856:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_aes128_init(key, iv, dir);
+ 857:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 858:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 859:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 860:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief release AES struct.
+ 861:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 862:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] aes:
+ 863:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 864:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 865:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 0: succeeded
+ 866:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = -1: failed
+ 867:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 868:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 869:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 870:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 871:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_aes128_destroy(
+ 872:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ p_aes128_t aes)
+ 873:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 874:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_aes128_destroy(aes);
+ 875:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 876:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 877:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 878:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief encrypt data with aes (cbc/128bit key).
+ 879:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 880:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] aes: AES handler
+ 881:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] src: plain data
+ 882:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] blockNum: plain data number of 16 bytes size
+ 883:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] dst: cipher data
+ 884:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 885:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 886:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 0: succeeded
+ 887:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = -1: failed
+ 888:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 889:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 890:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 891:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 892:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_aes128_cbc_encrypt(
+ 893:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ p_aes128_t aes,
+ 894:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ const void *src,
+ 895:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ size_t blockNum,
+ 896:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _OUT_ void *dst)
+ 897:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 898:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_aes128_cbc_encrypt(aes, src, blockNum, dst);
+ 899:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 900:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 901:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 902:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief encrypt data with aes (cfb/128bit key).
+ 903:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 904:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] aes: AES handler
+ 905:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] src: plain data
+ 906:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] blockNum: plain data number of 16 bytes size
+ 907:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] dst: cipher data
+ 908:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 909:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 910:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 0: succeeded
+ 911:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = -1: failed
+ 912:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 913:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 914:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 915:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 916:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_aes128_cfb_encrypt(
+ 917:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ p_aes128_t aes,
+ 918:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ const void *src,
+ 919:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ size_t blockNum,
+ 920:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _OUT_ void *dst)
+ 921:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 922:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_aes128_cfb_encrypt(aes, src, blockNum, dst);
+ 923:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 924:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 925:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 926:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief decrypt data with aes (cbc/128bit key).
+ 927:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 928:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] aes: AES handler
+ 929:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] src: cipher data
+ 930:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] blockNum: plain data number of 16 bytes size
+ 931:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] dst: plain data
+ 932:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 933:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 934:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 0: succeeded
+ 935:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = -1: failed
+ 936:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 937:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 938:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 939:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 940:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_aes128_cbc_decrypt(
+ 941:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ p_aes128_t aes,
+ 942:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ const void *src,
+ 943:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ size_t blockNum,
+ 944:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _OUT_ void *dst)
+ 945:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 946:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_aes128_cbc_decrypt(aes, src, blockNum, dst);
+ 947:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 948:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 949:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 950:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief decrypt data with aes (cfb/128bit key).
+ 951:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 952:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] aes: AES handler
+ 953:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] src: cipher data
+ 954:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[in] blockNum: plain data number of 16 bytes size
+ 955:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] dst: plain data
+ 956:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return
+ 957:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 958:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 0: succeeded
+ 959:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = -1: failed
+ 960:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 961:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 962:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 963:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 964:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_aes128_cfb_decrypt(
+ 965:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ p_aes128_t aes,
+ 966:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ const void *src,
+ 967:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _IN_ size_t blockNum,
+ 968:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _OUT_ void *dst)
+ 969:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 970:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_aes128_cfb_decrypt(aes, src, blockNum, dst);
+ 971:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 972:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 973:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+ 974:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief get the information of the connected AP.
+ 975:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+ 976:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] ssid: array to store ap ssid. It will be null if ssid is not required.
+ 977:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] passwd: array to store ap password. It will be null if ap password is not required.
+ 978:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] bssid: array to store ap bssid. It will be null if bssid is not required.
+ 979:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** * @return
+ 980:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @verbatim
+ 981:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = 0: succeeded
+ 982:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****      = -1: failed
+ 983:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****    @endverbatim
+ 984:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+ 985:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+ 986:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+ 987:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_wifi_get_ap_info(
+ 988:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _OUT_ char ssid[PLATFORM_MAX_SSID_LEN],
+ 989:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _OUT_ char passwd[PLATFORM_MAX_PASSWD_LEN],
+ 990:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****             _OUT_ uint8_t bssid[ETH_ALEN])
+ 991:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+ 992:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return platform_wifi_get_ap_info(ssid, passwd, bssid);
+ 993:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 994:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 995:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @} */// end of os_awss
+ 996:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+ 997:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /** @defgroup group_os_product product
+ 998:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *  @{
+ 999:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+1000:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+1001:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+1002:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get product key string.
+1003:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+1004:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] key_str @n Buffer for using to store key string.
+1005:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return A pointer to the start address of key_str.
+1006:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+1007:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+1008:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+1009:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_product_get_key(char key_str[OS_PRODUCT_KEY_LEN])
+1010:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+1011:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return product_get_key(key_str);
+1012:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+1013:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+1014:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+1015:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get product secret string.
+1016:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+1017:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] secret_str @n Buffer for using to store secret string.
+1018:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return A pointer to the start address of secret_str.
+1019:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+1020:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+1021:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+1022:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_product_get_secret(char secret_str[OS_PRODUCT_SECRET_LEN])
+1023:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+1024:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return product_get_secret(secret_str);
+ 310              		.loc 2 1024 5
+ 311              		.loc 2 1024 12 is_stmt 0
+ 312 00f2 E800     		addi	a0,sp,76
+ 313              	.LVL32:
+ 314 00f4 97000000 		call	HAL_GetProductSecret
+ 314      E7800000 
+ 315              	.LVL33:
+ 316              	.LBE42:
+ 317              	.LBE41:
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             memcpy(iv, random, sizeof(random));
+ 318              		.loc 1 87 13 is_stmt 1
+ 319              	.L24:
+ 320              	.LBE40:
+ 321              	.LBB43:
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             memcpy(iv, random, sizeof(random));
+ 322              		.loc 1 95 13
+ 323 00fc 7010     		addi	a2,sp,44
+ 324 00fe 6C18     		addi	a1,sp,60
+ 325 0100 E800     		addi	a0,sp,76
+ 326 0102 97000000 		call	cal_passwd.isra.0
+ 326      E7800000 
+ 327              	.LVL34:
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             break;
+ 328              		.loc 1 96 13
+ 329 010a 4146     		li	a2,16
+ 330 010c 6C18     		addi	a1,sp,60
+ 331 010e 6808     		addi	a0,sp,28
+ 332 0110 97000000 		call	memcpy
+ 332      E7800000 
+ 333              	.LVL35:
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         }
+ 334              		.loc 1 97 13
+ 335              	.LBE43:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     uint8_t iv[AES128_KEY_LEN] = {0};
+ 336              		.loc 1 51 10 is_stmt 0
+ 337 0118 8547     		li	a5,1
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     char decrypt = 1;
+ 338              		.loc 1 50 10
+ 339 011a 0149     		li	s2,0
+ 340              	.LVL36:
+ 341              	.L11:
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         }
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     }
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     plain[0] = '\0';
+ 342              		.loc 1 108 5 is_stmt 1
+ 343              		.loc 1 108 14 is_stmt 0
+ 344 011c 23800900 		sb	zero,0(s3)
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     if (decrypt) {
+ 345              		.loc 1 110 5 is_stmt 1
+ 346              		.loc 1 110 8 is_stmt 0
+ 347 0120 95CB     		beq	a5,zero,.L12
+ 348              	.LVL37:
+ 349              	.LBB46:
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         p_aes128_t aes = os_aes128_init(key, iv, PLATFORM_AES_DECRYPTION);
+ 350              		.loc 1 111 9 is_stmt 1
+ 351              	.LBB47:
+ 352              	.LBB48:
+ 856:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 353              		.loc 2 856 5
+ 856:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 354              		.loc 2 856 12 is_stmt 0
+ 355 0122 0546     		li	a2,1
+ 356 0124 6C08     		addi	a1,sp,28
+ 357              	.LVL38:
+ 358 0126 6810     		addi	a0,sp,44
+ 359              	.LVL39:
+ 360 0128 97000000 		call	HAL_Aes128_Init
+ 360      E7800000 
+ 361              	.LVL40:
+ 362 0130 2A8A     		mv	s4,a0
+ 363              	.LVL41:
+ 364              	.LBE48:
+ 365              	.LBE47:
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         if (cbc) { // AP
+ 366              		.loc 1 112 9 is_stmt 1
+ 367              	.LBB49:
+ 368              	.LBB50:
+ 946:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 369              		.loc 2 946 12 is_stmt 0
+ 370 0132 CE86     		mv	a3,s3
+ 371              	.LBE50:
+ 372              	.LBE49:
+ 373              		.loc 1 112 12
+ 374 0134 630A0B04 		beq	s6,zero,.L13
+ 375              	.LVL42:
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             /*
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****              * mobile-ap, dev-ap, router
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****              */
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             os_aes128_cbc_decrypt(aes, decoded, len / AES128_KEY_LEN / 2, plain);
+ 376              		.loc 1 116 13 is_stmt 1
+ 377              	.LBB52:
+ 378              	.LBB51:
+ 946:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 379              		.loc 2 946 5
+ 946:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 380              		.loc 2 946 12 is_stmt 0
+ 381 0138 13060002 		li	a2,32
+ 382 013c 33C6C402 		div	a2,s1,a2
+ 383              	.LVL43:
+ 384 0140 A285     		mv	a1,s0
+ 385 0142 97000000 		call	HAL_Aes128_Cbc_Decrypt
+ 385      E7800000 
+ 386              	.LVL44:
+ 387              	.L14:
+ 388              	.LBE51:
+ 389              	.LBE52:
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         } else {  // smartconfig
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             /*
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****              * smartconfig/wps, zconfig
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****              */
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             os_aes128_cfb_decrypt(aes, decoded, len, plain);
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         }
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         os_aes128_destroy(aes);
+ 390              		.loc 1 123 9 is_stmt 1
+ 391              	.LBB53:
+ 392              	.LBB54:
+ 874:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 393              		.loc 2 874 5
+ 874:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 394              		.loc 2 874 12 is_stmt 0
+ 395 014a 5285     		mv	a0,s4
+ 396 014c 97000000 		call	HAL_Aes128_Destroy
+ 396      E7800000 
+ 397              	.LVL45:
+ 398              	.L12:
+ 399              	.LBE54:
+ 400              	.LBE53:
+ 401              	.LBE46:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     }
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     os_free(decoded);
+ 402              		.loc 1 126 5 is_stmt 1
+ 403              	.LBB57:
+ 404              	.LBB58:
+ 394:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 405              		.loc 2 394 5
+ 406 0154 2285     		mv	a0,s0
+ 407 0156 97000000 		call	HAL_Free
+ 407      E7800000 
+ 408              	.LVL46:
+ 409              	.LBE58:
+ 410              	.LBE57:
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****     return res;
+ 411              		.loc 1 128 5
+ 412              		.loc 1 128 12 is_stmt 0
+ 413 015e 4A85     		mv	a0,s2
+ 414              	.LVL47:
+ 415              	.L3:
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** }
+ 416              		.loc 1 129 1
+ 417 0160 4961     		addi	sp,sp,144
+ 418              		.cfi_remember_state
+ 419              		.cfi_def_cfa_offset 0
+ 420 0162 17030000 		tail	__riscv_restore_8
+ 420      67000300 
+ 421              		.cfi_restore 23
+ 422              		.cfi_restore 22
+ 423              		.cfi_restore 21
+ 424              		.cfi_restore 20
+ 425              		.cfi_restore 19
+ 426              		.cfi_restore 18
+ 427              		.cfi_restore 9
+ 428              		.cfi_restore 8
+ 429              		.cfi_restore 1
+ 430              		.cfi_def_cfa_offset -48
+ 431              	.LVL48:
+ 432              	.L9:
+ 433              		.cfi_restore_state
+ 434              	.LBB59:
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             os_device_get_secret(dev_sec);
+ 435              		.loc 1 93 13 is_stmt 1
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             os_device_get_secret(dev_sec);
+ 436              		.loc 1 93 18 is_stmt 0
+ 437 016a 1306D003 		li	a2,61
+ 438 016e 8145     		li	a1,0
+ 439 0170 8808     		addi	a0,sp,80
+ 440 0172 82C6     		sw	zero,76(sp)
+ 441 0174 97000000 		call	memset
+ 441      E7800000 
+ 442              	.LVL49:
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****             cal_passwd(dev_sec, random, key);
+ 443              		.loc 1 94 13 is_stmt 1
+ 444              	.LBB44:
+ 445              	.LBB45:
+1025:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+1026:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** 
+1027:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** /**
+1028:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @brief Get device secret string.
+1029:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  *
+1030:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @param[out] secret_str @n Buffer for using to store secret string.
+1031:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @return A pointer to the start address of secret_str.
+1032:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @see None.
+1033:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  * @note None.
+1034:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****  */
+1035:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** static inline int os_device_get_secret(char secret_str[OS_DEVICE_SECRET_LEN])
+1036:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** {
+1037:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h ****     return device_get_secret(secret_str);
+ 446              		.loc 2 1037 5
+ 447              		.loc 2 1037 12 is_stmt 0
+ 448 017c E800     		addi	a0,sp,76
+ 449              	.LVL50:
+ 450 017e 97000000 		call	HAL_GetDeviceSecret
+ 450      E7800000 
+ 451              	.LVL51:
+ 452 0186 9DBF     		j	.L24
+ 453              	.LVL52:
+ 454              	.L13:
+ 455              	.LBE45:
+ 456              	.LBE44:
+ 457              	.LBE59:
+ 458              	.LBB60:
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c ****         }
+ 459              		.loc 1 121 13 is_stmt 1
+ 460              	.LBB55:
+ 461              	.LBB56:
+ 970:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 462              		.loc 2 970 5
+ 970:..\..\..\..\cloud\alicloud\src\services\dev_bind\os/os.h **** }
+ 463              		.loc 2 970 12 is_stmt 0
+ 464 0188 2686     		mv	a2,s1
+ 465 018a A285     		mv	a1,s0
+ 466 018c 97000000 		call	HAL_Aes128_Cfb_Decrypt
+ 466      E7800000 
+ 467              	.LVL53:
+ 468 0194 5DBF     		j	.L14
+ 469              	.LVL54:
+ 470              	.L15:
+ 471              	.LBE56:
+ 472              	.LBE55:
+ 473              	.LBE60:
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/services/awss\awss_crypt.c **** 
+ 474              		.loc 1 58 16
+ 475 0196 7D55     		li	a0,-1
+ 476              	.LVL55:
+ 477 0198 E1B7     		j	.L3
+ 478              		.cfi_endproc
+ 479              	.LFE65:
+ 481              		.section	.rodata.__FUNCTION__.0,"a"
+ 482              		.align	2
+ 483              		.set	.LANCHOR0,. + 0
+ 486              	__FUNCTION__.0:
+ 487 0000 6165735F 		.string	"aes_decrypt_string"
+ 487      64656372 
+ 487      7970745F 
+ 487      73747269 
+ 487      6E6700
+ 488              		.text
+ 489              	.Letext0:
+ 490              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 491              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 492              		.file 5 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 493              		.file 6 "..\\..\\..\\..\\cloud\\alicloud\\include/imports/iot_import_crypt.h"
+ 494              		.file 7 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+ 495              		.file 8 "..\\..\\..\\..\\cloud\\alicloud\\include/imports/iot_import_product.h"
+ 496              		.file 9 "<built-in>"
+ 497              		.file 10 "..\\..\\..\\..\\cloud\\alicloud\\include/iot_import.h"
+ 498              		.file 11 "..\\..\\..\\..\\cloud\\alicloud\\src\\infra\\utils/iotx_utils.h"
+ 499              		.file 12 "..\\..\\..\\..\\cloud\\alicloud\\src\\infra\\log/iotx_log.h"
+ 500              		.file 13 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nuc
+ 501              		.file 14 "..\\..\\..\\..\\cloud\\alicloud\\src\\services\\dev_bind/sha256.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 awss_crypt.c
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:12     .text.cal_passwd.isra.0:0000000000000000 cal_passwd.isra.0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:16     .text.cal_passwd.isra.0:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:18     .text.cal_passwd.isra.0:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:19     .text.cal_passwd.isra.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:20     .text.cal_passwd.isra.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:21     .text.cal_passwd.isra.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:22     .text.cal_passwd.isra.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:23     .text.cal_passwd.isra.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:24     .text.cal_passwd.isra.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:26     .text.cal_passwd.isra.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:27     .text.cal_passwd.isra.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:28     .text.cal_passwd.isra.0:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:29     .text.cal_passwd.isra.0:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:31     .text.cal_passwd.isra.0:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:35     .text.cal_passwd.isra.0:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:45     .text.cal_passwd.isra.0:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:46     .text.cal_passwd.isra.0:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:53     .text.cal_passwd.isra.0:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:54     .text.cal_passwd.isra.0:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:55     .text.cal_passwd.isra.0:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:60     .text.cal_passwd.isra.0:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:63     .text.cal_passwd.isra.0:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:64     .text.cal_passwd.isra.0:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:68     .text.cal_passwd.isra.0:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:73     .text.cal_passwd.isra.0:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:74     .text.cal_passwd.isra.0:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:79     .text.cal_passwd.isra.0:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:80     .text.cal_passwd.isra.0:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:82     .text.cal_passwd.isra.0:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:90     .text.cal_passwd.isra.0:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:91     .text.cal_passwd.isra.0:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:93     .text.cal_passwd.isra.0:000000000000007c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:95     .text.cal_passwd.isra.0:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:100    .text.cal_passwd.isra.0:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:106    .text.cal_passwd.isra.0:000000000000009c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:107    .text.cal_passwd.isra.0:000000000000009c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:108    .text.cal_passwd.isra.0:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:110    .text.cal_passwd.isra.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:111    .text.cal_passwd.isra.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:112    .text.cal_passwd.isra.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:113    .text.cal_passwd.isra.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:114    .text.cal_passwd.isra.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:115    .text.cal_passwd.isra.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:116    .text.cal_passwd.isra.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:133    .text.aes_decrypt_string:0000000000000000 aes_decrypt_string
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:136    .text.aes_decrypt_string:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:138    .text.aes_decrypt_string:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:139    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:140    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:141    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:142    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:143    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:144    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:145    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:146    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:147    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:148    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:151    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:152    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:153    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:154    .text.aes_decrypt_string:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:156    .text.aes_decrypt_string:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:159    .text.aes_decrypt_string:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:160    .text.aes_decrypt_string:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:162    .text.aes_decrypt_string:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:169    .text.aes_decrypt_string:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:176    .text.aes_decrypt_string:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:182    .text.aes_decrypt_string:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:187    .text.aes_decrypt_string:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:188    .text.aes_decrypt_string:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:193    .text.aes_decrypt_string:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:194    .text.aes_decrypt_string:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:202    .text.aes_decrypt_string:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:205    .text.aes_decrypt_string:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:206    .text.aes_decrypt_string:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:207    .text.aes_decrypt_string:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:213    .text.aes_decrypt_string:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:214    .text.aes_decrypt_string:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:216    .text.aes_decrypt_string:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:220    .text.aes_decrypt_string:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:225    .text.aes_decrypt_string:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:226    .text.aes_decrypt_string:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:227    .text.aes_decrypt_string:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:228    .text.aes_decrypt_string:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:230    .text.aes_decrypt_string:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:238    .text.aes_decrypt_string:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:239    .text.aes_decrypt_string:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:241    .text.aes_decrypt_string:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:248    .text.aes_decrypt_string:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:262    .text.aes_decrypt_string:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:268    .text.aes_decrypt_string:00000000000000aa .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:269    .text.aes_decrypt_string:00000000000000aa .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:279    .text.aes_decrypt_string:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:280    .text.aes_decrypt_string:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:281    .text.aes_decrypt_string:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:283    .text.aes_decrypt_string:00000000000000cc .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:286    .text.aes_decrypt_string:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:290    .text.aes_decrypt_string:00000000000000d0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:300    .text.aes_decrypt_string:00000000000000e0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:301    .text.aes_decrypt_string:00000000000000e0 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:310    .text.aes_decrypt_string:00000000000000f2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:311    .text.aes_decrypt_string:00000000000000f2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:312    .text.aes_decrypt_string:00000000000000f2 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:322    .text.aes_decrypt_string:00000000000000fc .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:323    .text.aes_decrypt_string:00000000000000fc .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:329    .text.aes_decrypt_string:000000000000010a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:336    .text.aes_decrypt_string:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:337    .text.aes_decrypt_string:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:339    .text.aes_decrypt_string:000000000000011a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:343    .text.aes_decrypt_string:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:344    .text.aes_decrypt_string:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:346    .text.aes_decrypt_string:0000000000000120 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:347    .text.aes_decrypt_string:0000000000000120 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:353    .text.aes_decrypt_string:0000000000000122 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:354    .text.aes_decrypt_string:0000000000000122 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:355    .text.aes_decrypt_string:0000000000000122 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:369    .text.aes_decrypt_string:0000000000000132 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:370    .text.aes_decrypt_string:0000000000000132 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:374    .text.aes_decrypt_string:0000000000000134 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:379    .text.aes_decrypt_string:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:380    .text.aes_decrypt_string:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:381    .text.aes_decrypt_string:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:393    .text.aes_decrypt_string:000000000000014a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:394    .text.aes_decrypt_string:000000000000014a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:395    .text.aes_decrypt_string:000000000000014a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:405    .text.aes_decrypt_string:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:406    .text.aes_decrypt_string:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:412    .text.aes_decrypt_string:000000000000015e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:413    .text.aes_decrypt_string:000000000000015e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:417    .text.aes_decrypt_string:0000000000000160 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:418    .text.aes_decrypt_string:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:419    .text.aes_decrypt_string:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:421    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:422    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:423    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:424    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:425    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:426    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:427    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:428    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:429    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:430    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:433    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:436    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:437    .text.aes_decrypt_string:000000000000016a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:446    .text.aes_decrypt_string:000000000000017c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:447    .text.aes_decrypt_string:000000000000017c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:448    .text.aes_decrypt_string:000000000000017c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:462    .text.aes_decrypt_string:0000000000000188 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:463    .text.aes_decrypt_string:0000000000000188 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:464    .text.aes_decrypt_string:0000000000000188 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:475    .text.aes_decrypt_string:0000000000000196 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:478    .text.aes_decrypt_string:000000000000019a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:483    .rodata.__FUNCTION__.0:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:486    .rodata.__FUNCTION__.0:0000000000000000 __FUNCTION__.0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:119    .text.cal_passwd.isra.0:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:481    .text.aes_decrypt_string:000000000000019a .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:121    .rodata.aes_decrypt_string.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:124    .rodata.aes_decrypt_string.str1.4:0000000000000014 .LC1
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:127    .rodata.aes_decrypt_string.str1.4:000000000000001c .LC2
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:470    .text.aes_decrypt_string:0000000000000196 .L15
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:288    .text.aes_decrypt_string:00000000000000d0 .L5
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:246    .text.aes_decrypt_string:0000000000000076 .L7
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:297    .text.aes_decrypt_string:00000000000000e0 .L8
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:432    .text.aes_decrypt_string:000000000000016a .L9
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:341    .text.aes_decrypt_string:000000000000011c .L11
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:236    .text.aes_decrypt_string:0000000000000064 .L6
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:398    .text.aes_decrypt_string:0000000000000154 .L12
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:454    .text.aes_decrypt_string:0000000000000188 .L13
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:319    .text.aes_decrypt_string:00000000000000fc .L24
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:387    .text.aes_decrypt_string:000000000000014a .L14
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:415    .text.aes_decrypt_string:0000000000000160 .L3
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:1892   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3213   .debug_str:00000000000001a2 .LASF70
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3307   .debug_str:00000000000004f8 .LASF71
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3211   .debug_str:0000000000000111 .LASF72
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3125   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3163   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3249   .debug_str:0000000000000374 .LASF0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3235   .debug_str:0000000000000311 .LASF3
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3243   .debug_str:0000000000000350 .LASF1
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3173   .debug_str:0000000000000035 .LASF2
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3191   .debug_str:0000000000000095 .LASF4
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3263   .debug_str:00000000000003c9 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3229   .debug_str:00000000000002f1 .LASF6
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3189   .debug_str:000000000000008a .LASF7
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3283   .debug_str:0000000000000452 .LASF8
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3217   .debug_str:000000000000029d .LASF9
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3251   .debug_str:0000000000000380 .LASF10
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3255   .debug_str:000000000000039d .LASF11
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3175   .debug_str:000000000000003f .LASF12
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3269   .debug_str:00000000000003ef .LASF13
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3203   .debug_str:00000000000000e5 .LASF14
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3259   .debug_str:00000000000003b5 .LASF15
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3165   .debug_str:0000000000000000 .LASF16
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3309   .debug_str:0000000000000590 .LASF17
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3279   .debug_str:000000000000042d .LASF18
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3187   .debug_str:0000000000000080 .LASF19
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3221   .debug_str:00000000000002c0 .LASF20
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3285   .debug_str:0000000000000464 .LASF21
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3287   .debug_str:000000000000046b .LASF22
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3273   .debug_str:00000000000003ff .LASF23
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3239   .debug_str:000000000000032f .LASF24
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3177   .debug_str:0000000000000046 .LASF25
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3303   .debug_str:00000000000004d6 .LASF26
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3215   .debug_str:0000000000000289 .LASF27
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3295   .debug_str:000000000000049b .LASF73
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:134    .text.aes_decrypt_string:0000000000000000 .LFB65
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:479    .text.aes_decrypt_string:000000000000019a .LFE65
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3169   .debug_str:000000000000001a .LASF28
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2550   .debug_loc:0000000000000000 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3253   .debug_str:0000000000000397 .LASF29
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2583   .debug_loc:0000000000000050 .LLST5
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2610   .debug_loc:000000000000009a .LLST6
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3245   .debug_str:000000000000035e .LASF30
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2621   .debug_loc:00000000000000b8 .LLST7
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3185   .debug_str:0000000000000078 .LASF31
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2632   .debug_loc:00000000000000d6 .LLST8
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2676   .debug_loc:000000000000013f .LLST9
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3205   .debug_str:00000000000000ed .LASF32
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2690   .debug_loc:0000000000000160 .LLST10
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2723   .debug_loc:00000000000001b0 .LLST11
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3275   .debug_str:000000000000040e .LASF33
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2760   .debug_loc:000000000000020b .LLST12
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3313   .debug_str:00000000000005b0 .LASF34
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3223   .debug_str:00000000000002cf .LASF35
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2792   .debug_loc:000000000000025a .LLST13
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3311   .debug_str:00000000000005a3 .LASF74
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:298    .text.aes_decrypt_string:00000000000000e0 .LBB40
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:320    .text.aes_decrypt_string:00000000000000fc .LBE40
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3265   .debug_str:00000000000003dc .LASF36
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:308    .text.aes_decrypt_string:00000000000000f2 .LBB41
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:317    .text.aes_decrypt_string:00000000000000fc .LBE41
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2803   .debug_loc:0000000000000278 .LLST17
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:315    .text.aes_decrypt_string:00000000000000fc .LVL33
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:306    .text.aes_decrypt_string:00000000000000f2 .LVL31
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3183   .debug_str:0000000000000070 .LASF37
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:444    .text.aes_decrypt_string:000000000000017c .LBB44
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:456    .text.aes_decrypt_string:0000000000000188 .LBE44
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2822   .debug_loc:00000000000002a7 .LLST18
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:451    .text.aes_decrypt_string:0000000000000186 .LVL51
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:327    .text.aes_decrypt_string:000000000000010a .LVL34
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:333    .text.aes_decrypt_string:0000000000000118 .LVL35
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:442    .text.aes_decrypt_string:000000000000017c .LVL49
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2841   .debug_loc:00000000000002d6 .LLST19
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:351    .text.aes_decrypt_string:0000000000000122 .LBB47
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:365    .text.aes_decrypt_string:0000000000000132 .LBE47
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2860   .debug_loc:000000000000030a .LLST20
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2868   .debug_loc:000000000000031e .LLST21
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2887   .debug_loc:000000000000034d .LLST22
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:361    .text.aes_decrypt_string:0000000000000130 .LVL40
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:367    .text.aes_decrypt_string:0000000000000132 .LBB49
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2906   .debug_loc:000000000000037c .LLST23
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2917   .debug_loc:000000000000039a .LLST24
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2942   .debug_loc:00000000000003cd .LLST25
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2949   .debug_loc:00000000000003e0 .LLST26
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:386    .text.aes_decrypt_string:000000000000014a .LVL44
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:391    .text.aes_decrypt_string:000000000000014a .LBB53
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:400    .text.aes_decrypt_string:0000000000000154 .LBE53
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2960   .debug_loc:00000000000003fe .LLST27
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:397    .text.aes_decrypt_string:0000000000000154 .LVL45
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:460    .text.aes_decrypt_string:0000000000000188 .LBB55
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:472    .text.aes_decrypt_string:0000000000000196 .LBE55
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2967   .debug_loc:0000000000000411 .LLST28
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2978   .debug_loc:000000000000042f .LLST29
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2985   .debug_loc:0000000000000442 .LLST30
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:2992   .debug_loc:0000000000000455 .LLST31
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:467    .text.aes_decrypt_string:0000000000000194 .LVL53
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:163    .text.aes_decrypt_string:0000000000000010 .LBB32
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3003   .debug_loc:0000000000000473 .LLST14
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3020   .debug_loc:00000000000004a0 .LLST15
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:165    .text.aes_decrypt_string:0000000000000010 .LBB34
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3039   .debug_loc:00000000000004d4 .LLST16
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:209    .text.aes_decrypt_string:000000000000003e .LVL18
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:221    .text.aes_decrypt_string:0000000000000050 .LVL19
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:403    .text.aes_decrypt_string:0000000000000154 .LBB57
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:410    .text.aes_decrypt_string:000000000000015e .LBE57
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3051   .debug_loc:00000000000004f4 .LLST32
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:408    .text.aes_decrypt_string:000000000000015e .LVL46
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:235    .text.aes_decrypt_string:0000000000000064 .LVL20
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:245    .text.aes_decrypt_string:0000000000000076 .LVL21
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:260    .text.aes_decrypt_string:000000000000009e .LVL24
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:277    .text.aes_decrypt_string:00000000000000ca .LVL26
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:294    .text.aes_decrypt_string:00000000000000de .LVL29
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3257   .debug_str:00000000000003aa .LASF42
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3199   .debug_str:00000000000000c8 .LASF38
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3297   .debug_str:00000000000004ae .LASF39
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3267   .debug_str:00000000000003e8 .LASF40
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3247   .debug_str:0000000000000369 .LASF41
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3219   .debug_str:00000000000002ab .LASF43
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3261   .debug_str:00000000000003be .LASF44
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3201   .debug_str:00000000000000cf .LASF45
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3299   .debug_str:00000000000004b6 .LASF46
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3209   .debug_str:0000000000000108 .LASF47
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3207   .debug_str:00000000000000f2 .LASF48
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3281   .debug_str:0000000000000440 .LASF49
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3233   .debug_str:0000000000000302 .LASF50
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3301   .debug_str:00000000000004cc .LASF51
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3291   .debug_str:000000000000048d .LASF52
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3231   .debug_str:00000000000002fa .LASF75
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3241   .debug_str:0000000000000346 .LASF53
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:13     .text.cal_passwd.isra.0:0000000000000000 .LFB71
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:117    .text.cal_passwd.isra.0:00000000000000a6 .LFE71
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3058   .debug_loc:0000000000000507 .LLST0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3069   .debug_loc:0000000000000525 .LLST1
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3080   .debug_loc:0000000000000543 .LLST2
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3091   .debug_loc:0000000000000561 .LLST3
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:43     .text.cal_passwd.isra.0:0000000000000020 .LVL4
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:51     .text.cal_passwd.isra.0:0000000000000032 .LVL5
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:57     .text.cal_passwd.isra.0:000000000000003c .LVL6
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:71     .text.cal_passwd.isra.0:0000000000000056 .LVL9
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:88     .text.cal_passwd.isra.0:000000000000007a .LVL10
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:98     .text.cal_passwd.isra.0:000000000000008e .LVL11
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:104    .text.cal_passwd.isra.0:000000000000009c .LVL12
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3289   .debug_str:0000000000000478 .LASF54
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3225   .debug_str:00000000000002d7 .LASF56
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3197   .debug_str:00000000000000b7 .LASF58
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3171   .debug_str:0000000000000021 .LASF55
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3193   .debug_str:00000000000000a0 .LASF57
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3167   .debug_str:0000000000000009 .LASF59
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3195   .debug_str:00000000000000a7 .LASF60
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3277   .debug_str:0000000000000416 .LASF61
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3227   .debug_str:00000000000002de .LASF62
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3315   .debug_str:00000000000005b7 .LASF63
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3271   .debug_str:00000000000003f4 .LASF64
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3293   .debug_str:0000000000000492 .LASF65
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3237   .debug_str:000000000000031b .LASF66
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3305   .debug_str:00000000000004ec .LASF67
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3181   .debug_str:0000000000000069 .LASF68
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:3179   .debug_str:000000000000005d .LASF69
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:137    .text.aes_decrypt_string:0000000000000000 .LVL13
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:170    .text.aes_decrypt_string:0000000000000012 .LVL16
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:249    .text.aes_decrypt_string:000000000000007a .LVL22
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:287    .text.aes_decrypt_string:00000000000000d0 .LVL28
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:296    .text.aes_decrypt_string:00000000000000e0 .LVL30
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:469    .text.aes_decrypt_string:0000000000000196 .LVL54
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:375    .text.aes_decrypt_string:0000000000000138 .LVL42
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:453    .text.aes_decrypt_string:0000000000000188 .LVL52
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:157    .text.aes_decrypt_string:000000000000000c .LVL15
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:284    .text.aes_decrypt_string:00000000000000ce .LVL27
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:340    .text.aes_decrypt_string:000000000000011c .LVL36
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:431    .text.aes_decrypt_string:000000000000016a .LVL48
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:252    .text.aes_decrypt_string:0000000000000082 .LVL23
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:150    .text.aes_decrypt_string:0000000000000008 .LVL14
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:414    .text.aes_decrypt_string:0000000000000160 .LVL47
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:267    .text.aes_decrypt_string:00000000000000aa .LVL25
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:348    .text.aes_decrypt_string:0000000000000122 .LVL37
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:313    .text.aes_decrypt_string:00000000000000f4 .LVL32
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:449    .text.aes_decrypt_string:000000000000017e .LVL50
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:363    .text.aes_decrypt_string:0000000000000132 .LVL41
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:357    .text.aes_decrypt_string:0000000000000126 .LVL38
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:359    .text.aes_decrypt_string:0000000000000128 .LVL39
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:383    .text.aes_decrypt_string:0000000000000140 .LVL43
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:199    .text.aes_decrypt_string:0000000000000034 .LVL17
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:476    .text.aes_decrypt_string:0000000000000198 .LVL55
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:17     .text.cal_passwd.isra.0:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:40     .text.cal_passwd.isra.0:0000000000000016 .LVL3
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:36     .text.cal_passwd.isra.0:0000000000000012 .LVL1
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:38     .text.cal_passwd.isra.0:0000000000000014 .LVL2
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:61     .text.cal_passwd.isra.0:0000000000000044 .LVL7
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:503    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:174    .text.aes_decrypt_string:0000000000000012 .LBE32
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:200    .text.aes_decrypt_string:0000000000000034 .LBB39
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:224    .text.aes_decrypt_string:0000000000000050 .LBE39
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:172    .text.aes_decrypt_string:0000000000000012 .LBE34
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:203    .text.aes_decrypt_string:0000000000000034 .LBB37
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:211    .text.aes_decrypt_string:000000000000003e .LBE37
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:321    .text.aes_decrypt_string:00000000000000fc .LBB43
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:335    .text.aes_decrypt_string:0000000000000118 .LBE43
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:434    .text.aes_decrypt_string:000000000000016a .LBB59
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:457    .text.aes_decrypt_string:0000000000000188 .LBE59
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:349    .text.aes_decrypt_string:0000000000000122 .LBB46
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:401    .text.aes_decrypt_string:0000000000000154 .LBE46
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:458    .text.aes_decrypt_string:0000000000000188 .LBB60
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:473    .text.aes_decrypt_string:0000000000000196 .LBE60
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:372    .text.aes_decrypt_string:0000000000000134 .LBE49
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:377    .text.aes_decrypt_string:0000000000000138 .LBB52
+C:\Users\stapi\AppData\Local\Temp\cciv9xmF.s:389    .text.aes_decrypt_string:000000000000014a .LBE52
+
+UNDEFINED SYMBOLS
+__riscv_save_4
+memset
+strlen
+memcpy
+SHA256_hash
+__riscv_restore_4
+__riscv_save_8
+HAL_Malloc
+LITE_hexstr_convert
+LITE_syslog
+HAL_GetProductSecret
+HAL_Aes128_Init
+HAL_Aes128_Cbc_Decrypt
+HAL_Aes128_Destroy
+HAL_Free
+__riscv_restore_8
+HAL_GetDeviceSecret
+HAL_Aes128_Cfb_Decrypt

@@ -1,0 +1,604 @@
+   1              		.file	"bitfield.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.bitfield_alloc,"ax",@progbits
+  10              		.align	1
+  11              		.globl	bitfield_alloc
+  13              	bitfield_alloc:
+  14              	.LFB71:
+  15              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c ****  * Bitfield
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c ****  * Copyright (c) 2013, Jouni Malinen <j@w1.fi>
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c ****  *
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c ****  * This software may be distributed under the terms of the BSD license.
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c ****  * See README for more details.
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c ****  */
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** #include "includes.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** #include "common.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** #include "bitfield.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** struct bitfield {
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	u8 *bits;
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	size_t max_bits;
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** };
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** struct bitfield * bitfield_alloc(size_t max_bits)
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** {
+  16              		.loc 1 22 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  19 0000 17030000 		call	t0,__riscv_save_1
+  19      E7020300 
+  20              		.cfi_offset 8, -8
+  21              		.cfi_offset 1, -4
+  22              		.cfi_def_cfa_offset 16
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	struct bitfield *bf;
+  23              		.loc 1 23 2
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	bf = os_zalloc(sizeof(*bf) + (max_bits + 7) / 8);
+  24              		.loc 1 25 2
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	struct bitfield *bf;
+  25              		.loc 1 22 1 is_stmt 0
+  26 0008 2A84     		mv	s0,a0
+  27              		.loc 1 25 41
+  28 000a 1D05     		addi	a0,a0,7
+  29              	.LVL1:
+  30              		.loc 1 25 46
+  31 000c 0D81     		srli	a0,a0,3
+  32              		.loc 1 25 7
+  33 000e 2105     		addi	a0,a0,8
+  34 0010 97000000 		call	os_zalloc
+  34      E7800000 
+  35              	.LVL2:
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	if (bf == NULL)
+  36              		.loc 1 26 2 is_stmt 1
+  37              		.loc 1 26 5 is_stmt 0
+  38 0018 09C5     		beq	a0,zero,.L1
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		return NULL;
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	bf->bits = (u8 *) (bf + 1);
+  39              		.loc 1 28 2 is_stmt 1
+  40              		.loc 1 28 24 is_stmt 0
+  41 001a 93078500 		addi	a5,a0,8
+  42              		.loc 1 28 11
+  43 001e 1CC1     		sw	a5,0(a0)
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	bf->max_bits = max_bits;
+  44              		.loc 1 29 2 is_stmt 1
+  45              		.loc 1 29 15 is_stmt 0
+  46 0020 40C1     		sw	s0,4(a0)
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	return bf;
+  47              		.loc 1 30 2 is_stmt 1
+  48              	.L1:
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** }
+  49              		.loc 1 31 1 is_stmt 0
+  50 0022 17030000 		tail	__riscv_restore_1
+  50      67000300 
+  51              		.cfi_restore 8
+  52              		.cfi_restore 1
+  53              		.cfi_def_cfa_offset 0
+  54              		.cfi_endproc
+  55              	.LFE71:
+  57              		.section	.text.bitfield_free,"ax",@progbits
+  58              		.align	1
+  59              		.globl	bitfield_free
+  61              	bitfield_free:
+  62              	.LFB72:
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** void bitfield_free(struct bitfield *bf)
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** {
+  63              		.loc 1 35 1 is_stmt 1
+  64              		.cfi_startproc
+  65              	.LVL3:
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	os_free(bf);
+  66              		.loc 1 36 2
+  67 0000 17030000 		tail	os_free
+  67      67000300 
+  68              	.LVL4:
+  69              		.cfi_endproc
+  70              	.LFE72:
+  72              		.section	.text.bitfield_set,"ax",@progbits
+  73              		.align	1
+  74              		.globl	bitfield_set
+  76              	bitfield_set:
+  77              	.LFB73:
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** }
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** void bitfield_set(struct bitfield *bf, size_t bit)
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** {
+  78              		.loc 1 41 1
+  79              		.cfi_startproc
+  80              	.LVL5:
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	if (bit >= bf->max_bits)
+  81              		.loc 1 42 2
+  82              		.loc 1 42 5 is_stmt 0
+  83 0000 5C41     		lw	a5,4(a0)
+  84 0002 63FDF500 		bleu	a5,a1,.L9
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		return;
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	bf->bits[bit / 8] |= BIT(bit % 8);
+  85              		.loc 1 44 2 is_stmt 1
+  86              		.loc 1 44 20 is_stmt 0
+  87 0006 1C41     		lw	a5,0(a0)
+  88              		.loc 1 44 15
+  89 0008 13D73500 		srli	a4,a1,3
+  90              		.loc 1 44 23
+  91 000c 9D89     		andi	a1,a1,7
+  92              	.LVL6:
+  93              		.loc 1 44 20
+  94 000e BA97     		add	a5,a5,a4
+  95 0010 03C70700 		lbu	a4,0(a5)
+  96 0014 B315B728 		bset	a1,a4,a1
+  97 0018 2380B700 		sb	a1,0(a5)
+  98              	.L9:
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** }
+  99              		.loc 1 45 1
+ 100 001c 8280     		ret
+ 101              		.cfi_endproc
+ 102              	.LFE73:
+ 104              		.section	.text.bitfield_clear,"ax",@progbits
+ 105              		.align	1
+ 106              		.globl	bitfield_clear
+ 108              	bitfield_clear:
+ 109              	.LFB74:
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** void bitfield_clear(struct bitfield *bf, size_t bit)
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** {
+ 110              		.loc 1 49 1 is_stmt 1
+ 111              		.cfi_startproc
+ 112              	.LVL7:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	if (bit >= bf->max_bits)
+ 113              		.loc 1 50 2
+ 114              		.loc 1 50 5 is_stmt 0
+ 115 0000 5C41     		lw	a5,4(a0)
+ 116 0002 63FDF500 		bleu	a5,a1,.L11
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		return;
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	bf->bits[bit / 8] &= ~BIT(bit % 8);
+ 117              		.loc 1 52 2 is_stmt 1
+ 118              		.loc 1 52 20 is_stmt 0
+ 119 0006 1C41     		lw	a5,0(a0)
+ 120              		.loc 1 52 15
+ 121 0008 13D73500 		srli	a4,a1,3
+ 122              		.loc 1 52 24
+ 123 000c 9D89     		andi	a1,a1,7
+ 124              	.LVL8:
+ 125              		.loc 1 52 20
+ 126 000e BA97     		add	a5,a5,a4
+ 127 0010 03C70700 		lbu	a4,0(a5)
+ 128 0014 B315B748 		bclr	a1,a4,a1
+ 129 0018 2380B700 		sb	a1,0(a5)
+ 130              	.L11:
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** }
+ 131              		.loc 1 53 1
+ 132 001c 8280     		ret
+ 133              		.cfi_endproc
+ 134              	.LFE74:
+ 136              		.section	.text.bitfield_is_set,"ax",@progbits
+ 137              		.align	1
+ 138              		.globl	bitfield_is_set
+ 140              	bitfield_is_set:
+ 141              	.LFB75:
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** int bitfield_is_set(struct bitfield *bf, size_t bit)
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** {
+ 142              		.loc 1 57 1 is_stmt 1
+ 143              		.cfi_startproc
+ 144              	.LVL9:
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	if (bit >= bf->max_bits)
+ 145              		.loc 1 58 2
+ 146              		.loc 1 58 5 is_stmt 0
+ 147 0000 5C41     		lw	a5,4(a0)
+ 148 0002 63FEF500 		bleu	a5,a1,.L15
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		return 0;
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	return !!(bf->bits[bit / 8] & BIT(bit % 8));
+ 149              		.loc 1 60 2 is_stmt 1
+ 150              		.loc 1 60 20 is_stmt 0
+ 151 0006 1C41     		lw	a5,0(a0)
+ 152              		.loc 1 60 25
+ 153 0008 13D73500 		srli	a4,a1,3
+ 154              		.loc 1 60 32
+ 155 000c 9D89     		andi	a1,a1,7
+ 156              	.LVL10:
+ 157              		.loc 1 60 20
+ 158 000e BA97     		add	a5,a5,a4
+ 159 0010 03C50700 		lbu	a0,0(a5)
+ 160              	.LVL11:
+ 161              		.loc 1 60 9
+ 162 0014 B355B500 		srl	a1,a0,a1
+ 163 0018 13F51500 		andi	a0,a1,1
+ 164 001c 8280     		ret
+ 165              	.LVL12:
+ 166              	.L15:
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		return 0;
+ 167              		.loc 1 59 10
+ 168 001e 0145     		li	a0,0
+ 169              	.LVL13:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** }
+ 170              		.loc 1 61 1
+ 171 0020 8280     		ret
+ 172              		.cfi_endproc
+ 173              	.LFE75:
+ 175              		.section	.text.bitfield_get_first_zero,"ax",@progbits
+ 176              		.align	1
+ 177              		.globl	bitfield_get_first_zero
+ 179              	bitfield_get_first_zero:
+ 180              	.LFB77:
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** static int first_zero(u8 val)
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** {
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	int i;
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	for (i = 0; i < 8; i++) {
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (!(val & 0x01))
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 			return i;
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		val >>= 1;
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	}
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	return -1;
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** }
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** int bitfield_get_first_zero(struct bitfield *bf)
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** {
+ 181              		.loc 1 77 1 is_stmt 1
+ 182              		.cfi_startproc
+ 183              	.LVL14:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	size_t i;
+ 184              		.loc 1 78 2
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	for (i = 0; i < (bf->max_bits + 7) / 8; i++) {
+ 185              		.loc 1 79 2
+ 186              		.loc 1 79 21 is_stmt 0
+ 187 0000 5041     		lw	a2,4(a0)
+ 188              		.loc 1 79 9
+ 189 0002 8147     		li	a5,0
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (bf->bits[i] != 0xff)
+ 190              		.loc 1 80 6
+ 191 0004 9305F00F 		li	a1,255
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	for (i = 0; i < (bf->max_bits + 7) / 8; i++) {
+ 192              		.loc 1 79 32
+ 193 0008 13077600 		addi	a4,a2,7
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	for (i = 0; i < (bf->max_bits + 7) / 8; i++) {
+ 194              		.loc 1 79 37
+ 195 000c 0D83     		srli	a4,a4,3
+ 196              	.LVL15:
+ 197              	.L17:
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	for (i = 0; i < (bf->max_bits + 7) / 8; i++) {
+ 198              		.loc 1 79 14 is_stmt 1 discriminator 1
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	for (i = 0; i < (bf->max_bits + 7) / 8; i++) {
+ 199              		.loc 1 79 2 is_stmt 0 discriminator 1
+ 200 000e 6314F700 		bne	a4,a5,.L20
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 			break;
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	}
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	if (i == (bf->max_bits + 7) / 8)
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		return -1;
+ 201              		.loc 1 84 10
+ 202 0012 7D55     		li	a0,-1
+ 203              	.LVL16:
+ 204 0014 8280     		ret
+ 205              	.LVL17:
+ 206              	.L20:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (bf->bits[i] != 0xff)
+ 207              		.loc 1 80 3 is_stmt 1
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (bf->bits[i] != 0xff)
+ 208              		.loc 1 80 15 is_stmt 0
+ 209 0016 1441     		lw	a3,0(a0)
+ 210 0018 BE96     		add	a3,a3,a5
+ 211 001a 83C60600 		lbu	a3,0(a3)
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (bf->bits[i] != 0xff)
+ 212              		.loc 1 80 6
+ 213 001e 6384B602 		beq	a3,a1,.L18
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	i = i * 8 + first_zero(bf->bits[i]);
+ 214              		.loc 1 85 2 is_stmt 1
+ 215              		.loc 1 85 8 is_stmt 0
+ 216 0022 13973700 		slli	a4,a5,3
+ 217              	.LVL18:
+ 218              	.LBB4:
+ 219              	.LBB5:
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	for (i = 0; i < 8; i++) {
+ 220              		.loc 1 66 2 is_stmt 1
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (!(val & 0x01))
+ 221              		.loc 1 67 2
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (!(val & 0x01))
+ 222              		.loc 1 67 14
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (!(val & 0x01))
+ 223              		.loc 1 67 2 is_stmt 0
+ 224 0026 A145     		li	a1,8
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (!(val & 0x01))
+ 225              		.loc 1 67 9
+ 226 0028 8147     		li	a5,0
+ 227              	.LVL19:
+ 228              	.L19:
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 			return i;
+ 229              		.loc 1 68 3 is_stmt 1
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 			return i;
+ 230              		.loc 1 68 6 is_stmt 0
+ 231 002a 13F51600 		andi	a0,a3,1
+ 232 002e 11C5     		beq	a0,zero,.L22
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	}
+ 233              		.loc 1 70 3 is_stmt 1
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (!(val & 0x01))
+ 234              		.loc 1 67 22 is_stmt 0
+ 235 0030 8507     		addi	a5,a5,1
+ 236              	.LVL20:
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	}
+ 237              		.loc 1 70 7
+ 238 0032 8582     		srli	a3,a3,1
+ 239              	.LVL21:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (!(val & 0x01))
+ 240              		.loc 1 67 21 is_stmt 1
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (!(val & 0x01))
+ 241              		.loc 1 67 14
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (!(val & 0x01))
+ 242              		.loc 1 67 2 is_stmt 0
+ 243 0034 E39BB7FE 		bne	a5,a1,.L19
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** }
+ 244              		.loc 1 72 9
+ 245 0038 FD57     		li	a5,-1
+ 246              	.LVL22:
+ 247              	.L22:
+ 248              	.LBE5:
+ 249              	.LBE4:
+ 250              		.loc 1 85 4
+ 251 003a BA97     		add	a5,a5,a4
+ 252              	.LVL23:
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	if (i >= bf->max_bits)
+ 253              		.loc 1 86 2 is_stmt 1
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	i = i * 8 + first_zero(bf->bits[i]);
+ 254              		.loc 1 84 10 is_stmt 0
+ 255 003c 7D55     		li	a0,-1
+ 256              		.loc 1 86 5
+ 257 003e 63F3C700 		bleu	a2,a5,.L16
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		return -1;
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 	return i;
+ 258              		.loc 1 88 2 is_stmt 1
+ 259              		.loc 1 88 9 is_stmt 0
+ 260 0042 3E85     		mv	a0,a5
+ 261              	.L16:
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** }
+ 262              		.loc 1 89 1
+ 263 0044 8280     		ret
+ 264              	.LVL24:
+ 265              	.L18:
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (bf->bits[i] != 0xff)
+ 266              		.loc 1 79 42 is_stmt 1 discriminator 2
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/utils\bitfield.c **** 		if (bf->bits[i] != 0xff)
+ 267              		.loc 1 79 43 is_stmt 0 discriminator 2
+ 268 0046 8507     		addi	a5,a5,1
+ 269              	.LVL25:
+ 270 0048 D9B7     		j	.L17
+ 271              		.cfi_endproc
+ 272              	.LFE77:
+ 274              		.text
+ 275              	.Letext0:
+ 276              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 277              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 278              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 279              		.file 5 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+ 280              		.file 6 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 bitfield.c
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:13     .text.bitfield_alloc:0000000000000000 bitfield_alloc
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:17     .text.bitfield_alloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:19     .text.bitfield_alloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:20     .text.bitfield_alloc:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:21     .text.bitfield_alloc:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:22     .text.bitfield_alloc:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:24     .text.bitfield_alloc:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:25     .text.bitfield_alloc:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:26     .text.bitfield_alloc:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:28     .text.bitfield_alloc:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:31     .text.bitfield_alloc:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:33     .text.bitfield_alloc:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:37     .text.bitfield_alloc:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:38     .text.bitfield_alloc:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:40     .text.bitfield_alloc:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:41     .text.bitfield_alloc:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:43     .text.bitfield_alloc:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:45     .text.bitfield_alloc:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:46     .text.bitfield_alloc:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:49     .text.bitfield_alloc:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:50     .text.bitfield_alloc:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:51     .text.bitfield_alloc:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:52     .text.bitfield_alloc:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:53     .text.bitfield_alloc:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:54     .text.bitfield_alloc:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:61     .text.bitfield_free:0000000000000000 bitfield_free
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:64     .text.bitfield_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:66     .text.bitfield_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:67     .text.bitfield_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:69     .text.bitfield_free:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:76     .text.bitfield_set:0000000000000000 bitfield_set
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:79     .text.bitfield_set:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:81     .text.bitfield_set:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:82     .text.bitfield_set:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:83     .text.bitfield_set:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:86     .text.bitfield_set:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:87     .text.bitfield_set:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:89     .text.bitfield_set:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:91     .text.bitfield_set:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:94     .text.bitfield_set:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:100    .text.bitfield_set:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:101    .text.bitfield_set:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:108    .text.bitfield_clear:0000000000000000 bitfield_clear
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:111    .text.bitfield_clear:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:113    .text.bitfield_clear:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:114    .text.bitfield_clear:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:115    .text.bitfield_clear:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:118    .text.bitfield_clear:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:119    .text.bitfield_clear:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:121    .text.bitfield_clear:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:123    .text.bitfield_clear:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:126    .text.bitfield_clear:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:132    .text.bitfield_clear:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:133    .text.bitfield_clear:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:140    .text.bitfield_is_set:0000000000000000 bitfield_is_set
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:143    .text.bitfield_is_set:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:145    .text.bitfield_is_set:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:146    .text.bitfield_is_set:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:147    .text.bitfield_is_set:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:150    .text.bitfield_is_set:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:151    .text.bitfield_is_set:0000000000000006 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:153    .text.bitfield_is_set:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:155    .text.bitfield_is_set:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:158    .text.bitfield_is_set:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:162    .text.bitfield_is_set:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:168    .text.bitfield_is_set:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:171    .text.bitfield_is_set:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:172    .text.bitfield_is_set:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:179    .text.bitfield_get_first_zero:0000000000000000 bitfield_get_first_zero
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:182    .text.bitfield_get_first_zero:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:184    .text.bitfield_get_first_zero:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:185    .text.bitfield_get_first_zero:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:186    .text.bitfield_get_first_zero:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:187    .text.bitfield_get_first_zero:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:189    .text.bitfield_get_first_zero:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:191    .text.bitfield_get_first_zero:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:193    .text.bitfield_get_first_zero:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:195    .text.bitfield_get_first_zero:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:199    .text.bitfield_get_first_zero:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:200    .text.bitfield_get_first_zero:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:202    .text.bitfield_get_first_zero:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:208    .text.bitfield_get_first_zero:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:209    .text.bitfield_get_first_zero:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:213    .text.bitfield_get_first_zero:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:215    .text.bitfield_get_first_zero:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:216    .text.bitfield_get_first_zero:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:221    .text.bitfield_get_first_zero:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:222    .text.bitfield_get_first_zero:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:223    .text.bitfield_get_first_zero:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:224    .text.bitfield_get_first_zero:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:226    .text.bitfield_get_first_zero:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:230    .text.bitfield_get_first_zero:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:231    .text.bitfield_get_first_zero:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:234    .text.bitfield_get_first_zero:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:235    .text.bitfield_get_first_zero:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:238    .text.bitfield_get_first_zero:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:241    .text.bitfield_get_first_zero:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:242    .text.bitfield_get_first_zero:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:243    .text.bitfield_get_first_zero:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:245    .text.bitfield_get_first_zero:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:251    .text.bitfield_get_first_zero:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:254    .text.bitfield_get_first_zero:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:255    .text.bitfield_get_first_zero:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:257    .text.bitfield_get_first_zero:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:259    .text.bitfield_get_first_zero:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:260    .text.bitfield_get_first_zero:0000000000000042 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:263    .text.bitfield_get_first_zero:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:267    .text.bitfield_get_first_zero:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:268    .text.bitfield_get_first_zero:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:271    .text.bitfield_get_first_zero:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:57     .text.bitfield_alloc:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:72     .text.bitfield_free:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:104    .text.bitfield_set:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:136    .text.bitfield_clear:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:175    .text.bitfield_is_set:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:274    .text.bitfield_get_first_zero:000000000000004a .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:48     .text.bitfield_alloc:0000000000000022 .L1
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:98     .text.bitfield_set:000000000000001c .L9
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:130    .text.bitfield_clear:000000000000001c .L11
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:166    .text.bitfield_is_set:000000000000001e .L15
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:206    .text.bitfield_get_first_zero:0000000000000016 .L20
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:265    .text.bitfield_get_first_zero:0000000000000046 .L18
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:247    .text.bitfield_get_first_zero:000000000000003a .L22
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:228    .text.bitfield_get_first_zero:000000000000002a .L19
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:261    .text.bitfield_get_first_zero:0000000000000044 .L16
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:197    .text.bitfield_get_first_zero:000000000000000e .L17
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:618    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1248   .debug_str:0000000000000146 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1264   .debug_str:0000000000000282 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1242   .debug_str:0000000000000097 .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1204   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1220   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1224   .debug_str:000000000000000a .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1250   .debug_str:000000000000023f .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1274   .debug_str:000000000000033b .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1222   .debug_str:0000000000000000 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1234   .debug_str:000000000000005a .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1266   .debug_str:0000000000000310 .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1238   .debug_str:000000000000007a .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1270   .debug_str:0000000000000329 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1236   .debug_str:0000000000000068 .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1258   .debug_str:0000000000000261 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1232   .debug_str:0000000000000043 .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1252   .debug_str:000000000000024c .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1254   .debug_str:0000000000000251 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1278   .debug_str:0000000000000350 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1276   .debug_str:0000000000000347 .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1262   .debug_str:000000000000027d .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1272   .debug_str:0000000000000332 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1228   .debug_str:0000000000000020 .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:180    .text.bitfield_get_first_zero:0000000000000000 .LFB77
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:272    .text.bitfield_get_first_zero:000000000000004a .LFE77
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1011   .debug_loc:0000000000000000 .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1040   .debug_loc:0000000000000045 .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:218    .text.bitfield_get_first_zero:0000000000000026 .LBB4
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:249    .text.bitfield_get_first_zero:000000000000003a .LBE4
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1056   .debug_loc:000000000000006f .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1063   .debug_loc:0000000000000082 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1230   .debug_str:0000000000000038 .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1246   .debug_str:0000000000000136 .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:141    .text.bitfield_is_set:0000000000000000 .LFB75
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:173    .text.bitfield_is_set:0000000000000022 .LFE75
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1085   .debug_loc:00000000000000b9 .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1110   .debug_loc:00000000000000f3 .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1268   .debug_str:000000000000031a .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:109    .text.bitfield_clear:0000000000000000 .LFB74
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:134    .text.bitfield_clear:000000000000001e .LFE74
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1128   .debug_loc:000000000000011f .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1244   .debug_str:0000000000000129 .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:77     .text.bitfield_set:0000000000000000 .LFB73
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:102    .text.bitfield_set:000000000000001e .LFE73
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1142   .debug_loc:0000000000000140 .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1260   .debug_str:000000000000026f .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:62     .text.bitfield_free:0000000000000000 .LFB72
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:70     .text.bitfield_free:0000000000000008 .LFE72
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1156   .debug_loc:0000000000000161 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:68     .text.bitfield_free:0000000000000008 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1226   .debug_str:0000000000000011 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:14     .text.bitfield_alloc:0000000000000000 .LFB71
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:55     .text.bitfield_alloc:000000000000002a .LFE71
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1170   .debug_loc:0000000000000182 .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:35     .text.bitfield_alloc:0000000000000018 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1256   .debug_str:0000000000000259 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:1240   .debug_str:000000000000008d .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:183    .text.bitfield_get_first_zero:0000000000000000 .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:203    .text.bitfield_get_first_zero:0000000000000014 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:205    .text.bitfield_get_first_zero:0000000000000016 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:227    .text.bitfield_get_first_zero:000000000000002a .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:264    .text.bitfield_get_first_zero:0000000000000046 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:196    .text.bitfield_get_first_zero:000000000000000e .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:252    .text.bitfield_get_first_zero:000000000000003c .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:217    .text.bitfield_get_first_zero:0000000000000026 .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:246    .text.bitfield_get_first_zero:000000000000003a .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:236    .text.bitfield_get_first_zero:0000000000000032 .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:239    .text.bitfield_get_first_zero:0000000000000034 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:144    .text.bitfield_is_set:0000000000000000 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:160    .text.bitfield_is_set:0000000000000014 .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:165    .text.bitfield_is_set:000000000000001e .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:169    .text.bitfield_is_set:0000000000000020 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:156    .text.bitfield_is_set:000000000000000e .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:112    .text.bitfield_clear:0000000000000000 .LVL7
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:124    .text.bitfield_clear:000000000000000e .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:80     .text.bitfield_set:0000000000000000 .LVL5
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:92     .text.bitfield_set:000000000000000e .LVL6
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:65     .text.bitfield_free:0000000000000000 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:18     .text.bitfield_alloc:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:29     .text.bitfield_alloc:000000000000000c .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccz0hSHR.s:282    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+__riscv_save_1
+os_zalloc
+__riscv_restore_1
+os_free

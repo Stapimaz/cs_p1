@@ -1,0 +1,1019 @@
+   1              		.file	"l2_packet_gdwifi.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.l2_packet_receive,"ax",@progbits
+  10              		.align	1
+  12              	l2_packet_receive:
+  13              	.LFB71:
+  14              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c ****  * Layer2 packet handling for gdwifi system
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c ****  * Copyright (C) GigaDevice 2023-2023
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c ****  */
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** #include "includes.h"
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** #include "common.h"
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** #include "l2_packet.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** #include "eloop.h"
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** #include "wifi_netif.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** struct l2_packet_data {
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	int l2_hdr; /* whether TX buffer already contain L2 (Ethernet) header */
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	int sock;
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	struct netif *net_if;
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	void (*rx_callback)(void *ctx, const u8 *src_addr,
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 			    const u8 *buf, size_t len);
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	void *rx_callback_ctx;
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** };
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** static void l2_packet_receive(int sock, void *eloop_ctx, void *sock_ctx)
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** {
+  15              		.loc 1 23 1
+  16              		.cfi_startproc
+  17              	.LVL0:
+  18 0000 17030000 		call	t0,__riscv_save_3
+  18      E7020300 
+  19              		.cfi_offset 18, -16
+  20              		.cfi_offset 9, -12
+  21              		.cfi_offset 8, -8
+  22              		.cfi_offset 1, -4
+  23              		.cfi_def_cfa_offset 16
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	struct l2_packet_data *l2 = eloop_ctx;
+  24              		.loc 1 24 2
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	struct l2_packet_data *l2 = eloop_ctx;
+  25              		.loc 1 23 1 is_stmt 0
+  26 0008 2A89     		mv	s2,a0
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	struct mac_eth_hdr *eth;
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	uint8_t *buf;
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	uint8_t *payload;
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	int len;
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	buf = os_zalloc(1500);
+  27              		.loc 1 30 8
+  28 000a 1305C05D 		li	a0,1500
+  29              	.LVL1:
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	struct l2_packet_data *l2 = eloop_ctx;
+  30              		.loc 1 23 1
+  31 000e AE84     		mv	s1,a1
+  32              	.LVL2:
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	struct mac_eth_hdr *eth;
+  33              		.loc 1 25 2 is_stmt 1
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	uint8_t *payload;
+  34              		.loc 1 26 2
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	int len;
+  35              		.loc 1 27 2
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  36              		.loc 1 28 2
+  37              		.loc 1 30 2
+  38              		.loc 1 30 8 is_stmt 0
+  39 0010 97000000 		call	os_zalloc
+  39      E7800000 
+  40              	.LVL3:
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (buf == NULL)
+  41              		.loc 1 31 2 is_stmt 1
+  42              		.loc 1 31 5 is_stmt 0
+  43 0018 1DC1     		beq	a0,zero,.L1
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		return;
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	len = recv(sock, buf, 1500, 0);
+  44              		.loc 1 34 8
+  45 001a AA85     		mv	a1,a0
+  46 001c 2A84     		mv	s0,a0
+  47              		.loc 1 34 2 is_stmt 1
+  48              		.loc 1 34 8 is_stmt 0
+  49 001e 8146     		li	a3,0
+  50 0020 1306C05D 		li	a2,1500
+  51 0024 4A85     		mv	a0,s2
+  52              	.LVL4:
+  53 0026 97000000 		call	lwip_recv
+  53      E7800000 
+  54              	.LVL5:
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (len < (signed)sizeof(*eth)) {
+  55              		.loc 1 35 2 is_stmt 1
+  56              		.loc 1 35 5 is_stmt 0
+  57 002e B547     		li	a5,13
+  58 0030 63CBA700 		bgt	a0,a5,.L3
+  59              	.LVL6:
+  60              	.L8:
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		os_free(buf);
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		return;
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	}
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	eth = (struct mac_eth_hdr *)buf;
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	payload = &buf[sizeof(*eth)];
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	len -= sizeof(*eth);
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	l2->rx_callback(l2->rx_callback_ctx, (u8 *)(&eth->sa),
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 			payload, len);
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	os_free(buf);
+  61              		.loc 1 47 2 is_stmt 1
+  62 0034 2285     		mv	a0,s0
+  63 0036 97000000 		call	os_free
+  63      E7800000 
+  64              	.LVL7:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return;
+  65              		.loc 1 49 2
+  66              	.L1:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+  67              		.loc 1 50 1 is_stmt 0
+  68 003e 17030000 		tail	__riscv_restore_3
+  68      67000300 
+  69              		.cfi_remember_state
+  70              		.cfi_restore 18
+  71              		.cfi_restore 9
+  72              		.cfi_restore 8
+  73              		.cfi_restore 1
+  74              		.cfi_def_cfa_offset 0
+  75              	.LVL8:
+  76              	.L3:
+  77              		.cfi_restore_state
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	payload = &buf[sizeof(*eth)];
+  78              		.loc 1 40 2 is_stmt 1
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	len -= sizeof(*eth);
+  79              		.loc 1 41 2
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  80              		.loc 1 42 2
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 			payload, len);
+  81              		.loc 1 44 2
+  82 0046 930625FF 		addi	a3,a0,-14
+  83              	.LVL9:
+  84 004a DC44     		lw	a5,12(s1)
+  85 004c 8848     		lw	a0,16(s1)
+  86 004e 1306E400 		addi	a2,s0,14
+  87              	.LVL10:
+  88 0052 93056400 		addi	a1,s0,6
+  89 0056 8297     		jalr	a5
+  90              	.LVL11:
+  91 0058 F1BF     		j	.L8
+  92              		.cfi_endproc
+  93              	.LFE71:
+  95              		.section	.text.l2_packet_init,"ax",@progbits
+  96              		.align	1
+  97              		.globl	l2_packet_init
+  99              	l2_packet_init:
+ 100              	.LFB72:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** struct l2_packet_data * l2_packet_init(
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	const char *ifname, const u8 *own_addr, unsigned short protocol,
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	void (*rx_callback)(void *ctx, const u8 *src_addr,
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 			    const u8 *buf, size_t len),
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	void *rx_callback_ctx, int l2_hdr)
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** {
+ 101              		.loc 1 57 1
+ 102              		.cfi_startproc
+ 103              	.LVL12:
+ 104 0000 17030000 		call	t0,__riscv_save_6
+ 104      E7020300 
+ 105              		.cfi_offset 21, -28
+ 106              		.cfi_offset 20, -24
+ 107              		.cfi_offset 19, -20
+ 108              		.cfi_offset 18, -16
+ 109              		.cfi_offset 9, -12
+ 110              		.cfi_offset 8, -8
+ 111              		.cfi_offset 1, -4
+ 112              		.cfi_def_cfa_offset 32
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	struct l2_packet_data *l2;
+ 113              		.loc 1 58 2
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	l2 = os_zalloc(sizeof(struct l2_packet_data));
+ 114              		.loc 1 60 2
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	struct l2_packet_data *l2;
+ 115              		.loc 1 57 1 is_stmt 0
+ 116 0008 2A89     		mv	s2,a0
+ 117              		.loc 1 60 7
+ 118 000a 5145     		li	a0,20
+ 119              	.LVL13:
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	struct l2_packet_data *l2;
+ 120              		.loc 1 57 1
+ 121 000c B284     		mv	s1,a2
+ 122 000e B68A     		mv	s5,a3
+ 123 0010 3A8A     		mv	s4,a4
+ 124 0012 BE89     		mv	s3,a5
+ 125              		.loc 1 60 7
+ 126 0014 97000000 		call	os_zalloc
+ 126      E7800000 
+ 127              	.LVL14:
+ 128 001c 2A84     		mv	s0,a0
+ 129              	.LVL15:
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (l2 == NULL)
+ 130              		.loc 1 61 2 is_stmt 1
+ 131              		.loc 1 61 5 is_stmt 0
+ 132 001e 21C1     		beq	a0,zero,.L9
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		return NULL;
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	l2->rx_callback = rx_callback;
+ 133              		.loc 1 64 2 is_stmt 1
+ 134              		.loc 1 64 18 is_stmt 0
+ 135 0020 23265501 		sw	s5,12(a0)
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	l2->rx_callback_ctx = rx_callback_ctx;
+ 136              		.loc 1 65 2 is_stmt 1
+ 137              		.loc 1 65 22 is_stmt 0
+ 138 0024 23284501 		sw	s4,16(a0)
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	l2->l2_hdr = l2_hdr;
+ 139              		.loc 1 66 2 is_stmt 1
+ 140              		.loc 1 66 13 is_stmt 0
+ 141 0028 23203501 		sw	s3,0(a0)
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	l2->net_if = (struct netif *)net_if_find_from_name(ifname);
+ 142              		.loc 1 68 2 is_stmt 1
+ 143              		.loc 1 68 31 is_stmt 0
+ 144 002c 4A85     		mv	a0,s2
+ 145 002e 97000000 		call	net_if_find_from_name
+ 145      E7800000 
+ 146              	.LVL16:
+ 147              		.loc 1 68 13
+ 148 0036 08C4     		sw	a0,8(s0)
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (!l2->net_if)
+ 149              		.loc 1 69 2 is_stmt 1
+ 150              		.loc 1 69 5 is_stmt 0
+ 151 0038 05C9     		beq	a0,zero,.L11
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		goto err;
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	l2->sock = net_l2_socket_create(l2->net_if, protocol);
+ 152              		.loc 1 72 2 is_stmt 1
+ 153              		.loc 1 72 13 is_stmt 0
+ 154 003a A685     		mv	a1,s1
+ 155 003c 97000000 		call	net_l2_socket_create
+ 155      E7800000 
+ 156              	.LVL17:
+ 157              		.loc 1 72 11
+ 158 0044 48C0     		sw	a0,4(s0)
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (l2->sock < 0)
+ 159              		.loc 1 73 2 is_stmt 1
+ 160              		.loc 1 73 5 is_stmt 0
+ 161 0046 63410502 		blt	a0,zero,.L11
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		goto err;
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	eloop_register_read_sock(l2->sock, l2_packet_receive, l2, NULL);
+ 162              		.loc 1 76 2 is_stmt 1
+ 163 004a B7050000 		lui	a1,%hi(l2_packet_receive)
+ 164 004e 8146     		li	a3,0
+ 165 0050 2286     		mv	a2,s0
+ 166 0052 93850500 		addi	a1,a1,%lo(l2_packet_receive)
+ 167 0056 97000000 		call	eloop_register_read_sock
+ 167      E7800000 
+ 168              	.LVL18:
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return l2;
+ 169              		.loc 1 77 2
+ 170              	.L9:
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** err:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	os_free(l2);
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return NULL;
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+ 171              		.loc 1 82 1 is_stmt 0
+ 172 005e 2285     		mv	a0,s0
+ 173 0060 17030000 		tail	__riscv_restore_6
+ 173      67000300 
+ 174              		.cfi_remember_state
+ 175              		.cfi_restore 21
+ 176              		.cfi_restore 20
+ 177              		.cfi_restore 19
+ 178              		.cfi_restore 18
+ 179              		.cfi_restore 9
+ 180              		.cfi_restore 8
+ 181              		.cfi_restore 1
+ 182              		.cfi_def_cfa_offset 0
+ 183              	.LVL19:
+ 184              	.L11:
+ 185              		.cfi_restore_state
+ 186              	.LDL1:
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return NULL;
+ 187              		.loc 1 80 2 is_stmt 1
+ 188 0068 2285     		mv	a0,s0
+ 189 006a 97000000 		call	os_free
+ 189      E7800000 
+ 190              	.LVL20:
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+ 191              		.loc 1 81 2
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+ 192              		.loc 1 81 9 is_stmt 0
+ 193 0072 0144     		li	s0,0
+ 194              	.LVL21:
+ 195 0074 EDB7     		j	.L9
+ 196              		.cfi_endproc
+ 197              	.LFE72:
+ 199              		.section	.text.l2_packet_init_bridge,"ax",@progbits
+ 200              		.align	1
+ 201              		.globl	l2_packet_init_bridge
+ 203              	l2_packet_init_bridge:
+ 204              	.LFB73:
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** struct l2_packet_data * l2_packet_init_bridge(
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	const char *br_ifname, const char *ifname, const u8 *own_addr,
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	unsigned short protocol,
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	void (*rx_callback)(void *ctx, const u8 *src_addr,
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 			    const u8 *buf, size_t len),
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	void *rx_callback_ctx, int l2_hdr)
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** {
+ 205              		.loc 1 90 1 is_stmt 1
+ 206              		.cfi_startproc
+ 207              	.LVL22:
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return l2_packet_init(br_ifname, own_addr, protocol, rx_callback,
+ 208              		.loc 1 91 2
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return l2_packet_init(br_ifname, own_addr, protocol, rx_callback,
+ 209              		.loc 1 90 1 is_stmt 0
+ 210 0000 B285     		mv	a1,a2
+ 211              	.LVL23:
+ 212 0002 3686     		mv	a2,a3
+ 213              	.LVL24:
+ 214 0004 BA86     		mv	a3,a4
+ 215              	.LVL25:
+ 216 0006 3E87     		mv	a4,a5
+ 217              	.LVL26:
+ 218 0008 C287     		mv	a5,a6
+ 219              	.LVL27:
+ 220              		.loc 1 91 9
+ 221 000a 17030000 		tail	l2_packet_init
+ 221      67000300 
+ 222              	.LVL28:
+ 223              		.cfi_endproc
+ 224              	.LFE73:
+ 226              		.section	.text.l2_packet_deinit,"ax",@progbits
+ 227              		.align	1
+ 228              		.globl	l2_packet_deinit
+ 230              	l2_packet_deinit:
+ 231              	.LFB74:
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 			      rx_callback_ctx, l2_hdr);
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** void l2_packet_deinit(struct l2_packet_data *l2)
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** {
+ 232              		.loc 1 96 1 is_stmt 1
+ 233              		.cfi_startproc
+ 234              	.LVL29:
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (l2 == NULL)
+ 235              		.loc 1 97 2
+ 236              		.loc 1 97 5 is_stmt 0
+ 237 0000 0DC9     		beq	a0,zero,.L27
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (l2 == NULL)
+ 238              		.loc 1 96 1
+ 239 0002 17030000 		call	t0,__riscv_save_1
+ 239      E7020300 
+ 240              		.cfi_offset 8, -8
+ 241              		.cfi_offset 1, -4
+ 242              		.cfi_def_cfa_offset 16
+ 243 000a 2A84     		mv	s0,a0
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		return;
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	eloop_unregister_read_sock(l2->sock);
+ 244              		.loc 1 100 2 is_stmt 1
+ 245 000c 4841     		lw	a0,4(a0)
+ 246              	.LVL30:
+ 247 000e 97000000 		call	eloop_unregister_read_sock
+ 247      E7800000 
+ 248              	.LVL31:
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	net_l2_socket_delete(l2->sock);
+ 249              		.loc 1 101 2
+ 250 0016 4840     		lw	a0,4(s0)
+ 251 0018 97000000 		call	net_l2_socket_delete
+ 251      E7800000 
+ 252              	.LVL32:
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	os_free(l2);
+ 253              		.loc 1 102 2
+ 254 0020 2285     		mv	a0,s0
+ 255 0022 97000000 		call	os_free
+ 255      E7800000 
+ 256              	.LVL33:
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+ 257              		.loc 1 103 1 is_stmt 0
+ 258 002a 17030000 		tail	__riscv_restore_1
+ 258      67000300 
+ 259              		.cfi_restore 8
+ 260              		.cfi_restore 1
+ 261              		.cfi_def_cfa_offset 0
+ 262              	.LVL34:
+ 263              	.L27:
+ 264 0032 8280     		ret
+ 265              		.cfi_endproc
+ 266              	.LFE74:
+ 268              		.section	.text.l2_packet_get_own_addr,"ax",@progbits
+ 269              		.align	1
+ 270              		.globl	l2_packet_get_own_addr
+ 272              	l2_packet_get_own_addr:
+ 273              	.LFB75:
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** int l2_packet_get_own_addr(struct l2_packet_data *l2, u8 *addr)
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** {
+ 274              		.loc 1 106 1 is_stmt 1
+ 275              		.cfi_startproc
+ 276              	.LVL35:
+ 277 0000 17030000 		call	t0,__riscv_save_1
+ 277      E7020300 
+ 278              		.cfi_offset 8, -8
+ 279              		.cfi_offset 1, -4
+ 280              		.cfi_def_cfa_offset 16
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	os_memcpy(addr, net_if_get_mac_addr(l2->net_if), ETH_ALEN);
+ 281              		.loc 1 107 2
+ 282              		.loc 1 107 18 is_stmt 0
+ 283 0008 0845     		lw	a0,8(a0)
+ 284              	.LVL36:
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	os_memcpy(addr, net_if_get_mac_addr(l2->net_if), ETH_ALEN);
+ 285              		.loc 1 106 1
+ 286 000a 2E84     		mv	s0,a1
+ 287              		.loc 1 107 18
+ 288 000c 97000000 		call	net_if_get_mac_addr
+ 288      E7800000 
+ 289              	.LVL37:
+ 290 0014 AA85     		mv	a1,a0
+ 291              		.loc 1 107 2
+ 292 0016 1946     		li	a2,6
+ 293 0018 2285     		mv	a0,s0
+ 294 001a 97000000 		call	os_memcpy
+ 294      E7800000 
+ 295              	.LVL38:
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return 0;
+ 296              		.loc 1 108 2 is_stmt 1
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+ 297              		.loc 1 109 1 is_stmt 0
+ 298 0022 0145     		li	a0,0
+ 299 0024 17030000 		tail	__riscv_restore_1
+ 299      67000300 
+ 300              		.cfi_restore 8
+ 301              		.cfi_restore 1
+ 302              		.cfi_def_cfa_offset 0
+ 303              		.cfi_endproc
+ 304              	.LFE75:
+ 306              		.section	.text.l2_packet_send,"ax",@progbits
+ 307              		.align	1
+ 308              		.globl	l2_packet_send
+ 310              	l2_packet_send:
+ 311              	.LFB76:
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** int l2_packet_send(struct l2_packet_data *l2, const u8 *dst_addr, u16 proto,
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		   const u8 *buf, size_t len)
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** {
+ 312              		.loc 1 113 1 is_stmt 1
+ 313              		.cfi_startproc
+ 314              	.LVL39:
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (l2 == NULL)
+ 315              		.loc 1 114 2
+ 316              		.loc 1 114 5 is_stmt 0
+ 317 0000 0DC9     		beq	a0,zero,.L35
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (l2 == NULL)
+ 318              		.loc 1 113 1
+ 319 0002 17030000 		call	t0,__riscv_save_0
+ 319      E7020300 
+ 320              		.cfi_offset 1, -4
+ 321              		.cfi_def_cfa_offset 16
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		return -1;
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	if (l2->l2_hdr)
+ 322              		.loc 1 117 5
+ 323 000a 1C41     		lw	a5,0(a0)
+ 324 000c 2E88     		mv	a6,a1
+ 325 000e B288     		mv	a7,a2
+ 326 0010 B685     		mv	a1,a3
+ 327              	.LVL40:
+ 328 0012 3A86     		mv	a2,a4
+ 329              	.LVL41:
+ 330              		.loc 1 117 2 is_stmt 1
+ 331              		.loc 1 117 5 is_stmt 0
+ 332 0014 91C3     		beq	a5,zero,.L34
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 		dst_addr = NULL;
+ 333              		.loc 1 118 12
+ 334 0016 0148     		li	a6,0
+ 335              	.LVL42:
+ 336              	.L34:
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	net_l2_send(l2->net_if, buf, len, proto, dst_addr, NULL);
+ 337              		.loc 1 120 2 is_stmt 1
+ 338 0018 0845     		lw	a0,8(a0)
+ 339              	.LVL43:
+ 340 001a 8147     		li	a5,0
+ 341 001c 4287     		mv	a4,a6
+ 342              	.LVL44:
+ 343 001e C686     		mv	a3,a7
+ 344              	.LVL45:
+ 345 0020 97000000 		call	net_l2_send
+ 345      E7800000 
+ 346              	.LVL46:
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return 0;
+ 347              		.loc 1 122 2
+ 348              		.loc 1 122 9 is_stmt 0
+ 349 0028 0145     		li	a0,0
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+ 350              		.loc 1 123 1
+ 351 002a 17030000 		tail	__riscv_restore_0
+ 351      67000300 
+ 352              		.cfi_restore 1
+ 353              		.cfi_def_cfa_offset 0
+ 354              	.LVL47:
+ 355              	.L35:
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 356              		.loc 1 115 10
+ 357 0032 7D55     		li	a0,-1
+ 358              	.LVL48:
+ 359              		.loc 1 123 1
+ 360 0034 8280     		ret
+ 361              		.cfi_endproc
+ 362              	.LFE76:
+ 364              		.section	.text.l2_packet_get_ip_addr,"ax",@progbits
+ 365              		.align	1
+ 366              		.globl	l2_packet_get_ip_addr
+ 368              	l2_packet_get_ip_addr:
+ 369              	.LFB77:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** int l2_packet_get_ip_addr(struct l2_packet_data *l2, char *buf, size_t len)
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** {
+ 370              		.loc 1 126 1 is_stmt 1
+ 371              		.cfi_startproc
+ 372              	.LVL49:
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	/* TODO: get interface IP address (This function is not essential) */
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return -1;
+ 373              		.loc 1 128 2
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+ 374              		.loc 1 129 1 is_stmt 0
+ 375 0000 7D55     		li	a0,-1
+ 376              	.LVL50:
+ 377 0002 8280     		ret
+ 378              		.cfi_endproc
+ 379              	.LFE77:
+ 381              		.section	.text.l2_packet_notify_auth_start,"ax",@progbits
+ 382              		.align	1
+ 383              		.globl	l2_packet_notify_auth_start
+ 385              	l2_packet_notify_auth_start:
+ 386              	.LFB78:
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** void l2_packet_notify_auth_start(struct l2_packet_data *l2)
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** {
+ 387              		.loc 1 132 1 is_stmt 1
+ 388              		.cfi_startproc
+ 389              	.LVL51:
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	/* This function can be left empty */
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+ 390              		.loc 1 134 1
+ 391 0000 8280     		ret
+ 392              		.cfi_endproc
+ 393              	.LFE78:
+ 395              		.section	.text.l2_packet_set_packet_filter,"ax",@progbits
+ 396              		.align	1
+ 397              		.globl	l2_packet_set_packet_filter
+ 399              	l2_packet_set_packet_filter:
+ 400              	.LFB79:
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** int l2_packet_set_packet_filter(struct l2_packet_data *l2,
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 				enum l2_packet_filter_type type)
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** {
+ 401              		.loc 1 138 1
+ 402              		.cfi_startproc
+ 403              	.LVL52:
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	/* Only needed for advanced AP features */
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** 	return -1;
+ 404              		.loc 1 140 2
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/l2_packet\l2_packet_gdwifi.c **** }
+ 405              		.loc 1 141 1 is_stmt 0
+ 406 0000 7D55     		li	a0,-1
+ 407              	.LVL53:
+ 408 0002 8280     		ret
+ 409              		.cfi_endproc
+ 410              	.LFE79:
+ 412              		.text
+ 413              	.Letext0:
+ 414              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 415              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 416              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 417              		.file 5 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/arch.h"
+ 418              		.file 6 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/err.h"
+ 419              		.file 7 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/pbuf.h"
+ 420              		.file 8 "..\\..\\..\\..\\macsw\\export/mac_types.h"
+ 421              		.file 9 "..\\..\\..\\..\\macsw\\export/mac_frame.h"
+ 422              		.file 10 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/ip4_addr.h"
+ 423              		.file 11 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/ip_addr.h"
+ 424              		.file 12 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/netif.h"
+ 425              		.file 13 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/common.h"
+ 426              		.file 14 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RE
+ 427              		.file 15 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\port/wifi_netif.h"
+ 428              		.file 16 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/os.h"
+ 429              		.file 17 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/eloop.h"
+ 430              		.file 18 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/sockets.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 l2_packet_gdwifi.c
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:12     .text.l2_packet_receive:0000000000000000 l2_packet_receive
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:16     .text.l2_packet_receive:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:18     .text.l2_packet_receive:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:19     .text.l2_packet_receive:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:20     .text.l2_packet_receive:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:21     .text.l2_packet_receive:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:22     .text.l2_packet_receive:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:23     .text.l2_packet_receive:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:25     .text.l2_packet_receive:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:26     .text.l2_packet_receive:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:28     .text.l2_packet_receive:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:31     .text.l2_packet_receive:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:34     .text.l2_packet_receive:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:35     .text.l2_packet_receive:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:36     .text.l2_packet_receive:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:37     .text.l2_packet_receive:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:38     .text.l2_packet_receive:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:39     .text.l2_packet_receive:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:42     .text.l2_packet_receive:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:43     .text.l2_packet_receive:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:45     .text.l2_packet_receive:000000000000001a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:48     .text.l2_packet_receive:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:49     .text.l2_packet_receive:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:56     .text.l2_packet_receive:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:57     .text.l2_packet_receive:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:62     .text.l2_packet_receive:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:67     .text.l2_packet_receive:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:68     .text.l2_packet_receive:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:69     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:70     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:71     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:72     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:73     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:74     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:77     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:79     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:80     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:81     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:82     .text.l2_packet_receive:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:92     .text.l2_packet_receive:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:99     .text.l2_packet_init:0000000000000000 l2_packet_init
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:102    .text.l2_packet_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:104    .text.l2_packet_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:105    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:106    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:107    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:108    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:109    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:110    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:111    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:112    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:114    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:115    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:116    .text.l2_packet_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:118    .text.l2_packet_init:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:121    .text.l2_packet_init:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:126    .text.l2_packet_init:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:131    .text.l2_packet_init:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:132    .text.l2_packet_init:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:134    .text.l2_packet_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:135    .text.l2_packet_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:137    .text.l2_packet_init:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:138    .text.l2_packet_init:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:140    .text.l2_packet_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:141    .text.l2_packet_init:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:143    .text.l2_packet_init:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:144    .text.l2_packet_init:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:148    .text.l2_packet_init:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:150    .text.l2_packet_init:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:151    .text.l2_packet_init:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:153    .text.l2_packet_init:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:154    .text.l2_packet_init:000000000000003a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:158    .text.l2_packet_init:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:160    .text.l2_packet_init:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:161    .text.l2_packet_init:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:163    .text.l2_packet_init:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:171    .text.l2_packet_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:172    .text.l2_packet_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:174    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:175    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:176    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:177    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:178    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:179    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:180    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:181    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:182    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:185    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:188    .text.l2_packet_init:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:192    .text.l2_packet_init:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:193    .text.l2_packet_init:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:196    .text.l2_packet_init:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:203    .text.l2_packet_init_bridge:0000000000000000 l2_packet_init_bridge
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:206    .text.l2_packet_init_bridge:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:208    .text.l2_packet_init_bridge:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:209    .text.l2_packet_init_bridge:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:210    .text.l2_packet_init_bridge:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:221    .text.l2_packet_init_bridge:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:223    .text.l2_packet_init_bridge:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:230    .text.l2_packet_deinit:0000000000000000 l2_packet_deinit
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:233    .text.l2_packet_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:235    .text.l2_packet_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:236    .text.l2_packet_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:237    .text.l2_packet_deinit:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:239    .text.l2_packet_deinit:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:240    .text.l2_packet_deinit:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:241    .text.l2_packet_deinit:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:242    .text.l2_packet_deinit:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:245    .text.l2_packet_deinit:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:250    .text.l2_packet_deinit:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:254    .text.l2_packet_deinit:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:258    .text.l2_packet_deinit:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:259    .text.l2_packet_deinit:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:260    .text.l2_packet_deinit:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:261    .text.l2_packet_deinit:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:265    .text.l2_packet_deinit:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:272    .text.l2_packet_get_own_addr:0000000000000000 l2_packet_get_own_addr
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:275    .text.l2_packet_get_own_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:277    .text.l2_packet_get_own_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:278    .text.l2_packet_get_own_addr:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:279    .text.l2_packet_get_own_addr:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:280    .text.l2_packet_get_own_addr:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:282    .text.l2_packet_get_own_addr:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:283    .text.l2_packet_get_own_addr:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:286    .text.l2_packet_get_own_addr:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:288    .text.l2_packet_get_own_addr:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:292    .text.l2_packet_get_own_addr:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:297    .text.l2_packet_get_own_addr:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:298    .text.l2_packet_get_own_addr:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:300    .text.l2_packet_get_own_addr:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:301    .text.l2_packet_get_own_addr:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:302    .text.l2_packet_get_own_addr:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:303    .text.l2_packet_get_own_addr:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:310    .text.l2_packet_send:0000000000000000 l2_packet_send
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:313    .text.l2_packet_send:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:315    .text.l2_packet_send:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:316    .text.l2_packet_send:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:317    .text.l2_packet_send:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:319    .text.l2_packet_send:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:320    .text.l2_packet_send:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:321    .text.l2_packet_send:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:323    .text.l2_packet_send:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:331    .text.l2_packet_send:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:332    .text.l2_packet_send:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:334    .text.l2_packet_send:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:338    .text.l2_packet_send:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:348    .text.l2_packet_send:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:349    .text.l2_packet_send:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:351    .text.l2_packet_send:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:352    .text.l2_packet_send:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:353    .text.l2_packet_send:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:357    .text.l2_packet_send:0000000000000032 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:360    .text.l2_packet_send:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:361    .text.l2_packet_send:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:368    .text.l2_packet_get_ip_addr:0000000000000000 l2_packet_get_ip_addr
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:371    .text.l2_packet_get_ip_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:373    .text.l2_packet_get_ip_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:374    .text.l2_packet_get_ip_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:375    .text.l2_packet_get_ip_addr:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:378    .text.l2_packet_get_ip_addr:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:385    .text.l2_packet_notify_auth_start:0000000000000000 l2_packet_notify_auth_start
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:388    .text.l2_packet_notify_auth_start:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:390    .text.l2_packet_notify_auth_start:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:391    .text.l2_packet_notify_auth_start:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:392    .text.l2_packet_notify_auth_start:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:399    .text.l2_packet_set_packet_filter:0000000000000000 l2_packet_set_packet_filter
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:402    .text.l2_packet_set_packet_filter:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:404    .text.l2_packet_set_packet_filter:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:405    .text.l2_packet_set_packet_filter:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:406    .text.l2_packet_set_packet_filter:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:409    .text.l2_packet_set_packet_filter:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:95     .text.l2_packet_receive:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:199    .text.l2_packet_init:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:226    .text.l2_packet_init_bridge:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:268    .text.l2_packet_deinit:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:306    .text.l2_packet_get_own_addr:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:364    .text.l2_packet_send:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:381    .text.l2_packet_get_ip_addr:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:395    .text.l2_packet_notify_auth_start:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:412    .text.l2_packet_set_packet_filter:0000000000000004 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:66     .text.l2_packet_receive:000000000000003e .L1
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:76     .text.l2_packet_receive:0000000000000046 .L3
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:60     .text.l2_packet_receive:0000000000000034 .L8
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:170    .text.l2_packet_init:000000000000005e .L9
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:184    .text.l2_packet_init:0000000000000068 .L11
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:263    .text.l2_packet_deinit:0000000000000032 .L27
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:355    .text.l2_packet_send:0000000000000032 .L35
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:336    .text.l2_packet_send:0000000000000018 .L34
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:1742   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2917   .debug_str:00000000000001f1 .LASF99
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2977   .debug_str:0000000000000476 .LASF100
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2855   .debug_str:0000000000000000 .LASF101
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2831   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2853   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2869   .debug_str:00000000000000d4 .LASF1
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2969   .debug_str:0000000000000449 .LASF0
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2981   .debug_str:0000000000000526 .LASF2
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2961   .debug_str:000000000000041b .LASF3
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2939   .debug_str:000000000000037f .LASF4
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2949   .debug_str:00000000000003c5 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2867   .debug_str:00000000000000ca .LASF6
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2879   .debug_str:000000000000010a .LASF7
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3031   .debug_str:0000000000000649 .LASF8
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2929   .debug_str:0000000000000346 .LASF9
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3021   .debug_str:000000000000060e .LASF10
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3011   .debug_str:00000000000005bf .LASF11
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2919   .debug_str:00000000000002ea .LASF12
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2965   .debug_str:000000000000042d .LASF13
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2987   .debug_str:000000000000053e .LASF14
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2861   .debug_str:00000000000000ad .LASF15
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2901   .debug_str:000000000000019a .LASF16
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2971   .debug_str:0000000000000456 .LASF17
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2911   .debug_str:00000000000001d2 .LASF18
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3045   .debug_str:00000000000006a3 .LASF19
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2989   .debug_str:0000000000000543 .LASF20
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2975   .debug_str:0000000000000470 .LASF21
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3029   .debug_str:0000000000000643 .LASF22
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2985   .debug_str:0000000000000538 .LASF23
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3007   .debug_str:00000000000005ae .LASF30
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3055   .debug_str:00000000000006eb .LASF24
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3053   .debug_str:00000000000006e3 .LASF25
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2873   .debug_str:00000000000000e1 .LASF26
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3043   .debug_str:0000000000000695 .LASF27
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2963   .debug_str:0000000000000427 .LASF28
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2957   .debug_str:00000000000003ff .LASF29
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2983   .debug_str:000000000000052f .LASF31
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3017   .debug_str:00000000000005fd .LASF32
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2999   .debug_str:0000000000000581 .LASF33
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3059   .debug_str:00000000000006f5 .LASF34
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3001   .debug_str:0000000000000587 .LASF35
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2935   .debug_str:0000000000000361 .LASF36
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3019   .debug_str:0000000000000603 .LASF37
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2933   .debug_str:0000000000000357 .LASF38
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2947   .debug_str:00000000000003ad .LASF60
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2897   .debug_str:0000000000000175 .LASF39
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2997   .debug_str:000000000000056c .LASF40
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3023   .debug_str:0000000000000619 .LASF41
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2907   .debug_str:00000000000001bb .LASF42
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3027   .debug_str:000000000000063b .LASF43
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2871   .debug_str:00000000000000db .LASF44
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3041   .debug_str:000000000000068e .LASF45
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2913   .debug_str:00000000000001db .LASF46
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2863   .debug_str:00000000000000b4 .LASF47
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2889   .debug_str:000000000000013c .LASF48
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2859   .debug_str:00000000000000a6 .LASF49
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2887   .debug_str:0000000000000131 .LASF50
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2945   .debug_str:00000000000003a8 .LASF51
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3037   .debug_str:000000000000067c .LASF52
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2899   .debug_str:000000000000018a .LASF53
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2915   .debug_str:00000000000001e6 .LASF54
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2905   .debug_str:00000000000001b1 .LASF55
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3051   .debug_str:00000000000006d4 .LASF56
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2865   .debug_str:00000000000000ba .LASF57
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2925   .debug_str:0000000000000326 .LASF58
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2943   .debug_str:000000000000038f .LASF59
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3033   .debug_str:000000000000065c .LASF61
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2979   .debug_str:0000000000000510 .LASF62
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2923   .debug_str:000000000000030f .LASF63
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2893   .debug_str:0000000000000152 .LASF64
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2909   .debug_str:00000000000001c3 .LASF65
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2995   .debug_str:0000000000000565 .LASF66
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3057   .debug_str:00000000000006f0 .LASF67
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2951   .debug_str:00000000000003d3 .LASF68
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3009   .debug_str:00000000000005b3 .LASF69
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3049   .debug_str:00000000000006c4 .LASF70
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3047   .debug_str:00000000000006a8 .LASF72
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:400    .text.l2_packet_set_packet_filter:0000000000000000 .LFB79
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:410    .text.l2_packet_set_packet_filter:0000000000000004 .LFE79
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2341   .debug_loc:0000000000000000 .LLST30
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2967   .debug_str:0000000000000444 .LASF71
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3025   .debug_str:000000000000061f .LASF78
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:386    .text.l2_packet_notify_auth_start:0000000000000000 .LFB78
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:393    .text.l2_packet_notify_auth_start:0000000000000002 .LFE78
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3013   .debug_str:00000000000005d1 .LASF73
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:369    .text.l2_packet_get_ip_addr:0000000000000000 .LFB77
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:379    .text.l2_packet_get_ip_addr:0000000000000004 .LFE77
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2355   .debug_loc:0000000000000021 .LLST29
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2877   .debug_str:00000000000000fb .LASF74
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:311    .text.l2_packet_send:0000000000000000 .LFB76
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:362    .text.l2_packet_send:0000000000000036 .LFE76
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2369   .debug_loc:0000000000000042 .LLST24
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2885   .debug_str:0000000000000128 .LASF75
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2394   .debug_loc:000000000000007c .LLST25
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2941   .debug_str:0000000000000389 .LASF76
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2409   .debug_loc:00000000000000a5 .LLST26
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2427   .debug_loc:00000000000000d1 .LLST27
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2449   .debug_loc:0000000000000108 .LLST28
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:346    .text.l2_packet_send:0000000000000028 .LVL46
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2921   .debug_str:00000000000002f8 .LASF77
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:273    .text.l2_packet_get_own_addr:0000000000000000 .LFB75
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:304    .text.l2_packet_get_own_addr:000000000000002c .LFE75
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2471   .debug_loc:000000000000013f .LLST22
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2485   .debug_loc:0000000000000160 .LLST23
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:289    .text.l2_packet_get_own_addr:0000000000000014 .LVL37
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:295    .text.l2_packet_get_own_addr:0000000000000022 .LVL38
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2973   .debug_str:000000000000045f .LASF79
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:231    .text.l2_packet_deinit:0000000000000000 .LFB74
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:266    .text.l2_packet_deinit:0000000000000034 .LFE74
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2496   .debug_loc:000000000000017e .LLST21
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:248    .text.l2_packet_deinit:0000000000000016 .LVL31
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:252    .text.l2_packet_deinit:0000000000000020 .LVL32
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:256    .text.l2_packet_deinit:000000000000002a .LVL33
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2993   .debug_str:000000000000054f .LASF80
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:204    .text.l2_packet_init_bridge:0000000000000000 .LFB73
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:224    .text.l2_packet_init_bridge:0000000000000012 .LFE73
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2891   .debug_str:0000000000000148 .LASF81
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2511   .debug_loc:00000000000001a7 .LLST14
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2991   .debug_str:0000000000000548 .LASF82
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2525   .debug_loc:00000000000001c8 .LLST15
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2883   .debug_str:000000000000011f .LASF83
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2539   .debug_loc:00000000000001e9 .LLST16
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3003   .debug_str:0000000000000590 .LASF84
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2557   .debug_loc:0000000000000215 .LLST17
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2571   .debug_loc:0000000000000236 .LLST18
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2589   .debug_loc:0000000000000262 .LLST19
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2607   .debug_loc:000000000000028e .LLST20
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:222    .text.l2_packet_init_bridge:0000000000000012 .LVL28
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2903   .debug_str:00000000000001a2 .LASF85
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:100    .text.l2_packet_init:0000000000000000 .LFB72
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:197    .text.l2_packet_init:0000000000000076 .LFE72
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2621   .debug_loc:00000000000002af .LLST7
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2632   .debug_loc:00000000000002cd .LLST8
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2646   .debug_loc:00000000000002ee .LLST9
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2660   .debug_loc:000000000000030f .LLST10
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2671   .debug_loc:000000000000032d .LLST11
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2682   .debug_loc:000000000000034b .LLST12
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2693   .debug_loc:0000000000000369 .LLST13
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:186    .text.l2_packet_init:0000000000000068 .LDL1
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:127    .text.l2_packet_init:000000000000001c .LVL14
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:146    .text.l2_packet_init:0000000000000036 .LVL16
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:156    .text.l2_packet_init:0000000000000044 .LVL17
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:168    .text.l2_packet_init:000000000000005e .LVL18
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:190    .text.l2_packet_init:0000000000000072 .LVL20
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2875   .debug_str:00000000000000e9 .LASF102
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:13     .text.l2_packet_receive:0000000000000000 .LFB71
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:93     .text.l2_packet_receive:000000000000005a .LFE71
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2704   .debug_loc:0000000000000387 .LLST0
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2895   .debug_str:000000000000016b .LASF86
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2715   .debug_loc:00000000000003a5 .LLST1
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3039   .debug_str:0000000000000685 .LASF87
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2726   .debug_loc:00000000000003c3 .LLST2
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2740   .debug_loc:00000000000003e4 .LLST3
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2751   .debug_loc:0000000000000402 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2766   .debug_loc:000000000000042b .LLST5
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2785   .debug_loc:0000000000000458 .LLST6
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:40     .text.l2_packet_receive:0000000000000018 .LVL3
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:54     .text.l2_packet_receive:000000000000002e .LVL5
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:64     .text.l2_packet_receive:000000000000003e .LVL7
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:90     .text.l2_packet_receive:0000000000000058 .LVL11
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2927   .debug_str:000000000000033a .LASF88
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2857   .debug_str:0000000000000092 .LASF89
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2955   .debug_str:00000000000003f5 .LASF90
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2953   .debug_str:00000000000003da .LASF91
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2959   .debug_str:0000000000000406 .LASF92
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2931   .debug_str:000000000000034f .LASF93
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3035   .debug_str:0000000000000672 .LASF94
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3015   .debug_str:00000000000005e7 .LASF95
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:3005   .debug_str:0000000000000599 .LASF96
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2937   .debug_str:0000000000000366 .LASF97
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:2881   .debug_str:0000000000000115 .LASF98
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:403    .text.l2_packet_set_packet_filter:0000000000000000 .LVL52
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:407    .text.l2_packet_set_packet_filter:0000000000000002 .LVL53
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:372    .text.l2_packet_get_ip_addr:0000000000000000 .LVL49
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:376    .text.l2_packet_get_ip_addr:0000000000000002 .LVL50
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:314    .text.l2_packet_send:0000000000000000 .LVL39
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:339    .text.l2_packet_send:000000000000001a .LVL43
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:354    .text.l2_packet_send:0000000000000032 .LVL47
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:358    .text.l2_packet_send:0000000000000034 .LVL48
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:327    .text.l2_packet_send:0000000000000012 .LVL40
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:329    .text.l2_packet_send:0000000000000014 .LVL41
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:344    .text.l2_packet_send:0000000000000020 .LVL45
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:342    .text.l2_packet_send:000000000000001e .LVL44
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:276    .text.l2_packet_get_own_addr:0000000000000000 .LVL35
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:284    .text.l2_packet_get_own_addr:000000000000000a .LVL36
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:234    .text.l2_packet_deinit:0000000000000000 .LVL29
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:246    .text.l2_packet_deinit:000000000000000e .LVL30
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:262    .text.l2_packet_deinit:0000000000000032 .LVL34
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:207    .text.l2_packet_init_bridge:0000000000000000 .LVL22
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:211    .text.l2_packet_init_bridge:0000000000000002 .LVL23
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:213    .text.l2_packet_init_bridge:0000000000000004 .LVL24
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:215    .text.l2_packet_init_bridge:0000000000000006 .LVL25
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:217    .text.l2_packet_init_bridge:0000000000000008 .LVL26
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:219    .text.l2_packet_init_bridge:000000000000000a .LVL27
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:103    .text.l2_packet_init:0000000000000000 .LVL12
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:119    .text.l2_packet_init:000000000000000c .LVL13
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:129    .text.l2_packet_init:000000000000001e .LVL15
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:183    .text.l2_packet_init:0000000000000068 .LVL19
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:194    .text.l2_packet_init:0000000000000074 .LVL21
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:17     .text.l2_packet_receive:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:29     .text.l2_packet_receive:000000000000000e .LVL1
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:32     .text.l2_packet_receive:0000000000000010 .LVL2
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:52     .text.l2_packet_receive:0000000000000026 .LVL4
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:75     .text.l2_packet_receive:0000000000000046 .LVL8
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:87     .text.l2_packet_receive:0000000000000052 .LVL10
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:59     .text.l2_packet_receive:0000000000000034 .LVL6
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:83     .text.l2_packet_receive:000000000000004a .LVL9
+C:\Users\stapi\AppData\Local\Temp\cchuhjWK.s:432    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+__riscv_save_3
+os_zalloc
+lwip_recv
+os_free
+__riscv_restore_3
+__riscv_save_6
+net_if_find_from_name
+net_l2_socket_create
+eloop_register_read_sock
+__riscv_restore_6
+__riscv_save_1
+eloop_unregister_read_sock
+net_l2_socket_delete
+__riscv_restore_1
+net_if_get_mac_addr
+os_memcpy
+__riscv_save_0
+net_l2_send
+__riscv_restore_0

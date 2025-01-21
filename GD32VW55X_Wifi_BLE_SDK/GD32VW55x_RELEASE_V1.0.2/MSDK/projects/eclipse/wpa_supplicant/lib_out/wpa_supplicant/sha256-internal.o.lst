@@ -1,0 +1,2231 @@
+   1              		.file	"sha256-internal.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.sha256_compress,"ax",@progbits
+  10              		.align	1
+  12              	sha256_compress:
+  13              	.LFB433:
+  14              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * SHA-256 hash implementation and interface functions
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * Copyright (c) 2003-2011, Jouni Malinen <j@w1.fi>
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  *
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * This software may be distributed under the terms of the BSD license.
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * See README for more details.
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  */
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #include "gd32vw55x_hau.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #include "includes.h"
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #include "common.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #include "sha256.h"
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #include "sha256_i.h"
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #include "crypto.h"
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /**
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * sha256_vector - SHA256 hash for data vector
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * @num_elem: Number of elements in the data vector
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * @addr: Pointers to the data areas
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * @len: Lengths of the data blocks
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * @mac: Buffer for the hash
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * Returns: 0 on success, -1 of failure
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  */
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** int sha256_vector(size_t num_elem, const u8 *addr[], const size_t *len,
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		  u8 *mac)
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** {
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #ifdef WPA_HW_SECURITY_ENGINE_ENABLE
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	uint8_t *input = NULL;
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	uint32_t input_len = 0;
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	uint32_t i;
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	int ret;
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	for (i = 0; i < num_elem; i++) {
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		input_len += len[i];
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	input = (uint8_t *)os_malloc(input_len * sizeof(uint8_t));
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	if(NULL == input)
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		return -1;
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	for (i = 0, input_len = 0; i < num_elem; i++) {
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		os_memcpy(input + input_len, addr[i], len[i]);
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		input_len += len[i];
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	HW_ACC_ENGINE_LOCK();
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	ret = hau_hash_sha_256(input, input_len, mac);
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	HW_ACC_ENGINE_UNLOCK();
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	os_free(input);
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	return (ret == ERROR) ? -1 : 0;
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #else
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	struct sha256_state ctx;
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	size_t i;
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	if (TEST_FAIL())
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		return -1;
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	sha256_init(&ctx);
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	for (i = 0; i < num_elem; i++)
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		if (sha256_process(&ctx, addr[i], len[i]))
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			return -1;
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	if (sha256_done(&ctx, mac))
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		return -1;
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	return 0;
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #endif
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** }
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /* ===== start - public domain SHA256 implementation ===== */
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /* This is based on SHA256 implementation in LibTomCrypt that was released into
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****  * public domain by Tom St Denis. */
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /* the K array */
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** static const unsigned long K[64] = {
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0x428a2f98UL, 0x71374491UL, 0xb5c0fbcfUL, 0xe9b5dba5UL, 0x3956c25bUL,
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0x59f111f1UL, 0x923f82a4UL, 0xab1c5ed5UL, 0xd807aa98UL, 0x12835b01UL,
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0x243185beUL, 0x550c7dc3UL, 0x72be5d74UL, 0x80deb1feUL, 0x9bdc06a7UL,
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0xc19bf174UL, 0xe49b69c1UL, 0xefbe4786UL, 0x0fc19dc6UL, 0x240ca1ccUL,
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0x2de92c6fUL, 0x4a7484aaUL, 0x5cb0a9dcUL, 0x76f988daUL, 0x983e5152UL,
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0xa831c66dUL, 0xb00327c8UL, 0xbf597fc7UL, 0xc6e00bf3UL, 0xd5a79147UL,
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0x06ca6351UL, 0x14292967UL, 0x27b70a85UL, 0x2e1b2138UL, 0x4d2c6dfcUL,
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0x53380d13UL, 0x650a7354UL, 0x766a0abbUL, 0x81c2c92eUL, 0x92722c85UL,
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0xa2bfe8a1UL, 0xa81a664bUL, 0xc24b8b70UL, 0xc76c51a3UL, 0xd192e819UL,
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0xd6990624UL, 0xf40e3585UL, 0x106aa070UL, 0x19a4c116UL, 0x1e376c08UL,
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0x2748774cUL, 0x34b0bcb5UL, 0x391c0cb3UL, 0x4ed8aa4aUL, 0x5b9cca4fUL,
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0x682e6ff3UL, 0x748f82eeUL, 0x78a5636fUL, 0x84c87814UL, 0x8cc70208UL,
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	0x90befffaUL, 0xa4506cebUL, 0xbef9a3f7UL, 0xc67178f2UL
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** };
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /* Various logical functions */
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define RORc(x, y) \
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** ( ((((unsigned long) (x) & 0xFFFFFFFFUL) >> (unsigned long) ((y) & 31)) | \
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    ((unsigned long) (x) << (unsigned long) (32 - ((y) & 31)))) & 0xFFFFFFFFUL)
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define Ch(x,y,z)       (z ^ (x & (y ^ z)))
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define Maj(x,y,z)      (((x | y) & z) | (x & y))
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define S(x, n)         RORc((x), (n))
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define R(x, n)         (((x)&0xFFFFFFFFUL)>>(n))
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define Sigma0(x)       (S(x, 2) ^ S(x, 13) ^ S(x, 22))
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define Sigma1(x)       (S(x, 6) ^ S(x, 11) ^ S(x, 25))
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define Gamma0(x)       (S(x, 7) ^ S(x, 18) ^ R(x, 3))
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define Gamma1(x)       (S(x, 17) ^ S(x, 19) ^ R(x, 10))
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #ifndef MIN
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define MIN(x, y) (((x) < (y)) ? (x) : (y))
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #endif
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /* compress 512-bits */
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** static int sha256_compress(struct sha256_state *md, unsigned char *buf)
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** {
+  15              		.loc 1 111 1
+  16              		.cfi_startproc
+  17              	.LVL0:
+  18 0000 17030000 		call	t0,__riscv_save_3
+  18      E7020300 
+  19              		.cfi_offset 18, -16
+  20              		.cfi_offset 9, -12
+  21              		.cfi_offset 8, -8
+  22              		.cfi_offset 1, -4
+  23              		.cfi_def_cfa_offset 16
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	u32 S[8], W[64], t0, t1;
+  24              		.loc 1 112 2
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	u32 t;
+  25              		.loc 1 113 2
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	int i;
+  26              		.loc 1 114 2
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* copy state into S */
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	for (i = 0; i < 8; i++) {
+  27              		.loc 1 117 2
+  28              	.LVL1:
+  29              		.loc 1 117 14
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	u32 S[8], W[64], t0, t1;
+  30              		.loc 1 111 1 is_stmt 0
+  31 0008 6971     		addi	sp,sp,-304
+  32              		.cfi_def_cfa_offset 320
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	u32 S[8], W[64], t0, t1;
+  33              		.loc 1 111 1
+  34 000a 2A84     		mv	s0,a0
+  35 000c AE84     		mv	s1,a1
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		S[i] = md->state[i];
+  36              		.loc 1 118 8
+  37 000e 13060002 		li	a2,32
+  38 0012 93058500 		addi	a1,a0,8
+  39              	.LVL2:
+  40 0016 0808     		addi	a0,sp,16
+  41              	.LVL3:
+  42 0018 2EC6     		sw	a1,12(sp)
+  43 001a 97000000 		call	memcpy
+  43      E7800000 
+  44              	.LVL4:
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* copy the state into 512-bits into W[0..15] */
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	for (i = 0; i < 16; i++)
+  45              		.loc 1 122 2
+  46 0022 B245     		lw	a1,12(sp)
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		S[i] = md->state[i];
+  47              		.loc 1 118 8
+  48 0024 0147     		li	a4,0
+  49              		.loc 1 122 2
+  50 0026 13050004 		li	a0,64
+  51              	.L2:
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = WPA_GET_BE32(buf + (4 * i));
+  52              		.loc 1 123 3 is_stmt 1 discriminator 3
+  53              	.LVL5:
+  54              		.file 2 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/common.h"
+   1:..\..\..\..\wpa_supplicant\src\utils/common.h **** /*
+   2:..\..\..\..\wpa_supplicant\src\utils/common.h ****  * wpa_supplicant/hostapd / common helper functions, etc.
+   3:..\..\..\..\wpa_supplicant\src\utils/common.h ****  * Copyright (c) 2002-2007, Jouni Malinen <j@w1.fi>
+   4:..\..\..\..\wpa_supplicant\src\utils/common.h ****  *
+   5:..\..\..\..\wpa_supplicant\src\utils/common.h ****  * This software may be distributed under the terms of the BSD license.
+   6:..\..\..\..\wpa_supplicant\src\utils/common.h ****  * See README for more details.
+   7:..\..\..\..\wpa_supplicant\src\utils/common.h ****  */
+   8:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+   9:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef COMMON_H
+  10:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define COMMON_H
+  11:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  12:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include "os.h"
+  13:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  14:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if defined(__linux__) || defined(__GLIBC__)
+  15:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <endian.h>
+  16:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <byteswap.h>
+  17:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __linux__ */
+  18:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  19:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || \
+  20:..\..\..\..\wpa_supplicant\src\utils/common.h ****     defined(__OpenBSD__)
+  21:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <sys/types.h>
+  22:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <sys/endian.h>
+  23:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER	_BYTE_ORDER
+  24:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define	__LITTLE_ENDIAN	_LITTLE_ENDIAN
+  25:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define	__BIG_ENDIAN	_BIG_ENDIAN
+  26:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef __OpenBSD__
+  27:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_16 swap16
+  28:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_32 swap32
+  29:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_64 swap64
+  30:..\..\..\..\wpa_supplicant\src\utils/common.h **** #else /* __OpenBSD__ */
+  31:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_16 bswap16
+  32:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_32 bswap32
+  33:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_64 bswap64
+  34:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __OpenBSD__ */
+  35:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* defined(__FreeBSD__) || defined(__NetBSD__) ||
+  36:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	* defined(__DragonFly__) || defined(__OpenBSD__) */
+  37:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  38:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef __APPLE__
+  39:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <sys/types.h>
+  40:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <machine/endian.h>
+  41:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER	_BYTE_ORDER
+  42:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __LITTLE_ENDIAN	_LITTLE_ENDIAN
+  43:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BIG_ENDIAN	_BIG_ENDIAN
+  44:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned short bswap_16(unsigned short v)
+  45:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  46:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 8) | (v >> 8);
+  47:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+  48:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  49:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned int bswap_32(unsigned int v)
+  50:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  51:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 24) | ((v & 0xff00) << 8) |
+  52:..\..\..\..\wpa_supplicant\src\utils/common.h **** 		((v & 0xff0000) >> 8) | (v >> 24);
+  53:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+  54:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __APPLE__ */
+  55:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  56:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef CONFIG_GDWIFI
+  57:..\..\..\..\wpa_supplicant\src\utils/common.h **** // #include <sys/types.h>
+  58:..\..\..\..\wpa_supplicant\src\utils/common.h **** // #include <machine/endian.h>
+  59:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER	BYTE_ORDER
+  60:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __LITTLE_ENDIAN	LITTLE_ENDIAN
+  61:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BIG_ENDIAN	BIG_ENDIAN
+  62:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define ETHER_ADDR_LEN	6
+  63:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define ETH_P_802_3	0x0001		/* Dummy type for 802.3 frames  */
+  64:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  65:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned short bswap_16(unsigned short v)
+  66:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  67:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 8) | (v >> 8);
+  68:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+  69:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  70:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned int bswap_32(unsigned int v)
+  71:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  72:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 24) | ((v & 0xff00) << 8) |
+  73:..\..\..\..\wpa_supplicant\src\utils/common.h **** 		((v & 0xff0000) >> 8) | (v >> 24);
+  74:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+  75:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  76:..\..\..\..\wpa_supplicant\src\utils/common.h **** struct ether_header
+  77:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+  78:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	uint8_t  ether_dhost[ETHER_ADDR_LEN];
+  79:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	uint8_t  ether_shost[ETHER_ADDR_LEN];
+  80:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	uint16_t ether_type;
+  81:..\..\..\..\wpa_supplicant\src\utils/common.h **** } __PACKED;
+  82:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* CONFIG_GDWIFI */
+  83:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef __rtems__
+  84:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <rtems/endian.h>
+  85:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER BYTE_ORDER
+  86:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __LITTLE_ENDIAN LITTLE_ENDIAN
+  87:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BIG_ENDIAN BIG_ENDIAN
+  88:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_16 CPU_swap_u16
+  89:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define bswap_32 CPU_swap_u32
+  90:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __rtems__ */
+  91:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  92:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef CONFIG_NATIVE_WINDOWS
+  93:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <winsock.h>
+  94:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  95:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int socklen_t;
+  96:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+  97:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef MSG_DONTWAIT
+  98:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define MSG_DONTWAIT 0 /* not supported */
+  99:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 100:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 101:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* CONFIG_NATIVE_WINDOWS */
+ 102:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 103:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef _MSC_VER
+ 104:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define inline __inline
+ 105:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 106:..\..\..\..\wpa_supplicant\src\utils/common.h **** #undef vsnprintf
+ 107:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define vsnprintf _vsnprintf
+ 108:..\..\..\..\wpa_supplicant\src\utils/common.h **** #undef close
+ 109:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define close closesocket
+ 110:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* _MSC_VER */
+ 111:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 112:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 113:..\..\..\..\wpa_supplicant\src\utils/common.h **** /* Define platform specific integer types */
+ 114:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 115:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef _MSC_VER
+ 116:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT64 u64;
+ 117:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT32 u32;
+ 118:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT16 u16;
+ 119:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT8 u8;
+ 120:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT64 s64;
+ 121:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT32 s32;
+ 122:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT16 s16;
+ 123:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT8 s8;
+ 124:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_TYPES_DEFINED
+ 125:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* _MSC_VER */
+ 126:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 127:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef __vxworks
+ 128:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef unsigned long long u64;
+ 129:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT32 u32;
+ 130:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT16 u16;
+ 131:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef UINT8 u8;
+ 132:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef long long s64;
+ 133:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT32 s32;
+ 134:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT16 s16;
+ 135:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef INT8 s8;
+ 136:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_TYPES_DEFINED
+ 137:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __vxworks */
+ 138:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 139:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef WPA_TYPES_DEFINED
+ 140:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifdef CONFIG_USE_INTTYPES_H
+ 141:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <inttypes.h>
+ 142:..\..\..\..\wpa_supplicant\src\utils/common.h **** #else
+ 143:..\..\..\..\wpa_supplicant\src\utils/common.h **** #include <stdint.h>
+ 144:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 145:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef uint64_t u64;
+ 146:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef uint32_t u32;
+ 147:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef uint16_t u16;
+ 148:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef uint8_t u8;
+ 149:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int64_t s64;
+ 150:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int32_t s32;
+ 151:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int16_t s16;
+ 152:..\..\..\..\wpa_supplicant\src\utils/common.h **** typedef int8_t s8;
+ 153:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_TYPES_DEFINED
+ 154:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* !WPA_TYPES_DEFINED */
+ 155:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 156:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 157:..\..\..\..\wpa_supplicant\src\utils/common.h **** /* Define platform specific byte swapping macros */
+ 158:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 159:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if defined(__CYGWIN__) || defined(CONFIG_NATIVE_WINDOWS)
+ 160:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 161:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned short wpa_swap_16(unsigned short v)
+ 162:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 163:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 8) | (v >> 8);
+ 164:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 165:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 166:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline unsigned int wpa_swap_32(unsigned int v)
+ 167:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 168:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((v & 0xff) << 24) | ((v & 0xff00) << 8) |
+ 169:..\..\..\..\wpa_supplicant\src\utils/common.h **** 		((v & 0xff0000) >> 8) | (v >> 24);
+ 170:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 171:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 172:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host16(n) (n)
+ 173:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le16(n) (n)
+ 174:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host16(n) wpa_swap_16(n)
+ 175:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be16(n) wpa_swap_16(n)
+ 176:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host32(n) (n)
+ 177:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le32(n) (n)
+ 178:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host32(n) wpa_swap_32(n)
+ 179:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be32(n) wpa_swap_32(n)
+ 180:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le64(n) (n)
+ 181:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 182:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_BYTE_SWAP_DEFINED
+ 183:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 184:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __CYGWIN__ || CONFIG_NATIVE_WINDOWS */
+ 185:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 186:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 187:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef WPA_BYTE_SWAP_DEFINED
+ 188:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 189:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef __BYTE_ORDER
+ 190:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef __LITTLE_ENDIAN
+ 191:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef __BIG_ENDIAN
+ 192:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __LITTLE_ENDIAN 1234
+ 193:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BIG_ENDIAN 4321
+ 194:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if defined(sparc)
+ 195:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define __BYTE_ORDER __BIG_ENDIAN
+ 196:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 197:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __BIG_ENDIAN */
+ 198:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __LITTLE_ENDIAN */
+ 199:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* __BYTE_ORDER */
+ 200:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 201:..\..\..\..\wpa_supplicant\src\utils/common.h **** #if __BYTE_ORDER == __LITTLE_ENDIAN
+ 202:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host16(n) ((__force u16) (le16) (n))
+ 203:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le16(n) ((__force le16) (u16) (n))
+ 204:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host16(n) bswap_16((__force u16) (be16) (n))
+ 205:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be16(n) ((__force be16) bswap_16((n)))
+ 206:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host32(n) ((__force u32) (le32) (n))
+ 207:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le32(n) ((__force le32) (u32) (n))
+ 208:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host32(n) bswap_32((__force u32) (be32) (n))
+ 209:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be32(n) ((__force be32) bswap_32((n)))
+ 210:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host64(n) ((__force u64) (le64) (n))
+ 211:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le64(n) ((__force le64) (u64) (n))
+ 212:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host64(n) bswap_64((__force u64) (be64) (n))
+ 213:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be64(n) ((__force be64) bswap_64((n)))
+ 214:..\..\..\..\wpa_supplicant\src\utils/common.h **** #elif __BYTE_ORDER == __BIG_ENDIAN
+ 215:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host16(n) bswap_16(n)
+ 216:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le16(n) bswap_16(n)
+ 217:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host16(n) (n)
+ 218:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be16(n) (n)
+ 219:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host32(n) bswap_32(n)
+ 220:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le32(n) bswap_32(n)
+ 221:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host32(n) (n)
+ 222:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be32(n) (n)
+ 223:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define le_to_host64(n) bswap_64(n)
+ 224:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_le64(n) bswap_64(n)
+ 225:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define be_to_host64(n) (n)
+ 226:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define host_to_be64(n) (n)
+ 227:..\..\..\..\wpa_supplicant\src\utils/common.h **** #ifndef WORDS_BIGENDIAN
+ 228:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WORDS_BIGENDIAN
+ 229:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 230:..\..\..\..\wpa_supplicant\src\utils/common.h **** #else
+ 231:..\..\..\..\wpa_supplicant\src\utils/common.h **** #error Could not determine CPU byte order
+ 232:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif
+ 233:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 234:..\..\..\..\wpa_supplicant\src\utils/common.h **** #define WPA_BYTE_SWAP_DEFINED
+ 235:..\..\..\..\wpa_supplicant\src\utils/common.h **** #endif /* !WPA_BYTE_SWAP_DEFINED */
+ 236:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 237:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 238:..\..\..\..\wpa_supplicant\src\utils/common.h **** /* Macros for handling unaligned memory accesses */
+ 239:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 240:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline u16 WPA_GET_BE16(const u8 *a)
+ 241:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 242:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return (a[0] << 8) | a[1];
+ 243:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 244:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 245:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline void WPA_PUT_BE16(u8 *a, u16 val)
+ 246:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 247:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[0] = val >> 8;
+ 248:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = val & 0xff;
+ 249:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 250:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 251:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline u16 WPA_GET_LE16(const u8 *a)
+ 252:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 253:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return (a[1] << 8) | a[0];
+ 254:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 255:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 256:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline void WPA_PUT_LE16(u8 *a, u16 val)
+ 257:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 258:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = val >> 8;
+ 259:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[0] = val & 0xff;
+ 260:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 261:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 262:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline u32 WPA_GET_BE24(const u8 *a)
+ 263:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 264:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return (a[0] << 16) | (a[1] << 8) | a[2];
+ 265:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 266:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 267:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline void WPA_PUT_BE24(u8 *a, u32 val)
+ 268:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 269:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[0] = (val >> 16) & 0xff;
+ 270:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = (val >> 8) & 0xff;
+ 271:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[2] = val & 0xff;
+ 272:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 273:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 274:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline u32 WPA_GET_BE32(const u8 *a)
+ 275:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 276:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((u32) a[0] << 24) | (a[1] << 16) | (a[2] << 8) | a[3];
+  55              		.loc 2 276 2 discriminator 3
+  56 002a 3386E400 		add	a2,s1,a4
+  57              	.LVL6:
+  58 002e 83461600 		lbu	a3,1(a2)
+  59 0032 83470600 		lbu	a5,0(a2)
+  60 0036 A206     		slli	a3,a3,8
+  61 0038 DD8E     		or	a3,a3,a5
+  62 003a 83472600 		lbu	a5,2(a2)
+  63 003e C207     		slli	a5,a5,16
+  64 0040 DD8E     		or	a3,a5,a3
+  65 0042 83473600 		lbu	a5,3(a2)
+  66 0046 E207     		slli	a5,a5,24
+  67 0048 D58F     		or	a5,a5,a3
+  68              		.loc 1 123 8 is_stmt 0 discriminator 3
+  69 004a 1418     		addi	a3,sp,48
+  70 004c BA96     		add	a3,a3,a4
+  71 004e 93D78769 		rev8	a5,a5
+  72              	.LVL7:
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = WPA_GET_BE32(buf + (4 * i));
+  73              		.loc 1 122 2 discriminator 3
+  74 0052 1107     		addi	a4,a4,4
+  75              		.loc 1 123 8 discriminator 3
+  76 0054 9CC2     		sw	a5,0(a3)
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = WPA_GET_BE32(buf + (4 * i));
+  77              		.loc 1 122 22 is_stmt 1 discriminator 3
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = WPA_GET_BE32(buf + (4 * i));
+  78              		.loc 1 122 14 discriminator 3
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = WPA_GET_BE32(buf + (4 * i));
+  79              		.loc 1 122 2 is_stmt 0 discriminator 3
+  80 0056 E31AA7FC 		bne	a4,a0,.L2
+  81 005a 1818     		addi	a4,sp,48
+  82 005c 8819     		addi	a0,sp,240
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* fill W[16..63] */
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	for (i = 16; i < 64; i++) {
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) +
+  83              		.loc 1 127 10
+  84 005e 3D4E     		li	t3,15
+  85 0060 3543     		li	t1,13
+  86              		.loc 1 127 40
+  87 0062 B948     		li	a7,14
+  88              	.L3:
+  89              		.loc 1 127 3 is_stmt 1 discriminator 3
+  90              		.loc 1 127 10 is_stmt 0 discriminator 3
+  91 0064 145F     		lw	a3,56(a4)
+  92              		.loc 1 127 40 discriminator 3
+  93 0066 5043     		lw	a2,4(a4)
+  94              		.loc 1 127 10 discriminator 3
+  95 0068 33986660 		rol	a6,a3,t1
+  96 006c B397C661 		rol	a5,a3,t3
+  97 0070 A982     		srli	a3,a3,10
+  98 0072 B3C70701 		xor	a5,a5,a6
+  99 0076 B58F     		xor	a5,a5,a3
+ 100              		.loc 1 127 58 discriminator 3
+ 101 0078 03280700 		lw	a6,0(a4)
+ 102 007c 5453     		lw	a3,36(a4)
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) +
+ 103              		.loc 1 126 2 discriminator 3
+ 104 007e 1107     		addi	a4,a4,4
+ 105              		.loc 1 127 58 discriminator 3
+ 106 0080 C296     		add	a3,a3,a6
+ 107 0082 B697     		add	a5,a5,a3
+ 108              		.loc 1 127 40 discriminator 3
+ 109 0084 33181661 		rol	a6,a2,a7
+ 110 0088 93567660 		rori	a3,a2,7
+ 111 008c 0D82     		srli	a2,a2,3
+ 112 008e B3C60601 		xor	a3,a3,a6
+ 113 0092 B18E     		xor	a3,a3,a2
+ 114              		.loc 1 127 58 discriminator 3
+ 115 0094 B697     		add	a5,a5,a3
+ 116              		.loc 1 127 8 discriminator 3
+ 117 0096 5CDF     		sw	a5,60(a4)
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) +
+ 118              		.loc 1 126 23 is_stmt 1 discriminator 3
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) +
+ 119              		.loc 1 126 15 discriminator 3
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) +
+ 120              		.loc 1 126 2 is_stmt 0 discriminator 3
+ 121 0098 E316E5FC 		bne	a0,a4,.L3
+ 122 009c B254     		lw	s1,44(sp)
+ 123              	.LVL8:
+ 124 009e 0256     		lw	a2,32(sp)
+ 125 00a0 2258     		lw	a6,40(sp)
+ 126 00a2 125E     		lw	t3,36(sp)
+ 127 00a4 C246     		lw	a3,16(sp)
+ 128 00a6 5245     		lw	a0,20(sp)
+ 129 00a8 6243     		lw	t1,24(sp)
+ 130 00aa 724F     		lw	t5,28(sp)
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			W[i - 16];
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* Compress */
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #define RND(a,b,c,d,e,f,g,h,i)                          \
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	t0 = h + Sigma1(e) + Ch(e, f, g) + K[i] + W[i];	\
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	t1 = Sigma0(a) + Maj(a, b, c);			\
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	d += t0;					\
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	h  = t0 + t1;
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	for (i = 0; i < 64; ++i) {
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		RND(S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7], i);
+ 131              		.loc 1 139 3
+ 132 00ac B70E0000 		lui	t4,%hi(.LANCHOR0)
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		W[i] = Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) +
+ 133              		.loc 1 126 2
+ 134 00b0 8148     		li	a7,0
+ 135              		.loc 1 139 3
+ 136 00b2 9D43     		li	t2,7
+ 137 00b4 938E0E00 		addi	t4,t4,%lo(.LANCHOR0)
+ 138 00b8 A942     		li	t0,10
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		RND(S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7], i);
+ 139              		.loc 1 138 2
+ 140 00ba 930F0010 		li	t6,256
+ 141              	.L4:
+ 142              		.loc 1 139 3 is_stmt 1 discriminator 3
+ 143 00be 1357B660 		rori	a4,a2,11
+ 144 00c2 13090103 		addi	s2,sp,48
+ 145 00c6 93576660 		rori	a5,a2,6
+ 146 00ca B98F     		xor	a5,a5,a4
+ 147 00cc 33177660 		rol	a4,a2,t2
+ 148 00d0 4699     		add	s2,s2,a7
+ 149 00d2 B98F     		xor	a5,a5,a4
+ 150 00d4 33871E01 		add	a4,t4,a7
+ 151 00d8 03290900 		lw	s2,0(s2)
+ 152 00dc 1843     		lw	a4,0(a4)
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		RND(S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7], i);
+ 153              		.loc 1 138 2 is_stmt 0 discriminator 3
+ 154 00de 9108     		addi	a7,a7,4
+ 155              		.loc 1 139 3 discriminator 3
+ 156 00e0 4A97     		add	a4,a4,s2
+ 157 00e2 BA97     		add	a5,a5,a4
+ 158 00e4 3347C801 		xor	a4,a6,t3
+ 159 00e8 718F     		and	a4,a4,a2
+ 160 00ea 33470701 		xor	a4,a4,a6
+ 161 00ee BA97     		add	a5,a5,a4
+ 162 00f0 A697     		add	a5,a5,s1
+ 163              	.LVL9:
+ 164              		.loc 1 139 3 is_stmt 1 discriminator 3
+ 165 00f2 93D4D660 		rori	s1,a3,13
+ 166 00f6 13D72660 		rori	a4,a3,2
+ 167 00fa 258F     		xor	a4,a4,s1
+ 168 00fc B3945660 		rol	s1,a3,t0
+ 169 0100 258F     		xor	a4,a4,s1
+ 170 0102 B364D500 		or	s1,a0,a3
+ 171 0106 3379D500 		and	s2,a0,a3
+ 172 010a B3F46400 		and	s1,s1,t1
+ 173 010e B3E42401 		or	s1,s1,s2
+ 174 0112 2697     		add	a4,a4,s1
+ 175              	.LVL10:
+ 176              		.loc 1 139 3 discriminator 3
+ 177 0114 3309FF00 		add	s2,t5,a5
+ 178              		.loc 1 139 3 discriminator 3
+ 179 0118 C284     		mv	s1,a6
+ 180 011a BA97     		add	a5,a5,a4
+ 181              	.LVL11:
+ 182              		.loc 1 139 57 discriminator 3
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		t = S[7]; S[7] = S[6]; S[6] = S[5]; S[5] = S[4];
+ 183              		.loc 1 140 3 discriminator 3
+ 184              		.loc 1 140 13 discriminator 3
+ 185              		.loc 1 140 26 discriminator 3
+ 186              		.loc 1 140 39 discriminator 3
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		S[4] = S[3]; S[3] = S[2]; S[2] = S[1]; S[1] = S[0]; S[0] = t;
+ 187              		.loc 1 141 3 discriminator 3
+ 188              		.loc 1 141 16 discriminator 3
+ 189              		.loc 1 141 29 discriminator 3
+ 190              		.loc 1 141 42 discriminator 3
+ 191              		.loc 1 141 55 discriminator 3
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		RND(S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7], i);
+ 192              		.loc 1 138 22 discriminator 3
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		RND(S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7], i);
+ 193              		.loc 1 138 14 discriminator 3
+ 194 011c 1A8F     		mv	t5,t1
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		RND(S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7], i);
+ 195              		.loc 1 138 2 is_stmt 0 discriminator 3
+ 196 011e 639BF803 		bne	a7,t6,.L6
+ 197 0122 3EC8     		sw	a5,16(sp)
+ 198 0124 42D6     		sw	a6,44(sp)
+ 199 0126 4AD0     		sw	s2,32(sp)
+ 200 0128 72D4     		sw	t3,40(sp)
+ 201 012a 32D2     		sw	a2,36(sp)
+ 202 012c 36CA     		sw	a3,20(sp)
+ 203 012e 2ACC     		sw	a0,24(sp)
+ 204 0130 1ACE     		sw	t1,28(sp)
+ 205 0132 1C08     		addi	a5,sp,16
+ 206              	.LVL12:
+ 207 0134 13048402 		addi	s0,s0,40
+ 208              	.LVL13:
+ 209              	.L5:
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* feedback */
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	for (i = 0; i < 8; i++) {
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		md->state[i] = md->state[i] + S[i];
+ 210              		.loc 1 146 3 is_stmt 1 discriminator 3
+ 211              		.loc 1 146 31 is_stmt 0 discriminator 3
+ 212 0138 9841     		lw	a4,0(a1)
+ 213 013a 9443     		lw	a3,0(a5)
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		md->state[i] = md->state[i] + S[i];
+ 214              		.loc 1 145 2 discriminator 3
+ 215 013c 9107     		addi	a5,a5,4
+ 216              		.loc 1 146 31 discriminator 3
+ 217 013e 3697     		add	a4,a4,a3
+ 218              		.loc 1 146 16 discriminator 3
+ 219 0140 98C1     		sw	a4,0(a1)
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		md->state[i] = md->state[i] + S[i];
+ 220              		.loc 1 145 21 is_stmt 1 discriminator 3
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		md->state[i] = md->state[i] + S[i];
+ 221              		.loc 1 145 14 discriminator 3
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		md->state[i] = md->state[i] + S[i];
+ 222              		.loc 1 145 2 is_stmt 0 discriminator 3
+ 223 0142 9105     		addi	a1,a1,4
+ 224 0144 E39A85FE 		bne	a1,s0,.L5
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	return 0;
+ 225              		.loc 1 148 2 is_stmt 1
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** }
+ 226              		.loc 1 149 1 is_stmt 0
+ 227 0148 0145     		li	a0,0
+ 228              	.LVL14:
+ 229 014a 5561     		addi	sp,sp,304
+ 230              		.cfi_remember_state
+ 231              		.cfi_def_cfa_offset 0
+ 232              	.LVL15:
+ 233 014c 17030000 		tail	__riscv_restore_3
+ 233      67000300 
+ 234              		.cfi_restore 18
+ 235              		.cfi_restore 9
+ 236              		.cfi_restore 8
+ 237              		.cfi_restore 1
+ 238              		.cfi_def_cfa_offset -16
+ 239              	.LVL16:
+ 240              	.L6:
+ 241              		.cfi_restore_state
+ 242 0154 2A83     		mv	t1,a0
+ 243 0156 7288     		mv	a6,t3
+ 244 0158 3685     		mv	a0,a3
+ 245 015a 328E     		mv	t3,a2
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		t = S[7]; S[7] = S[6]; S[6] = S[5]; S[5] = S[4];
+ 246              		.loc 1 139 3
+ 247 015c BE86     		mv	a3,a5
+ 248 015e 4A86     		mv	a2,s2
+ 249 0160 B9BF     		j	.L4
+ 250              		.cfi_endproc
+ 251              	.LFE433:
+ 253              		.section	.text.sha256_vector,"ax",@progbits
+ 254              		.align	1
+ 255              		.globl	sha256_vector
+ 257              	sha256_vector:
+ 258              	.LFB432:
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #ifdef WPA_HW_SECURITY_ENGINE_ENABLE
+ 259              		.loc 1 27 1 is_stmt 1
+ 260              		.cfi_startproc
+ 261              	.LVL17:
+ 262 0000 17030000 		call	t0,__riscv_save_8
+ 262      E7020300 
+ 263              		.cfi_offset 23, -36
+ 264              		.cfi_offset 22, -32
+ 265              		.cfi_offset 21, -28
+ 266              		.cfi_offset 20, -24
+ 267              		.cfi_offset 19, -20
+ 268              		.cfi_offset 18, -16
+ 269              		.cfi_offset 9, -12
+ 270              		.cfi_offset 8, -8
+ 271              		.cfi_offset 1, -4
+ 272              		.cfi_def_cfa_offset 48
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	uint32_t input_len = 0;
+ 273              		.loc 1 29 2
+ 274              	.LVL18:
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	uint32_t i;
+ 275              		.loc 1 30 2
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	int ret;
+ 276              		.loc 1 31 2
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 277              		.loc 1 32 2
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		input_len += len[i];
+ 278              		.loc 1 34 2
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #ifdef WPA_HW_SECURITY_ENGINE_ENABLE
+ 279              		.loc 1 27 1 is_stmt 0
+ 280 0008 AA87     		mv	a5,a0
+ 281 000a 2E8B     		mv	s6,a1
+ 282 000c 328A     		mv	s4,a2
+ 283 000e B68A     		mv	s5,a3
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		input_len += len[i];
+ 284              		.loc 1 34 9
+ 285 0010 0144     		li	s0,0
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	uint32_t i;
+ 286              		.loc 1 30 11
+ 287 0012 0145     		li	a0,0
+ 288              	.LVL19:
+ 289              	.L12:
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		input_len += len[i];
+ 290              		.loc 1 34 14 is_stmt 1 discriminator 1
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		input_len += len[i];
+ 291              		.loc 1 34 2 is_stmt 0 discriminator 1
+ 292 0014 631BF404 		bne	s0,a5,.L13
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	if(NULL == input)
+ 293              		.loc 1 38 2 is_stmt 1
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	if(NULL == input)
+ 294              		.loc 1 38 21 is_stmt 0
+ 295 0018 97000000 		call	os_malloc
+ 295      E7800000 
+ 296              	.LVL20:
+ 297 0020 AA84     		mv	s1,a0
+ 298              	.LVL21:
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		return -1;
+ 299              		.loc 1 39 2 is_stmt 1
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 300              		.loc 1 40 10 is_stmt 0
+ 301 0022 7D55     		li	a0,-1
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		return -1;
+ 302              		.loc 1 39 4
+ 303 0024 9DCC     		beq	s1,zero,.L11
+ 304 0026 0A04     		slli	s0,s0,2
+ 305              	.LVL22:
+ 306 0028 0149     		li	s2,0
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		os_memcpy(input + input_len, addr[i], len[i]);
+ 307              		.loc 1 42 24
+ 308 002a 8149     		li	s3,0
+ 309              	.L15:
+ 310              	.LVL23:
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		os_memcpy(input + input_len, addr[i], len[i]);
+ 311              		.loc 1 42 29 is_stmt 1 discriminator 1
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		os_memcpy(input + input_len, addr[i], len[i]);
+ 312              		.loc 1 42 2 is_stmt 0 discriminator 1
+ 313 002c 63158904 		bne	s2,s0,.L16
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	ret = hau_hash_sha_256(input, input_len, mac);
+ 314              		.loc 1 47 2 is_stmt 1
+ 315 0030 97000000 		call	sys_enter_critical
+ 315      E7800000 
+ 316              	.LVL24:
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	HW_ACC_ENGINE_UNLOCK();
+ 317              		.loc 1 48 2
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	HW_ACC_ENGINE_UNLOCK();
+ 318              		.loc 1 48 8 is_stmt 0
+ 319 0038 5686     		mv	a2,s5
+ 320 003a CE85     		mv	a1,s3
+ 321 003c 2685     		mv	a0,s1
+ 322 003e 97000000 		call	hau_hash_sha_256
+ 322      E7800000 
+ 323              	.LVL25:
+ 324 0046 2A84     		mv	s0,a0
+ 325              	.LVL26:
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	os_free(input);
+ 326              		.loc 1 49 2 is_stmt 1
+ 327 0048 97000000 		call	sys_exit_critical
+ 327      E7800000 
+ 328              	.LVL27:
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	return (ret == ERROR) ? -1 : 0;
+ 329              		.loc 1 50 2
+ 330 0050 2685     		mv	a0,s1
+ 331 0052 97000000 		call	os_free
+ 331      E7800000 
+ 332              	.LVL28:
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #else
+ 333              		.loc 1 51 2
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** #else
+ 334              		.loc 1 51 29 is_stmt 0
+ 335 005a 13351400 		seqz	a0,s0
+ 336 005e 3305A040 		neg	a0,a0
+ 337              	.LVL29:
+ 338              	.L11:
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 339              		.loc 1 67 1
+ 340 0062 17030000 		tail	__riscv_restore_8
+ 340      67000300 
+ 341              		.cfi_remember_state
+ 342              		.cfi_restore 23
+ 343              		.cfi_restore 22
+ 344              		.cfi_restore 21
+ 345              		.cfi_restore 20
+ 346              		.cfi_restore 19
+ 347              		.cfi_restore 18
+ 348              		.cfi_restore 9
+ 349              		.cfi_restore 8
+ 350              		.cfi_restore 1
+ 351              		.cfi_def_cfa_offset 0
+ 352              	.LVL30:
+ 353              	.L13:
+ 354              		.cfi_restore_state
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 355              		.loc 1 35 3 is_stmt 1 discriminator 3
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 356              		.loc 1 35 19 is_stmt 0 discriminator 3
+ 357 006a 33474421 		sh2add	a4,s0,s4
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 358              		.loc 1 35 13 discriminator 3
+ 359 006e 1843     		lw	a4,0(a4)
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		input_len += len[i];
+ 360              		.loc 1 34 29 discriminator 3
+ 361 0070 0504     		addi	s0,s0,1
+ 362              	.LVL31:
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 363              		.loc 1 35 13 discriminator 3
+ 364 0072 3A95     		add	a0,a0,a4
+ 365              	.LVL32:
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		input_len += len[i];
+ 366              		.loc 1 34 28 is_stmt 1 discriminator 3
+ 367 0074 45B7     		j	.L12
+ 368              	.LVL33:
+ 369              	.L16:
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		input_len += len[i];
+ 370              		.loc 1 43 3 discriminator 3
+ 371 0076 B3072B01 		add	a5,s6,s2
+ 372 007a B30B2A01 		add	s7,s4,s2
+ 373 007e 8C43     		lw	a1,0(a5)
+ 374 0080 03A60B00 		lw	a2,0(s7)
+ 375 0084 33853401 		add	a0,s1,s3
+ 376 0088 1109     		addi	s2,s2,4
+ 377 008a 97000000 		call	os_memcpy
+ 377      E7800000 
+ 378              	.LVL34:
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 379              		.loc 1 44 3 discriminator 3
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 380              		.loc 1 44 13 is_stmt 0 discriminator 3
+ 381 0092 83A70B00 		lw	a5,0(s7)
+ 382 0096 BE99     		add	s3,s3,a5
+ 383              	.LVL35:
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		os_memcpy(input + input_len, addr[i], len[i]);
+ 384              		.loc 1 42 43 is_stmt 1 discriminator 3
+ 385 0098 51BF     		j	.L15
+ 386              		.cfi_endproc
+ 387              	.LFE432:
+ 389              		.section	.text.sha256_init,"ax",@progbits
+ 390              		.align	1
+ 391              		.globl	sha256_init
+ 393              	sha256_init:
+ 394              	.LFB434:
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /* Initialize the hash state */
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** void sha256_init(struct sha256_state *md)
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** {
+ 395              		.loc 1 154 1
+ 396              		.cfi_startproc
+ 397              	.LVL36:
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->curlen = 0;
+ 398              		.loc 1 155 2
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->length = 0;
+ 399              		.loc 1 156 13 is_stmt 0
+ 400 0000 8147     		li	a5,0
+ 401 0002 5CC1     		sw	a5,4(a0)
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[0] = 0x6A09E667UL;
+ 402              		.loc 1 157 15
+ 403 0004 B7E7096A 		li	a5,1779032064
+ 404 0008 93877766 		addi	a5,a5,1639
+ 405 000c 1CC5     		sw	a5,8(a0)
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[1] = 0xBB67AE85UL;
+ 406              		.loc 1 158 15
+ 407 000e B7B767BB 		li	a5,-1150832640
+ 408 0012 938757E8 		addi	a5,a5,-379
+ 409 0016 5CC5     		sw	a5,12(a0)
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[2] = 0x3C6EF372UL;
+ 410              		.loc 1 159 15
+ 411 0018 B7F76E3C 		li	a5,1013903360
+ 412 001c 93872737 		addi	a5,a5,882
+ 413 0020 1CC9     		sw	a5,16(a0)
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[3] = 0xA54FF53AUL;
+ 414              		.loc 1 160 15
+ 415 0022 B7F74FA5 		li	a5,-1521487872
+ 416 0026 9387A753 		addi	a5,a5,1338
+ 417 002a 5CC9     		sw	a5,20(a0)
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[4] = 0x510E527FUL;
+ 418              		.loc 1 161 15
+ 419 002c B7570E51 		li	a5,1359892480
+ 420 0030 9387F727 		addi	a5,a5,639
+ 421 0034 1CCD     		sw	a5,24(a0)
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[5] = 0x9B05688CUL;
+ 422              		.loc 1 162 15
+ 423 0036 B777059B 		li	a5,-1694142464
+ 424 003a 9387C788 		addi	a5,a5,-1908
+ 425 003e 5CCD     		sw	a5,28(a0)
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[6] = 0x1F83D9ABUL;
+ 426              		.loc 1 163 15
+ 427 0040 B7E7831F 		li	a5,528736256
+ 428 0044 9387B79A 		addi	a5,a5,-1621
+ 429 0048 1CD1     		sw	a5,32(a0)
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[7] = 0x5BE0CD19UL;
+ 430              		.loc 1 164 15
+ 431 004a B7D7E05B 		li	a5,1541459968
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[0] = 0x6A09E667UL;
+ 432              		.loc 1 156 13
+ 433 004e 0147     		li	a4,0
+ 434              		.loc 1 164 15
+ 435 0050 938797D1 		addi	a5,a5,-743
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->length = 0;
+ 436              		.loc 1 155 13
+ 437 0054 23240502 		sw	zero,40(a0)
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[0] = 0x6A09E667UL;
+ 438              		.loc 1 156 2 is_stmt 1
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[1] = 0xBB67AE85UL;
+ 439              		.loc 1 157 2
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[2] = 0x3C6EF372UL;
+ 440              		.loc 1 158 2
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[3] = 0xA54FF53AUL;
+ 441              		.loc 1 159 2
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[4] = 0x510E527FUL;
+ 442              		.loc 1 160 2
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[5] = 0x9B05688CUL;
+ 443              		.loc 1 161 2
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[6] = 0x1F83D9ABUL;
+ 444              		.loc 1 162 2
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[7] = 0x5BE0CD19UL;
+ 445              		.loc 1 163 2
+ 446              		.loc 1 164 2
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->state[0] = 0x6A09E667UL;
+ 447              		.loc 1 156 13 is_stmt 0
+ 448 0058 18C1     		sw	a4,0(a0)
+ 449              		.loc 1 164 15
+ 450 005a 5CD1     		sw	a5,36(a0)
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** }
+ 451              		.loc 1 165 1
+ 452 005c 8280     		ret
+ 453              		.cfi_endproc
+ 454              	.LFE434:
+ 456              		.section	.text.sha256_process,"ax",@progbits
+ 457              		.align	1
+ 458              		.globl	sha256_process
+ 460              	sha256_process:
+ 461              	.LFB435:
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /**
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    Process a block of memory though the hash
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    @param md     The hash state
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    @param in     The data to hash
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    @param inlen  The length of the data (octets)
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    @return CRYPT_OK if successful
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** */
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** int sha256_process(struct sha256_state *md, const unsigned char *in,
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		   unsigned long inlen)
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** {
+ 462              		.loc 1 176 1 is_stmt 1
+ 463              		.cfi_startproc
+ 464              	.LVL37:
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	unsigned long n;
+ 465              		.loc 1 177 2
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	if (md->curlen >= sizeof(md->buf))
+ 466              		.loc 1 179 2
+ 467              		.loc 1 179 5 is_stmt 0
+ 468 0000 1855     		lw	a4,40(a0)
+ 469 0002 9307F003 		li	a5,63
+ 470 0006 63E8E70A 		bgtu	a4,a5,.L29
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	unsigned long n;
+ 471              		.loc 1 176 1
+ 472 000a 17030000 		call	t0,__riscv_save_7
+ 472      E7020300 
+ 473              		.cfi_offset 22, -32
+ 474              		.cfi_offset 21, -28
+ 475              		.cfi_offset 20, -24
+ 476              		.cfi_offset 19, -20
+ 477              		.cfi_offset 18, -16
+ 478              		.cfi_offset 9, -12
+ 479              		.cfi_offset 8, -8
+ 480              		.cfi_offset 1, -4
+ 481              		.cfi_def_cfa_offset 32
+ 482 0012 2A84     		mv	s0,a0
+ 483 0014 2E89     		mv	s2,a1
+ 484 0016 B284     		mv	s1,a2
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		return -1;
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	while (inlen > 0) {
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		if (md->curlen == 0 && inlen >= SHA256_BLOCK_SIZE) {
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			if (sha256_compress(md, (unsigned char *) in) < 0)
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				return -1;
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			md->length += SHA256_BLOCK_SIZE * 8;
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			in += SHA256_BLOCK_SIZE;
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			inlen -= SHA256_BLOCK_SIZE;
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		} else {
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			n = MIN(inlen, (SHA256_BLOCK_SIZE - md->curlen));
+ 485              		.loc 1 190 8
+ 486 0018 130A0004 		li	s4,64
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			os_memcpy(md->buf + md->curlen, in, n);
+ 487              		.loc 1 191 14
+ 488 001c 930AC502 		addi	s5,a0,44
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			if (sha256_compress(md, (unsigned char *) in) < 0)
+ 489              		.loc 1 183 23
+ 490 0020 130BF003 		li	s6,63
+ 491              	.LVL38:
+ 492              	.L21:
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		if (md->curlen == 0 && inlen >= SHA256_BLOCK_SIZE) {
+ 493              		.loc 1 182 8 is_stmt 1
+ 494 0024 81E8     		bne	s1,zero,.L26
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			md->curlen += n;
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			in += n;
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			inlen -= n;
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			if (md->curlen == SHA256_BLOCK_SIZE) {
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				if (sha256_compress(md, md->buf) < 0)
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 					return -1;
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				md->length += 8 * SHA256_BLOCK_SIZE;
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				md->curlen = 0;
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			}
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		}
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	return 0;
+ 495              		.loc 1 204 9 is_stmt 0
+ 496 0026 0145     		li	a0,0
+ 497 0028 11A0     		j	.L20
+ 498              	.L24:
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 499              		.loc 1 180 10
+ 500 002a 7D55     		li	a0,-1
+ 501              	.L20:
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** }
+ 502              		.loc 1 205 1
+ 503 002c 17030000 		tail	__riscv_restore_7
+ 503      67000300 
+ 504              		.cfi_remember_state
+ 505              		.cfi_restore 22
+ 506              		.cfi_restore 21
+ 507              		.cfi_restore 20
+ 508              		.cfi_restore 19
+ 509              		.cfi_restore 18
+ 510              		.cfi_restore 9
+ 511              		.cfi_restore 8
+ 512              		.cfi_restore 1
+ 513              		.cfi_def_cfa_offset 0
+ 514              	.L26:
+ 515              		.cfi_restore_state
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			if (sha256_compress(md, (unsigned char *) in) < 0)
+ 516              		.loc 1 183 3 is_stmt 1
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			if (sha256_compress(md, (unsigned char *) in) < 0)
+ 517              		.loc 1 183 9 is_stmt 0
+ 518 0034 0854     		lw	a0,40(s0)
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			if (sha256_compress(md, (unsigned char *) in) < 0)
+ 519              		.loc 1 183 6
+ 520 0036 0DE9     		bne	a0,zero,.L23
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			if (sha256_compress(md, (unsigned char *) in) < 0)
+ 521              		.loc 1 183 23 discriminator 1
+ 522 0038 63789B02 		bleu	s1,s6,.L23
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				return -1;
+ 523              		.loc 1 184 4 is_stmt 1
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				return -1;
+ 524              		.loc 1 184 8 is_stmt 0
+ 525 003c CA85     		mv	a1,s2
+ 526 003e 2285     		mv	a0,s0
+ 527 0040 97000000 		call	sha256_compress
+ 527      E7800000 
+ 528              	.LVL39:
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				return -1;
+ 529              		.loc 1 184 7
+ 530 0048 E34105FE 		blt	a0,zero,.L24
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			in += SHA256_BLOCK_SIZE;
+ 531              		.loc 1 186 4 is_stmt 1
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			in += SHA256_BLOCK_SIZE;
+ 532              		.loc 1 186 15 is_stmt 0
+ 533 004c 1C40     		lw	a5,0(s0)
+ 534 004e 5440     		lw	a3,4(s0)
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			inlen -= SHA256_BLOCK_SIZE;
+ 535              		.loc 1 187 7
+ 536 0050 13090904 		addi	s2,s2,64
+ 537              	.LVL40:
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			in += SHA256_BLOCK_SIZE;
+ 538              		.loc 1 186 15
+ 539 0054 13870720 		addi	a4,a5,512
+ 540 0058 B337F700 		sltu	a5,a4,a5
+ 541 005c B697     		add	a5,a5,a3
+ 542 005e 18C0     		sw	a4,0(s0)
+ 543 0060 5CC0     		sw	a5,4(s0)
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			inlen -= SHA256_BLOCK_SIZE;
+ 544              		.loc 1 187 4 is_stmt 1
+ 545              	.LVL41:
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		} else {
+ 546              		.loc 1 188 4
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		} else {
+ 547              		.loc 1 188 10 is_stmt 0
+ 548 0062 938404FC 		addi	s1,s1,-64
+ 549              	.LVL42:
+ 550 0066 7DBF     		j	.L21
+ 551              	.L23:
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			os_memcpy(md->buf + md->curlen, in, n);
+ 552              		.loc 1 190 4 is_stmt 1
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			os_memcpy(md->buf + md->curlen, in, n);
+ 553              		.loc 1 190 8 is_stmt 0
+ 554 0068 B309AA40 		sub	s3,s4,a0
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			os_memcpy(md->buf + md->curlen, in, n);
+ 555              		.loc 1 190 6
+ 556 006c B3D9990A 		minu	s3,s3,s1
+ 557              	.LVL43:
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			md->curlen += n;
+ 558              		.loc 1 191 4 is_stmt 1
+ 559 0070 CA85     		mv	a1,s2
+ 560 0072 4E86     		mv	a2,s3
+ 561 0074 5695     		add	a0,s5,a0
+ 562 0076 97000000 		call	os_memcpy
+ 562      E7800000 
+ 563              	.LVL44:
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			in += n;
+ 564              		.loc 1 192 4
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			in += n;
+ 565              		.loc 1 192 15 is_stmt 0
+ 566 007e 1C54     		lw	a5,40(s0)
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			inlen -= n;
+ 567              		.loc 1 193 7
+ 568 0080 4E99     		add	s2,s2,s3
+ 569              	.LVL45:
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			if (md->curlen == SHA256_BLOCK_SIZE) {
+ 570              		.loc 1 194 10
+ 571 0082 B3843441 		sub	s1,s1,s3
+ 572              	.LVL46:
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			in += n;
+ 573              		.loc 1 192 15
+ 574 0086 CE97     		add	a5,s3,a5
+ 575 0088 1CD4     		sw	a5,40(s0)
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			inlen -= n;
+ 576              		.loc 1 193 4 is_stmt 1
+ 577              	.LVL47:
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			if (md->curlen == SHA256_BLOCK_SIZE) {
+ 578              		.loc 1 194 4
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				if (sha256_compress(md, md->buf) < 0)
+ 579              		.loc 1 195 4
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				if (sha256_compress(md, md->buf) < 0)
+ 580              		.loc 1 195 7 is_stmt 0
+ 581 008a E39D47F9 		bne	a5,s4,.L21
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 					return -1;
+ 582              		.loc 1 196 5 is_stmt 1
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 					return -1;
+ 583              		.loc 1 196 9 is_stmt 0
+ 584 008e D685     		mv	a1,s5
+ 585 0090 2285     		mv	a0,s0
+ 586 0092 97000000 		call	sha256_compress
+ 586      E7800000 
+ 587              	.LVL48:
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 					return -1;
+ 588              		.loc 1 196 8
+ 589 009a E34805F8 		blt	a0,zero,.L24
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				md->curlen = 0;
+ 590              		.loc 1 198 5 is_stmt 1
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				md->curlen = 0;
+ 591              		.loc 1 198 16 is_stmt 0
+ 592 009e 1C40     		lw	a5,0(s0)
+ 593 00a0 5440     		lw	a3,4(s0)
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			}
+ 594              		.loc 1 199 16
+ 595 00a2 23240402 		sw	zero,40(s0)
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 				md->curlen = 0;
+ 596              		.loc 1 198 16
+ 597 00a6 13870720 		addi	a4,a5,512
+ 598 00aa B337F700 		sltu	a5,a4,a5
+ 599 00ae B697     		add	a5,a5,a3
+ 600 00b0 18C0     		sw	a4,0(s0)
+ 601 00b2 5CC0     		sw	a5,4(s0)
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			}
+ 602              		.loc 1 199 5 is_stmt 1
+ 603 00b4 85BF     		j	.L21
+ 604              	.LVL49:
+ 605              	.L29:
+ 606              		.cfi_def_cfa_offset 0
+ 607              		.cfi_restore 1
+ 608              		.cfi_restore 8
+ 609              		.cfi_restore 9
+ 610              		.cfi_restore 18
+ 611              		.cfi_restore 19
+ 612              		.cfi_restore 20
+ 613              		.cfi_restore 21
+ 614              		.cfi_restore 22
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 615              		.loc 1 180 10 is_stmt 0
+ 616 00b6 7D55     		li	a0,-1
+ 617              	.LVL50:
+ 618              		.loc 1 205 1
+ 619 00b8 8280     		ret
+ 620              		.cfi_endproc
+ 621              	.LFE435:
+ 623              		.section	.text.sha256_done,"ax",@progbits
+ 624              		.align	1
+ 625              		.globl	sha256_done
+ 627              	sha256_done:
+ 628              	.LFB436:
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** /**
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    Terminate the hash to get the digest
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    @param md  The hash state
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    @param out [out] The destination of the hash (32 bytes)
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c ****    @return CRYPT_OK if successful
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** */
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** int sha256_done(struct sha256_state *md, unsigned char *out)
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** {
+ 629              		.loc 1 215 1 is_stmt 1
+ 630              		.cfi_startproc
+ 631              	.LVL51:
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	int i;
+ 632              		.loc 1 216 2
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	if (md->curlen >= sizeof(md->buf))
+ 633              		.loc 1 218 2
+ 634              		.loc 1 218 8 is_stmt 0
+ 635 0000 1C55     		lw	a5,40(a0)
+ 636              		.loc 1 218 5
+ 637 0002 1307F003 		li	a4,63
+ 638 0006 636FF70E 		bgtu	a5,a4,.L40
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	int i;
+ 639              		.loc 1 215 1
+ 640 000a 17030000 		call	t0,__riscv_save_2
+ 640      E7020300 
+ 641              		.cfi_offset 9, -12
+ 642              		.cfi_offset 8, -8
+ 643              		.cfi_offset 1, -4
+ 644              		.cfi_def_cfa_offset 16
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		return -1;
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* increase the length of the message */
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->length += md->curlen * 8;
+ 645              		.loc 1 222 13
+ 646 0012 1841     		lw	a4,0(a0)
+ 647 0014 5041     		lw	a2,4(a0)
+ 648 0016 2A84     		mv	s0,a0
+ 649 0018 B3E6E720 		sh3add	a3,a5,a4
+ 650 001c 33B7E600 		sltu	a4,a3,a4
+ 651 0020 3297     		add	a4,a4,a2
+ 652 0022 58C1     		sw	a4,4(a0)
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* append the '1' bit */
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	md->buf[md->curlen++] = (unsigned char) 0x80;
+ 653              		.loc 1 225 20
+ 654 0024 13871700 		addi	a4,a5,1
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 655              		.loc 1 222 13
+ 656 0028 14C1     		sw	a3,0(a0)
+ 657              		.loc 1 225 24
+ 658 002a AA97     		add	a5,a0,a5
+ 659              		.loc 1 225 20
+ 660 002c 18D5     		sw	a4,40(a0)
+ 661              		.loc 1 225 24
+ 662 002e 930600F8 		li	a3,-128
+ 663 0032 2386D702 		sb	a3,44(a5)
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* if the length is currently above 56 bytes we append zeros
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	 * then compress.  Then we can fall back to padding zeros and length
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	 * encoding like normal.
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	 */
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	if (md->curlen > 56) {
+ 664              		.loc 1 231 5
+ 665 0036 93078003 		li	a5,56
+ 666 003a AE84     		mv	s1,a1
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 667              		.loc 1 222 2 is_stmt 1
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 668              		.loc 1 225 2
+ 669              		.loc 1 231 2
+ 670              		.loc 1 231 5 is_stmt 0
+ 671 003c 63F0E702 		bleu	a4,a5,.L35
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		while (md->curlen < SHA256_BLOCK_SIZE) {
+ 672              		.loc 1 232 9
+ 673 0040 1307F003 		li	a4,63
+ 674              	.L34:
+ 675              		.loc 1 232 9 is_stmt 1
+ 676              		.loc 1 232 12 is_stmt 0
+ 677 0044 1C54     		lw	a5,40(s0)
+ 678              		.loc 1 232 9
+ 679 0046 6371F70A 		bleu	a5,a4,.L36
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 			md->buf[md->curlen++] = (unsigned char) 0;
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		}
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		sha256_compress(md, md->buf);
+ 680              		.loc 1 235 3 is_stmt 1
+ 681 004a 9305C402 		addi	a1,s0,44
+ 682              	.LVL52:
+ 683 004e 2285     		mv	a0,s0
+ 684              	.LVL53:
+ 685 0050 97000000 		call	sha256_compress
+ 685      E7800000 
+ 686              	.LVL54:
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		md->curlen = 0;
+ 687              		.loc 1 236 3
+ 688              		.loc 1 236 14 is_stmt 0
+ 689 0058 23240402 		sw	zero,40(s0)
+ 690              	.L35:
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 238:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* pad up to 56 bytes of zeroes */
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	while (md->curlen < 56) {
+ 691              		.loc 1 240 8
+ 692 005c 13077003 		li	a4,55
+ 693              	.L37:
+ 694              		.loc 1 240 8 is_stmt 1
+ 695              		.loc 1 240 11 is_stmt 0
+ 696 0060 1C54     		lw	a5,40(s0)
+ 697              		.loc 1 240 8
+ 698 0062 637AF708 		bleu	a5,a4,.L38
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		md->buf[md->curlen++] = (unsigned char) 0;
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 244:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* store length */
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	WPA_PUT_BE64(md->buf + 56, md->length);
+ 699              		.loc 1 245 2 is_stmt 1
+ 700 0066 5840     		lw	a4,4(s0)
+ 701              	.LVL55:
+ 702 0068 1C40     		lw	a5,0(s0)
+ 703              	.LVL56:
+ 704              	.LBB8:
+ 705              	.LBB9:
+ 277:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 278:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 279:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline void WPA_PUT_BE32(u8 *a, u32 val)
+ 280:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 281:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[0] = (val >> 24) & 0xff;
+ 282:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = (val >> 16) & 0xff;
+ 283:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[2] = (val >> 8) & 0xff;
+ 284:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[3] = val & 0xff;
+ 285:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 286:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 287:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline u32 WPA_GET_LE32(const u8 *a)
+ 288:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 289:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return ((u32) a[3] << 24) | (a[2] << 16) | (a[1] << 8) | a[0];
+ 290:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 291:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 292:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline void WPA_PUT_LE32(u8 *a, u32 val)
+ 293:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 294:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[3] = (val >> 24) & 0xff;
+ 295:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[2] = (val >> 16) & 0xff;
+ 296:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = (val >> 8) & 0xff;
+ 297:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[0] = val & 0xff;
+ 298:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 299:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 300:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline u64 WPA_GET_BE64(const u8 *a)
+ 301:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 302:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	return (((u64) a[0]) << 56) | (((u64) a[1]) << 48) |
+ 303:..\..\..\..\wpa_supplicant\src\utils/common.h **** 		(((u64) a[2]) << 40) | (((u64) a[3]) << 32) |
+ 304:..\..\..\..\wpa_supplicant\src\utils/common.h **** 		(((u64) a[4]) << 24) | (((u64) a[5]) << 16) |
+ 305:..\..\..\..\wpa_supplicant\src\utils/common.h **** 		(((u64) a[6]) << 8) | ((u64) a[7]);
+ 306:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 307:..\..\..\..\wpa_supplicant\src\utils/common.h **** 
+ 308:..\..\..\..\wpa_supplicant\src\utils/common.h **** static inline void WPA_PUT_BE64(u8 *a, u64 val)
+ 309:..\..\..\..\wpa_supplicant\src\utils/common.h **** {
+ 310:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[0] = val >> 56;
+ 706              		.loc 2 310 2
+ 707              	.LBE9:
+ 708              	.LBE8:
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	sha256_compress(md, md->buf);
+ 709              		.loc 1 246 2 is_stmt 0
+ 710 006a 9305C402 		addi	a1,s0,44
+ 711              	.LBB11:
+ 712              	.LBB10:
+ 713              		.loc 2 310 13
+ 714 006e 93568701 		srli	a3,a4,24
+ 715              		.loc 2 310 7
+ 716 0072 2302D406 		sb	a3,100(s0)
+ 311:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = val >> 48;
+ 717              		.loc 2 311 2 is_stmt 1
+ 718              		.loc 2 311 13 is_stmt 0
+ 719 0076 93560701 		srli	a3,a4,16
+ 720              		.loc 2 311 7
+ 721 007a A302D406 		sb	a3,101(s0)
+ 312:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[2] = val >> 40;
+ 722              		.loc 2 312 2 is_stmt 1
+ 313:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[3] = val >> 32;
+ 723              		.loc 2 313 7 is_stmt 0
+ 724 007e A303E406 		sb	a4,103(s0)
+ 312:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[2] = val >> 40;
+ 725              		.loc 2 312 13
+ 726 0082 93568700 		srli	a3,a4,8
+ 314:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[4] = val >> 24;
+ 727              		.loc 2 314 13
+ 728 0086 13D78701 		srli	a4,a5,24
+ 729              	.LVL57:
+ 730              		.loc 2 314 7
+ 731 008a 2304E406 		sb	a4,104(s0)
+ 315:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[5] = val >> 16;
+ 732              		.loc 2 315 13
+ 733 008e 13D70701 		srli	a4,a5,16
+ 734              		.loc 2 315 7
+ 735 0092 A304E406 		sb	a4,105(s0)
+ 316:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[6] = val >> 8;
+ 736              		.loc 2 316 13
+ 737 0096 13D78700 		srli	a4,a5,8
+ 738              		.loc 2 316 7
+ 739 009a 2305E406 		sb	a4,106(s0)
+ 312:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[3] = val >> 32;
+ 740              		.loc 2 312 7
+ 741 009e 2303D406 		sb	a3,102(s0)
+ 313:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[4] = val >> 24;
+ 742              		.loc 2 313 2 is_stmt 1
+ 314:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[5] = val >> 16;
+ 743              		.loc 2 314 2
+ 315:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[6] = val >> 8;
+ 744              		.loc 2 315 2
+ 745              		.loc 2 316 2
+ 317:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[7] = val & 0xff;
+ 746              		.loc 2 317 2
+ 747              		.loc 2 317 7 is_stmt 0
+ 748 00a2 A305F406 		sb	a5,107(s0)
+ 749              	.LVL58:
+ 750              	.LBE10:
+ 751              	.LBE11:
+ 752              		.loc 1 246 2 is_stmt 1
+ 753 00a6 2285     		mv	a0,s0
+ 754 00a8 97000000 		call	sha256_compress
+ 754      E7800000 
+ 755              	.LVL59:
+ 247:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 248:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	/* copy output */
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	for (i = 0; i < 8; i++)
+ 756              		.loc 1 249 2
+ 757              		.loc 1 249 14
+ 758 00b0 2104     		addi	s0,s0,8
+ 759              	.LVL60:
+ 760 00b2 A685     		mv	a1,s1
+ 761 00b4 13870402 		addi	a4,s1,32
+ 762              	.LVL61:
+ 763              	.L39:
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		WPA_PUT_BE32(out + (4 * i), md->state[i]);
+ 764              		.loc 1 250 3 discriminator 3
+ 765 00b8 1C40     		lw	a5,0(s0)
+ 766              	.LVL62:
+ 767              	.LBB12:
+ 768              	.LBB13:
+ 281:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = (val >> 16) & 0xff;
+ 769              		.loc 2 281 2 discriminator 3
+ 770              	.LBE13:
+ 771              	.LBE12:
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		WPA_PUT_BE32(out + (4 * i), md->state[i]);
+ 772              		.loc 1 249 2 is_stmt 0 discriminator 3
+ 773 00ba 9105     		addi	a1,a1,4
+ 774 00bc 1104     		addi	s0,s0,4
+ 775              	.LVL63:
+ 776              	.LBB15:
+ 777              	.LBB14:
+ 281:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = (val >> 16) & 0xff;
+ 778              		.loc 2 281 14 discriminator 3
+ 779 00be 93D68701 		srli	a3,a5,24
+ 281:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[1] = (val >> 16) & 0xff;
+ 780              		.loc 2 281 7 discriminator 3
+ 781 00c2 238ED5FE 		sb	a3,-4(a1)
+ 282:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[2] = (val >> 8) & 0xff;
+ 782              		.loc 2 282 2 is_stmt 1 discriminator 3
+ 282:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[2] = (val >> 8) & 0xff;
+ 783              		.loc 2 282 14 is_stmt 0 discriminator 3
+ 784 00c6 93D60701 		srli	a3,a5,16
+ 282:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[2] = (val >> 8) & 0xff;
+ 785              		.loc 2 282 7 discriminator 3
+ 786 00ca A38ED5FE 		sb	a3,-3(a1)
+ 283:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[3] = val & 0xff;
+ 787              		.loc 2 283 2 is_stmt 1 discriminator 3
+ 283:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[3] = val & 0xff;
+ 788              		.loc 2 283 14 is_stmt 0 discriminator 3
+ 789 00ce 93D68700 		srli	a3,a5,8
+ 283:..\..\..\..\wpa_supplicant\src\utils/common.h **** 	a[3] = val & 0xff;
+ 790              		.loc 2 283 7 discriminator 3
+ 791 00d2 238FD5FE 		sb	a3,-2(a1)
+ 284:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 792              		.loc 2 284 2 is_stmt 1 discriminator 3
+ 284:..\..\..\..\wpa_supplicant\src\utils/common.h **** }
+ 793              		.loc 2 284 7 is_stmt 0 discriminator 3
+ 794 00d6 A38FF5FE 		sb	a5,-1(a1)
+ 795              	.LVL64:
+ 796              	.LBE14:
+ 797              	.LBE15:
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		WPA_PUT_BE32(out + (4 * i), md->state[i]);
+ 798              		.loc 1 249 21 is_stmt 1 discriminator 3
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		WPA_PUT_BE32(out + (4 * i), md->state[i]);
+ 799              		.loc 1 249 14 discriminator 3
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		WPA_PUT_BE32(out + (4 * i), md->state[i]);
+ 800              		.loc 1 249 2 is_stmt 0 discriminator 3
+ 801 00da E31FB7FC 		bne	a4,a1,.L39
+ 251:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	return 0;
+ 802              		.loc 1 252 9
+ 803 00de 0145     		li	a0,0
+ 253:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** }
+ 804              		.loc 1 253 1
+ 805 00e0 17030000 		tail	__riscv_restore_2
+ 805      67000300 
+ 806              		.cfi_remember_state
+ 807              		.cfi_restore 9
+ 808              		.cfi_restore 8
+ 809              		.cfi_restore 1
+ 810              		.cfi_def_cfa_offset 0
+ 811              	.LVL65:
+ 812              	.L36:
+ 813              		.cfi_restore_state
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		}
+ 814              		.loc 1 233 4 is_stmt 1
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		}
+ 815              		.loc 1 233 22 is_stmt 0
+ 816 00e8 93861700 		addi	a3,a5,1
+ 817 00ec 14D4     		sw	a3,40(s0)
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 		}
+ 818              		.loc 1 233 26
+ 819 00ee A297     		add	a5,s0,a5
+ 820 00f0 23860702 		sb	zero,44(a5)
+ 821 00f4 81BF     		j	.L34
+ 822              	.L38:
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 823              		.loc 1 241 3 is_stmt 1
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 824              		.loc 1 241 21 is_stmt 0
+ 825 00f6 93861700 		addi	a3,a5,1
+ 826 00fa 14D4     		sw	a3,40(s0)
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 	}
+ 827              		.loc 1 241 25
+ 828 00fc A297     		add	a5,s0,a5
+ 829 00fe 23860702 		sb	zero,44(a5)
+ 830 0102 B9BF     		j	.L37
+ 831              	.LVL66:
+ 832              	.L40:
+ 833              		.cfi_def_cfa_offset 0
+ 834              		.cfi_restore 1
+ 835              		.cfi_restore 8
+ 836              		.cfi_restore 9
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/wpa_supplicant/src/crypto\sha256-internal.c **** 
+ 837              		.loc 1 219 10
+ 838 0104 7D55     		li	a0,-1
+ 839              	.LVL67:
+ 840              		.loc 1 253 1
+ 841 0106 8280     		ret
+ 842              		.cfi_endproc
+ 843              	.LFE436:
+ 845              		.section	.rodata.K,"a"
+ 846              		.align	2
+ 847              		.set	.LANCHOR0,. + 0
+ 850              	K:
+ 851 0000 982F8A42 		.word	1116352408
+ 852 0004 91443771 		.word	1899447441
+ 853 0008 CFFBC0B5 		.word	-1245643825
+ 854 000c A5DBB5E9 		.word	-373957723
+ 855 0010 5BC25639 		.word	961987163
+ 856 0014 F111F159 		.word	1508970993
+ 857 0018 A4823F92 		.word	-1841331548
+ 858 001c D55E1CAB 		.word	-1424204075
+ 859 0020 98AA07D8 		.word	-670586216
+ 860 0024 015B8312 		.word	310598401
+ 861 0028 BE853124 		.word	607225278
+ 862 002c C37D0C55 		.word	1426881987
+ 863 0030 745DBE72 		.word	1925078388
+ 864 0034 FEB1DE80 		.word	-2132889090
+ 865 0038 A706DC9B 		.word	-1680079193
+ 866 003c 74F19BC1 		.word	-1046744716
+ 867 0040 C1699BE4 		.word	-459576895
+ 868 0044 8647BEEF 		.word	-272742522
+ 869 0048 C69DC10F 		.word	264347078
+ 870 004c CCA10C24 		.word	604807628
+ 871 0050 6F2CE92D 		.word	770255983
+ 872 0054 AA84744A 		.word	1249150122
+ 873 0058 DCA9B05C 		.word	1555081692
+ 874 005c DA88F976 		.word	1996064986
+ 875 0060 52513E98 		.word	-1740746414
+ 876 0064 6DC631A8 		.word	-1473132947
+ 877 0068 C82703B0 		.word	-1341970488
+ 878 006c C77F59BF 		.word	-1084653625
+ 879 0070 F30BE0C6 		.word	-958395405
+ 880 0074 4791A7D5 		.word	-710438585
+ 881 0078 5163CA06 		.word	113926993
+ 882 007c 67292914 		.word	338241895
+ 883 0080 850AB727 		.word	666307205
+ 884 0084 38211B2E 		.word	773529912
+ 885 0088 FC6D2C4D 		.word	1294757372
+ 886 008c 130D3853 		.word	1396182291
+ 887 0090 54730A65 		.word	1695183700
+ 888 0094 BB0A6A76 		.word	1986661051
+ 889 0098 2EC9C281 		.word	-2117940946
+ 890 009c 852C7292 		.word	-1838011259
+ 891 00a0 A1E8BFA2 		.word	-1564481375
+ 892 00a4 4B661AA8 		.word	-1474664885
+ 893 00a8 708B4BC2 		.word	-1035236496
+ 894 00ac A3516CC7 		.word	-949202525
+ 895 00b0 19E892D1 		.word	-778901479
+ 896 00b4 240699D6 		.word	-694614492
+ 897 00b8 85350EF4 		.word	-200395387
+ 898 00bc 70A06A10 		.word	275423344
+ 899 00c0 16C1A419 		.word	430227734
+ 900 00c4 086C371E 		.word	506948616
+ 901 00c8 4C774827 		.word	659060556
+ 902 00cc B5BCB034 		.word	883997877
+ 903 00d0 B30C1C39 		.word	958139571
+ 904 00d4 4AAAD84E 		.word	1322822218
+ 905 00d8 4FCA9C5B 		.word	1537002063
+ 906 00dc F36F2E68 		.word	1747873779
+ 907 00e0 EE828F74 		.word	1955562222
+ 908 00e4 6F63A578 		.word	2024104815
+ 909 00e8 1478C884 		.word	-2067236844
+ 910 00ec 0802C78C 		.word	-1933114872
+ 911 00f0 FAFFBE90 		.word	-1866530822
+ 912 00f4 EB6C50A4 		.word	-1538233109
+ 913 00f8 F7A3F9BE 		.word	-1090935817
+ 914 00fc F27871C6 		.word	-965641998
+ 915              		.text
+ 916              	.Letext0:
+ 917              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 918              		.file 4 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 919              		.file 5 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 920              		.file 6 "..\\..\\..\\..\\plf\\riscv\\gd32vw55x/gd32vw55x.h"
+ 921              		.file 7 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/memp.h"
+ 922              		.file 8 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+ 923              		.file 9 "..\\..\\..\\..\\wpa_supplicant\\src\\utils/os.h"
+ 924              		.file 10 "..\\..\\..\\..\\macsw\\import/rtos_import.h"
+ 925              		.file 11 "..\\..\\..\\..\\plf\\GD32VW55x_standard_peripheral\\Include/gd32vw55x_hau.h"
+ 926              		.file 12 "..\\..\\..\\..\\lwip\\lwip-2.1.2\\src\\include/lwip/netif.h"
+ 927              		.file 13 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sha256-internal.c
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:12     .text.sha256_compress:0000000000000000 sha256_compress
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:16     .text.sha256_compress:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:18     .text.sha256_compress:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:19     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:20     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:21     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:22     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:23     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:25     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:26     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:27     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:29     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:30     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:31     .text.sha256_compress:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:32     .text.sha256_compress:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:34     .text.sha256_compress:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:37     .text.sha256_compress:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:46     .text.sha256_compress:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:48     .text.sha256_compress:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:50     .text.sha256_compress:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:55     .text.sha256_compress:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:56     .text.sha256_compress:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:69     .text.sha256_compress:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:74     .text.sha256_compress:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:76     .text.sha256_compress:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:78     .text.sha256_compress:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:79     .text.sha256_compress:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:80     .text.sha256_compress:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:84     .text.sha256_compress:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:87     .text.sha256_compress:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:90     .text.sha256_compress:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:91     .text.sha256_compress:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:93     .text.sha256_compress:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:95     .text.sha256_compress:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:101    .text.sha256_compress:0000000000000078 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:104    .text.sha256_compress:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:106    .text.sha256_compress:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:109    .text.sha256_compress:0000000000000084 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:115    .text.sha256_compress:0000000000000094 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:117    .text.sha256_compress:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:119    .text.sha256_compress:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:120    .text.sha256_compress:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:121    .text.sha256_compress:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:132    .text.sha256_compress:00000000000000ac .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:134    .text.sha256_compress:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:136    .text.sha256_compress:00000000000000b2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:140    .text.sha256_compress:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:143    .text.sha256_compress:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:154    .text.sha256_compress:00000000000000de .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:156    .text.sha256_compress:00000000000000e0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:165    .text.sha256_compress:00000000000000f2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:177    .text.sha256_compress:0000000000000114 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:179    .text.sha256_compress:0000000000000118 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:183    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:184    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:185    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:186    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:187    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:188    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:189    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:190    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:191    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:192    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:193    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:194    .text.sha256_compress:000000000000011c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:196    .text.sha256_compress:000000000000011e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:211    .text.sha256_compress:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:212    .text.sha256_compress:0000000000000138 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:215    .text.sha256_compress:000000000000013c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:217    .text.sha256_compress:000000000000013e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:219    .text.sha256_compress:0000000000000140 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:221    .text.sha256_compress:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:222    .text.sha256_compress:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:223    .text.sha256_compress:0000000000000142 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:226    .text.sha256_compress:0000000000000148 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:227    .text.sha256_compress:0000000000000148 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:230    .text.sha256_compress:000000000000014c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:231    .text.sha256_compress:000000000000014c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:234    .text.sha256_compress:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:235    .text.sha256_compress:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:236    .text.sha256_compress:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:237    .text.sha256_compress:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:238    .text.sha256_compress:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:241    .text.sha256_compress:0000000000000154 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:247    .text.sha256_compress:000000000000015c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:250    .text.sha256_compress:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:257    .text.sha256_vector:0000000000000000 sha256_vector
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:260    .text.sha256_vector:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:262    .text.sha256_vector:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:263    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:264    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:265    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:266    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:267    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:268    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:269    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:270    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:271    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:272    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:275    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:276    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:277    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:278    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:279    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:280    .text.sha256_vector:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:285    .text.sha256_vector:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:287    .text.sha256_vector:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:291    .text.sha256_vector:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:292    .text.sha256_vector:0000000000000014 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:294    .text.sha256_vector:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:295    .text.sha256_vector:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:300    .text.sha256_vector:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:301    .text.sha256_vector:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:303    .text.sha256_vector:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:308    .text.sha256_vector:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:312    .text.sha256_vector:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:313    .text.sha256_vector:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:315    .text.sha256_vector:0000000000000030 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:318    .text.sha256_vector:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:319    .text.sha256_vector:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:327    .text.sha256_vector:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:330    .text.sha256_vector:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:334    .text.sha256_vector:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:335    .text.sha256_vector:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:340    .text.sha256_vector:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:341    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:342    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:343    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:344    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:345    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:346    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:347    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:348    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:349    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:350    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:351    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:354    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:356    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:357    .text.sha256_vector:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:359    .text.sha256_vector:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:361    .text.sha256_vector:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:364    .text.sha256_vector:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:367    .text.sha256_vector:0000000000000074 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:371    .text.sha256_vector:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:380    .text.sha256_vector:0000000000000092 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:381    .text.sha256_vector:0000000000000092 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:385    .text.sha256_vector:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:386    .text.sha256_vector:000000000000009a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:393    .text.sha256_init:0000000000000000 sha256_init
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:396    .text.sha256_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:398    .text.sha256_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:399    .text.sha256_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:400    .text.sha256_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:403    .text.sha256_init:0000000000000004 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:407    .text.sha256_init:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:411    .text.sha256_init:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:415    .text.sha256_init:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:419    .text.sha256_init:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:423    .text.sha256_init:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:427    .text.sha256_init:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:431    .text.sha256_init:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:433    .text.sha256_init:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:435    .text.sha256_init:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:437    .text.sha256_init:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:439    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:440    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:441    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:442    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:443    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:444    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:445    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:446    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:447    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:448    .text.sha256_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:450    .text.sha256_init:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:452    .text.sha256_init:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:453    .text.sha256_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:460    .text.sha256_process:0000000000000000 sha256_process
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:463    .text.sha256_process:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:465    .text.sha256_process:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:466    .text.sha256_process:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:467    .text.sha256_process:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:468    .text.sha256_process:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:472    .text.sha256_process:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:473    .text.sha256_process:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:474    .text.sha256_process:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:475    .text.sha256_process:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:476    .text.sha256_process:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:477    .text.sha256_process:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:478    .text.sha256_process:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:479    .text.sha256_process:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:480    .text.sha256_process:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:481    .text.sha256_process:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:486    .text.sha256_process:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:488    .text.sha256_process:000000000000001c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:490    .text.sha256_process:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:494    .text.sha256_process:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:496    .text.sha256_process:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:500    .text.sha256_process:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:503    .text.sha256_process:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:504    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:505    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:506    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:507    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:508    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:509    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:510    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:511    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:512    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:513    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:515    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:517    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:518    .text.sha256_process:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:520    .text.sha256_process:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:522    .text.sha256_process:0000000000000038 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:524    .text.sha256_process:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:525    .text.sha256_process:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:530    .text.sha256_process:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:532    .text.sha256_process:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:533    .text.sha256_process:000000000000004c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:536    .text.sha256_process:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:539    .text.sha256_process:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:546    .text.sha256_process:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:547    .text.sha256_process:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:548    .text.sha256_process:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:553    .text.sha256_process:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:554    .text.sha256_process:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:556    .text.sha256_process:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:559    .text.sha256_process:0000000000000070 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:565    .text.sha256_process:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:566    .text.sha256_process:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:568    .text.sha256_process:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:571    .text.sha256_process:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:574    .text.sha256_process:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:578    .text.sha256_process:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:579    .text.sha256_process:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:580    .text.sha256_process:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:581    .text.sha256_process:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:583    .text.sha256_process:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:584    .text.sha256_process:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:589    .text.sha256_process:000000000000009a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:591    .text.sha256_process:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:592    .text.sha256_process:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:595    .text.sha256_process:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:597    .text.sha256_process:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:603    .text.sha256_process:00000000000000b4 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:606    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:607    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:608    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:609    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:610    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:611    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:612    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:613    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:614    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:616    .text.sha256_process:00000000000000b6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:619    .text.sha256_process:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:620    .text.sha256_process:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:627    .text.sha256_done:0000000000000000 sha256_done
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:630    .text.sha256_done:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:632    .text.sha256_done:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:633    .text.sha256_done:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:634    .text.sha256_done:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:635    .text.sha256_done:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:637    .text.sha256_done:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:640    .text.sha256_done:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:641    .text.sha256_done:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:642    .text.sha256_done:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:643    .text.sha256_done:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:644    .text.sha256_done:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:646    .text.sha256_done:0000000000000012 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:654    .text.sha256_done:0000000000000024 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:656    .text.sha256_done:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:658    .text.sha256_done:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:660    .text.sha256_done:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:662    .text.sha256_done:000000000000002e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:665    .text.sha256_done:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:668    .text.sha256_done:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:669    .text.sha256_done:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:670    .text.sha256_done:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:671    .text.sha256_done:000000000000003c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:673    .text.sha256_done:0000000000000040 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:676    .text.sha256_done:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:677    .text.sha256_done:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:679    .text.sha256_done:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:681    .text.sha256_done:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:688    .text.sha256_done:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:689    .text.sha256_done:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:692    .text.sha256_done:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:695    .text.sha256_done:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:696    .text.sha256_done:0000000000000060 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:698    .text.sha256_done:0000000000000062 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:700    .text.sha256_done:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:709    .text.sha256_done:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:710    .text.sha256_done:000000000000006a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:714    .text.sha256_done:000000000000006e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:716    .text.sha256_done:0000000000000072 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:718    .text.sha256_done:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:719    .text.sha256_done:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:721    .text.sha256_done:000000000000007a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:723    .text.sha256_done:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:724    .text.sha256_done:000000000000007e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:726    .text.sha256_done:0000000000000082 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:728    .text.sha256_done:0000000000000086 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:731    .text.sha256_done:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:733    .text.sha256_done:000000000000008e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:735    .text.sha256_done:0000000000000092 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:737    .text.sha256_done:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:739    .text.sha256_done:000000000000009a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:741    .text.sha256_done:000000000000009e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:743    .text.sha256_done:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:744    .text.sha256_done:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:745    .text.sha256_done:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:746    .text.sha256_done:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:747    .text.sha256_done:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:748    .text.sha256_done:00000000000000a2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:753    .text.sha256_done:00000000000000a6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:757    .text.sha256_done:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:758    .text.sha256_done:00000000000000b0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:765    .text.sha256_done:00000000000000b8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:772    .text.sha256_done:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:773    .text.sha256_done:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:779    .text.sha256_done:00000000000000be .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:781    .text.sha256_done:00000000000000c2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:783    .text.sha256_done:00000000000000c6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:784    .text.sha256_done:00000000000000c6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:786    .text.sha256_done:00000000000000ca .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:788    .text.sha256_done:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:789    .text.sha256_done:00000000000000ce .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:791    .text.sha256_done:00000000000000d2 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:793    .text.sha256_done:00000000000000d6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:794    .text.sha256_done:00000000000000d6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:799    .text.sha256_done:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:800    .text.sha256_done:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:801    .text.sha256_done:00000000000000da .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:803    .text.sha256_done:00000000000000de .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:805    .text.sha256_done:00000000000000e0 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:806    .text.sha256_done:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:807    .text.sha256_done:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:808    .text.sha256_done:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:809    .text.sha256_done:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:810    .text.sha256_done:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:813    .text.sha256_done:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:815    .text.sha256_done:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:816    .text.sha256_done:00000000000000e8 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:819    .text.sha256_done:00000000000000ee .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:824    .text.sha256_done:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:825    .text.sha256_done:00000000000000f6 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:828    .text.sha256_done:00000000000000fc .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:833    .text.sha256_done:0000000000000104 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:834    .text.sha256_done:0000000000000104 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:835    .text.sha256_done:0000000000000104 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:836    .text.sha256_done:0000000000000104 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:838    .text.sha256_done:0000000000000104 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:841    .text.sha256_done:0000000000000106 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:842    .text.sha256_done:0000000000000108 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:847    .rodata.K:0000000000000000 .LANCHOR0
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:850    .rodata.K:0000000000000000 K
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:253    .text.sha256_compress:0000000000000162 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:389    .text.sha256_vector:000000000000009a .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:456    .text.sha256_init:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:623    .text.sha256_process:00000000000000ba .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:845    .text.sha256_done:0000000000000108 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:51     .text.sha256_compress:000000000000002a .L2
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:88     .text.sha256_compress:0000000000000064 .L3
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:240    .text.sha256_compress:0000000000000154 .L6
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:209    .text.sha256_compress:0000000000000138 .L5
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:141    .text.sha256_compress:00000000000000be .L4
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:353    .text.sha256_vector:000000000000006a .L13
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:338    .text.sha256_vector:0000000000000062 .L11
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:369    .text.sha256_vector:0000000000000076 .L16
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:289    .text.sha256_vector:0000000000000014 .L12
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:309    .text.sha256_vector:000000000000002c .L15
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:605    .text.sha256_process:00000000000000b6 .L29
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:514    .text.sha256_process:0000000000000034 .L26
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:501    .text.sha256_process:000000000000002c .L20
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:551    .text.sha256_process:0000000000000068 .L23
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:498    .text.sha256_process:000000000000002a .L24
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:492    .text.sha256_process:0000000000000024 .L21
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:832    .text.sha256_done:0000000000000104 .L40
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:690    .text.sha256_done:000000000000005c .L35
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:812    .text.sha256_done:00000000000000e8 .L36
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:822    .text.sha256_done:00000000000000f6 .L38
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:763    .text.sha256_done:00000000000000b8 .L39
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:674    .text.sha256_done:0000000000000044 .L34
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:693    .text.sha256_done:0000000000000060 .L37
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:1776   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3110   .debug_str:00000000000001e1 .LASF60
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3174   .debug_str:000000000000046d .LASF61
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3082   .debug_str:0000000000000088 .LASF62
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3034   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3060   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3080   .debug_str:0000000000000081 .LASF2
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3150   .debug_str:00000000000003dc .LASF0
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3144   .debug_str:00000000000003a5 .LASF1
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3126   .debug_str:0000000000000330 .LASF3
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3136   .debug_str:0000000000000373 .LASF4
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3124   .debug_str:0000000000000326 .LASF5
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3158   .debug_str:000000000000040e .LASF6
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3118   .debug_str:0000000000000306 .LASF7
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3182   .debug_str:000000000000052b .LASF8
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3176   .debug_str:0000000000000503 .LASF9
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3198   .debug_str:000000000000058f .LASF10
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3068   .debug_str:000000000000002e .LASF11
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3114   .debug_str:00000000000002e2 .LASF12
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3162   .debug_str:0000000000000428 .LASF13
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3184   .debug_str:0000000000000536 .LASF14
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3148   .debug_str:00000000000003d3 .LASF15
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3076   .debug_str:000000000000006b .LASF16
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3128   .debug_str:000000000000033a .LASF17
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3112   .debug_str:00000000000002da .LASF18
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3170   .debug_str:000000000000045d .LASF19
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3180   .debug_str:000000000000051e .LASF20
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3196   .debug_str:0000000000000582 .LASF21
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3194   .debug_str:0000000000000575 .LASF22
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3100   .debug_str:000000000000019f .LASF23
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3188   .debug_str:0000000000000548 .LASF24
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3062   .debug_str:0000000000000000 .LASF25
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3092   .debug_str:000000000000014f .LASF26
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3096   .debug_str:000000000000016f .LASF27
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3200   .debug_str:000000000000059d .LASF28
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3190   .debug_str:0000000000000555 .LASF29
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3168   .debug_str:000000000000044a .LASF30
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3088   .debug_str:0000000000000130 .LASF31
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3156   .debug_str:00000000000003fe .LASF32
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3094   .debug_str:000000000000015e .LASF33
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3104   .debug_str:00000000000001b9 .LASF34
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3172   .debug_str:0000000000000463 .LASF35
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3084   .debug_str:000000000000011a .LASF36
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3140   .debug_str:0000000000000390 .LASF37
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3070   .debug_str:0000000000000039 .LASF63
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3130   .debug_str:0000000000000340 .LASF38
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3146   .debug_str:00000000000003b1 .LASF39
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3098   .debug_str:000000000000017e .LASF40
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3108   .debug_str:00000000000001d4 .LASF64
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3134   .debug_str:000000000000036c .LASF41
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3074   .debug_str:0000000000000065 .LASF42
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3160   .debug_str:0000000000000421 .LASF43
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3142   .debug_str:0000000000000399 .LASF44
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:628    .text.sha256_done:0000000000000000 .LFB436
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:843    .text.sha256_done:0000000000000108 .LFE436
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2346   .debug_loc:0000000000000000 .LLST18
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2385   .debug_loc:000000000000005d .LLST19
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2400   .debug_loc:0000000000000086 .LLST20
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:704    .text.sha256_done:000000000000006a .LBB8
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2408   .debug_loc:000000000000009a .LLST21
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2430   .debug_loc:00000000000000c3 .LLST22
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:767    .text.sha256_done:00000000000000ba .LBB12
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2439   .debug_loc:00000000000000d9 .LLST23
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2446   .debug_loc:00000000000000ec .LLST24
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:686    .text.sha256_done:0000000000000058 .LVL54
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:755    .text.sha256_done:00000000000000b0 .LVL59
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3138   .debug_str:0000000000000381 .LASF45
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:461    .text.sha256_process:0000000000000000 .LFB435
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:621    .text.sha256_process:00000000000000ba .LFE435
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2479   .debug_loc:0000000000000120 .LLST14
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2501   .debug_loc:0000000000000157 .LLST15
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3102   .debug_str:00000000000001b3 .LASF46
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2530   .debug_loc:00000000000001a3 .LLST16
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2549   .debug_loc:00000000000001d7 .LLST17
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:528    .text.sha256_process:0000000000000048 .LVL39
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:563    .text.sha256_process:000000000000007e .LVL44
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:587    .text.sha256_process:000000000000009a .LVL48
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3164   .debug_str:000000000000042d .LASF65
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:394    .text.sha256_init:0000000000000000 .LFB434
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:454    .text.sha256_init:000000000000005e .LFE434
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3106   .debug_str:00000000000001c4 .LASF66
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:13     .text.sha256_compress:0000000000000000 .LFB433
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:251    .text.sha256_compress:0000000000000162 .LFE433
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2556   .debug_loc:00000000000001ea .LLST0
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2577   .debug_loc:0000000000000220 .LLST1
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2595   .debug_loc:000000000000024c .LLST2
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2602   .debug_loc:000000000000025f .LLST3
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2815   .debug_loc:000000000000036f .LLST4
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2841   .debug_loc:00000000000003b3 .LLST5
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:44     .text.sha256_compress:0000000000000022 .LVL4
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3066   .debug_str:0000000000000020 .LASF47
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:258    .text.sha256_vector:0000000000000000 .LFB432
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:387    .text.sha256_vector:000000000000009a .LFE432
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3178   .debug_str:0000000000000515 .LASF48
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2849   .debug_loc:00000000000003c7 .LLST6
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3120   .debug_str:000000000000030f .LASF49
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2878   .debug_loc:000000000000040c .LLST7
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2897   .debug_loc:0000000000000440 .LLST8
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2916   .debug_loc:0000000000000474 .LLST9
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3072   .debug_str:000000000000005f .LASF50
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2935   .debug_loc:00000000000004a8 .LLST10
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3186   .debug_str:000000000000053e .LASF51
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2956   .debug_loc:00000000000004de .LLST11
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:2980   .debug_loc:000000000000051e .LLST12
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3006   .debug_loc:0000000000000560 .LLST13
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:296    .text.sha256_vector:0000000000000020 .LVL20
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:316    .text.sha256_vector:0000000000000038 .LVL24
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:323    .text.sha256_vector:0000000000000046 .LVL25
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:328    .text.sha256_vector:0000000000000050 .LVL27
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:332    .text.sha256_vector:000000000000005a .LVL28
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:378    .text.sha256_vector:0000000000000092 .LVL34
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3078   .debug_str:0000000000000074 .LASF52
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3116   .debug_str:00000000000002f9 .LASF53
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3154   .debug_str:00000000000003f1 .LASF67
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3090   .debug_str:0000000000000145 .LASF54
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3086   .debug_str:0000000000000129 .LASF68
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3064   .debug_str:000000000000000f .LASF69
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3132   .debug_str:0000000000000362 .LASF55
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3192   .debug_str:0000000000000562 .LASF56
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3166   .debug_str:0000000000000439 .LASF57
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3122   .debug_str:0000000000000314 .LASF58
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:3152   .debug_str:00000000000003e9 .LASF59
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:631    .text.sha256_done:0000000000000000 .LVL51
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:684    .text.sha256_done:0000000000000050 .LVL53
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:759    .text.sha256_done:00000000000000b2 .LVL60
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:762    .text.sha256_done:00000000000000b8 .LVL61
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:811    .text.sha256_done:00000000000000e8 .LVL65
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:831    .text.sha256_done:0000000000000104 .LVL66
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:839    .text.sha256_done:0000000000000106 .LVL67
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:682    .text.sha256_done:000000000000004e .LVL52
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:703    .text.sha256_done:000000000000006a .LVL56
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:729    .text.sha256_done:000000000000008a .LVL57
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:749    .text.sha256_done:00000000000000a6 .LVL58
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:701    .text.sha256_done:0000000000000068 .LVL55
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:766    .text.sha256_done:00000000000000ba .LVL62
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:795    .text.sha256_done:00000000000000da .LVL64
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:775    .text.sha256_done:00000000000000be .LVL63
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:464    .text.sha256_process:0000000000000000 .LVL37
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:491    .text.sha256_process:0000000000000024 .LVL38
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:604    .text.sha256_process:00000000000000b6 .LVL49
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:617    .text.sha256_process:00000000000000b8 .LVL50
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:537    .text.sha256_process:0000000000000054 .LVL40
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:545    .text.sha256_process:0000000000000062 .LVL41
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:569    .text.sha256_process:0000000000000082 .LVL45
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:577    .text.sha256_process:000000000000008a .LVL47
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:572    .text.sha256_process:0000000000000086 .LVL46
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:557    .text.sha256_process:0000000000000070 .LVL43
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:17     .text.sha256_compress:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:41     .text.sha256_compress:0000000000000018 .LVL3
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:208    .text.sha256_compress:0000000000000138 .LVL13
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:239    .text.sha256_compress:0000000000000154 .LVL16
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:39     .text.sha256_compress:0000000000000016 .LVL2
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:123    .text.sha256_compress:000000000000009e .LVL8
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:163    .text.sha256_compress:00000000000000f2 .LVL9
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:181    .text.sha256_compress:000000000000011c .LVL11
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:175    .text.sha256_compress:0000000000000114 .LVL10
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:228    .text.sha256_compress:000000000000014a .LVL14
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:232    .text.sha256_compress:000000000000014c .LVL15
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:206    .text.sha256_compress:0000000000000134 .LVL12
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:28     .text.sha256_compress:0000000000000008 .LVL1
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:261    .text.sha256_vector:0000000000000000 .LVL17
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:288    .text.sha256_vector:0000000000000014 .LVL19
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:352    .text.sha256_vector:000000000000006a .LVL30
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:368    .text.sha256_vector:0000000000000076 .LVL33
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:274    .text.sha256_vector:0000000000000008 .LVL18
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:298    .text.sha256_vector:0000000000000022 .LVL21
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:310    .text.sha256_vector:000000000000002c .LVL23
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:337    .text.sha256_vector:0000000000000062 .LVL29
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:305    .text.sha256_vector:0000000000000028 .LVL22
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:362    .text.sha256_vector:0000000000000072 .LVL31
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:365    .text.sha256_vector:0000000000000074 .LVL32
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:325    .text.sha256_vector:0000000000000048 .LVL26
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:929    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:708    .text.sha256_done:000000000000006a .LBE8
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:711    .text.sha256_done:000000000000006e .LBB11
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:751    .text.sha256_done:00000000000000a6 .LBE11
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:771    .text.sha256_done:00000000000000ba .LBE12
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:776    .text.sha256_done:00000000000000be .LBB15
+C:\Users\stapi\AppData\Local\Temp\ccnURJuD.s:797    .text.sha256_done:00000000000000da .LBE15
+
+UNDEFINED SYMBOLS
+__riscv_save_3
+memcpy
+__riscv_restore_3
+__riscv_save_8
+os_malloc
+sys_enter_critical
+hau_hash_sha_256
+sys_exit_critical
+os_free
+__riscv_restore_8
+os_memcpy
+__riscv_save_7
+__riscv_restore_7
+__riscv_save_2
+__riscv_restore_2

@@ -1,0 +1,1407 @@
+   1              		.file	"utils_net.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_f2p0_c2p0_b_p0p94"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.rodata.iotx_net_disconnect.str1.4,"aMS",@progbits,1
+  10              		.align	2
+  11              	.LC0:
+  12 0000 5B657272 		.string	"[err] "
+  12      5D2000
+  13 0007 00       		.align	2
+  14              	.LC1:
+  15 0008 6E657477 		.string	"network is null"
+  15      6F726B20 
+  15      6973206E 
+  15      756C6C00 
+  16              		.align	2
+  17              	.LC2:
+  18 0018 0D0A00   		.string	"\r\n"
+  19              		.section	.text.iotx_net_disconnect,"ax",@progbits
+  20              		.align	1
+  21              		.globl	iotx_net_disconnect
+  23              	iotx_net_disconnect:
+  24              	.LFB32:
+  25              		.file 1 "C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_REL
+   1:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** /*
+   2:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****  * Copyright (C) 2015-2018 Alibaba Group Holding Limited
+   3:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****  */
+   4:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+   5:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #include <string.h>
+   6:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+   7:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #include "iot_import.h"
+   8:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #include "iot_export.h"
+   9:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #include "iotx_utils.h"
+  10:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #include "utils_net.h"
+  11:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #include "iotx_utils_internal.h"
+  12:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  13:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** /*** SSL connection ***/
+  14:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef SUPPORT_TLS
+  15:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static void *ssl_malloc(uint32_t size)
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return LITE_malloc(size, MEM_MAGIC, "tls");
+  18:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+  19:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static void ssl_free(void *ptr)
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     LITE_free(ptr);
+  22:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+  23:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+  24:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  25:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static int read_ssl(utils_network_pt pNetwork, char *buffer, uint32_t len, uint32_t timeout_ms)
+  26:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == pNetwork)
+  28:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+  29:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("network is null");
+  30:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+  31:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+  32:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return HAL_SSL_Read((uintptr_t)pNetwork->handle, buffer, len, timeout_ms);
+  34:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+  35:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  36:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static int write_ssl(utils_network_pt pNetwork, const char *buffer, uint32_t len, uint32_t timeout_
+  37:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == pNetwork)
+  39:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+  40:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("network is null");
+  41:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+  42:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+  43:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return HAL_SSL_Write((uintptr_t)pNetwork->handle, buffer, len, timeout_ms);
+  45:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+  46:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  47:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static int disconnect_ssl(utils_network_pt pNetwork)
+  48:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == pNetwork)
+  50:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+  51:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("network is null");
+  52:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+  53:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+  54:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_SSL_Destroy((uintptr_t)pNetwork->handle);
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->handle = 0;
+  57:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return 0;
+  59:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+  60:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  61:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static int connect_ssl(utils_network_pt pNetwork)
+  62:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+  63:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == pNetwork)
+  65:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+  66:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("network is null");
+  67:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return 1;
+  68:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+  69:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  70:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #if defined(SUPPORT_ITLS)
+  71:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     char pkps[PRODUCT_KEY_LEN + PRODUCT_SECRET_LEN + 3] = {0};
+  72:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  73:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_GetProductKey(pkps);
+  74:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int len = strlen(pkps);
+  75:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_GetProductSecret(pkps + len + 1);
+  76:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     len += strlen(pkps + len + 1) + 2;
+  77:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  78:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (0 != (pNetwork->handle = (intptr_t)HAL_SSL_Establish(
+  79:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->pHostAddress,
+  80:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->port,
+  81:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pkps, len)))
+  82:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+  83:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return 0;
+  84:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+  85:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #elif defined(SUPPORT_TLS)
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     ssl_hooks_t ssl_hooks;
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     memset(&ssl_hooks, 0, sizeof(ssl_hooks_t));
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     ssl_hooks.malloc = ssl_malloc;
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     ssl_hooks.free = ssl_free;
+  90:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_SSLHooks_set(&ssl_hooks);
+  92:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (0 != (pNetwork->handle = (intptr_t)HAL_SSL_Establish(
+  94:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->pHostAddress,
+  95:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->port,
+  96:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->ca_crt,
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->ca_crt_len + 1)))
+  98:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+  99:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return 0;
+ 100:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 101:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 102:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     else
+ 103:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 104:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         /* TODO SHOLUD not remove this handle space */
+ 105:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         /* The space will be freed by calling disconnect_ssl() */
+ 106:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         /* utils_memory_free((void *)pNetwork->handle); */
+ 107:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+ 108:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 109:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 110:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 111:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** /*** TCP connection ***/
+ 112:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static int read_tcp(utils_network_pt pNetwork, char *buffer, uint32_t len, uint32_t timeout_ms)
+ 113:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return HAL_TCP_Read(pNetwork->handle, buffer, len, timeout_ms);
+ 115:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 116:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 117:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static int write_tcp(utils_network_pt pNetwork, const char *buffer, uint32_t len, uint32_t timeout_
+ 118:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return HAL_TCP_Write(pNetwork->handle, buffer, len, timeout_ms);
+ 120:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 121:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 122:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static int disconnect_tcp(utils_network_pt pNetwork)
+ 123:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (pNetwork->handle == (uintptr_t)(-1))
+ 125:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("network is null");
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+ 128:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 129:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_TCP_Destroy(pNetwork->handle);
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->handle = -1;
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return 0;
+ 133:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 134:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 135:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static int connect_tcp(utils_network_pt pNetwork)
+ 136:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == pNetwork)
+ 138:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 139:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("network is null");
+ 140:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+ 141:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 142:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->handle = HAL_TCP_Establish(pNetwork->pHostAddress, pNetwork->port);
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (pNetwork->handle == (uintptr_t)(-1))
+ 145:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 146:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+ 147:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 148:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 149:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return 0;
+ 150:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 151:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 152:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** /****** network interface ******/
+ 153:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** int utils_net_read(utils_network_pt pNetwork, char *buffer, uint32_t len, uint32_t timeout_ms)
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+ 156:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 157:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 158:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_MutexLock(pNetwork->mutex);
+ 159:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 160:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == pNetwork->ca_crt)
+ 162:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 163:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef SUPPORT_ITLS
+ 164:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = read_ssl(pNetwork, buffer, len, timeout_ms);
+ 165:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = read_tcp(pNetwork, buffer, len, timeout_ms);
+ 167:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 168:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 169:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     else
+ 170:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 171:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef SUPPORT_TLS
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = read_ssl(pNetwork, buffer, len, timeout_ms);
+ 173:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 174:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("read no method");
+ 175:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 176:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 177:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 178:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 179:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_MutexUnlock(pNetwork->mutex);
+ 180:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 181:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return ret;
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 184:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 185:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** int utils_net_write(utils_network_pt pNetwork, const char *buffer, uint32_t len, uint32_t timeout_m
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+ 188:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 189:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 190:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_MutexLock(pNetwork->mutex);
+ 191:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 192:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == pNetwork->ca_crt)
+ 194:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 195:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef SUPPORT_ITLS
+ 196:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = write_ssl(pNetwork, buffer, len, timeout_ms);
+ 197:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = write_tcp(pNetwork, buffer, len, timeout_ms);
+ 199:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 200:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 201:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     else
+ 202:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 203:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef SUPPORT_TLS
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = write_ssl(pNetwork, buffer, len, timeout_ms);
+ 205:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 206:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("write no method");
+ 207:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 208:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 209:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 210:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 211:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_MutexUnlock(pNetwork->mutex);
+ 212:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 213:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return ret;
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 216:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 217:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** int iotx_net_disconnect(utils_network_pt pNetwork)
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+  26              		.loc 1 218 1
+  27              		.cfi_startproc
+  28              	.LVL0:
+  29 0000 17030000 		call	t0,__riscv_save_2
+  29      E7020300 
+  30              		.cfi_offset 9, -12
+  31              		.cfi_offset 8, -8
+  32              		.cfi_offset 1, -4
+  33              		.cfi_def_cfa_offset 16
+ 219:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+  34              		.loc 1 219 5
+  35              	.LVL1:
+ 220:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 221:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 222:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_MutexLock(pNetwork->mutex);
+ 223:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 224:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 225:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == pNetwork->ca_crt)
+  36              		.loc 1 225 5
+ 218:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+  37              		.loc 1 218 1 is_stmt 0
+  38 0008 2A84     		mv	s0,a0
+  39              		.loc 1 225 8
+  40 000a 1C44     		lw	a5,8(s0)
+  41              	.LBB6:
+  42              	.LBB7:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+  43              		.loc 1 124 17
+  44 000c 4845     		lw	a0,12(a0)
+  45              	.LVL2:
+  46              	.LBE7:
+  47              	.LBE6:
+  48              		.loc 1 225 8
+  49 000e A1EB     		bne	a5,zero,.L2
+ 226:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 227:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef SUPPORT_ITLS
+ 228:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = disconnect_ssl(pNetwork);
+ 229:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 230:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = disconnect_tcp(pNetwork);
+  50              		.loc 1 230 9 is_stmt 1
+  51              	.LVL3:
+  52              	.LBB10:
+  53              	.LBB8:
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+  54              		.loc 1 124 5
+ 124:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+  55              		.loc 1 124 8 is_stmt 0
+  56 0010 FD54     		li	s1,-1
+  57 0012 631F9502 		bne	a0,s1,.L3
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+  58              		.loc 1 126 9 is_stmt 1
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+  59              		.loc 1 126 9
+  60 0016 37050000 		lui	a0,%hi(.LC0)
+  61 001a 13050500 		addi	a0,a0,%lo(.LC0)
+  62 001e 97000000 		call	HAL_Printf
+  62      E7800000 
+  63              	.LVL4:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+  64              		.loc 1 126 9
+  65 0026 37050000 		lui	a0,%hi(.LC1)
+  66 002a 13050500 		addi	a0,a0,%lo(.LC1)
+  67 002e 97000000 		call	HAL_Printf
+  67      E7800000 
+  68              	.LVL5:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+  69              		.loc 1 126 9
+  70 0036 37050000 		lui	a0,%hi(.LC2)
+  71 003a 13050500 		addi	a0,a0,%lo(.LC2)
+  72 003e 97000000 		call	HAL_Printf
+  72      E7800000 
+  73              	.LVL6:
+ 126:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+  74              		.loc 1 126 9
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+  75              		.loc 1 127 9
+ 127:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+  76              		.loc 1 127 16 is_stmt 0
+  77 0046 7D55     		li	a0,-1
+  78              	.LVL7:
+  79              	.L1:
+  80              	.LBE8:
+  81              	.LBE10:
+ 231:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 232:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 233:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     else
+ 234:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 235:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef SUPPORT_TLS
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = disconnect_ssl(pNetwork);
+ 237:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 238:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("disconn no method");
+ 239:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 240:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 241:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 242:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 243:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_MutexUnlock(pNetwork->mutex);
+ 244:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 245:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return ret;
+ 247:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+  82              		.loc 1 247 1
+  83 0048 17030000 		tail	__riscv_restore_2
+  83      67000300 
+  84              		.cfi_remember_state
+  85              		.cfi_restore 9
+  86              		.cfi_restore 8
+  87              		.cfi_restore 1
+  88              		.cfi_def_cfa_offset 0
+  89              	.LVL8:
+  90              	.L3:
+  91              		.cfi_restore_state
+  92              	.LBB11:
+  93              	.LBB9:
+ 130:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->handle = -1;
+  94              		.loc 1 130 5 is_stmt 1
+  95 0050 97000000 		call	HAL_TCP_Destroy
+  95      E7800000 
+  96              	.LVL9:
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return 0;
+  97              		.loc 1 131 5
+ 131:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return 0;
+  98              		.loc 1 131 22 is_stmt 0
+  99 0058 44C4     		sw	s1,12(s0)
+ 132:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 100              		.loc 1 132 5 is_stmt 1
+ 101              	.LVL10:
+ 102              	.L6:
+ 103              	.LBE9:
+ 104              	.LBE11:
+ 105              	.LBB12:
+ 106              	.LBB13:
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 107              		.loc 1 58 5
+  58:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 108              		.loc 1 58 12 is_stmt 0
+ 109 005a 0145     		li	a0,0
+ 110              	.LVL11:
+ 111              	.LBE13:
+ 112              	.LBE12:
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 113              		.loc 1 246 5 is_stmt 1
+ 246:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 114              		.loc 1 246 12 is_stmt 0
+ 115 005c F5B7     		j	.L1
+ 116              	.LVL12:
+ 117              	.L2:
+ 236:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 118              		.loc 1 236 9 is_stmt 1
+ 119              	.LBB15:
+ 120              	.LBB14:
+  49:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 121              		.loc 1 49 5
+  55:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->handle = 0;
+ 122              		.loc 1 55 5
+ 123 005e 97000000 		call	HAL_SSL_Destroy
+ 123      E7800000 
+ 124              	.LVL13:
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 125              		.loc 1 56 5
+  56:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 126              		.loc 1 56 22 is_stmt 0
+ 127 0066 23260400 		sw	zero,12(s0)
+ 128 006a C5BF     		j	.L6
+ 129              	.LBE14:
+ 130              	.LBE15:
+ 131              		.cfi_endproc
+ 132              	.LFE32:
+ 134              		.section	.text.iotx_net_connect,"ax",@progbits
+ 135              		.align	1
+ 136              		.globl	iotx_net_connect
+ 138              	iotx_net_connect:
+ 139              	.LFB33:
+ 248:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 249:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** int iotx_net_connect(utils_network_pt pNetwork)
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+ 140              		.loc 1 250 1 is_stmt 1
+ 141              		.cfi_startproc
+ 142              	.LVL14:
+ 143 0000 17030000 		call	t0,__riscv_save_1
+ 143      E7020300 
+ 144              		.cfi_offset 8, -8
+ 145              		.cfi_offset 1, -4
+ 146              		.cfi_def_cfa_offset 16
+ 251:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+ 147              		.loc 1 251 5
+ 148              	.LVL15:
+ 252:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 253:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 254:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_MutexLock(pNetwork->mutex);
+ 255:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 256:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 257:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == pNetwork->ca_crt)
+ 149              		.loc 1 257 5
+ 150              		.loc 1 257 8 is_stmt 0
+ 151 0008 1C45     		lw	a5,8(a0)
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+ 152              		.loc 1 250 1
+ 153 000a 4111     		addi	sp,sp,-16
+ 154              		.cfi_def_cfa_offset 32
+ 250:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+ 155              		.loc 1 250 1
+ 156 000c 2A84     		mv	s0,a0
+ 157              		.loc 1 257 8
+ 158 000e 9DE3     		bne	a5,zero,.L8
+ 258:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 259:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef SUPPORT_ITLS
+ 260:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = connect_ssl(pNetwork);
+ 261:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 262:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = connect_tcp(pNetwork);
+ 159              		.loc 1 262 9 is_stmt 1
+ 160              	.LVL16:
+ 161              	.LBB20:
+ 162              	.LBB21:
+ 137:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 163              		.loc 1 137 5
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (pNetwork->handle == (uintptr_t)(-1))
+ 164              		.loc 1 143 5
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (pNetwork->handle == (uintptr_t)(-1))
+ 165              		.loc 1 143 24 is_stmt 0
+ 166 0010 83554500 		lhu	a1,4(a0)
+ 167 0014 0841     		lw	a0,0(a0)
+ 168              	.LVL17:
+ 169 0016 97000000 		call	HAL_TCP_Establish
+ 169      E7800000 
+ 170              	.LVL18:
+ 143:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (pNetwork->handle == (uintptr_t)(-1))
+ 171              		.loc 1 143 22
+ 172 001e 48C4     		sw	a0,12(s0)
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 173              		.loc 1 144 5 is_stmt 1
+ 144:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 174              		.loc 1 144 8 is_stmt 0
+ 175 0020 0505     		addi	a0,a0,1
+ 176              	.LVL19:
+ 177              	.L11:
+ 178              	.LBE21:
+ 179              	.LBE20:
+ 180              	.LBB22:
+ 181              	.LBB23:
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->pHostAddress,
+ 182              		.loc 1 93 8
+ 183 0022 13351500 		seqz	a0,a0
+ 184 0026 3305A040 		neg	a0,a0
+ 185              	.LVL20:
+ 186              	.LBE23:
+ 187              	.LBE22:
+ 263:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 264:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 265:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     else
+ 266:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 267:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef SUPPORT_TLS
+ 268:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         ret = connect_ssl(pNetwork);
+ 269:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 270:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("conn no method");
+ 271:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 272:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 273:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 274:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 275:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     HAL_MutexUnlock(pNetwork->mutex);
+ 276:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 277:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 278:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return ret;
+ 188              		.loc 1 278 5 is_stmt 1
+ 279:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 189              		.loc 1 279 1 is_stmt 0
+ 190 002a 4101     		addi	sp,sp,16
+ 191              		.cfi_remember_state
+ 192              		.cfi_def_cfa_offset 0
+ 193 002c 17030000 		tail	__riscv_restore_1
+ 193      67000300 
+ 194              		.cfi_restore 8
+ 195              		.cfi_restore 1
+ 196              		.cfi_def_cfa_offset -16
+ 197              	.LVL21:
+ 198              	.L8:
+ 199              		.cfi_restore_state
+ 268:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 200              		.loc 1 268 9 is_stmt 1
+ 201              	.LBB25:
+ 202              	.LBB24:
+  64:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 203              		.loc 1 64 5
+  86:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     memset(&ssl_hooks, 0, sizeof(ssl_hooks_t));
+ 204              		.loc 1 86 5
+  87:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     ssl_hooks.malloc = ssl_malloc;
+ 205              		.loc 1 87 5
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     ssl_hooks.free = ssl_free;
+ 206              		.loc 1 88 5
+  88:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     ssl_hooks.free = ssl_free;
+ 207              		.loc 1 88 22 is_stmt 0
+ 208 0034 B7070000 		lui	a5,%hi(ssl_malloc)
+ 209 0038 93870700 		addi	a5,a5,%lo(ssl_malloc)
+ 210 003c 3EC4     		sw	a5,8(sp)
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 211              		.loc 1 89 5 is_stmt 1
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 212              		.loc 1 89 20 is_stmt 0
+ 213 003e B7070000 		lui	a5,%hi(ssl_free)
+ 214 0042 93870700 		addi	a5,a5,%lo(ssl_free)
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 215              		.loc 1 91 5
+ 216 0046 2800     		addi	a0,sp,8
+  89:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 217              		.loc 1 89 20
+ 218 0048 3EC6     		sw	a5,12(sp)
+  91:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 219              		.loc 1 91 5 is_stmt 1
+ 220 004a 97000000 		call	HAL_SSLHooks_set
+ 220      E7800000 
+ 221              	.LVL22:
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->pHostAddress,
+ 222              		.loc 1 93 5
+  97:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 223              		.loc 1 97 27 is_stmt 0
+ 224 0052 83566400 		lhu	a3,6(s0)
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->pHostAddress,
+ 225              		.loc 1 93 44
+ 226 0056 1044     		lw	a2,8(s0)
+ 227 0058 83554400 		lhu	a1,4(s0)
+ 228 005c 0840     		lw	a0,0(s0)
+ 229 005e 8506     		addi	a3,a3,1
+ 230 0060 97000000 		call	HAL_SSL_Establish
+ 230      E7800000 
+ 231              	.LVL23:
+  93:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****                   pNetwork->pHostAddress,
+ 232              		.loc 1 93 32
+ 233 0068 48C4     		sw	a0,12(s0)
+ 234 006a 65BF     		j	.L11
+ 235              	.LBE24:
+ 236              	.LBE25:
+ 237              		.cfi_endproc
+ 238              	.LFE33:
+ 240              		.section	.text.ssl_free,"ax",@progbits
+ 241              		.align	1
+ 243              	ssl_free:
+ 244              	.LFB21:
+  20:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     LITE_free(ptr);
+ 245              		.loc 1 20 1 is_stmt 1
+ 246              		.cfi_startproc
+ 247              	.LVL24:
+  21:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 248              		.loc 1 21 5
+ 249 0000 17030000 		tail	LITE_free_internal
+ 249      67000300 
+ 250              	.LVL25:
+ 251              		.cfi_endproc
+ 252              	.LFE21:
+ 254              		.section	.text.ssl_malloc,"ax",@progbits
+ 255              		.align	1
+ 257              	ssl_malloc:
+ 258              	.LFB20:
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return LITE_malloc(size, MEM_MAGIC, "tls");
+ 259              		.loc 1 16 1
+ 260              		.cfi_startproc
+ 261              	.LVL26:
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 262              		.loc 1 17 5
+  16:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return LITE_malloc(size, MEM_MAGIC, "tls");
+ 263              		.loc 1 16 1 is_stmt 0
+ 264 0000 2A86     		mv	a2,a0
+  17:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 265              		.loc 1 17 12
+ 266 0002 8145     		li	a1,0
+ 267 0004 0145     		li	a0,0
+ 268              	.LVL27:
+ 269 0006 17030000 		tail	LITE_malloc_internal
+ 269      67000300 
+ 270              	.LVL28:
+ 271              		.cfi_endproc
+ 272              	.LFE20:
+ 274              		.section	.text.utils_net_write,"ax",@progbits
+ 275              		.align	1
+ 276              		.globl	utils_net_write
+ 278              	utils_net_write:
+ 279              	.LFB31:
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+ 280              		.loc 1 186 1 is_stmt 1
+ 281              		.cfi_startproc
+ 282              	.LVL29:
+ 283 0000 17030000 		call	t0,__riscv_save_0
+ 283      E7020300 
+ 284              		.cfi_offset 1, -4
+ 285              		.cfi_def_cfa_offset 16
+ 187:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 286              		.loc 1 187 5
+ 287              	.LVL30:
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 288              		.loc 1 193 5
+ 186:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+ 289              		.loc 1 186 1 is_stmt 0
+ 290 0008 AA87     		mv	a5,a0
+ 193:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 291              		.loc 1 193 8
+ 292 000a 9C47     		lw	a5,8(a5)
+ 293 000c 4845     		lw	a0,12(a0)
+ 294              	.LVL31:
+ 295 000e 89EB     		bne	a5,zero,.L17
+ 198:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 296              		.loc 1 198 9 is_stmt 1
+ 297              	.LVL32:
+ 298              	.LBB30:
+ 299              	.LBB31:
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 300              		.loc 1 119 5
+ 119:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 301              		.loc 1 119 12 is_stmt 0
+ 302 0010 97000000 		call	HAL_TCP_Write
+ 302      E7800000 
+ 303              	.LVL33:
+ 304              	.L16:
+ 305              	.LBE31:
+ 306              	.LBE30:
+ 215:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 307              		.loc 1 215 1
+ 308 0018 17030000 		tail	__riscv_restore_0
+ 308      67000300 
+ 309              		.cfi_remember_state
+ 310              		.cfi_restore 1
+ 311              		.cfi_def_cfa_offset 0
+ 312              	.LVL34:
+ 313              	.L17:
+ 314              		.cfi_restore_state
+ 204:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 315              		.loc 1 204 9 is_stmt 1
+ 316              	.LBB32:
+ 317              	.LBB33:
+  38:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 318              		.loc 1 38 5
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 319              		.loc 1 44 5
+  44:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 320              		.loc 1 44 12 is_stmt 0
+ 321 0020 97000000 		call	HAL_SSL_Write
+ 321      E7800000 
+ 322              	.LVL35:
+ 323              	.LBE33:
+ 324              	.LBE32:
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 325              		.loc 1 214 5 is_stmt 1
+ 214:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 326              		.loc 1 214 12 is_stmt 0
+ 327 0028 C5BF     		j	.L16
+ 328              		.cfi_endproc
+ 329              	.LFE31:
+ 331              		.section	.text.utils_net_read,"ax",@progbits
+ 332              		.align	1
+ 333              		.globl	utils_net_read
+ 335              	utils_net_read:
+ 336              	.LFB30:
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+ 337              		.loc 1 154 1 is_stmt 1
+ 338              		.cfi_startproc
+ 339              	.LVL36:
+ 340 0000 17030000 		call	t0,__riscv_save_0
+ 340      E7020300 
+ 341              		.cfi_offset 1, -4
+ 342              		.cfi_def_cfa_offset 16
+ 155:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 343              		.loc 1 155 5
+ 344              	.LVL37:
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 345              		.loc 1 161 5
+ 154:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     int ret = -1;
+ 346              		.loc 1 154 1 is_stmt 0
+ 347 0008 AA87     		mv	a5,a0
+ 161:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 348              		.loc 1 161 8
+ 349 000a 9C47     		lw	a5,8(a5)
+ 350 000c 4845     		lw	a0,12(a0)
+ 351              	.LVL38:
+ 352 000e 89EB     		bne	a5,zero,.L21
+ 166:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 353              		.loc 1 166 9 is_stmt 1
+ 354              	.LVL39:
+ 355              	.LBB38:
+ 356              	.LBB39:
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 357              		.loc 1 114 5
+ 114:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 358              		.loc 1 114 12 is_stmt 0
+ 359 0010 97000000 		call	HAL_TCP_Read
+ 359      E7800000 
+ 360              	.LVL40:
+ 361              	.L20:
+ 362              	.LBE39:
+ 363              	.LBE38:
+ 183:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 364              		.loc 1 183 1
+ 365 0018 17030000 		tail	__riscv_restore_0
+ 365      67000300 
+ 366              		.cfi_remember_state
+ 367              		.cfi_restore 1
+ 368              		.cfi_def_cfa_offset 0
+ 369              	.LVL41:
+ 370              	.L21:
+ 371              		.cfi_restore_state
+ 172:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #else
+ 372              		.loc 1 172 9 is_stmt 1
+ 373              	.LBB40:
+ 374              	.LBB41:
+  27:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 375              		.loc 1 27 5
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 376              		.loc 1 33 5
+  33:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 377              		.loc 1 33 12 is_stmt 0
+ 378 0020 97000000 		call	HAL_SSL_Read
+ 378      E7800000 
+ 379              	.LVL42:
+ 380              	.LBE41:
+ 381              	.LBE40:
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 382              		.loc 1 182 5 is_stmt 1
+ 182:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 383              		.loc 1 182 12 is_stmt 0
+ 384 0028 C5BF     		j	.L20
+ 385              		.cfi_endproc
+ 386              	.LFE30:
+ 388              		.section	.rodata.iotx_net_init.str1.4,"aMS",@progbits,1
+ 389              		.align	2
+ 390              	.LC3:
+ 391 0000 6572726F 		.string	"error pNetwork=%p, host=%p"
+ 391      7220704E 
+ 391      6574776F 
+ 391      726B3D25 
+ 391      702C2068 
+ 392              		.section	.text.iotx_net_init,"ax",@progbits
+ 393              		.align	1
+ 394              		.globl	iotx_net_init
+ 396              	iotx_net_init:
+ 397              	.LFB34:
+ 280:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 281:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 282:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** static void *get_net_mutex()
+ 283:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+ 284:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     static void *mutex = NULL;
+ 285:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (mutex == NULL) {
+ 286:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         mutex = HAL_MutexCreate();
+ 287:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 288:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return mutex;
+ 289:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 290:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 291:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 292:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** int iotx_net_init(utils_network_pt pNetwork, const char *host, uint16_t port, const char *ca_crt)
+ 293:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** {
+ 398              		.loc 1 293 1 is_stmt 1
+ 399              		.cfi_startproc
+ 400              	.LVL43:
+ 401 0000 17030000 		call	t0,__riscv_save_2
+ 401      E7020300 
+ 402              		.cfi_offset 9, -12
+ 403              		.cfi_offset 8, -8
+ 404              		.cfi_offset 1, -4
+ 405              		.cfi_def_cfa_offset 16
+ 294:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (!pNetwork || !host)
+ 406              		.loc 1 294 5
+ 293:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (!pNetwork || !host)
+ 407              		.loc 1 293 1 is_stmt 0
+ 408 0008 2A84     		mv	s0,a0
+ 409 000a AE84     		mv	s1,a1
+ 410              		.loc 1 294 8
+ 411 000c 11C1     		beq	a0,zero,.L25
+ 412              		.loc 1 294 19 discriminator 1
+ 413 000e A1E1     		bne	a1,zero,.L26
+ 414              	.L25:
+ 295:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 296:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         utils_err("error pNetwork=%p, host=%p", pNetwork, host);
+ 415              		.loc 1 296 9 is_stmt 1
+ 416              		.loc 1 296 9
+ 417 0010 37050000 		lui	a0,%hi(.LC0)
+ 418              	.LVL44:
+ 419 0014 13050500 		addi	a0,a0,%lo(.LC0)
+ 420 0018 97000000 		call	HAL_Printf
+ 420      E7800000 
+ 421              	.LVL45:
+ 422              		.loc 1 296 9
+ 423 0020 37050000 		lui	a0,%hi(.LC3)
+ 424 0024 2686     		mv	a2,s1
+ 425 0026 A285     		mv	a1,s0
+ 426 0028 13050500 		addi	a0,a0,%lo(.LC3)
+ 427 002c 97000000 		call	HAL_Printf
+ 427      E7800000 
+ 428              	.LVL46:
+ 429              		.loc 1 296 9
+ 430 0034 37050000 		lui	a0,%hi(.LC2)
+ 431 0038 13050500 		addi	a0,a0,%lo(.LC2)
+ 432 003c 97000000 		call	HAL_Printf
+ 432      E7800000 
+ 433              	.LVL47:
+ 434              		.loc 1 296 9
+ 297:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         return -1;
+ 435              		.loc 1 297 9
+ 436              		.loc 1 297 16 is_stmt 0
+ 437 0044 7D55     		li	a0,-1
+ 438              	.L24:
+ 298:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 299:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 300:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->pHostAddress = host;
+ 301:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->port = port;
+ 302:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->ca_crt = ca_crt;
+ 303:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 304:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #ifdef CONFIG_TCP_SOCKET_ACCESS_CONTROL
+ 305:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->mutex = get_net_mutex();
+ 306:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** #endif
+ 307:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 308:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     if (NULL == ca_crt)
+ 309:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 310:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         pNetwork->ca_crt_len = 0;
+ 311:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 312:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     else
+ 313:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 314:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****         pNetwork->ca_crt_len = strlen(ca_crt);
+ 315:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 316:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 317:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->handle = 0;
+ 318:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->read = utils_net_read;
+ 319:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->write = utils_net_write;
+ 320:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->disconnect = iotx_net_disconnect;
+ 321:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->connect = iotx_net_connect;
+ 322:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 323:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     return 0;
+ 324:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 439              		.loc 1 324 1
+ 440 0046 17030000 		tail	__riscv_restore_2
+ 440      67000300 
+ 441              		.cfi_remember_state
+ 442              		.cfi_restore 9
+ 443              		.cfi_restore 8
+ 444              		.cfi_restore 1
+ 445              		.cfi_def_cfa_offset 0
+ 446              	.LVL48:
+ 447              	.L26:
+ 448              		.cfi_restore_state
+ 300:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->port = port;
+ 449              		.loc 1 300 28
+ 450 004e 0CC0     		sw	a1,0(s0)
+ 301:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->ca_crt = ca_crt;
+ 451              		.loc 1 301 20
+ 452 0050 2312C400 		sh	a2,4(s0)
+ 302:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 453              		.loc 1 302 22
+ 454 0054 14C4     		sw	a3,8(s0)
+ 455 0056 3685     		mv	a0,a3
+ 300:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->port = port;
+ 456              		.loc 1 300 5 is_stmt 1
+ 301:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->ca_crt = ca_crt;
+ 457              		.loc 1 301 5
+ 302:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 458              		.loc 1 302 5
+ 308:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 459              		.loc 1 308 5
+ 310:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 460              		.loc 1 310 30 is_stmt 0
+ 461 0058 8147     		li	a5,0
+ 308:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     {
+ 462              		.loc 1 308 8
+ 463 005a 99C6     		beq	a3,zero,.L28
+ 464              	.LVL49:
+ 314:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 465              		.loc 1 314 9 is_stmt 1
+ 314:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 466              		.loc 1 314 32 is_stmt 0
+ 467 005c 97000000 		call	strlen
+ 467      E7800000 
+ 468              	.LVL50:
+ 314:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     }
+ 469              		.loc 1 314 30
+ 470 0064 B3470508 		zext.h	a5,a0
+ 471              	.L28:
+ 472 0068 2313F400 		sh	a5,6(s0)
+ 317:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->read = utils_net_read;
+ 473              		.loc 1 317 5 is_stmt 1
+ 318:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->write = utils_net_write;
+ 474              		.loc 1 318 20 is_stmt 0
+ 475 006c B7070000 		lui	a5,%hi(utils_net_read)
+ 476 0070 93870700 		addi	a5,a5,%lo(utils_net_read)
+ 477 0074 1CC8     		sw	a5,16(s0)
+ 319:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->disconnect = iotx_net_disconnect;
+ 478              		.loc 1 319 21
+ 479 0076 B7070000 		lui	a5,%hi(utils_net_write)
+ 480 007a 93870700 		addi	a5,a5,%lo(utils_net_write)
+ 481 007e 5CC8     		sw	a5,20(s0)
+ 320:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->connect = iotx_net_connect;
+ 482              		.loc 1 320 26
+ 483 0080 B7070000 		lui	a5,%hi(iotx_net_disconnect)
+ 484 0084 93870700 		addi	a5,a5,%lo(iotx_net_disconnect)
+ 485 0088 1CCC     		sw	a5,24(s0)
+ 321:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 486              		.loc 1 321 23
+ 487 008a B7070000 		lui	a5,%hi(iotx_net_connect)
+ 488 008e 93870700 		addi	a5,a5,%lo(iotx_net_connect)
+ 317:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->read = utils_net_read;
+ 489              		.loc 1 317 22
+ 490 0092 23260400 		sw	zero,12(s0)
+ 318:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->write = utils_net_write;
+ 491              		.loc 1 318 5 is_stmt 1
+ 319:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->disconnect = iotx_net_disconnect;
+ 492              		.loc 1 319 5
+ 320:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c ****     pNetwork->connect = iotx_net_connect;
+ 493              		.loc 1 320 5
+ 321:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 494              		.loc 1 321 5
+ 321:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** 
+ 495              		.loc 1 321 23 is_stmt 0
+ 496 0096 5CCC     		sw	a5,28(s0)
+ 323:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 497              		.loc 1 323 5 is_stmt 1
+ 323:C:/Users/stapi/OneDrive/Desktop/GD32VW553/V1_MQTT_OK/GD32VW55X_Wifi_BLE_SDK/GD32VW55x_RELEASE_V1.0.2/MSDK/cloud/alicloud/src/infra/utils/misc\utils_net.c **** }
+ 498              		.loc 1 323 12 is_stmt 0
+ 499 0098 0145     		li	a0,0
+ 500 009a 75B7     		j	.L24
+ 501              		.cfi_endproc
+ 502              	.LFE34:
+ 504              		.text
+ 505              	.Letext0:
+ 506              		.file 2 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 507              		.file 3 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 508              		.file 4 "..\\..\\..\\..\\cloud\\alicloud\\include/imports/iot_import_tls.h"
+ 509              		.file 5 "..\\..\\..\\..\\cloud\\alicloud\\src\\infra\\utils\\misc/utils_net.h"
+ 510              		.file 6 "..\\..\\..\\..\\cloud\\alicloud\\include/iot_import.h"
+ 511              		.file 7 "c:\\users\\stapi\\onedrive\\desktop\\gd32vw553\\embeddedbuilder_v1.4.7.26843\\tools\\nucl
+ 512              		.file 8 "..\\..\\..\\..\\cloud\\alicloud\\include/imports/iot_import_tcp.h"
+ 513              		.file 9 "..\\..\\..\\..\\cloud\\alicloud\\src\\infra\\utils/iotx_utils.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 utils_net.c
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:23     .text.iotx_net_disconnect:0000000000000000 iotx_net_disconnect
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:27     .text.iotx_net_disconnect:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:29     .text.iotx_net_disconnect:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:30     .text.iotx_net_disconnect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:31     .text.iotx_net_disconnect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:32     .text.iotx_net_disconnect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:33     .text.iotx_net_disconnect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:36     .text.iotx_net_disconnect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:37     .text.iotx_net_disconnect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:38     .text.iotx_net_disconnect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:40     .text.iotx_net_disconnect:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:44     .text.iotx_net_disconnect:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:49     .text.iotx_net_disconnect:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:54     .text.iotx_net_disconnect:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:55     .text.iotx_net_disconnect:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:56     .text.iotx_net_disconnect:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:59     .text.iotx_net_disconnect:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:60     .text.iotx_net_disconnect:0000000000000016 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:65     .text.iotx_net_disconnect:0000000000000026 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:70     .text.iotx_net_disconnect:0000000000000036 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:75     .text.iotx_net_disconnect:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:76     .text.iotx_net_disconnect:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:77     .text.iotx_net_disconnect:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:83     .text.iotx_net_disconnect:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:84     .text.iotx_net_disconnect:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:85     .text.iotx_net_disconnect:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:86     .text.iotx_net_disconnect:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:87     .text.iotx_net_disconnect:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:88     .text.iotx_net_disconnect:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:91     .text.iotx_net_disconnect:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:95     .text.iotx_net_disconnect:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:98     .text.iotx_net_disconnect:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:99     .text.iotx_net_disconnect:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:107    .text.iotx_net_disconnect:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:108    .text.iotx_net_disconnect:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:109    .text.iotx_net_disconnect:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:114    .text.iotx_net_disconnect:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:115    .text.iotx_net_disconnect:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:121    .text.iotx_net_disconnect:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:122    .text.iotx_net_disconnect:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:123    .text.iotx_net_disconnect:000000000000005e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:126    .text.iotx_net_disconnect:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:127    .text.iotx_net_disconnect:0000000000000066 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:131    .text.iotx_net_disconnect:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:138    .text.iotx_net_connect:0000000000000000 iotx_net_connect
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:141    .text.iotx_net_connect:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:143    .text.iotx_net_connect:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:144    .text.iotx_net_connect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:145    .text.iotx_net_connect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:146    .text.iotx_net_connect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:149    .text.iotx_net_connect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:150    .text.iotx_net_connect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:151    .text.iotx_net_connect:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:153    .text.iotx_net_connect:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:154    .text.iotx_net_connect:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:156    .text.iotx_net_connect:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:158    .text.iotx_net_connect:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:163    .text.iotx_net_connect:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:164    .text.iotx_net_connect:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:165    .text.iotx_net_connect:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:166    .text.iotx_net_connect:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:172    .text.iotx_net_connect:000000000000001e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:174    .text.iotx_net_connect:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:175    .text.iotx_net_connect:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:183    .text.iotx_net_connect:0000000000000022 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:189    .text.iotx_net_connect:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:190    .text.iotx_net_connect:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:191    .text.iotx_net_connect:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:192    .text.iotx_net_connect:000000000000002c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:194    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:195    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:196    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:199    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:203    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:204    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:205    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:206    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:207    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:257    .text.ssl_malloc:0000000000000000 ssl_malloc
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:208    .text.iotx_net_connect:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:212    .text.iotx_net_connect:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:243    .text.ssl_free:0000000000000000 ssl_free
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:213    .text.iotx_net_connect:000000000000003e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:216    .text.iotx_net_connect:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:218    .text.iotx_net_connect:0000000000000048 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:220    .text.iotx_net_connect:000000000000004a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:223    .text.iotx_net_connect:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:224    .text.iotx_net_connect:0000000000000052 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:226    .text.iotx_net_connect:0000000000000056 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:233    .text.iotx_net_connect:0000000000000068 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:237    .text.iotx_net_connect:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:246    .text.ssl_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:248    .text.ssl_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:249    .text.ssl_free:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:251    .text.ssl_free:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:260    .text.ssl_malloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:262    .text.ssl_malloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:263    .text.ssl_malloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:264    .text.ssl_malloc:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:266    .text.ssl_malloc:0000000000000002 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:271    .text.ssl_malloc:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:278    .text.utils_net_write:0000000000000000 utils_net_write
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:281    .text.utils_net_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:283    .text.utils_net_write:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:284    .text.utils_net_write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:285    .text.utils_net_write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:288    .text.utils_net_write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:289    .text.utils_net_write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:290    .text.utils_net_write:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:292    .text.utils_net_write:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:300    .text.utils_net_write:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:301    .text.utils_net_write:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:302    .text.utils_net_write:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:308    .text.utils_net_write:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:309    .text.utils_net_write:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:310    .text.utils_net_write:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:311    .text.utils_net_write:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:314    .text.utils_net_write:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:318    .text.utils_net_write:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:319    .text.utils_net_write:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:320    .text.utils_net_write:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:321    .text.utils_net_write:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:326    .text.utils_net_write:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:327    .text.utils_net_write:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:328    .text.utils_net_write:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:335    .text.utils_net_read:0000000000000000 utils_net_read
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:338    .text.utils_net_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:340    .text.utils_net_read:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:341    .text.utils_net_read:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:342    .text.utils_net_read:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:345    .text.utils_net_read:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:346    .text.utils_net_read:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:347    .text.utils_net_read:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:349    .text.utils_net_read:000000000000000a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:357    .text.utils_net_read:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:358    .text.utils_net_read:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:359    .text.utils_net_read:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:365    .text.utils_net_read:0000000000000018 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:366    .text.utils_net_read:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:367    .text.utils_net_read:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:368    .text.utils_net_read:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:371    .text.utils_net_read:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:375    .text.utils_net_read:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:376    .text.utils_net_read:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:377    .text.utils_net_read:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:378    .text.utils_net_read:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:383    .text.utils_net_read:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:384    .text.utils_net_read:0000000000000028 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:385    .text.utils_net_read:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:396    .text.iotx_net_init:0000000000000000 iotx_net_init
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:399    .text.iotx_net_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:401    .text.iotx_net_init:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:402    .text.iotx_net_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:403    .text.iotx_net_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:404    .text.iotx_net_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:405    .text.iotx_net_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:407    .text.iotx_net_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:408    .text.iotx_net_init:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:411    .text.iotx_net_init:000000000000000c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:413    .text.iotx_net_init:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:416    .text.iotx_net_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:417    .text.iotx_net_init:0000000000000010 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:423    .text.iotx_net_init:0000000000000020 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:430    .text.iotx_net_init:0000000000000034 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:435    .text.iotx_net_init:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:436    .text.iotx_net_init:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:437    .text.iotx_net_init:0000000000000044 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:440    .text.iotx_net_init:0000000000000046 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:441    .text.iotx_net_init:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:442    .text.iotx_net_init:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:443    .text.iotx_net_init:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:444    .text.iotx_net_init:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:445    .text.iotx_net_init:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:448    .text.iotx_net_init:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:450    .text.iotx_net_init:000000000000004e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:452    .text.iotx_net_init:0000000000000050 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:454    .text.iotx_net_init:0000000000000054 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:457    .text.iotx_net_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:458    .text.iotx_net_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:459    .text.iotx_net_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:460    .text.iotx_net_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:461    .text.iotx_net_init:0000000000000058 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:463    .text.iotx_net_init:000000000000005a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:466    .text.iotx_net_init:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:467    .text.iotx_net_init:000000000000005c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:470    .text.iotx_net_init:0000000000000064 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:474    .text.iotx_net_init:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:475    .text.iotx_net_init:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:479    .text.iotx_net_init:0000000000000076 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:483    .text.iotx_net_init:0000000000000080 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:487    .text.iotx_net_init:000000000000008a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:490    .text.iotx_net_init:0000000000000092 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:492    .text.iotx_net_init:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:493    .text.iotx_net_init:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:494    .text.iotx_net_init:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:495    .text.iotx_net_init:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:496    .text.iotx_net_init:0000000000000096 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:498    .text.iotx_net_init:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:499    .text.iotx_net_init:0000000000000098 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:501    .text.iotx_net_init:000000000000009c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:134    .text.iotx_net_disconnect:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:240    .text.iotx_net_connect:000000000000006c .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:254    .text.ssl_free:0000000000000008 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:274    .text.ssl_malloc:000000000000000e .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:331    .text.utils_net_write:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:388    .text.utils_net_read:000000000000002a .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:504    .text.iotx_net_init:000000000000009c .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:11     .rodata.iotx_net_disconnect.str1.4:0000000000000000 .LC0
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:14     .rodata.iotx_net_disconnect.str1.4:0000000000000008 .LC1
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:17     .rodata.iotx_net_disconnect.str1.4:0000000000000018 .LC2
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:117    .text.iotx_net_disconnect:000000000000005e .L2
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:90     .text.iotx_net_disconnect:0000000000000050 .L3
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:79     .text.iotx_net_disconnect:0000000000000048 .L1
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:102    .text.iotx_net_disconnect:000000000000005a .L6
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:198    .text.iotx_net_connect:0000000000000034 .L8
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:177    .text.iotx_net_connect:0000000000000022 .L11
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:313    .text.utils_net_write:0000000000000020 .L17
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:304    .text.utils_net_write:0000000000000018 .L16
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:370    .text.utils_net_read:0000000000000020 .L21
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:361    .text.utils_net_read:0000000000000018 .L20
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:390    .rodata.iotx_net_init.str1.4:0000000000000000 .LC3
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:414    .text.iotx_net_init:0000000000000010 .L25
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:447    .text.iotx_net_init:000000000000004e .L26
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:471    .text.iotx_net_init:0000000000000068 .L28
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:438    .text.iotx_net_init:0000000000000046 .L24
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:1628   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2839   .debug_str:0000000000000209 .LASF63
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2819   .debug_str:000000000000008a .LASF64
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2835   .debug_str:000000000000016c .LASF65
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2753   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2791   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2871   .debug_str:00000000000003af .LASF0
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2863   .debug_str:0000000000000372 .LASF1
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2857   .debug_str:0000000000000354 .LASF2
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2801   .debug_str:0000000000000032 .LASF3
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2815   .debug_str:0000000000000078 .LASF6
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2879   .debug_str:00000000000003e2 .LASF4
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2847   .debug_str:0000000000000315 .LASF5
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2813   .debug_str:000000000000006d .LASF7
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2903   .debug_str:0000000000000473 .LASF8
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2843   .debug_str:00000000000002f9 .LASF9
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2865   .debug_str:000000000000037e .LASF10
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2823   .debug_str:0000000000000134 .LASF11
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2917   .debug_str:00000000000004bc .LASF12
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2885   .debug_str:000000000000040d .LASF13
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2873   .debug_str:00000000000003bc .LASF14
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2867   .debug_str:0000000000000395 .LASF15
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2807   .debug_str:000000000000004d .LASF16
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2827   .debug_str:0000000000000147 .LASF17
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2803   .debug_str:000000000000003c .LASF18
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2833   .debug_str:0000000000000167 .LASF19
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2877   .debug_str:00000000000003d6 .LASF20
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2845   .debug_str:0000000000000307 .LASF66
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2849   .debug_str:000000000000031e .LASF21
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2901   .debug_str:000000000000046e .LASF22
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2829   .debug_str:0000000000000151 .LASF23
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2817   .debug_str:0000000000000083 .LASF24
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2913   .debug_str:00000000000004b0 .LASF25
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2861   .debug_str:000000000000036d .LASF26
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2799   .debug_str:000000000000002c .LASF27
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2855   .debug_str:0000000000000349 .LASF28
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2825   .debug_str:000000000000013f .LASF29
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2869   .debug_str:000000000000039e .LASF30
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2907   .debug_str:0000000000000492 .LASF31
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2929   .debug_str:000000000000050d .LASF34
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:397    .text.iotx_net_init:0000000000000000 .LFB34
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:502    .text.iotx_net_init:000000000000009c .LFE34
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2841   .debug_str:00000000000002f0 .LASF32
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2267   .debug_loc:0000000000000000 .LLST22
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2927   .debug_str:0000000000000508 .LASF33
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2278   .debug_loc:000000000000001e .LLST23
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2289   .debug_loc:000000000000003c .LLST24
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2314   .debug_loc:0000000000000076 .LLST25
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:421    .text.iotx_net_init:0000000000000020 .LVL45
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:428    .text.iotx_net_init:0000000000000034 .LVL46
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:433    .text.iotx_net_init:0000000000000044 .LVL47
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:468    .text.iotx_net_init:0000000000000064 .LVL50
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2897   .debug_str:0000000000000453 .LASF35
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:139    .text.iotx_net_connect:0000000000000000 .LFB33
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:238    .text.iotx_net_connect:000000000000006c .LFE33
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2343   .debug_loc:00000000000000bb .LLST3
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2354   .debug_loc:00000000000000d9 .LLST4
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:161    .text.iotx_net_connect:0000000000000010 .LBB20
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:179    .text.iotx_net_connect:0000000000000022 .LBE20
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2373   .debug_loc:0000000000000106 .LLST5
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:170    .text.iotx_net_connect:000000000000001e .LVL18
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:180    .text.iotx_net_connect:0000000000000022 .LBB22
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:221    .text.iotx_net_connect:0000000000000052 .LVL22
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:231    .text.iotx_net_connect:0000000000000068 .LVL23
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2797   .debug_str:0000000000000018 .LASF36
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:24     .text.iotx_net_disconnect:0000000000000000 .LFB32
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:132    .text.iotx_net_disconnect:000000000000006c .LFE32
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2384   .debug_loc:0000000000000124 .LLST0
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2395   .debug_loc:0000000000000142 .LLST1
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:41     .text.iotx_net_disconnect:000000000000000c .LBB6
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2421   .debug_loc:000000000000017d .LLST2
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:63     .text.iotx_net_disconnect:0000000000000026 .LVL4
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:68     .text.iotx_net_disconnect:0000000000000036 .LVL5
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:73     .text.iotx_net_disconnect:0000000000000046 .LVL6
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:96     .text.iotx_net_disconnect:0000000000000058 .LVL9
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:105    .text.iotx_net_disconnect:000000000000005a .LBB12
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:124    .text.iotx_net_disconnect:0000000000000066 .LVL13
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2851   .debug_str:000000000000032b .LASF37
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:279    .text.utils_net_write:0000000000000000 .LFB31
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:329    .text.utils_net_write:000000000000002a .LFE31
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2432   .debug_loc:000000000000019b .LLST8
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2895   .debug_str:000000000000044c .LASF38
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2446   .debug_loc:00000000000001bc .LLST9
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2471   .debug_loc:00000000000001f6 .LLST10
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2831   .debug_str:000000000000015c .LASF39
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2496   .debug_loc:0000000000000230 .LLST11
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2521   .debug_loc:000000000000026a .LLST12
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:298    .text.utils_net_write:0000000000000010 .LBB30
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:306    .text.utils_net_write:0000000000000018 .LBE30
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2544   .debug_loc:00000000000002a2 .LLST13
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:303    .text.utils_net_write:0000000000000018 .LVL33
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:316    .text.utils_net_write:0000000000000020 .LBB32
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:324    .text.utils_net_write:0000000000000028 .LBE32
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2554   .debug_loc:00000000000002b8 .LLST14
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:322    .text.utils_net_write:0000000000000028 .LVL35
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2795   .debug_str:0000000000000009 .LASF40
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:336    .text.utils_net_read:0000000000000000 .LFB30
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:386    .text.utils_net_read:000000000000002a .LFE30
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2564   .debug_loc:00000000000002ce .LLST15
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2578   .debug_loc:00000000000002ef .LLST16
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2603   .debug_loc:0000000000000329 .LLST17
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2628   .debug_loc:0000000000000363 .LLST18
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2653   .debug_loc:000000000000039d .LLST19
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:355    .text.utils_net_read:0000000000000010 .LBB38
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:363    .text.utils_net_read:0000000000000018 .LBE38
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2676   .debug_loc:00000000000003d5 .LLST20
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:360    .text.utils_net_read:0000000000000018 .LVL40
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:373    .text.utils_net_read:0000000000000020 .LBB40
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:381    .text.utils_net_read:0000000000000028 .LBE40
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2686   .debug_loc:00000000000003eb .LLST21
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:379    .text.utils_net_read:0000000000000028 .LVL42
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2837   .debug_str:00000000000001fd .LASF41
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2881   .debug_str:00000000000003f5 .LASF42
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2899   .debug_str:0000000000000464 .LASF43
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2883   .debug_str:0000000000000404 .LASF44
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2891   .debug_str:000000000000042b .LASF45
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2811   .debug_str:0000000000000063 .LASF67
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2931   .debug_str:000000000000051b .LASF46
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2805   .debug_str:0000000000000043 .LASF47
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2793   .debug_str:0000000000000000 .LASF48
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2911   .debug_str:00000000000004a7 .LASF68
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:244    .text.ssl_free:0000000000000000 .LFB21
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:252    .text.ssl_free:0000000000000008 .LFE21
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2696   .debug_loc:0000000000000401 .LLST6
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:250    .text.ssl_free:0000000000000008 .LVL25
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2859   .debug_str:0000000000000362 .LASF69
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:258    .text.ssl_malloc:0000000000000000 .LFB20
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:272    .text.ssl_malloc:000000000000000e .LFE20
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2915   .debug_str:00000000000004b7 .LASF49
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2710   .debug_loc:0000000000000422 .LLST7
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:270    .text.ssl_malloc:000000000000000e .LVL28
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2925   .debug_str:00000000000004fd .LASF50
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2889   .debug_str:0000000000000424 .LASF51
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2923   .debug_str:00000000000004eb .LASF52
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2875   .debug_str:00000000000003c5 .LASF53
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2887   .debug_str:0000000000000412 .LASF54
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2821   .debug_str:0000000000000124 .LASF55
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2921   .debug_str:00000000000004db .LASF56
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2853   .debug_str:000000000000033b .LASF57
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2909   .debug_str:0000000000000499 .LASF58
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2905   .debug_str:0000000000000485 .LASF59
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2809   .debug_str:0000000000000056 .LASF60
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2919   .debug_str:00000000000004c8 .LASF61
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:2893   .debug_str:0000000000000437 .LASF62
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:400    .text.iotx_net_init:0000000000000000 .LVL43
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:418    .text.iotx_net_init:0000000000000014 .LVL44
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:446    .text.iotx_net_init:000000000000004e .LVL48
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:464    .text.iotx_net_init:000000000000005c .LVL49
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:142    .text.iotx_net_connect:0000000000000000 .LVL14
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:168    .text.iotx_net_connect:0000000000000016 .LVL17
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:148    .text.iotx_net_connect:0000000000000008 .LVL15
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:185    .text.iotx_net_connect:000000000000002a .LVL20
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:197    .text.iotx_net_connect:0000000000000034 .LVL21
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:160    .text.iotx_net_connect:0000000000000010 .LVL16
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:176    .text.iotx_net_connect:0000000000000022 .LVL19
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:28     .text.iotx_net_disconnect:0000000000000000 .LVL0
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:45     .text.iotx_net_disconnect:000000000000000e .LVL2
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:35     .text.iotx_net_disconnect:0000000000000008 .LVL1
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:78     .text.iotx_net_disconnect:0000000000000048 .LVL7
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:89     .text.iotx_net_disconnect:0000000000000050 .LVL8
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:110    .text.iotx_net_disconnect:000000000000005c .LVL11
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:116    .text.iotx_net_disconnect:000000000000005e .LVL12
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:51     .text.iotx_net_disconnect:0000000000000010 .LVL3
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:101    .text.iotx_net_disconnect:000000000000005a .LVL10
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:282    .text.utils_net_write:0000000000000000 .LVL29
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:294    .text.utils_net_write:000000000000000e .LVL31
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:312    .text.utils_net_write:0000000000000020 .LVL34
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:287    .text.utils_net_write:0000000000000008 .LVL30
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:297    .text.utils_net_write:0000000000000010 .LVL32
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:339    .text.utils_net_read:0000000000000000 .LVL36
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:351    .text.utils_net_read:000000000000000e .LVL38
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:369    .text.utils_net_read:0000000000000020 .LVL41
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:344    .text.utils_net_read:0000000000000008 .LVL37
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:354    .text.utils_net_read:0000000000000010 .LVL39
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:247    .text.ssl_free:0000000000000000 .LVL24
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:261    .text.ssl_malloc:0000000000000000 .LVL26
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:268    .text.ssl_malloc:0000000000000006 .LVL27
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:515    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:47     .text.iotx_net_disconnect:000000000000000e .LBE6
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:52     .text.iotx_net_disconnect:0000000000000010 .LBB10
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:81     .text.iotx_net_disconnect:0000000000000048 .LBE10
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:92     .text.iotx_net_disconnect:0000000000000050 .LBB11
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:104    .text.iotx_net_disconnect:000000000000005a .LBE11
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:112    .text.iotx_net_disconnect:000000000000005c .LBE12
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:119    .text.iotx_net_disconnect:000000000000005e .LBB15
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:130    .text.iotx_net_disconnect:000000000000006c .LBE15
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:187    .text.iotx_net_connect:000000000000002a .LBE22
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:201    .text.iotx_net_connect:0000000000000034 .LBB25
+C:\Users\stapi\AppData\Local\Temp\cciLij8W.s:236    .text.iotx_net_connect:000000000000006c .LBE25
+
+UNDEFINED SYMBOLS
+__riscv_save_2
+HAL_Printf
+__riscv_restore_2
+HAL_TCP_Destroy
+HAL_SSL_Destroy
+__riscv_save_1
+HAL_TCP_Establish
+__riscv_restore_1
+HAL_SSLHooks_set
+HAL_SSL_Establish
+LITE_free_internal
+LITE_malloc_internal
+__riscv_save_0
+HAL_TCP_Write
+__riscv_restore_0
+HAL_SSL_Write
+HAL_TCP_Read
+HAL_SSL_Read
+strlen

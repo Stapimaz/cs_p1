@@ -40,7 +40,7 @@ OF SUCH DAMAGE.
 #ifdef CONFIG_MQTT
 #include "lwip/apps/mqtt.h"
 #include "dbg_print.h"
-#define MQTT_LINK_TIME_LIMIT 5000
+#define MQTT_LINK_TIME_LIMIT 15000 //KK
 
 void mqtt_pub_cb(void *arg, err_t status);
 void mqtt_sub_cb(void *arg, err_t status);

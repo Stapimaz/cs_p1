@@ -61,8 +61,8 @@ OF SUCH DAMAGE.
  */
 #endif
 
-#define CONFIG_IPERF_TEST
-#define CONFIG_IPERF3_TEST
+//#define CONFIG_IPERF_TEST
+//#define CONFIG_IPERF3_TEST
 
 #ifdef CONFIG_IPERF3_TEST
 #define IPERF_TASK_MAX              2

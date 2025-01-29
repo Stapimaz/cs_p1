@@ -303,11 +303,9 @@ static void ble_adp_evt_handler(ble_adp_evt_t event, ble_adp_data_u *p_data)
                    p_data->adapter_info.sugg_dft_data.sugg_max_tx_time);
 
             dbg_print(INFO, "loc irk:");
-
-            for (i = 0; i < BLE_GAP_KEY_LEN; i++) {
+            for (uint8_t i = 0; i < BLE_GAP_KEY_LEN; i++) {
                 dbg_print(INFO, " %02x", p_data->adapter_info.loc_irk_info.irk[i]);
             }
-
             dbg_print(INFO, "\r\n");
             dbg_print(INFO, "identity addr %02X:%02X:%02X:%02X:%02X:%02X \r\n ",
                    p_data->adapter_info.loc_irk_info.identity.addr[5],
@@ -323,11 +321,18 @@ static void ble_adp_evt_handler(ble_adp_evt_t event, ble_adp_data_u *p_data)
         if (app_env.process_reset) {
             app_env.process_reset = false;
             app_reset();
+
         } else {
+            // The BLE stack is now fully enabled, do post-enable tasks:
             app_enable_cmplt_handler(p_data->status);
             ble_task_ready();
+
+            // ============= ADD YOUR SCAN ENABLE HERE =============
+            dbg_print(NOTICE, "Enabling BLE scanning from adapter callback...\r\n");
+            app_scan_enable(false);  // or 'true' if you want to track RSSI changes
         }
         break;
+
 
     case BLE_ADP_EVT_DISABLE_CMPL_INFO:
         if (!p_data->status) {

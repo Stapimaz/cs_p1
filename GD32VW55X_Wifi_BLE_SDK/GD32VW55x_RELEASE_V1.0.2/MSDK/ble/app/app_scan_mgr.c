@@ -137,18 +137,20 @@ static void scan_mgr_report_hdlr(ble_gap_adv_report_info_t *p_info)
             p_dev_info = scan_mgr_find_dev_by_idx(idx);
             p_dev_info->adv_sid = p_info->adv_sid;
             p_dev_info->idx = idx;
-            dbg_print(NOTICE, "new device addr %02X:%02X:%02X:%02X:%02X:%02X, addr type 0x%x, rssi %d, sid 0x%x, dev idx %u, peri_adv_int %u, name %s\r\n",
-                   p_info->peer_addr.addr[5], p_info->peer_addr.addr[4], p_info->peer_addr.addr[3],
-                   p_info->peer_addr.addr[2], p_info->peer_addr.addr[1], p_info->peer_addr.addr[0],
-                   p_info->peer_addr.addr_type, p_info->rssi, p_info->adv_sid, idx, p_info->period_adv_intv, name);
+//            dbg_print(NOTICE, "new device addr %02X:%02X:%02X:%02X:%02X:%02X, addr type 0x%x, rssi %d, sid 0x%x, dev idx %u, peri_adv_int %u, name %s\r\n",
+//                   p_info->peer_addr.addr[5], p_info->peer_addr.addr[4], p_info->peer_addr.addr[3],
+//                   p_info->peer_addr.addr[2], p_info->peer_addr.addr[1], p_info->peer_addr.addr[0],
+//                   p_info->peer_addr.addr_type, p_info->rssi, p_info->adv_sid, idx, p_info->period_adv_intv, name);
         } else if ((p_dev_info->recv_name_flag == 0 && p_name != NULL) || ble_scan_mgr_cb.update_with_rssi) {
-            dbg_print(NOTICE, "update device addr %02X:%02X:%02X:%02X:%02X:%02X, addr type 0x%x, rssi %d, sid 0x%x, dev idx %u name %s\r\n",
-                   p_info->peer_addr.addr[5], p_info->peer_addr.addr[4], p_info->peer_addr.addr[3],
-                   p_info->peer_addr.addr[2], p_info->peer_addr.addr[1], p_info->peer_addr.addr[0],
-                   p_info->peer_addr.addr_type, p_info->rssi, p_info->adv_sid, p_dev_info->idx, name);
+//            dbg_print(NOTICE, "update device addr %02X:%02X:%02X:%02X:%02X:%02X, addr type 0x%x, rssi %d, sid 0x%x, dev idx %u name %s\r\n",
+//                   p_info->peer_addr.addr[5], p_info->peer_addr.addr[4], p_info->peer_addr.addr[3],
+//                   p_info->peer_addr.addr[2], p_info->peer_addr.addr[1], p_info->peer_addr.addr[0],
+//                   p_info->peer_addr.addr_type, p_info->rssi, p_info->adv_sid, p_dev_info->idx, name);
         }
 
         p_dev_info->recv_name_flag = (p_name == NULL ? 0 : 1);
+        p_dev_info->adv_len = p_info->data.len > 31 ? 31 : p_info->data.len;
+        memcpy(p_dev_info->adv_data, p_info->data.p_data, p_dev_info->adv_len);
     }
 }
 
@@ -161,6 +163,9 @@ static void scan_mgr_report_hdlr(ble_gap_adv_report_info_t *p_info)
 */
 static void ble_app_scan_mgr_evt_handler(ble_scan_evt_t event, ble_scan_data_u *p_data)
 {
+
+    //dbg_print(ERR, "EVENT HANDLER BURAYA BAK!!! \n\r");
+
     switch (event) {
     case BLE_SCAN_EVT_STATE_CHG:
         if (p_data->scan_state.scan_state == BLE_SCAN_STATE_ENABLED) {
@@ -169,6 +174,7 @@ static void ble_app_scan_mgr_evt_handler(ble_scan_evt_t event, ble_scan_data_u *
 
         else if (p_data->scan_state.scan_state == BLE_SCAN_STATE_ENABLING) {
             scan_mgr_clear_dev_list();
+            dbg_print(ERR, "SCAN ENABLING \n\r");
         }
 
         else if (p_data->scan_state.scan_state == BLE_SCAN_STATE_DISABLED) {
@@ -265,10 +271,12 @@ void scan_mgr_clear_dev_list(void)
 */
 void app_scan_enable(bool update_rssi)
 {
-    if (ble_scan_enable() != BLE_ERR_NO_ERROR) {
-        dbg_print(NOTICE, "app_scan_enable fail!\r\n");
-        return;
-    }
+	if (ble_scan_enable() != BLE_ERR_NO_ERROR) {
+	    dbg_print(ERR, "BLE Scan failed to start!\r\n");
+	} else {
+	    dbg_print(NOTICE, "BLE scan enable with no errors\r\n");
+	}
+
 
     ble_scan_mgr_cb.update_with_rssi = update_rssi;
 }
@@ -314,8 +322,11 @@ void app_scan_mgr_init(void)
 {
     memset(&ble_scan_mgr_cb, 0, sizeof(ble_scan_mgr_cb));
     INIT_DLIST_HEAD(&ble_scan_mgr_cb.devs_list);
+
+    dbg_print(NOTICE, "[BLE] Registering scan event handler...\r\n");
     ble_scan_callback_register(ble_app_scan_mgr_evt_handler);
 }
+
 
 /*!
     \brief      Deinit application scan manager module

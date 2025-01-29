@@ -46,6 +46,10 @@ typedef struct dev_info
     uint8_t        adv_sid;         /*!< Advertising set ID */
     uint8_t        idx;             /*!< Device index */
     uint8_t        recv_name_flag;  /*!< Receive name flag */
+
+    // ADD THESE:
+    uint8_t        adv_data[31];    /*!< Store the raw adv data here */
+    uint8_t        adv_len;         /*!< Length of the raw adv data */
 } dev_info_t;
 
 /*!

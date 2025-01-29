@@ -100,8 +100,9 @@ static void demo_task(void *arg)
     //    start scanning with:
     //        app_scan_enable(false);
     //----------------------------------------------------------------
-    printf("[DEMO_TASK] Enabling BLE scanning.\r\n");
-    app_scan_enable(false);
+//    printf("[DEMO_TASK] Enabling BLE scanning.\r\n");
+//    sys_ms_sleep(1000);
+//    app_scan_enable(false);
 
     //----------------------------------------------------------------
     // 4) Periodically check the scanned device list
@@ -112,7 +113,7 @@ static void demo_task(void *arg)
     {
         // Just show the current device list in logs:
         // This prints "new device addr ..." or "dev idx..." in the logs.
-        scan_mgr_list_scanned_devices();
+        //scan_mgr_list_scanned_devices();
 
         // OPTIONAL: Example of iterating over each device in the list:
         //   1) We find known MAC addresses
@@ -127,13 +128,14 @@ static void demo_task(void *arg)
             // Suppose we are looking for a known beacon MAC, e.g.:
             //   4F:3A:22:11:66:77  (just an example)
             // Compare reversed or forward depending on your usage.
-            if (dev->peer_addr.addr[0] == 0x77 &&
-                dev->peer_addr.addr[1] == 0x66 &&
-                dev->peer_addr.addr[2] == 0x11 &&
-                dev->peer_addr.addr[3] == 0x22 &&
-                dev->peer_addr.addr[4] == 0x3A &&
-                dev->peer_addr.addr[5] == 0x4F)
+            if (dev->peer_addr.addr[0] == 0xc5 &&
+                dev->peer_addr.addr[1] == 0xb3 &&
+                dev->peer_addr.addr[2] == 0xbd &&
+                dev->peer_addr.addr[3] == 0x7f &&
+                dev->peer_addr.addr[4] == 0x2b &&
+                dev->peer_addr.addr[5] == 0xc6)
             {
+            	dbg_print(ERR, "EXACT DEVICE FOUND! \n\r");
                 // Example: publish to an MQTT topic
                 char msg_payload[80];
                 snprintf(msg_payload, sizeof(msg_payload),

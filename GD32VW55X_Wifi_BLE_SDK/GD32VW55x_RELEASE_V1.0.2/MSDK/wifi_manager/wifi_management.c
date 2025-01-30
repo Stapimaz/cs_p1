@@ -1595,27 +1595,6 @@ int wifi_management_connect(char *ssid, char *password, uint8_t blocked)
 
 
 
-/*!
-    \brief      Connect to Wi-Fi with predefined SSID and password
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
-void connect_to_wifi(void) {
-    char *ssid = "Mobiliz NaRGE_Guest";           // Replace with your Wi-Fi SSID
-    char *password = "M@b!lz12.*";   // Replace with your Wi-Fi password
-    uint8_t block = 1;                  // Block until connected
-
-    int result = wifi_management_connect(ssid, password, block);
-    if (result == 0) {
-        printf("Wi-Fi connected successfully!\n");
-    } else {
-        printf("Wi-Fi connection failed! Error: %d\n", result);
-    }
-}
-
-
-
 
 /*!
     \brief      Connect to an AP

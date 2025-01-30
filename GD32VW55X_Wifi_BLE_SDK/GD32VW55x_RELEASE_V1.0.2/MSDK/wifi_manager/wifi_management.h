@@ -57,8 +57,9 @@ extern "C" {
 #define WIFI_MGMT_ROAMING_RETRY_INTERVAL        2500    // unit: ms (not less than EAPOL_TIMEROUT)
 #define WIFI_MGMT_ROAMING_RETRY_UNLIMITED       0xFFFFFFFFUL
 
-#define WIFI_MGMT_CONNECT_RETRY_LIMIT           3       // max retry times
-#define WIFI_MGMT_CONNECT_RETRY_INTERVAL        2000    // unit: ms (not less than EAPOL_TIMEROUT)
+//WIFI DENEME SAYISI
+#define WIFI_MGMT_CONNECT_RETRY_LIMIT           5       // max retry times
+#define WIFI_MGMT_CONNECT_RETRY_INTERVAL        5000    // unit: ms (not less than EAPOL_TIMEROUT)
 
 #define WIFI_MGMT_MAX_RETRY_INTERVAL            300000  // unit: ms
 

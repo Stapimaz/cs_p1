@@ -327,7 +327,6 @@ static void ble_adp_evt_handler(ble_adp_evt_t event, ble_adp_data_u *p_data)
             app_enable_cmplt_handler(p_data->status);
             ble_task_ready();
 
-            // ============= ADD YOUR SCAN ENABLE HERE =============
             dbg_print(NOTICE, "Enabling BLE scanning from adapter callback...\r\n");
             app_scan_enable(false);  // or 'true' if you want to track RSSI changes
         }

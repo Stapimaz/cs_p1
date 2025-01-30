@@ -6,13 +6,13 @@
  *  - Wi-Fi scan + connect
  *  - MQTT connect (using cmd_mqtt)
  *  - BLE init + scanning (using app_scan_mgr's public API)
- *  - Optionally parse scanned devices in the task's while loop
+ *  - Filtering for a specific beacon based on adv_data[5] = 'M' and adv_data[6] = 'Z'
+ *  - Parsing data and publishing in JSON format
  */
 
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-
 #include "gd32vw55x_platform.h"
 #include "wrapper_os.h"
 
@@ -29,23 +29,35 @@
 #include "mqtt_cmd.h"
 
 // --------------------------------------------------------------------
-// Adjust these constants for your Wi-Fi and MQTT environment
+// Wi-Fi and MQTT configuration
 // --------------------------------------------------------------------
 #define MY_WIFI_SSID        "Mobiliz NaRGE_Guest"
 #define MY_WIFI_PASSWORD    "M@b!lz12.*"
 
-// Example broker
-#define MQTT_BROKER_HOST    "broker.hivemq.com"
+#define MQTT_BROKER_HOST    "test.mosquitto.org"
 #define MQTT_BROKER_PORT    "1883"
 #define MQTT_BROKER_ENC     "0"   // 0 => no TLS
+#define MQTT_TOPIC          "test2205/ble_beacons"
 
 // --------------------------------------------------------------------
-// Single RTOS task that does:
-//   1) Wi-Fi connect
-//   2) MQTT connect
-//   3) BLE scanning via app_scan_enable()
-//   4) Periodically check the scanned device list
-//   5) If a known device is found, do an MQTT publish
+// Function to publish JSON data to MQTT
+// --------------------------------------------------------------------
+static void publish_json_data(const char *json_payload)
+{
+    char *pub_args[] = {
+        "mqtt", "publish",
+        MQTT_TOPIC,
+        (char *)json_payload,
+        "0",  // QoS=0
+        "0"   // retain=0
+    };
+    cmd_mqtt(6, pub_args);
+
+    dbg_print(NOTICE, "[demo_task] Data sent to MQTT => %s\r\n", json_payload);
+}
+
+// --------------------------------------------------------------------
+// RTOS Task: Wi-Fi, MQTT, BLE Scanning, Data Filtering & Publishing
 // --------------------------------------------------------------------
 static void demo_task(void *arg)
 {
@@ -71,53 +83,26 @@ static void demo_task(void *arg)
     printf("[DEMO_TASK] Wi-Fi connected!\r\n");
 
     //----------------------------------------------------------------
-    // 2) Connect to MQTT broker using cmd_mqtt
+    // 2) Connect to MQTT broker
     //----------------------------------------------------------------
-    {
-        // Format: mqtt connect <server_ip> <server_port> <encryption_mode> [<username> <password>]
-        char *mqtt_args[] = {
-            "mqtt", "connect",
-            (char *)MQTT_BROKER_HOST,
-            (char *)MQTT_BROKER_PORT,
-            (char *)MQTT_BROKER_ENC
-        };
-        cmd_mqtt(5, mqtt_args);
-        printf("[DEMO_TASK] cmd_mqtt connect done.\r\n");
-    }
+    char *mqtt_args[] = {
+        "mqtt", "connect",
+        (char *)MQTT_BROKER_HOST,
+        (char *)MQTT_BROKER_PORT,
+        (char *)MQTT_BROKER_ENC
+    };
+    cmd_mqtt(5, mqtt_args);
+    printf("[DEMO_TASK] cmd_mqtt connect done.\r\n");
 
-    // Optionally enable auto reconnect to broker
-    {
-        char *auto_rec_args[] = { "mqtt", "auto_reconnect", "1" };
-        cmd_mqtt(3, auto_rec_args);
-        printf("[DEMO_TASK] MQTT auto reconnect enabled.\r\n");
-    }
+    char *auto_rec_args[] = { "mqtt", "auto_reconnect", "1" };
+    cmd_mqtt(3, auto_rec_args);
+    printf("[DEMO_TASK] MQTT auto reconnect enabled.\r\n");
 
     //----------------------------------------------------------------
-    // 3) Enable BLE scanning
-    //
-    //    Because ble_init(true) was called in main(), the internal
-    //    BLE modules + app_scan_mgr_init() are ready. We can now
-    //    start scanning with:
-    //        app_scan_enable(false);
-    //----------------------------------------------------------------
-//    printf("[DEMO_TASK] Enabling BLE scanning.\r\n");
-//    sys_ms_sleep(1000);
-//    app_scan_enable(false);
-
-    //----------------------------------------------------------------
-    // 4) Periodically check the scanned device list
-    //    The default scan_mgr_report_hdlr logs new devices,
-    //    but let's do an example "publish if known device found."
+    // 3) BLE Scanning & Filtering for Target Beacon
     //----------------------------------------------------------------
     while (1)
     {
-        // Just show the current device list in logs:
-        // This prints "new device addr ..." or "dev idx..." in the logs.
-        //scan_mgr_list_scanned_devices();
-
-        // OPTIONAL: Example of iterating over each device in the list:
-        //   1) We find known MAC addresses
-        //   2) If found, we publish an example message
         for (uint8_t idx = 0; ; idx++)
         {
             dev_info_t *dev = scan_mgr_find_dev_by_idx(idx);
@@ -125,41 +110,49 @@ static void demo_task(void *arg)
                 break; // No more devices
             }
 
-            // Suppose we are looking for a known beacon MAC, e.g.:
-            //   4F:3A:22:11:66:77  (just an example)
-            // Compare reversed or forward depending on your usage.
-            if (dev->peer_addr.addr[0] == 0xc5 &&
-                dev->peer_addr.addr[1] == 0xb3 &&
-                dev->peer_addr.addr[2] == 0xbd &&
-                dev->peer_addr.addr[3] == 0x7f &&
-                dev->peer_addr.addr[4] == 0x2b &&
-                dev->peer_addr.addr[5] == 0xc6)
+            // Check for target beacon: adv_data[5] = 'M' (0x4D), adv_data[6] = 'Z' (0x5A)
+            if (dev->adv_len < 26) continue; // Ensure enough bytes
+
+            if (dev->adv_data[5] == 0x4D && dev->adv_data[6] == 0x5A)
             {
-            	dbg_print(ERR, "EXACT DEVICE FOUND! \n\r");
-                // Example: publish to an MQTT topic
-                char msg_payload[80];
-                snprintf(msg_payload, sizeof(msg_payload),
-                         "Found Beacon: %02X:%02X:%02X:%02X:%02X:%02X",
-                         dev->peer_addr.addr[5], dev->peer_addr.addr[4],
-                         dev->peer_addr.addr[3], dev->peer_addr.addr[2],
-                         dev->peer_addr.addr[1], dev->peer_addr.addr[0]);
+                dbg_print(NOTICE, "[demo_task] TARGET BEACON FOUND! Parsing data...\r\n");
 
-                // Publish via cmd_mqtt
-                char *pub_args[] = {
-                    "mqtt", "publish",
-                    "test/ble_beacons",   // topic
-                    msg_payload,          // payload
-                    "0",                  // QoS=0
-                    "0"                   // retain=0
-                };
-                cmd_mqtt(6, pub_args);
+                // Extract values from advertisement packet
+                uint8_t device_type = dev->adv_data[7];
+                uint32_t msg_counter = (dev->adv_data[8] << 24) | (dev->adv_data[9] << 16) |
+                                       (dev->adv_data[10] << 8) | dev->adv_data[11];
 
-                // Possibly remove from the list or do something else
-                // scan_mgr_clear_dev_list(); // if you want to clear
+                int16_t temperature = (dev->adv_data[12] << 8) | dev->adv_data[13];
+                int16_t humidity = (dev->adv_data[14] << 8) | dev->adv_data[15];
+                uint16_t battery_voltage = (dev->adv_data[16] << 8) | dev->adv_data[17];
+
+                bool reed_relay = dev->adv_data[18] ? true : false;
+                uint8_t accelerometer = dev->adv_data[19];
+
+                // Format JSON string
+                char json_payload[256];
+                snprintf(json_payload, sizeof(json_payload),
+                         "{"
+                         "\"MAC\":\"%02X:%02X:%02X:%02X:%02X:%02X\","
+                         "\"DeviceType\":%u,"
+                         "\"MessageCounter\":%u,"
+                         "\"Temperature\":%d,"
+                         "\"Humidity\":%d,"
+                         "\"BatteryVoltage\":%u,"
+                         "\"ReedRelay\":%s,"
+                         "\"Accelerometer\":%u"
+                         "}",
+                         dev->peer_addr.addr[5], dev->peer_addr.addr[4], dev->peer_addr.addr[3],
+                         dev->peer_addr.addr[2], dev->peer_addr.addr[1], dev->peer_addr.addr[0],
+                         device_type, msg_counter, temperature, humidity, battery_voltage,
+                         reed_relay ? "true" : "false", accelerometer);
+
+                // Publish JSON to MQTT
+                publish_json_data(json_payload);
             }
         }
 
-        // Sleep 5s before re-checking
+        // Sleep 5s before checking again
         sys_ms_sleep(5000);
     }
 
@@ -209,7 +202,6 @@ int main(void)
     // 6) Start FreeRTOS (or your RTOS) scheduler
     sys_os_start();
 
-    // Should never arrive here
     while (1) {}
     return 0;
 }

@@ -31,13 +31,101 @@
 // --------------------------------------------------------------------
 // Wi-Fi and MQTT configuration
 // --------------------------------------------------------------------
-#define MY_WIFI_SSID        "Mobiliz NaRGE_Guest"
-#define MY_WIFI_PASSWORD    "M@b!lz12.*"
+#define PRIMARY_WIFI_SSID        "Mobiliz NaRGE_Guest"
+#define PRIMARY_WIFI_PASSWORD    "M@b!lz12.*"
+#define BACKUP_WIFI_SSID        "Redmi Note 10S"
+#define BACKUP_WIFI_PASSWORD    "54321012"
 
 #define MQTT_BROKER_HOST    "test.mosquitto.org"
 #define MQTT_BROKER_PORT    "1883"
 #define MQTT_BROKER_ENC     "0"   // 0 => no TLS
-#define MQTT_TOPIC          "test2205/ble_beacons"
+#define MQTT_TOPIC          "test22052077/ble_beacons"
+
+
+typedef enum {
+    WIFI_DISCONNECTED = 0,
+    WIFI_CONNECTED = 1
+} wifi_status_t;
+
+static wifi_status_t wifi_status = WIFI_DISCONNECTED;
+
+
+static void wifi_mgmt_callback(wifi_management_event_t event, void *param) {
+    if (event == WIFI_MGMT_EVENT_DISCONNECT) {
+        printf("[WIFI] Connection lost! Will retry in 5 minutes.\n");
+        wifi_status = WIFI_DISCONNECTED;
+
+        // Disconnect MQTT cleanly if running
+        char *mqtt_disconnect_args[] = { "mqtt", "disconnect" };
+        cmd_mqtt(2, mqtt_disconnect_args);
+        printf("[MQTT] Disconnected due to Wi-Fi loss.\n");
+    } else if (event == WIFI_MGMT_EVENT_CONNECT_SUCCESS) {
+        printf("[WIFI] Connected successfully. Reconnecting to MQTT...\n");
+        wifi_status = WIFI_CONNECTED;
+
+        // Ensure previous MQTT connection is closed before reconnecting
+        char *mqtt_disconnect_args[] = { "mqtt", "disconnect" };
+        cmd_mqtt(2, mqtt_disconnect_args);
+        sys_ms_sleep(1000); // Short delay to ensure cleanup
+
+        // Reconnect to MQTT after Wi-Fi restores
+        char *mqtt_args[] = {
+            "mqtt", "connect",
+            (char *)MQTT_BROKER_HOST,
+            (char *)MQTT_BROKER_PORT,
+            (char *)MQTT_BROKER_ENC
+        };
+        cmd_mqtt(5, mqtt_args);
+    }
+}
+
+
+
+
+
+
+static bool wifi_try_connect(const char *ssid, const char *password) {
+    printf("[WIFI] Trying to connect to SSID: %s\n", ssid);
+    int ret = wifi_management_connect((char *)ssid, (char *)password, /*blocked=*/1);
+
+    if (ret == 0) {
+        printf("[WIFI] Successfully connected to %s!\n", ssid);
+        return true;
+    } else {
+        printf("[WIFI] Connection to %s failed (error: %d).\n", ssid, ret);
+        return false;
+    }
+}
+
+
+
+static void wifi_connect_handler(void) {
+    bool connected = false;
+
+    // Try PRIMARY Wi-Fi first
+    if (wifi_try_connect(PRIMARY_WIFI_SSID, PRIMARY_WIFI_PASSWORD)) {
+        connected = true;
+    } else {
+        // If primary Wi-Fi fails, try BACKUP Wi-Fi
+        if (wifi_try_connect(BACKUP_WIFI_SSID, BACKUP_WIFI_PASSWORD)) {
+            connected = true;
+        }
+    }
+
+    if (connected) {
+        wifi_status = WIFI_CONNECTED;
+        printf("[WIFI] Successfully connected to Wi-Fi.\n");
+    } else {
+        wifi_status = WIFI_DISCONNECTED;
+        printf("[WIFI] Both Wi-Fi connections failed. Running in offline mode.\n");
+    }
+}
+
+
+
+
+
+
 
 // --------------------------------------------------------------------
 // Function to publish JSON data to MQTT
@@ -56,35 +144,83 @@ static void publish_json_data(const char *json_payload)
     dbg_print(NOTICE, "[demo_task] Data sent to MQTT => %s\r\n", json_payload);
 }
 
+static void wifi_monitor_task(void *arg) {
+    (void)arg;
+
+    while (1) {
+        // Check if we are disconnected
+        if (wifi_status == WIFI_DISCONNECTED) {
+            printf("[WIFI] Disconnected. Retrying in 5 minutes...\n");
+            sys_ms_sleep(300000);  // Wait 5 minutes before retrying
+
+            printf("[WIFI] Retrying Wi-Fi connection...\n");
+
+            // Try reconnecting
+            if (wifi_try_connect(PRIMARY_WIFI_SSID, PRIMARY_WIFI_PASSWORD) ||
+                wifi_try_connect(BACKUP_WIFI_SSID, BACKUP_WIFI_PASSWORD)) {
+                wifi_status = WIFI_CONNECTED;
+                printf("[WIFI] Reconnected successfully.\n");
+
+                // Reconnect MQTT after Wi-Fi is back
+                char *mqtt_args[] = {
+                    "mqtt", "connect",
+                    (char *)MQTT_BROKER_HOST,
+                    (char *)MQTT_BROKER_PORT,
+                    (char *)MQTT_BROKER_ENC
+                };
+                cmd_mqtt(5, mqtt_args);
+            } else {
+                printf("[WIFI] Still disconnected. Will retry in another 5 minutes.\n");
+            }
+        }
+
+        // Sleep 5 seconds before checking again
+        sys_ms_sleep(5000);
+    }
+}
+
+
+
+
+
+
 // --------------------------------------------------------------------
 // RTOS Task: Wi-Fi, MQTT, BLE Scanning, Data Filtering & Publishing
 // --------------------------------------------------------------------
 static void demo_task(void *arg)
 {
     (void)arg;
-    int ret;
 
     //----------------------------------------------------------------
-    // 1) Wi-Fi scan + connect
+    // 1) Initial Wi-Fi scan + connect
     //----------------------------------------------------------------
-    printf("[DEMO_TASK] Start Wi-Fi scan.\r\n");
-    ret = wifi_management_scan(/*blocked=*/1, MY_WIFI_SSID);
-    if (ret != 0) {
-        printf("[DEMO_TASK] Wi-Fi scan failed => %d\r\n", ret);
-        goto demo_exit;
+    printf("[DEMO_TASK] Starting Wi-Fi Connection Handler...\r\n");
+    wifi_connect_handler();  // Only tries once at startup
+
+    // Start Wi-Fi monitor task (runs in the background)
+    os_task_t wifi_task_handle = sys_task_create_dynamic(
+        (uint8_t*)"wifi_monitor_task",
+        2048,  // Smaller stack size
+        OS_TASK_PRIORITY(1),
+        wifi_monitor_task,
+        NULL
+    );
+
+    if (!wifi_task_handle) {
+        dbg_print(ERR, "[MAIN] Failed to create Wi-Fi monitor task\r\n");
+        for (;;) {}
     }
 
-    printf("[DEMO_TASK] Connecting to Wi-Fi SSID='%s'...\r\n", MY_WIFI_SSID);
-    ret = wifi_management_connect((char *)MY_WIFI_SSID, (char *)MY_WIFI_PASSWORD, /*blocked=*/1);
-    if (ret != 0) {
-        printf("[DEMO_TASK] Wi-Fi connect failed => %d\r\n", ret);
-        goto demo_exit;
+    //----------------------------------------------------------------
+    // 2) Wait for Wi-Fi before MQTT connection
+    //----------------------------------------------------------------
+    while (wifi_status == WIFI_DISCONNECTED) {
+        printf("[DEMO_TASK] Waiting for Wi-Fi...\n");
+        sys_ms_sleep(5000);
     }
-    printf("[DEMO_TASK] Wi-Fi connected!\r\n");
 
-    //----------------------------------------------------------------
-    // 2) Connect to MQTT broker
-    //----------------------------------------------------------------
+    printf("[DEMO_TASK] Wi-Fi connected! Proceeding to MQTT setup...\r\n");
+
     char *mqtt_args[] = {
         "mqtt", "connect",
         (char *)MQTT_BROKER_HOST,
@@ -103,63 +239,68 @@ static void demo_task(void *arg)
     //----------------------------------------------------------------
     while (1)
     {
-        for (uint8_t idx = 0; ; idx++)
-        {
-            dev_info_t *dev = scan_mgr_find_dev_by_idx(idx);
-            if (!dev) {
-                break; // No more devices
-            }
-
-            // Check for target beacon: adv_data[5] = 'M' (0x4D), adv_data[6] = 'Z' (0x5A)
-            if (dev->adv_len < 26) continue; // Ensure enough bytes
-
-            if (dev->adv_data[5] == 0x4D && dev->adv_data[6] == 0x5A)
+        if (wifi_status == WIFI_DISCONNECTED) {
+            printf("[DEMO_TASK] Wi-Fi is down. Running in offline mode.\n");
+        } else {
+            for (uint8_t idx = 0; ; idx++)
             {
-                dbg_print(NOTICE, "[demo_task] TARGET BEACON FOUND! Parsing data...\r\n");
+                dev_info_t *dev = scan_mgr_find_dev_by_idx(idx);
+                if (!dev) {
+                    break; // No more devices
+                }
 
-                // Extract values from advertisement packet
-                uint8_t device_type = dev->adv_data[7];
-                uint32_t msg_counter = (dev->adv_data[8] << 24) | (dev->adv_data[9] << 16) |
-                                       (dev->adv_data[10] << 8) | dev->adv_data[11];
+                // Check for target beacon: adv_data[5] = 'M' (0x4D), adv_data[6] = 'Z' (0x5A)
+                if (dev->adv_len < 26) continue; // Ensure enough bytes
 
-                int16_t temperature = (dev->adv_data[12] << 8) | dev->adv_data[13];
-                int16_t humidity = (dev->adv_data[14] << 8) | dev->adv_data[15];
-                uint16_t battery_voltage = (dev->adv_data[16] << 8) | dev->adv_data[17];
+                if (dev->adv_data[5] == 0x4D && dev->adv_data[6] == 0x5A)
+                {
+                    dbg_print(NOTICE, "[demo_task] TARGET BEACON FOUND! Parsing data...\r\n");
 
-                bool reed_relay = dev->adv_data[18] ? true : false;
-                uint8_t accelerometer = dev->adv_data[19];
+                    // Extract values from advertisement packet
+                    uint8_t device_type = dev->adv_data[7];
+                    uint32_t msg_counter = (dev->adv_data[8] << 24) | (dev->adv_data[9] << 16) |
+                                           (dev->adv_data[10] << 8) | dev->adv_data[11];
 
-                // Format JSON string
-                char json_payload[256];
-                snprintf(json_payload, sizeof(json_payload),
-                         "{"
-                         "\"MAC\":\"%02X:%02X:%02X:%02X:%02X:%02X\","
-                         "\"DeviceType\":%u,"
-                         "\"MessageCounter\":%u,"
-                         "\"Temperature\":%d,"
-                         "\"Humidity\":%d,"
-                         "\"BatteryVoltage\":%u,"
-                         "\"ReedRelay\":%s,"
-                         "\"Accelerometer\":%u"
-                         "}",
-                         dev->peer_addr.addr[5], dev->peer_addr.addr[4], dev->peer_addr.addr[3],
-                         dev->peer_addr.addr[2], dev->peer_addr.addr[1], dev->peer_addr.addr[0],
-                         device_type, msg_counter, temperature, humidity, battery_voltage,
-                         reed_relay ? "true" : "false", accelerometer);
+                    int16_t temperature = (dev->adv_data[12] << 8) | dev->adv_data[13];
+                    int16_t humidity = (dev->adv_data[14] << 8) | dev->adv_data[15];
+                    uint16_t battery_voltage = (dev->adv_data[16] << 8) | dev->adv_data[17];
 
-                // Publish JSON to MQTT
-                publish_json_data(json_payload);
+                    bool reed_relay = dev->adv_data[18] ? true : false;
+                    uint8_t accelerometer = dev->adv_data[19];
+
+                    // Format JSON string
+                    char json_payload[256];
+                    snprintf(json_payload, sizeof(json_payload),
+                             "{"
+                             "\"MAC\":\"%02X:%02X:%02X:%02X:%02X:%02X\","
+                             "\"DeviceType\":%u,"
+                             "\"MessageCounter\":%u,"
+                             "\"Temperature\":%d,"
+                             "\"Humidity\":%d,"
+                             "\"BatteryVoltage\":%u,"
+                             "\"ReedRelay\":%s,"
+                             "\"Accelerometer\":%u"
+                             "}",
+                             dev->peer_addr.addr[5], dev->peer_addr.addr[4], dev->peer_addr.addr[3],
+                             dev->peer_addr.addr[2], dev->peer_addr.addr[1], dev->peer_addr.addr[0],
+                             device_type, msg_counter, temperature, humidity, battery_voltage,
+                             reed_relay ? "true" : "false", accelerometer);
+
+                    // Publish JSON to MQTT
+                    publish_json_data(json_payload);
+                }
             }
         }
 
-        // Sleep 5s before checking again
-        sys_ms_sleep(5000);
+        // Sleep 7s before checking again
+        sys_ms_sleep(7000); // BLE CHECK
     }
 
-demo_exit:
     printf("[DEMO_TASK] The demo has ended.\r\n");
     sys_task_delete(NULL);
 }
+
+
 
 /* -------------------------------------------------------------------------
  *  main()
@@ -205,3 +346,4 @@ int main(void)
     while (1) {}
     return 0;
 }
+

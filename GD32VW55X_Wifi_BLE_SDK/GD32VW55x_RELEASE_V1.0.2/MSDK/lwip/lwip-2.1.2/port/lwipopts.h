@@ -189,7 +189,7 @@ extern "C" {
 #define LWIP_STATS                    0
 #define LWIP_STATS_DISPLAY            0
 
-#ifdef CONFIG_AZURE_IOT_SUPPORT
+
 #define LWIP_SO_SNDTIMEO              1
 /* SNTP definitions */
 #define LWIP_SNTP                     1
@@ -205,8 +205,7 @@ void sntp_set_system_time(uint32_t sec);
 #define LWIP_SO_SNDRCVTIMEO_NONSTANDARD     0
 
 #define SYS_TIMER_BUF_FOR_AZURE             10
-
-#endif /* CONFIG_AZURE_IOT_SUPPORT */
+ /* CONFIG_AZURE_IOT_SUPPORT */
 
 #ifdef TUYAOS_SUPPORT
 #define LWIP_TCPIP_TIMEOUT            1

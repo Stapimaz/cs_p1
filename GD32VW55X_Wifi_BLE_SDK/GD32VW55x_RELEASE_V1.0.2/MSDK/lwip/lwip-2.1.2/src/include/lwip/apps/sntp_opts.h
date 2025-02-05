@@ -18,7 +18,7 @@
  * 3. The name of the author may not be used to endorse or promote products
  *    derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR `AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
  * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
@@ -40,6 +40,16 @@
 #include "lwip/opt.h"
 #include "lwip/prot/iana.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void set_rtc_by_epoch_time(uint32_t secs);  /* Forward declaration for RTC update function */
+
+#ifdef __cplusplus
+}
+#endif
+
 /**
  * @defgroup sntp_opts Options
  * @ingroup sntp
@@ -55,6 +65,10 @@
 #if !defined SNTP_SET_SYSTEM_TIME || defined __DOXYGEN__
 #define SNTP_SET_SYSTEM_TIME(sec)   LWIP_UNUSED_ARG(sec)
 #endif
+
+/* Override the default SNTP_SET_SYSTEM_TIME to use our custom RTC function */
+#undef SNTP_SET_SYSTEM_TIME
+#define SNTP_SET_SYSTEM_TIME(sec)  set_rtc_by_epoch_time((sec))
 
 /** The maximum number of SNTP servers that can be set */
 #if !defined SNTP_MAX_SERVERS || defined __DOXYGEN__
@@ -126,7 +140,7 @@
  * memory.
  */
 #if !defined SNTP_COMP_ROUNDTRIP || defined __DOXYGEN__
-#define SNTP_COMP_ROUNDTRIP         0
+#define SNTP_COMP_ROUNDTRIP         1 //KK
 #endif
 
 /** According to the RFC, this shall be a random delay

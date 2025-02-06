@@ -26,7 +26,7 @@
 #define INVALID_SOCKET              (-1)
 #define OTA_SOCKET_RECV_TIMEOUT     60000
 
-#define PORT                        80
+#define PORT                        8880
 #define TERM                        "\r\n"
 #define ENDING                      "\r\n\r\n"
 

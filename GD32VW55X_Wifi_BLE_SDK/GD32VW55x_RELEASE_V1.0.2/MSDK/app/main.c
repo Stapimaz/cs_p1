@@ -34,8 +34,8 @@
 #include "app_scan_mgr.h"
 
 // MQTT command includes
-#include "mqtt_cmd.h"          // where cmd_mqtt(...) is declared
-#include "lwip/apps/mqtt.h"    // for mqtt_client_is_connected
+#include "mqtt_cmd.h"
+#include "lwip/apps/mqtt.h"
 extern mqtt_client_t *mqtt_client; // declared in mqtt_cmd.c
 
 // SNTP includes
@@ -72,8 +72,8 @@ extern mqtt_client_t *mqtt_client; // declared in mqtt_cmd.c
 // OTA config placeholders
 // --------------------------------------------------------------------
 #ifdef CONFIG_OTA_DEMO_SUPPORT
-  #define OTA_SERVER_IP       "192.168.1.100"  // Just a placeholder
-  #define OTA_IMAGE_URL       "my_firmware.bin"
+    #define OTA_SERVER_IP  "91.93.129.88"
+    #define OTA_IMAGE_URL  "/kazim/gigadevice/image-ota2.bin"
 #endif
 
 // --------------------------------------------------------------------
@@ -167,7 +167,7 @@ uint32_t get_current_epoch_time(void)
 
     uint8_t leap = (mon>2 && (((year%4==0)&&(year%100!=0))||(year%400==0))) ? 1:0;
     uint32_t days_since_1970 = (year-1970)*365 + ((year-1969)/4)
-       + mdays[mon-1] + (day-1) + leap;
+                  + mdays[mon-1] + (day-1) + leap;
 
     uint32_t epoch = days_since_1970*86400 + hr*3600 + min*60 + sec;
     return epoch;
@@ -270,35 +270,11 @@ static void start_ota_demo(void)
 // --------------------------------------------------------------------
 // Offline Flash Storage Implementation
 // --------------------------------------------------------------------
-// We reserve a 64KB region at offset 0x00300000 in the 4MB flash.
-// Adjust these if your memory map requires something else.
-#define OFFLINE_DATA_BASE   (0x00300000)
-#define OFFLINE_DATA_SIZE   (0x00010000)  // 64KB
 
-// We'll store in flash:
-//   [0..3]  = a "valid" magic or 0 if erased
-//   [4..7]  = flash-stored offset (uint32_t, if we wanted robust power-loss recovery)
-//   [8.. ]  = repeated blocks of [4 bytes length][message bytes]
-//
-// However, to avoid repeated rewriting of the offset in flash,
-// we keep an *in-RAM* offset that increments for each new message.
-// We only store offset to flash once on the first initialization
-// so we mark the area valid. The offset in flash won't be updated
-// each time. If you lose power while offline, data appended after
-// the last offset update won't be recoverable, but for a simpler
-// demonstration, this approach avoids bit-setting issues.
-//
-// If you require power-loss persistence for every message, you need
-// a more advanced "log-based" or wear-leveling approach that can
-// handle repeated writes without losing bits.
-//
-// Steps for this simpler approach:
-//   1) If the region is invalid or blank, we erase the sector, then store a "valid" marker
-//      plus set offset=0 in flash. We also store offset=0 in a RAM variable s_ram_offset.
-//   2) Each time we store a JSON, we do not rewrite offset in flash. We only use s_ram_offset
-//      to find the next location in the region, then raw_flash_write the new record.
-//   3) On flush (when we reconnect), we read from [8.. s_ram_offset], publish each record,
-//      then erase the entire region so offset goes back to 0 in both flash and RAM.
+// ------------------- CHANGED THESE 2 DEFINES -------------------
+#define OFFLINE_DATA_BASE   (0x00320000)      // was 0x00300000
+#define OFFLINE_DATA_SIZE   (0x00080000)      // 512KB (was 0x00010000 for 64KB)
+// ---------------------------------------------------------------
 
 static bool offline_initialized = false;
 static uint32_t s_ram_offset = 0;  // Our in-RAM offset for new messages.
@@ -310,10 +286,10 @@ static uint32_t s_ram_offset = 0;  // Our in-RAM offset for new messages.
  */
 static void offline_data_erase(void)
 {
-    // Erase 64KB region
+    // Erase entire region
     raw_flash_erase(OFFLINE_DATA_BASE, OFFLINE_DATA_SIZE);
 
-    // Set magic + offset=0
+    // Write [ magic, offset=0 ] at start
     uint32_t init_data[2];
     init_data[0] = OFFLINE_MAGIC_VALID;
     init_data[1] = 0; // offset
@@ -336,12 +312,10 @@ static void offline_data_init(void)
     uint32_t magic_in_flash = init_data[0];
     uint32_t flash_offset   = init_data[1];
 
-    // If magic is invalid or 0xFFFFFFFF => we erase
     if(magic_in_flash != OFFLINE_MAGIC_VALID) {
         printf("[FLASH] Offline storage is uninitialized => erasing region.\r\n");
         offline_data_erase(); // sets s_ram_offset=0
     } else {
-        // We have a valid region. Use that offset.
         s_ram_offset = flash_offset;
         printf("[FLASH] Offline region valid, stored offset=%u\r\n", (unsigned)s_ram_offset);
     }
@@ -404,7 +378,6 @@ static void offline_flush_to_mqtt(void)
         offline_data_init();
     }
 
-    // If no data was stored in this power cycle, s_ram_offset=0 => skip
     if(s_ram_offset == 0){
         printf("[FLASH] No offline data stored.\r\n");
         return;
@@ -432,7 +405,6 @@ static void offline_flush_to_mqtt(void)
         char temp_buf[512];
         if(length >= sizeof(temp_buf)) {
             printf("[FLASH] skipping large record => len=%u\r\n", (unsigned)length);
-            // skip it
             read_pos += length;
             continue;
         }
@@ -472,11 +444,9 @@ static void wifi_reconnect_task(void *arg)
                 printf("[RECONNECT] Wi-Fi reconnected!\r\n");
                 start_sntp_and_sync();
 
-                // forcibly disconnect old MQTT
                 my_mqtt_cmd_disconnect();
                 sys_ms_sleep(1000);
 
-                // connect again
                 my_mqtt_cmd_connect();
 
                 // Flush offline data (if any) now that we're online
@@ -484,10 +454,9 @@ static void wifi_reconnect_task(void *arg)
                     offline_flush_to_mqtt();
                 }
 
-#ifdef CONFIG_OTA_DEMO_SUPPORT
-                // If you want an automatic OTA attempt upon reconnection, do:
+                #ifdef CONFIG_OTA_DEMO_SUPPORT
                 start_ota_demo();
-#endif
+                #endif
 
             } else {
                 // remain offline
@@ -500,8 +469,6 @@ static void wifi_reconnect_task(void *arg)
             if(wifi_vif_tab[0].sta.state != WIFI_STA_STATE_CONNECTED) {
                 printf("[RECONNECT] Wi-Fi dropped.\r\n");
                 wifi_status = WIFI_DISCONNECTED;
-
-                // stop SNTP + MQTT
                 sntp_stop();
                 my_mqtt_cmd_disconnect();
             }
@@ -523,11 +490,11 @@ static void demo_task(void *arg)
 
     // Create background reconnect
     os_task_t rtask = sys_task_create_dynamic(
-        (uint8_t*)"wifi_reconnect_task",
-        2048,
-        OS_TASK_PRIORITY(0),
-        wifi_reconnect_task,
-        NULL
+            (uint8_t*)"wifi_reconnect_task",
+            2048,
+            OS_TASK_PRIORITY(0),
+            wifi_reconnect_task,
+            NULL
     );
     if(!rtask) {
         dbg_print(ERR,"[MAIN] can't create wifi_reconnect_task\r\n");
@@ -537,14 +504,12 @@ static void demo_task(void *arg)
     // If connected => do SNTP + MQTT + optional OTA
     if(wifi_status==WIFI_CONNECTED){
         start_sntp_and_sync();
-        my_mqtt_cmd_connect(); // "mqtt connect test.mosquitto.org 1883 0"
+        my_mqtt_cmd_connect();
 
-#ifdef CONFIG_OTA_DEMO_SUPPORT
-        // Start OTA if you want it on first connect
+        #ifdef CONFIG_OTA_DEMO_SUPPORT
         start_ota_demo();
-#endif
+        #endif
 
-        // Also flush any leftover data if MQTT is available
         if(mqtt_client && mqtt_client_is_connected(mqtt_client)){
             offline_flush_to_mqtt();
         }
@@ -571,20 +536,20 @@ static void demo_task(void *arg)
 
                 char json_payload[256];
                 snprintf(json_payload, sizeof(json_payload),
-                    "{"
-                    "\"MAC\":\"%02X:%02X:%02X:%02X:%02X:%02X\","
-                    "\"DeviceType\":%u,"
-                    "\"MessageCounter\":%u,"
-                    "\"Temperature\":%d,"
-                    "\"Humidity\":%d,"
-                    "\"BatteryVoltage\":%u,"
-                    "\"ReedRelay\":%s,"
-                    "\"Accelerometer\":%u"
-                    "}",
-                    dev->peer_addr.addr[5], dev->peer_addr.addr[4], dev->peer_addr.addr[3],
-                    dev->peer_addr.addr[2], dev->peer_addr.addr[1], dev->peer_addr.addr[0],
-                    device_type, msg_counter, temperature, humidity, batt,
-                    reed_relay?"true":"false", accel
+                         "{"
+                         "\"MAC\":\"%02X:%02X:%02X:%02X:%02X:%02X\","
+                         "\"DeviceType\":%u,"
+                         "\"MessageCounter\":%u,"
+                         "\"Temperature\":%d,"
+                         "\"Humidity\":%d,"
+                         "\"BatteryVoltage\":%u,"
+                         "\"ReedRelay\":%s,"
+                         "\"Accelerometer\":%u"
+                         "}",
+                         dev->peer_addr.addr[5], dev->peer_addr.addr[4], dev->peer_addr.addr[3],
+                         dev->peer_addr.addr[2], dev->peer_addr.addr[1], dev->peer_addr.addr[0],
+                         device_type, msg_counter, temperature, humidity, batt,
+                         reed_relay?"true":"false", accel
                 );
 
                 if(wifi_status==WIFI_CONNECTED && mqtt_client && mqtt_client_is_connected(mqtt_client)) {
@@ -604,14 +569,14 @@ static void demo_task(void *arg)
                     size_t curlen = strlen(json_payload);
                     if(curlen < (sizeof(json_payload)-30)) {
                         snprintf(json_payload+curlen-1, sizeof(json_payload)-curlen,
-                            ",\"Timestamp\":%lu}", (unsigned long)t);
+                                 ",\"Timestamp\":%lu}", (unsigned long)t);
                     }
                     save_to_flash_storage(json_payload);
                 }
             }
         }
 
-        sys_ms_sleep(7000);
+        sys_ms_sleep(7000); //every 7 seconds
     }
 
     sys_task_delete(NULL);
@@ -627,6 +592,8 @@ int main(void)
     sys_os_init();
     platform_init();
 
+    dbg_print(NOTICE, "Firmware version: 1.0\r\n");
+
     // Initialize BLE
     ble_init(true);
 
@@ -641,11 +608,11 @@ int main(void)
 
     // Create the main demo task
     os_task_t handle = sys_task_create_dynamic(
-        (uint8_t*)"demo_task",
-        4096,
-        OS_TASK_PRIORITY(1),
-        demo_task,
-        NULL
+            (uint8_t*)"demo_task",
+            4096,
+            OS_TASK_PRIORITY(1),
+            demo_task,
+            NULL
     );
     if(!handle){
         dbg_print(ERR,"[MAIN] can't create demo_task\r\n");

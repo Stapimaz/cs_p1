@@ -39,6 +39,9 @@ OF SUCH DAMAGE.
 
 #include "ble_gap.h"
 
+void app_get_local_mac(uint8_t *mac_out);
+
+
 /*!
     \brief      Init adapter application module
     \param[in]  none

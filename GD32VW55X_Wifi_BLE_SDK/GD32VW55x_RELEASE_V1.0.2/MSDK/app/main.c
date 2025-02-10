@@ -3,17 +3,18 @@
  *
  * Demonstrates:
  *  1) OTA firmware update support via ota_demo.c
- *  2) "save_to_flash_storage" function for offline BLE data storage
- *  3) Re-sending offline data upon Wi-Fi reconnect
+ *  2) Offline data storage in flash (only dynamic fields to save space)
+ *  3) Re-sending offline data upon Wi-Fi *or MQTT* reconnect
  *
  * Key features retained from original code:
  *  - Connects to Wi-Fi
  *  - Syncs time via SNTP
  *  - Connects to broker test.mosquitto.org using cmd_mqtt connect
- *  - BLE scanning => either publishes or saves offline
- *  - Reconnect logic that tries every 5 minutes
+ *  - BLE scanning => either publishes immediately or saves offline
+ *  - Reconnect logic that tries every 5 minutes if Wi-Fi is disconnected
+ *  - If Wi-Fi is connected but MQTT is disconnected => we reconnect MQTT
  *  - Adds optional OTA logic
- *  - Adds offline flash storage for JSON
+ *  - Stores only dynamic fields in flash for offline use
  */
 
 #include <stdint.h>
@@ -51,6 +52,9 @@ extern mqtt_client_t *mqtt_client; // declared in mqtt_cmd.c
 // OTA includes (enabled if CONFIG_OTA_DEMO_SUPPORT is defined)
 #include "ota_demo.h"
 
+// Adapter manager includes, needed for app_get_local_mac()
+#include "app_adapter_mgr.h"
+
 // --------------------------------------------------------------------
 // Wi-Fi config
 // --------------------------------------------------------------------
@@ -73,7 +77,7 @@ extern mqtt_client_t *mqtt_client; // declared in mqtt_cmd.c
 // --------------------------------------------------------------------
 #ifdef CONFIG_OTA_DEMO_SUPPORT
     #define OTA_SERVER_IP  "91.93.129.88"
-    #define OTA_IMAGE_URL  "/kazim/gigadevice/image-ota2.bin"
+    #define OTA_IMAGE_URL  "/kazim/gigadevice/image-ota222.bin"
 #endif
 
 // --------------------------------------------------------------------
@@ -86,9 +90,30 @@ typedef enum {
 
 static wifi_status_t wifi_status = WIFI_DISCONNECTED;
 
+// --------------------------------------------------------------------
+// Store Gateway MAC (initialized in demo_task, not main())
+// --------------------------------------------------------------------
+static char g_gateway_mac[18]; // "AA:BB:CC:DD:EE:FF" + null terminator
+
+static void init_gw_mac(void)
+{
+    uint8_t mac[6] = {0};
+    // This function must be declared in app_adapter_mgr.h and
+    // implemented in app_adapter_mgr.c, for example:
+    //   void app_get_local_mac(uint8_t *mac_out)
+    //   {
+    //       memcpy(mac_out, app_env.id_addr.addr, 6);
+    //   }
+    app_get_local_mac(mac);
+
+    snprintf(g_gateway_mac, sizeof(g_gateway_mac),
+             "%02X:%02X:%02X:%02X:%02X:%02X",
+             mac[5], mac[4], mac[3], mac[2], mac[1], mac[0]);
+    printf("[GW MAC] => %s\r\n", g_gateway_mac);
+}
 
 // --------------------------------------------------------------------
-// RTC + SNTP (unchanged from your original code)
+// RTC + SNTP
 // --------------------------------------------------------------------
 static uint8_t to_bcd(uint8_t dec) {
     return (uint8_t)((((dec / 10) & 0xF) << 4) | (dec % 10));
@@ -271,15 +296,31 @@ static void start_ota_demo(void)
 // Offline Flash Storage Implementation
 // --------------------------------------------------------------------
 
-// ------------------- CHANGED THESE 2 DEFINES -------------------
-#define OFFLINE_DATA_BASE   (0x00320000)      // was 0x00300000
-#define OFFLINE_DATA_SIZE   (0x00080000)      // 512KB (was 0x00010000 for 64KB)
-// ---------------------------------------------------------------
+// We have increased this to 768KB to store more messages.
+#define OFFLINE_DATA_BASE   (0x00320000)
+#define OFFLINE_DATA_SIZE   (0x000C0000)  // 768KB
 
 static bool offline_initialized = false;
-static uint32_t s_ram_offset = 0;  // Our in-RAM offset for new messages.
+static uint32_t s_ram_offset = 0;  // Our in-RAM offset for new records.
 
 #define OFFLINE_MAGIC_VALID  0xA5A5A5A5  // An arbitrary "valid" marker
+
+/**
+ * @brief A compact struct of dynamic fields only
+ *        so we don't waste space on JSON formatting in flash.
+ */
+typedef struct __attribute__((packed)) {
+    uint8_t  peer_mac[6];     // scanned beacon MAC
+    uint8_t  device_type;     // from adv_data[7]
+    uint32_t msg_counter;     // from adv_data[8..11]
+    int16_t  temperature;     // adv_data[12..13]
+    int16_t  humidity;        // adv_data[14..15]
+    uint16_t battery;         // adv_data[16..17]
+    uint8_t  reed_relay;      // adv_data[18] => 0 or 1
+    uint8_t  accel;           // adv_data[19]
+    uint8_t  offline;         // 1 if was offline at time of scanning
+    uint32_t timestamp;       // valid if offline=1
+} offline_record_t; // => 24 bytes packed
 
 /**
  * @brief Erase entire offline region, and set magic + offset=0
@@ -323,54 +364,43 @@ static void offline_data_init(void)
 }
 
 /**
- * @brief Save a JSON payload to flash (when offline)
- *
- * Using our RAM offset s_ram_offset. We do NOT rewrite offset in flash each time.
+ * @brief Write a new record into flash (dynamic fields only).
  */
-static void save_to_flash_storage(const char *payload)
+static void save_offline_record(const offline_record_t *rec)
 {
     if(!offline_initialized){
         offline_data_init();
     }
 
-    size_t msg_len = strlen(payload);
-    if(msg_len == 0){
-        return;
-    }
+    // We store: [4 bytes length][the record struct]
+    const uint32_t record_size = sizeof(offline_record_t); // 24
+    const uint32_t needed = 4 + record_size;                // 28
 
-    // We'll store new record at OFFLINE_DATA_BASE + 8 + s_ram_offset
-    // Format: [4 bytes length][payload bytes]
-    uint32_t needed = 4 + msg_len;
-
-    // Check if enough space remains
-    //   total region size = OFFLINE_DATA_SIZE
-    //   first 8 bytes used for magic + offset
-    //   so max data area = OFFLINE_DATA_SIZE - 8
+    // check space
     if(s_ram_offset + needed > (OFFLINE_DATA_SIZE - 8)) {
-        printf("[FLASH] Not enough space for offline storage. Erasing everything.\r\n");
+        printf("[FLASH] Not enough space for offline record. Erasing everything.\r\n");
         offline_data_erase();
     }
 
-    // Record location
+    // The new record location => after the first 8 bytes + s_ram_offset
     uint32_t record_addr = OFFLINE_DATA_BASE + 8 + s_ram_offset;
 
-    // 1) write length
-    uint32_t length_le = (uint32_t)msg_len;
-    raw_flash_write(record_addr, &length_le, sizeof(length_le));
-
-    // 2) write payload
+    // 1) Write length
+    raw_flash_write(record_addr, &record_size, sizeof(record_size));
     record_addr += 4;
-    raw_flash_write(record_addr, payload, msg_len);
 
-    // 3) update in-RAM offset
+    // 2) Write the record
+    raw_flash_write(record_addr, rec, record_size);
+
+    // 3) Update in-RAM offset
     s_ram_offset += needed;
 
-    printf("[FLASH] Offline data saved => msg_len=%u (RAM_offset=%u)\r\n",
-           (unsigned)msg_len, (unsigned)s_ram_offset);
+    printf("[FLASH] Offline record saved => offset now=%u\r\n", (unsigned)s_ram_offset);
 }
 
 /**
- * @brief Read all stored JSON records from flash, publish them, then erase the region
+ * @brief Read all stored records from flash, reconstruct JSON, publish them,
+ *        then erase the region if we detect any mismatch or after finishing.
  */
 static void offline_flush_to_mqtt(void)
 {
@@ -390,44 +420,81 @@ static void offline_flush_to_mqtt(void)
         // read record length
         uint32_t length = 0;
         raw_flash_read(OFFLINE_DATA_BASE + 8 + read_pos, &length, sizeof(length));
-        read_pos += 4; // moved past length field
+        read_pos += 4; // move past length field
 
+        // Check for blank or invalid
         if(length == 0 || length == 0xFFFFFFFF) {
-            // blank or invalid => stop
             break;
         }
+
+        // Check if out of bounds
         if(read_pos + length > s_ram_offset) {
-            // out of range => stop
             break;
         }
 
-        // read JSON string
-        char temp_buf[512];
-        if(length >= sizeof(temp_buf)) {
-            printf("[FLASH] skipping large record => len=%u\r\n", (unsigned)length);
-            read_pos += length;
-            continue;
+        // Must match our struct size exactly
+        if(length != sizeof(offline_record_t)) {
+            // This means old/corrupt data -> erase region now
+            printf("[FLASH] Found record with invalid length=%u => erasing region.\r\n",(unsigned)length);
+            offline_data_erase();
+            return;
         }
 
-        memset(temp_buf, 0, sizeof(temp_buf));
-        raw_flash_read(OFFLINE_DATA_BASE + 8 + read_pos, temp_buf, length);
+        // read the record
+        offline_record_t rec;
+        raw_flash_read(OFFLINE_DATA_BASE + 8 + read_pos, &rec, length);
         read_pos += length;
 
-        // Now publish this record
-        printf("[FLASH] Publishing offline record: %s\r\n", temp_buf);
-        my_mqtt_cmd_publish(temp_buf);
+        // Reconstruct the JSON with static text + dynamic fields
+        char json_payload[256];
+        snprintf(json_payload, sizeof(json_payload),
+                 "{"
+                 "\"MAC\":\"%02X:%02X:%02X:%02X:%02X:%02X\","
+                 "\"GW_MAC\":\"%s\","
+                 "\"DeviceType\":%u,"
+                 "\"MessageCounter\":%u,"
+                 "\"Temperature\":%d,"
+                 "\"Humidity\":%d,"
+                 "\"BatteryVoltage\":%u,"
+                 "\"ReedRelay\":%s,"
+                 "\"Accelerometer\":%u",
+                 rec.peer_mac[5], rec.peer_mac[4], rec.peer_mac[3],
+                 rec.peer_mac[2], rec.peer_mac[1], rec.peer_mac[0],
+                 g_gateway_mac,
+                 rec.device_type,
+                 rec.msg_counter,
+                 rec.temperature,
+                 rec.humidity,
+                 rec.battery,
+                 (rec.reed_relay ? "true" : "false"),
+                 rec.accel
+        );
 
-        sys_ms_sleep(200); // small delay between publishes
+        // If offline=1 => add timestamp
+        if(rec.offline) {
+            char buf[40];
+            snprintf(buf, sizeof(buf), ",\"Timestamp\":%lu}", (unsigned long)rec.timestamp);
+            strncat(json_payload, buf, sizeof(json_payload) - strlen(json_payload) - 1);
+        } else {
+            strncat(json_payload, "}", sizeof(json_payload) - strlen(json_payload) - 1);
+        }
+
+        // Publish
+        printf("[FLASH] Publishing offline record: %s\r\n", json_payload);
+        my_mqtt_cmd_publish(json_payload);
+
+        sys_ms_sleep(200); // small delay
     }
 
-    // After sending all, erase entire region => offset=0
+    // After sending all (or hitting a blank), erase entire region => offset=0
     offline_data_erase();
     printf("[FLASH] Offline data flush complete.\r\n");
 }
 
 
 // --------------------------------------------------------------------
-// Wi-Fi reconnect => tries every 5 min, then does SNTP + MQTT + flush
+// Wi-Fi reconnect => tries every 5 min if offline. Also tries MQTT
+// reconnect if Wi-Fi is connected but MQTT is down.
 // --------------------------------------------------------------------
 static void wifi_reconnect_task(void *arg)
 {
@@ -463,7 +530,7 @@ static void wifi_reconnect_task(void *arg)
                 printf("[RECONNECT] Still offline.\r\n");
             }
         } else {
-            // check if we truly remain connected
+            // check if we truly remain connected to Wi-Fi
             extern struct wifi_vif_tag wifi_vif_tab[];
             #define WIFI_STA_STATE_CONNECTED 6
             if(wifi_vif_tab[0].sta.state != WIFI_STA_STATE_CONNECTED) {
@@ -471,6 +538,23 @@ static void wifi_reconnect_task(void *arg)
                 wifi_status = WIFI_DISCONNECTED;
                 sntp_stop();
                 my_mqtt_cmd_disconnect();
+            } else {
+                // Wi-Fi is up, check MQTT connection
+                if(!(mqtt_client && mqtt_client_is_connected(mqtt_client))) {
+                    printf("[RECONNECT] MQTT disconnected => reconnecting...\r\n");
+                    my_mqtt_cmd_disconnect();
+                    sys_ms_sleep(1000);
+                    my_mqtt_cmd_connect();
+
+                    // If reconnect success, flush offline
+                    if(mqtt_client && mqtt_client_is_connected(mqtt_client)) {
+                        offline_flush_to_mqtt();
+
+                        #ifdef CONFIG_OTA_DEMO_SUPPORT
+                        start_ota_demo();
+                        #endif
+                    }
+                }
             }
         }
 
@@ -485,10 +569,13 @@ static void wifi_reconnect_task(void *arg)
 static void demo_task(void *arg)
 {
     (void)arg;
+
+
+
     printf("[demo_task] Wi-Fi connecting...\r\n");
     wifi_connect_handler();
 
-    // Create background reconnect
+    // Create background reconnect task
     os_task_t rtask = sys_task_create_dynamic(
             (uint8_t*)"wifi_reconnect_task",
             2048,
@@ -501,7 +588,7 @@ static void demo_task(void *arg)
         for(;;){}
     }
 
-    // If connected => do SNTP + MQTT + optional OTA
+    // If connected => do SNTP + MQTT + optional OTA + flush
     if(wifi_status==WIFI_CONNECTED){
         start_sntp_and_sync();
         my_mqtt_cmd_connect();
@@ -515,44 +602,59 @@ static void demo_task(void *arg)
         }
     }
 
+    // ---- Move init_gw_mac here so the MAC is valid. ----
+      init_gw_mac();
+
     // BLE scanning forever
     while(1){
         for (uint8_t idx=0; ; idx++){
             dev_info_t* dev = scan_mgr_find_dev_by_idx(idx);
             if(!dev) break;
             if(dev->adv_len < 26) continue;
+
             // check adv_data[5]==0x4D && adv_data[6]==0x5A => "MZ"
             if(dev->adv_data[5]==0x4D && dev->adv_data[6]==0x5A) {
                 printf("[demo_task] Found Target Beacon!\r\n");
 
+                // parse dynamic fields
                 uint8_t device_type = dev->adv_data[7];
-                uint32_t msg_counter= (dev->adv_data[8]<<24)|(dev->adv_data[9]<<16)|
-                                      (dev->adv_data[10]<<8)| dev->adv_data[11];
-                int16_t temperature = (int16_t)((dev->adv_data[12]<<8)|dev->adv_data[13]);
-                int16_t humidity    = (int16_t)((dev->adv_data[14]<<8)|dev->adv_data[15]);
-                uint16_t batt       = (uint16_t)((dev->adv_data[16]<<8)|dev->adv_data[17]);
-                bool reed_relay     = dev->adv_data[18]?true:false;
-                uint8_t accel       = dev->adv_data[19];
+                uint32_t msg_counter = (dev->adv_data[8]<<24)|(dev->adv_data[9]<<16)|
+                                       (dev->adv_data[10]<<8)| dev->adv_data[11];
+                int16_t temperature  = (int16_t)((dev->adv_data[12]<<8)|dev->adv_data[13]);
+                int16_t humidity     = (int16_t)((dev->adv_data[14]<<8)|dev->adv_data[15]);
+                uint16_t batt        = (uint16_t)((dev->adv_data[16]<<8)|dev->adv_data[17]);
+                bool reed_relay      = dev->adv_data[18]?true:false;
+                uint8_t accel        = dev->adv_data[19];
 
-                char json_payload[256];
-                snprintf(json_payload, sizeof(json_payload),
-                         "{"
-                         "\"MAC\":\"%02X:%02X:%02X:%02X:%02X:%02X\","
-                         "\"DeviceType\":%u,"
-                         "\"MessageCounter\":%u,"
-                         "\"Temperature\":%d,"
-                         "\"Humidity\":%d,"
-                         "\"BatteryVoltage\":%u,"
-                         "\"ReedRelay\":%s,"
-                         "\"Accelerometer\":%u"
-                         "}",
-                         dev->peer_addr.addr[5], dev->peer_addr.addr[4], dev->peer_addr.addr[3],
-                         dev->peer_addr.addr[2], dev->peer_addr.addr[1], dev->peer_addr.addr[0],
-                         device_type, msg_counter, temperature, humidity, batt,
-                         reed_relay?"true":"false", accel
-                );
-
+                // We'll create the JSON if we are online, else store a compact record
                 if(wifi_status==WIFI_CONNECTED && mqtt_client && mqtt_client_is_connected(mqtt_client)) {
+                    // Construct JSON with a new "GW_MAC" right after "MAC"
+                    char json_payload[256];
+                    snprintf(json_payload, sizeof(json_payload),
+                             "{"
+                             "\"MAC\":\"%02X:%02X:%02X:%02X:%02X:%02X\","
+                             "\"GW_MAC\":\"%s\","
+                             "\"DeviceType\":%u,"
+                             "\"MessageCounter\":%u,"
+                             "\"Temperature\":%d,"
+                             "\"Humidity\":%d,"
+                             "\"BatteryVoltage\":%u,"
+                             "\"ReedRelay\":%s,"
+                             "\"Accelerometer\":%u"
+                             "}",
+                             dev->peer_addr.addr[5], dev->peer_addr.addr[4],
+                             dev->peer_addr.addr[3], dev->peer_addr.addr[2],
+                             dev->peer_addr.addr[1], dev->peer_addr.addr[0],
+                             g_gateway_mac,
+                             device_type,
+                             msg_counter,
+                             temperature,
+                             humidity,
+                             batt,
+                             reed_relay?"true":"false",
+                             accel
+                    );
+
                     // Publish now
                     my_mqtt_cmd_publish(json_payload);
 
@@ -561,22 +663,31 @@ static void demo_task(void *arg)
                     printf("TIMESTAMP(Online): %lu\r\n", (unsigned long)t);
 
                 } else {
-                    // offline => store
-                    uint32_t t = get_current_epoch_time();
-                    printf("TIMESTAMP(Offline): %lu\r\n", (unsigned long)t);
+                    // offline => store to flash (compact struct)
+                    offline_record_t rec;
+                    memset(&rec, 0, sizeof(rec));
+                    // store MAC in same order we read it
+                    memcpy(rec.peer_mac, dev->peer_addr.addr, 6);
 
-                    // Add timestamp to JSON before storing offline
-                    size_t curlen = strlen(json_payload);
-                    if(curlen < (sizeof(json_payload)-30)) {
-                        snprintf(json_payload+curlen-1, sizeof(json_payload)-curlen,
-                                 ",\"Timestamp\":%lu}", (unsigned long)t);
-                    }
-                    save_to_flash_storage(json_payload);
+                    rec.device_type = device_type;
+                    rec.msg_counter = msg_counter;
+                    rec.temperature = temperature;
+                    rec.humidity    = humidity;
+                    rec.battery     = batt;
+                    rec.reed_relay  = (reed_relay ? 1 : 0);
+                    rec.accel       = accel;
+
+                    rec.offline     = 1; // we were offline
+                    rec.timestamp   = get_current_epoch_time();
+
+                    save_offline_record(&rec);
+
+                    printf("TIMESTAMP(Offline): %lu\r\n", (unsigned long)rec.timestamp);
                 }
             }
         }
 
-        sys_ms_sleep(7000); //every 7 seconds
+        sys_ms_sleep(7000); // every 7 seconds
     }
 
     sys_task_delete(NULL);
@@ -594,7 +705,7 @@ int main(void)
 
     dbg_print(NOTICE, "Firmware version: 1.0\r\n");
 
-    // Initialize BLE
+    // BLE init in main
     ble_init(true);
 
     // Initialize Wi-Fi
@@ -619,6 +730,7 @@ int main(void)
         for(;;){}
     }
 
+    // Start OS
     sys_os_start();
     for(;;){}
     return 0;

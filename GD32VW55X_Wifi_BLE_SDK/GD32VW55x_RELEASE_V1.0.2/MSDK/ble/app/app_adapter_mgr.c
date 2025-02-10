@@ -90,6 +90,21 @@ struct adapter_env_tag
 /* BLE adapter application environment data */
 struct adapter_env_tag app_env;
 
+// In app_adapter_mgr.c (add this function):
+void app_get_local_mac(uint8_t *mac_out)
+{
+    if (!mac_out) return;
+
+    // Copy the stored MAC address from app_env
+    memcpy(mac_out, app_env.id_addr.addr, 6);
+
+    // Debug print to verify the function works
+    dbg_print(NOTICE, "[app_get_local_mac] MAC: %02X:%02X:%02X:%02X:%02X:%02X\r\n",
+              mac_out[5], mac_out[4], mac_out[3],
+              mac_out[2], mac_out[1], mac_out[0]);
+}
+
+
 /*!
     \brief      Function called after BLE stack enabled, used to get local IRK and set local name
     \param[in]  status: BLE stack enable status

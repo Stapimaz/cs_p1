@@ -26,7 +26,6 @@ THE SOFTWARE.
 
 #include "app_cfg.h"
 
-#if defined(CONFIG_ALICLOUD_SUPPORT) || defined(CONFIG_IPERF3_TEST)
 
 #include <string.h>
 #include <stdio.h>
@@ -2293,4 +2292,3 @@ CJSON_PUBLIC(void) cJSON_free(void *object)
     global_hooks.deallocate(object);
 }
 
-#endif

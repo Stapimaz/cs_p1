@@ -5,16 +5,19 @@
  *  1) OTA firmware update support via ota_demo.c
  *  2) Offline data storage in flash (only dynamic fields to save space)
  *  3) Re-sending offline data upon Wi-Fi *or MQTT* reconnect
+ *  4) **A concurrent SoftAP that serves a simple HTML page** to configure
+ *     PRIMARY/SECONDARY Wi-Fi SSID/PASS in real time.
  *
- * Key features retained from original code:
- *  - Connects to Wi-Fi
+ * Key features retained:
+ *  - Connects to Wi-Fi (station mode)
  *  - Syncs time via SNTP
- *  - Connects to broker test.mosquitto.org using cmd_mqtt connect
+ *  - Connects to broker test.mosquitto.org (MQTT)
  *  - BLE scanning => either publishes immediately or saves offline
- *  - Reconnect logic that tries every 5 minutes if Wi-Fi is disconnected
- *  - If Wi-Fi is connected but MQTT is disconnected => we reconnect MQTT
- *  - Adds optional OTA logic
+ *  - Reconnect logic tries every 5 minutes if Wi-Fi is disconnected (modified to 10s for first time)
+ *  - If Wi-Fi is up but MQTT is disconnected => reconnect MQTT
+ *  - Optional OTA logic
  *  - Stores only dynamic fields in flash for offline use
+ *  - **SoftAP + basic HTTP server** for on-the-fly Wi-Fi config
  */
 
 #include <stdint.h>
@@ -55,13 +58,22 @@ extern mqtt_client_t *mqtt_client; // declared in mqtt_cmd.c
 // Adapter manager includes, needed for app_get_local_mac()
 #include "app_adapter_mgr.h"
 
+// LWIP includes for sockets
+#include "lwip/sockets.h"
+#include "lwip/errno.h"
+
 // --------------------------------------------------------------------
-// Wi-Fi config
+// Wi-Fi config (changeable at runtime via the new AP/HTML page)
 // --------------------------------------------------------------------
-#define PRIMARY_WIFI_SSID       "Mobiliz NaRGE_Gues"
-#define PRIMARY_WIFI_PASSWORD   "M@b!lz12.*"
-#define BACKUP_WIFI_SSID        "Redmi Note 10S"
-#define BACKUP_WIFI_PASSWORD    "54321012"
+static char g_primary_ssid[64]     = "Redmi Note 10S";
+static char g_primary_password[64] = "54321012";
+static char g_backup_ssid[64]      = "Redmi Note 10S";
+static char g_backup_password[64]  = "54321012";
+
+#define PRIMARY_WIFI_SSID        g_primary_ssid
+#define PRIMARY_WIFI_PASSWORD    g_primary_password
+#define BACKUP_WIFI_SSID         g_backup_ssid
+#define BACKUP_WIFI_PASSWORD     g_backup_password
 
 // --------------------------------------------------------------------
 // MQTT config
@@ -69,7 +81,6 @@ extern mqtt_client_t *mqtt_client; // declared in mqtt_cmd.c
 #define MQTT_BROKER_HOST   "test.mosquitto.org"
 #define MQTT_BROKER_PORT   "1883"
 #define MQTT_BROKER_ENC    "0"   // 0 => no TLS
-
 #define MQTT_TOPIC         "test22052077/ble_beacons"
 
 // --------------------------------------------------------------------
@@ -90,26 +101,70 @@ typedef enum {
 
 static wifi_status_t wifi_status = WIFI_DISCONNECTED;
 
+/**
+ * We make this global so the HTTP handler can reset it immediately
+ * if the user triggers a manual Wi-Fi reconnect.
+ */
+bool g_first_offline_retry = true; // used by wifi_reconnect_task()
+
 // --------------------------------------------------------------------
-// Store Gateway MAC (initialized in demo_task, not main())
+// Store Gateway MAC in Flash
 // --------------------------------------------------------------------
-static char g_gateway_mac[18]; // "AA:BB:CC:DD:EE:FF" + null terminator
+#define GW_MAC_FLASH_ADDR  (0x002F0000U)    // Example sector, adjust if needed
+#define GW_MAC_FLASH_SIZE  (0x1000U)        // We'll assume a 4KB sector here
+#define GW_MAC_FLASH_MAGIC (0xA5123456UL)
+
+static int ONLINE_SCAN_INTERVAL = 7000;
+static int OFFLINE_SCAN_INTERVAL = 14000;
+
+typedef struct {
+    uint32_t magic;         // Marker to confirm we've stored
+    char     mac_str[18];   // "AA:BB:CC:DD:EE:FF"
+} gw_mac_store_t;
+
+static char g_gateway_mac[18] = {0};
+
+static void gw_mac_read_from_flash(void)
+{
+    gw_mac_store_t info;
+    raw_flash_read(GW_MAC_FLASH_ADDR, &info, sizeof(info));
+
+    if ((info.magic == GW_MAC_FLASH_MAGIC) && (info.mac_str[0] != '\0')) {
+        strncpy(g_gateway_mac, info.mac_str, sizeof(g_gateway_mac));
+    } else {
+        g_gateway_mac[0] = '\0';
+    }
+}
+
+static void gw_mac_write_to_flash(const char* mac_str)
+{
+    // Erase the 4KB sector first
+    raw_flash_erase(GW_MAC_FLASH_ADDR, GW_MAC_FLASH_SIZE);
+
+    gw_mac_store_t info;
+    info.magic = GW_MAC_FLASH_MAGIC;
+    memset(info.mac_str, 0, sizeof(info.mac_str));
+    strncpy(info.mac_str, mac_str, sizeof(info.mac_str) - 1);
+
+    raw_flash_write(GW_MAC_FLASH_ADDR, &info, sizeof(info));
+    printf("[GW MAC FLASH] MAC '%s' stored at 0x%08X.\r\n", mac_str, (unsigned)GW_MAC_FLASH_ADDR);
+}
 
 static void init_gw_mac(void)
 {
-    uint8_t mac[6] = {0};
-    // This function must be declared in app_adapter_mgr.h and
-    // implemented in app_adapter_mgr.c, for example:
-    //   void app_get_local_mac(uint8_t *mac_out)
-    //   {
-    //       memcpy(mac_out, app_env.id_addr.addr, 6);
-    //   }
-    app_get_local_mac(mac);
+    uint8_t mac[6];
+    app_get_local_mac(mac);  // from hardware
 
-    snprintf(g_gateway_mac, sizeof(g_gateway_mac),
+    char temp[18];
+    snprintf(temp, sizeof(temp),
              "%02X:%02X:%02X:%02X:%02X:%02X",
              mac[5], mac[4], mac[3], mac[2], mac[1], mac[0]);
-    printf("[GW MAC] => %s\r\n", g_gateway_mac);
+
+    printf("[GW MAC] (Hardware) => %s\r\n", temp);
+    strncpy(g_gateway_mac, temp, sizeof(g_gateway_mac));
+
+    // Overwrite each time for simplicity
+    gw_mac_write_to_flash(g_gateway_mac);
 }
 
 // --------------------------------------------------------------------
@@ -130,7 +185,6 @@ void set_rtc_by_epoch_time(uint32_t utc_secs)
     uint32_t year = 1970;
     while (1) {
         uint32_t ydays = 365;
-        // leap year check
         if ((year % 4 == 0 && (year % 100 != 0)) || (year % 400 == 0)) {
             ydays = 366;
         }
@@ -167,7 +221,6 @@ void set_rtc_by_epoch_time(uint32_t utc_secs)
     r.minute        = to_bcd((uint8_t)minute);
     r.second        = to_bcd((uint8_t)second);
 
-    // Example prescalers
     r.factor_asyn    = 0x63;
     r.factor_syn     = 0x13F;
     r.display_format = RTC_24HOUR;
@@ -205,9 +258,9 @@ static void start_sntp_and_sync(void)
         sntp_setservername(0, "pool.ntp.org");
         sntp_init();
     }
+    // Let time sync
     sys_ms_sleep(8000);
 }
-
 
 // --------------------------------------------------------------------
 // Basic Wi-Fi connect logic
@@ -236,7 +289,6 @@ static void wifi_connect_handler(void)
     }
 }
 
-
 // --------------------------------------------------------------------
 // cmd_mqtt usage wrappers
 // --------------------------------------------------------------------
@@ -259,7 +311,6 @@ static void my_mqtt_cmd_disconnect(void)
 
 static void my_mqtt_cmd_publish(const char *payload)
 {
-    // e.g. "mqtt publish <topic> <payload> 0 0"
     char *args[] = {
         "mqtt", "publish",
         (char*)MQTT_TOPIC,
@@ -270,16 +321,12 @@ static void my_mqtt_cmd_publish(const char *payload)
     cmd_mqtt(6, args);
 }
 
-
 // --------------------------------------------------------------------
-// OTA DEMO Support
+// OTA DEMO
 // --------------------------------------------------------------------
 #ifdef CONFIG_OTA_DEMO_SUPPORT
 static void start_ota_demo(void)
 {
-    // Just a placeholder function that starts OTA if you want
-    // In a real scenario, you'd do DNS lookups, get image URL, etc.
-    // Here, we assume direct IP input to ota_demo_cfg_init.
     if(ota_demo_cfg_init(OTA_SERVER_IP, OTA_IMAGE_URL) == 0){
         printf("[OTA] Starting OTA Demo => IP=%s, URL=%s\r\n", OTA_SERVER_IP, OTA_IMAGE_URL);
         if(ota_demo_start() != 0){
@@ -289,65 +336,47 @@ static void start_ota_demo(void)
         printf("[OTA] ota_demo_cfg_init() failed.\r\n");
     }
 }
-#endif // CONFIG_OTA_DEMO_SUPPORT
-
+#endif
 
 // --------------------------------------------------------------------
-// Offline Flash Storage Implementation
+// Offline Flash Storage
 // --------------------------------------------------------------------
-
-// We have increased this to 768KB to store more messages.
 #define OFFLINE_DATA_BASE   (0x00320000)
 #define OFFLINE_DATA_SIZE   (0x000C0000)  // 768KB
 
 static bool offline_initialized = false;
 static uint32_t s_ram_offset = 0;  // Our in-RAM offset for new records.
 
-#define OFFLINE_MAGIC_VALID  0xA5A5A5A5  // An arbitrary "valid" marker
+#define OFFLINE_MAGIC_VALID  0xA5A5A5A5
 
-/**
- * @brief A compact struct of dynamic fields only
- *        so we don't waste space on JSON formatting in flash.
- */
 typedef struct __attribute__((packed)) {
-    uint8_t  peer_mac[6];     // scanned beacon MAC
-    uint8_t  device_type;     // from adv_data[7]
-    uint32_t msg_counter;     // from adv_data[8..11]
-    int16_t  temperature;     // adv_data[12..13]
-    int16_t  humidity;        // adv_data[14..15]
-    uint16_t battery;         // adv_data[16..17]
-    uint8_t  reed_relay;      // adv_data[18] => 0 or 1
-    uint8_t  accel;           // adv_data[19]
-    uint8_t  offline;         // 1 if was offline at time of scanning
-    uint32_t timestamp;       // valid if offline=1
-} offline_record_t; // => 24 bytes packed
+    uint8_t  peer_mac[6];
+    uint8_t  device_type;
+    uint32_t msg_counter;
+    int16_t  temperature;
+    int16_t  humidity;
+    uint16_t battery;
+    uint8_t  reed_relay;
+    uint8_t  accel;
+    uint8_t  offline;
+    uint32_t timestamp;
+} offline_record_t;
 
-/**
- * @brief Erase entire offline region, and set magic + offset=0
- */
 static void offline_data_erase(void)
 {
-    // Erase entire region
+	sys_ms_sleep(1500);
     raw_flash_erase(OFFLINE_DATA_BASE, OFFLINE_DATA_SIZE);
-
-    // Write [ magic, offset=0 ] at start
     uint32_t init_data[2];
     init_data[0] = OFFLINE_MAGIC_VALID;
-    init_data[1] = 0; // offset
+    init_data[1] = 0;
+    sys_ms_sleep(2000);
     raw_flash_write(OFFLINE_DATA_BASE, init_data, sizeof(init_data));
-
-    // Also set our RAM offset to 0
     s_ram_offset = 0;
-
     printf("[FLASH] Erased offline region => offset=0.\r\n");
 }
 
-/**
- * @brief Initialize offline data region
- */
 static void offline_data_init(void)
 {
-    // read the first 8 bytes: [ magic, offset ]
     uint32_t init_data[2];
     raw_flash_read(OFFLINE_DATA_BASE, init_data, sizeof(init_data));
     uint32_t magic_in_flash = init_data[0];
@@ -355,7 +384,7 @@ static void offline_data_init(void)
 
     if(magic_in_flash != OFFLINE_MAGIC_VALID) {
         printf("[FLASH] Offline storage is uninitialized => erasing region.\r\n");
-        offline_data_erase(); // sets s_ram_offset=0
+        offline_data_erase();
     } else {
         s_ram_offset = flash_offset;
         printf("[FLASH] Offline region valid, stored offset=%u\r\n", (unsigned)s_ram_offset);
@@ -363,89 +392,72 @@ static void offline_data_init(void)
     offline_initialized = true;
 }
 
-/**
- * @brief Write a new record into flash (dynamic fields only).
- */
 static void save_offline_record(const offline_record_t *rec)
 {
     if(!offline_initialized){
         offline_data_init();
     }
+    const uint32_t record_size = sizeof(offline_record_t);
+    const uint32_t needed = 4 + record_size; // length + record
 
-    // We store: [4 bytes length][the record struct]
-    const uint32_t record_size = sizeof(offline_record_t); // 24
-    const uint32_t needed = 4 + record_size;                // 28
-
-    // check space
     if(s_ram_offset + needed > (OFFLINE_DATA_SIZE - 8)) {
         printf("[FLASH] Not enough space for offline record. Erasing everything.\r\n");
         offline_data_erase();
     }
 
-    // The new record location => after the first 8 bytes + s_ram_offset
     uint32_t record_addr = OFFLINE_DATA_BASE + 8 + s_ram_offset;
-
-    // 1) Write length
-    raw_flash_write(record_addr, &record_size, sizeof(record_size));
+    raw_flash_write(record_addr, &record_size, 4);
     record_addr += 4;
-
-    // 2) Write the record
     raw_flash_write(record_addr, rec, record_size);
 
-    // 3) Update in-RAM offset
     s_ram_offset += needed;
-
     printf("[FLASH] Offline record saved => offset now=%u\r\n", (unsigned)s_ram_offset);
 }
 
-/**
- * @brief Read all stored records from flash, reconstruct JSON, publish them,
- *        then erase the region if we detect any mismatch or after finishing.
- */
+// Add these delay and sync points in the offline_flush_to_mqtt function:
 static void offline_flush_to_mqtt(void)
 {
     if(!offline_initialized){
         offline_data_init();
     }
-
     if(s_ram_offset == 0){
         printf("[FLASH] No offline data stored.\r\n");
         return;
     }
 
     printf("[FLASH] Found %u bytes of offline data => flushing...\r\n",(unsigned)s_ram_offset);
-
     uint32_t read_pos = 0;
-    while(read_pos < s_ram_offset) {
-        // read record length
-        uint32_t length = 0;
-        raw_flash_read(OFFLINE_DATA_BASE + 8 + read_pos, &length, sizeof(length));
-        read_pos += 4; // move past length field
 
-        // Check for blank or invalid
+    // Add delay before starting flush
+    sys_ms_sleep(1000);  // Give MQTT connection time to stabilize
+
+    while(read_pos < s_ram_offset) {
+        // Verify MQTT is still connected before each record
+        if(!mqtt_client || !mqtt_client_is_connected(mqtt_client)) {
+            printf("[FLASH] MQTT disconnected during flush - aborting\r\n");
+            return;
+        }
+
+        uint32_t length = 0;
+        raw_flash_read(OFFLINE_DATA_BASE + 8 + read_pos, &length, 4);
+        read_pos += 4;
+
         if(length == 0 || length == 0xFFFFFFFF) {
             break;
         }
-
-        // Check if out of bounds
         if(read_pos + length > s_ram_offset) {
             break;
         }
-
-        // Must match our struct size exactly
         if(length != sizeof(offline_record_t)) {
-            // This means old/corrupt data -> erase region now
             printf("[FLASH] Found record with invalid length=%u => erasing region.\r\n",(unsigned)length);
             offline_data_erase();
             return;
         }
 
-        // read the record
         offline_record_t rec;
         raw_flash_read(OFFLINE_DATA_BASE + 8 + read_pos, &rec, length);
         read_pos += length;
 
-        // Reconstruct the JSON with static text + dynamic fields
         char json_payload[256];
         snprintf(json_payload, sizeof(json_payload),
                  "{"
@@ -457,7 +469,9 @@ static void offline_flush_to_mqtt(void)
                  "\"Humidity\":%d,"
                  "\"BatteryVoltage\":%u,"
                  "\"ReedRelay\":%s,"
-                 "\"Accelerometer\":%u",
+                 "\"Accelerometer\":%u,"
+                 "\"Timestamp\":%lu"  // Always include timestamp for offline records
+                 "}",
                  rec.peer_mac[5], rec.peer_mac[4], rec.peer_mac[3],
                  rec.peer_mac[2], rec.peer_mac[1], rec.peer_mac[0],
                  g_gateway_mac,
@@ -467,95 +481,92 @@ static void offline_flush_to_mqtt(void)
                  rec.humidity,
                  rec.battery,
                  (rec.reed_relay ? "true" : "false"),
-                 rec.accel
+                 rec.accel,
+                 (unsigned long)rec.timestamp
         );
 
-        // If offline=1 => add timestamp
-        if(rec.offline) {
-            char buf[40];
-            snprintf(buf, sizeof(buf), ",\"Timestamp\":%lu}", (unsigned long)rec.timestamp);
-            strncat(json_payload, buf, sizeof(json_payload) - strlen(json_payload) - 1);
-        } else {
-            strncat(json_payload, "}", sizeof(json_payload) - strlen(json_payload) - 1);
-        }
-
-        // Publish
         printf("[FLASH] Publishing offline record: %s\r\n", json_payload);
         my_mqtt_cmd_publish(json_payload);
 
-        sys_ms_sleep(200); // small delay
+        // Add delay between records
+        sys_ms_sleep(1000);  // Prevent overwhelming MQTT connection
     }
 
-    // After sending all (or hitting a blank), erase entire region => offset=0
+    // Add delay before erasing
+    sys_ms_sleep(1500);
     offline_data_erase();
+
+    // Add final delay after erase
+    sys_ms_sleep(1000);
     printf("[FLASH] Offline data flush complete.\r\n");
 }
 
-
 // --------------------------------------------------------------------
-// Wi-Fi reconnect => tries every 5 min if offline. Also tries MQTT
-// reconnect if Wi-Fi is connected but MQTT is down.
+// Wi-Fi reconnect => tries every 5 min if offline.
+// ***CHANGE #2: first time offline => wait 10s, subsequent => 5 min
 // --------------------------------------------------------------------
 static void wifi_reconnect_task(void *arg)
 {
     (void)arg;
+
     while(1) {
         if(wifi_status == WIFI_DISCONNECTED) {
-            printf("[RECONNECT] Offline => next attempt in 5 mins.\r\n");
-            sys_ms_sleep(5UL*60UL*1000UL);
+            // If the user *just* changed config and forced a manual reconnect that failed,
+            // we reset g_first_offline_retry=true. So let's do logic:
+            if(g_first_offline_retry) {
+                printf("[RECONNECT] Offline => next attempt in 10 seconds.\r\n");
+                sys_ms_sleep(10000);
+                g_first_offline_retry = false; // after doing the 10s attempt
+            } else {
+                printf("[RECONNECT] Offline => next attempt in 5 mins.\r\n");
+                sys_ms_sleep(5UL*60UL*1000UL);
+            }
 
-            // Attempt connect
             if(wifi_try_connect(PRIMARY_WIFI_SSID, PRIMARY_WIFI_PASSWORD) ||
                wifi_try_connect(BACKUP_WIFI_SSID,  BACKUP_WIFI_PASSWORD)){
                 wifi_status = WIFI_CONNECTED;
                 printf("[RECONNECT] Wi-Fi reconnected!\r\n");
+
+                sys_ms_sleep(500);
                 start_sntp_and_sync();
 
                 my_mqtt_cmd_disconnect();
                 sys_ms_sleep(1000);
-
                 my_mqtt_cmd_connect();
 
-                // Flush offline data (if any) now that we're online
                 if(mqtt_client && mqtt_client_is_connected(mqtt_client)){
                     offline_flush_to_mqtt();
                 }
-
-                #ifdef CONFIG_OTA_DEMO_SUPPORT
+#ifdef CONFIG_OTA_DEMO_SUPPORT
                 start_ota_demo();
-                #endif
-
+#endif
             } else {
-                // remain offline
                 printf("[RECONNECT] Still offline.\r\n");
             }
-        } else {
-            // check if we truly remain connected to Wi-Fi
-            extern struct wifi_vif_tag wifi_vif_tab[];
-            #define WIFI_STA_STATE_CONNECTED 6
-            if(wifi_vif_tab[0].sta.state != WIFI_STA_STATE_CONNECTED) {
-                printf("[RECONNECT] Wi-Fi dropped.\r\n");
-                wifi_status = WIFI_DISCONNECTED;
-                sntp_stop();
-                my_mqtt_cmd_disconnect();
-            } else {
-                // Wi-Fi is up, check MQTT connection
-                if(!(mqtt_client && mqtt_client_is_connected(mqtt_client))) {
-                    printf("[RECONNECT] MQTT disconnected => reconnecting...\r\n");
-                    my_mqtt_cmd_disconnect();
-                    sys_ms_sleep(1000);
-                    my_mqtt_cmd_connect();
+        }
 
-                    // If reconnect success, flush offline
-                    if(mqtt_client && mqtt_client_is_connected(mqtt_client)) {
-                        offline_flush_to_mqtt();
-
-                        #ifdef CONFIG_OTA_DEMO_SUPPORT
-                        start_ota_demo();
-                        #endif
-                    }
-                }
+        // New block to handle the case where Wi-Fi is up but MQTT has disconnected.
+        if(wifi_status == WIFI_CONNECTED && (!(mqtt_client && mqtt_client_is_connected(mqtt_client)))) {
+            printf("[RECONNECT] MQTT disconnected => reconnecting...\r\n");
+            my_mqtt_cmd_disconnect();
+            sys_ms_sleep(1000);
+            my_mqtt_cmd_connect();
+            if(mqtt_client && mqtt_client_is_connected(mqtt_client)) {
+                offline_flush_to_mqtt();
+#ifdef CONFIG_OTA_DEMO_SUPPORT
+                start_ota_demo();
+#endif
             }
+        }
+
+        // Check if Wi-Fi is still connected
+        extern struct wifi_vif_tag wifi_vif_tab[];
+        #define WIFI_STA_STATE_CONNECTED 6
+        if(wifi_status == WIFI_CONNECTED && wifi_vif_tab[0].sta.state != WIFI_STA_STATE_CONNECTED) {
+            printf("[RECONNECT] Wi-Fi dropped.\r\n");
+            wifi_status = WIFI_DISCONNECTED;
+            sntp_stop();
+            my_mqtt_cmd_disconnect();
         }
 
         sys_ms_sleep(10000);
@@ -564,18 +575,318 @@ static void wifi_reconnect_task(void *arg)
 
 
 // --------------------------------------------------------------------
+// Minimal HTTP server for SoftAP
+// --------------------------------------------------------------------
+static void parse_url_params(const char *query,
+                             char *p_ssid, size_t p_ssid_len,
+                             char *p_pass, size_t p_pass_len,
+                             char *b_ssid, size_t b_ssid_len,
+                             char *b_pass, size_t b_pass_len)
+{
+    #define SCAN_PARAM(q, name, dest, maxlen) do { \
+        char *p = strstr((q), name "=");           \
+        if(p){                                     \
+            p += strlen(name) + 1;                 \
+            size_t i=0;                            \
+            while(*p && *p!='&' && i<(maxlen-1)){  \
+                if(*p == '+') dest[i] = ' ';       \
+                else dest[i] = *p;                 \
+                i++; p++;                          \
+            }                                      \
+            dest[i] = '\0';                        \
+        }                                          \
+    } while(0)
+
+    SCAN_PARAM(query, "p_ssid",  p_ssid,  p_ssid_len);
+    SCAN_PARAM(query, "p_pass",  p_pass,  p_pass_len);
+    SCAN_PARAM(query, "b_ssid",  b_ssid,  b_ssid_len);
+    SCAN_PARAM(query, "b_pass",  b_pass,  b_pass_len);
+
+    #undef SCAN_PARAM
+}
+
+// Here is the actual HTML form with {{MAC}} placeholder
+static const char html_form[] =
+"HTTP/1.0 200 OK\r\n"
+"Content-Type: text/html\r\n\r\n"
+"<!DOCTYPE html>"
+"<html>"
+"<head>"
+"<meta charset='UTF-8'>"
+"<title>MZ-GW Wi-Fi Config</title>"
+"<style>"
+"  body { background: #fafafa; font-family: Arial, sans-serif; padding:20px; }"
+"  .container { background: #fff; padding: 20px; border-radius: 6px; max-width:400px; margin:auto; text-align:center; }"
+"  .container h2 { margin-top:0; }"
+"  .logo { display:block; margin:20px auto; max-width:200px; }"
+"  label { font-weight:bold; display:block; text-align:left; margin:10px 0 5px 0; }"
+"  input { display:block; margin:0 auto 10px auto; width:90%; padding:8px; }"
+"  .btn { background:#90ee90; color:#000; border:none; padding:10px 20px; cursor:pointer; display:block; margin:20px auto 0 auto; }"
+"  .btn:hover { background:#80dd80; }"
+"</style>"
+"</head>"
+"<body>"
+"<div class='container'>"
+"<svg class='logo' id='Layer_1' data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1496 486'>"
+"<title>tr</title>"
+"<circle cx='253.73' cy='249' r='208.82' style='fill:transparent'/>"
+"<path d='M510.88,186.59H659q32,0,46.28,12.56T719.6,240v92.67H680.78V245.12c0-10.64-1.59-17.71-4.85-21.16s-9.9-5.23-20-5.23H634.23V332.67H594.87V218.73H549.68V332.67h-38.8Z' style='fill:#231f20;fill-rule:evenodd'/>"
+"<path d='M785.05,259.7c0,13.76,3.29,24.61,9.72,32.42s15.64,11.67,27.26,11.67,20.57-3.86,27.15-11.67,9.91-18.66,9.91-32.42-3.26-24.6-9.82-32.38S833.63,215.67,822,215.67s-20.58,3.87-27.14,11.65S785.05,245.89,785.05,259.7Zm114.51,0q0,34.41-20.92,54.91c-14,13.64-32.71,20.47-56.39,20.47s-42.41-6.83-56.55-20.56-21.11-32-21.11-54.82,7.07-41.12,21.11-54.93,33-20.71,56.55-20.71c23.4,0,42.07,6.86,56.2,20.62S899.56,236.8,899.56,259.73Z' style='fill:#231f20;fill-rule:evenodd'/>"
+"<path d='M961.94,133.64v53H995c14.57,0,26.32,1.72,35.17,5.2A53.8,53.8,0,0,1,1053,209.05a69.89,69.89,0,0,1,11.83,22.16,83.74,83.74,0,0,1,4,26.56q0,35.09-18.75,55t-52.42,19.9H923.36v-199Zm23.54,84.53H961.94v83.19h26.54c14.61,0,25-3.12,30.93-9.3s9-16.64,9-31.4c0-15.16-3.21-26-9.88-32.6S1000.89,218.17,985.48,218.17Z' style='fill:#231f20;fill-rule:evenodd'/>"
+"<rect x='1092.52' y='186.59' width='40.46' height='146.09' style='fill:#231f20'/>"
+"<rect x='1165.98' y='133.64' width='40.47' height='199.03' style='fill:#231f20'/>"
+"<rect x='1239.58' y='186.59' width='40.46' height='146.09' style='fill:#231f20'/>"
+"<path d='M1237.58,146.14A21.85,21.85,0,1,1,1259.41,168,21.85,21.85,0,0,1,1237.58,146.14Z' style='fill:#231f20;fill-rule:evenodd'/>"
+"<path d='M1090.9,146.14A21.85,21.85,0,1,1,1112.73,168,21.86,21.86,0,0,1,1090.9,146.14Z' style='fill:#231f20;fill-rule:evenodd'/>"
+"<polygon points='1313.04 301.39 1399.54 218.17 1313.04 218.17 1313.04 186.59 1450.05 186.59 1450.05 218.11 1363.56 301.36 1450.05 301.36 1450.05 332.67 1313.04 332.67 1313.04 301.39' style='fill:#231f20;fill-rule:evenodd'/>"
+"<path d='M301.93,45.78a166.5,166.5,0,0,1-3.78,319.35,4.93,4.93,0,0,1-2.75-9.46A138.83,138.83,0,0,0,243.07,85c-69,4.77-124.62,61-128.72,130a138.88,138.88,0,0,0,94.76,140.23,4.91,4.91,0,0,1,3.4,4.65V360a4.92,4.92,0,0,1-6.23,4.77A166.51,166.51,0,0,1,87.09,190.23C92.77,124,138.1,68.5,198.8,47.49,110.12,71.61,44.91,152.68,44.91,249c0,105.39,78.07,192.53,179.53,206.77V286.61a49,49,0,0,0,57.55,0v169.3C384,442.11,462.55,354.74,462.55,249,462.55,150.27,394,67.55,301.93,45.78ZM210.18,314.47a4.78,4.78,0,0,1,2.33,4.08v.16a4.84,4.84,0,0,1-7.06,4.3,103.7,103.7,0,0,1-55.39-103.74c5.21-47.71,43.59-86.18,91.3-91.47a103.8,103.8,0,0,1,57.55,196.32,4.82,4.82,0,0,1-4.52-8.51,82.5,82.5,0,0,0-50.58-153.46c-38.93,4.3-69.91,36.53-72.86,75.59A82.38,82.38,0,0,0,210.18,314.47Zm43-33.79A28.78,28.78,0,1,1,282,251.9,28.78,28.78,0,0,1,253.22,280.68Z' style='fill:#3dae2b'/>"
+"</svg>"
+"<h2>Wi-Fi Config<br>MZ-GW/{{MAC}}</h2>"
+"<form method='GET' action='/set'>"
+"  <label>Primary SSID:</label>"
+"  <input type='text' name='p_ssid'>"
+"  <label>Primary PASS:</label>"
+"  <input type='text' name='p_pass'>"
+"  <label>Backup SSID:</label>"
+"  <input type='text' name='b_ssid'>"
+"  <label>Backup PASS:</label>"
+"  <input type='text' name='b_pass'>"
+"  <input class='btn' type='submit' value='Save & Reconnect'/>"
+"</form>"
+"</div>"
+"</body></html>\r\n";
+
+static void http_server_handle_request(int fd)
+{
+    char recv_buf[512];
+    int ret = recv(fd, recv_buf, sizeof(recv_buf)-1, 0);
+    if(ret <= 0) {
+        return;
+    }
+    recv_buf[ret] = '\0';
+
+    if(strncmp(recv_buf, "GET /set?", 9)==0) {
+        // 1) Extract the query
+        char *qs = &recv_buf[9];
+        char *end = strstr(qs, " ");
+        if(end) *end = '\0';
+
+        // 2) Parse parameters
+        char new_p_ssid[64]  = {0};
+        char new_p_pass[64]  = {0};
+        char new_b_ssid[64]  = {0};
+        char new_b_pass[64]  = {0};
+
+        parse_url_params(qs,
+                         new_p_ssid, sizeof(new_p_ssid),
+                         new_p_pass, sizeof(new_p_pass),
+                         new_b_ssid, sizeof(new_b_ssid),
+                         new_b_pass, sizeof(new_b_pass));
+
+        // 3) Update global SSID/PASS
+        if(strlen(new_p_ssid)>0) {
+            strncpy(g_primary_ssid, new_p_ssid, sizeof(g_primary_ssid));
+        }
+        if(strlen(new_p_pass)>0) {
+            strncpy(g_primary_password, new_p_pass, sizeof(g_primary_password));
+        }
+        if(strlen(new_b_ssid)>0) {
+            strncpy(g_backup_ssid, new_b_ssid, sizeof(g_backup_ssid));
+        }
+        if(strlen(new_b_pass)>0) {
+            strncpy(g_backup_password, new_b_pass, sizeof(g_backup_password));
+        }
+
+        printf("[HTTP] Updating Wi-Fi config => disconnect + reconnect...\r\n");
+        // 4) Manual disconnect+connect to new config
+        my_mqtt_cmd_disconnect();
+        wifi_management_disconnect();
+        sys_ms_sleep(2000);
+
+        wifi_connect_handler();
+
+        if(wifi_status == WIFI_CONNECTED) {
+            // We do the immediate chain so we're not stuck offline:
+            printf("[HTTP] Manual connect success => start SNTP, reconnect MQTT.\r\n");
+            start_sntp_and_sync();
+            my_mqtt_cmd_disconnect();
+            sys_ms_sleep(1000);
+            my_mqtt_cmd_connect();
+
+            if(mqtt_client && mqtt_client_is_connected(mqtt_client)){
+                offline_flush_to_mqtt();
+            }
+#ifdef CONFIG_OTA_DEMO_SUPPORT
+            start_ota_demo();
+#endif
+            // Next time we lose Wi-Fi, let's do 10s first again:
+            g_first_offline_retry = false;
+
+        } else {
+            // Connect failed => ensure we do a short 10s wait next time
+            g_first_offline_retry = true;
+        }
+
+        // 5) Respond
+        const char resp_ok[] =
+        "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n"
+        "<html><body><h3>New Wi-Fi config saved. Attempting reconnection now.</h3>"
+        "<a href='/'>Back</a>"
+        "</body></html>\r\n";
+        send(fd, resp_ok, strlen(resp_ok), 0);
+
+    } else {
+        // Return the HTML form with dynamic MAC placeholder
+
+        // Copy the entire html_form into a buffer so we can replace {{MAC}}
+        char dynamic_html[sizeof(html_form) + 32];
+        memset(dynamic_html, 0, sizeof(dynamic_html));
+        strncpy(dynamic_html, html_form, sizeof(dynamic_html) - 1);
+
+        // Find {{MAC}} and substitute with g_gateway_mac
+        char *title_placeholder = strstr(dynamic_html, "{{MAC}}");
+        if (title_placeholder) {
+            // Make a local string to hold the MAC
+            char temp[32];
+            snprintf(temp, sizeof(temp), "%s", g_gateway_mac);
+
+            // Move the remainder of the string forward by the length of the placeholder minus the length of the MAC
+            // We are effectively removing 7 characters ("{{MAC}}") then inserting the actual MAC length
+            size_t mac_len = strlen(temp);
+            memmove(
+                title_placeholder + mac_len,
+                title_placeholder + 7,
+                strlen(title_placeholder + 7) + 1
+            );
+            // Insert the actual MAC
+            memcpy(title_placeholder, temp, mac_len);
+        }
+
+        // Send to the client
+        send(fd, dynamic_html, strlen(dynamic_html), 0);
+    }
+}
+
+static void softap_http_server_task(void *param)
+{
+    (void)param;
+
+    // 1) Start SoftAP
+    char ap_ssid[32];
+    if (strlen(g_gateway_mac) > 0) {
+        snprintf(ap_ssid, sizeof(ap_ssid), "MZ-GW/%s", g_gateway_mac);
+    } else {
+        snprintf(ap_ssid, sizeof(ap_ssid), "MZ-GW/");
+    }
+
+    char *ap_password = "12345678";
+    uint8_t channel   = 6;
+    wifi_ap_auth_mode_t auth_mode = AUTH_MODE_WPA2_WPA3;
+    uint8_t is_hidden = 0;
+
+    printf("[HTTP] Starting Wi-Fi SoftAP: %s\r\n", ap_ssid);
+    int ret = wifi_management_ap_start(ap_ssid, ap_password, channel, auth_mode, is_hidden);
+    if(ret != 0){
+        printf("[HTTP] wifi_management_ap_start failed, code=%d\r\n", ret);
+        goto exit_ap;
+    }
+    printf("[HTTP] SoftAP started successfully.\r\n");
+
+    // 2) Start a minimal HTTP server on port 80
+    int listen_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if(listen_fd < 0){
+        printf("[HTTP] Socket create error!\r\n");
+        goto exit_ap;
+    }
+    int reuse=1;
+    setsockopt(listen_fd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+
+    struct sockaddr_in srv_addr;
+    memset(&srv_addr, 0, sizeof(srv_addr));
+    srv_addr.sin_family      = AF_INET;
+    srv_addr.sin_port        = htons(80);
+    srv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+
+    if(bind(listen_fd, (struct sockaddr*)&srv_addr, sizeof(srv_addr))<0){
+        printf("[HTTP] Bind error!\r\n");
+        goto exit_server;
+    }
+    if(listen(listen_fd, 4)<0){
+        printf("[HTTP] Listen error!\r\n");
+        goto exit_server;
+    }
+
+    printf("[HTTP] Listening on port 80 (SoftAP) ...\r\n");
+
+    while(1) {
+        struct sockaddr_in client_addr;
+        socklen_t addr_len = sizeof(client_addr);
+        int cli_fd = accept(listen_fd, (struct sockaddr*)&client_addr, &addr_len);
+        if(cli_fd < 0) {
+            if(errno == EAGAIN) {
+                continue;
+            }
+            printf("[HTTP] accept error %d\r\n", errno);
+            break;
+        }
+        http_server_handle_request(cli_fd);
+        shutdown(cli_fd, SHUT_RD);
+        close(cli_fd);
+    }
+
+exit_server:
+    if(listen_fd >= 0){
+        shutdown(listen_fd, SHUT_RD);
+        close(listen_fd);
+    }
+exit_ap:
+	sys_ms_sleep(500);
+    wifi_management_ap_stop();
+    printf("[HTTP] SoftAP server ended.\r\n");
+
+    sys_task_delete(NULL);
+}
+
+// --------------------------------------------------------------------
 // The main scanning/publishing task
 // --------------------------------------------------------------------
 static void demo_task(void *arg)
 {
     (void)arg;
 
+    // (A) Read MAC from flash if available
+    gw_mac_read_from_flash();
 
+    printf("[demo_task] Launching SoftAP concurrency first...\r\n");
 
-    printf("[demo_task] Wi-Fi connecting...\r\n");
-    wifi_connect_handler();
+    // Create SoftAP first
+    sys_task_create_dynamic(
+        (uint8_t*)"softap_http_server_task",
+        4096,
+        OS_TASK_PRIORITY(0),
+        softap_http_server_task,
+        NULL
+    );
 
-    // Create background reconnect task
+    // Let the SoftAP get started properly
+    sys_ms_sleep(2000);
+
+    printf("[demo_task] Now connecting STA...\r\n");
+    wifi_connect_handler();  // Attempt station connect
+
+    // If connected => SNTP + MQTT + optional OTA + flush offline
+    if(wifi_status==WIFI_CONNECTED){
+        start_sntp_and_sync();
+        my_mqtt_cmd_connect();
+#ifdef CONFIG_OTA_DEMO_SUPPORT
+        start_ota_demo();
+#endif
+        if(mqtt_client && mqtt_client_is_connected(mqtt_client)){
+            offline_flush_to_mqtt();
+        }
+    }
+
+    // Create background reconnect logic
     os_task_t rtask = sys_task_create_dynamic(
             (uint8_t*)"wifi_reconnect_task",
             2048,
@@ -588,24 +899,10 @@ static void demo_task(void *arg)
         for(;;){}
     }
 
-    // If connected => do SNTP + MQTT + optional OTA + flush
-    if(wifi_status==WIFI_CONNECTED){
-        start_sntp_and_sync();
-        my_mqtt_cmd_connect();
-
-        #ifdef CONFIG_OTA_DEMO_SUPPORT
-        start_ota_demo();
-        #endif
-
-        if(mqtt_client && mqtt_client_is_connected(mqtt_client)){
-            offline_flush_to_mqtt();
-        }
-    }
-
-    // ---- Move init_gw_mac here so the MAC is valid. ----
-      init_gw_mac();
-
-    // BLE scanning forever
+    // We still call init_gw_mac() => writes to flash for future boots
+    init_gw_mac();
+    sys_ms_sleep(500);
+    // BLE scanning + offline logic
     while(1){
         for (uint8_t idx=0; ; idx++){
             dev_info_t* dev = scan_mgr_find_dev_by_idx(idx);
@@ -616,7 +913,6 @@ static void demo_task(void *arg)
             if(dev->adv_data[5]==0x4D && dev->adv_data[6]==0x5A) {
                 printf("[demo_task] Found Target Beacon!\r\n");
 
-                // parse dynamic fields
                 uint8_t device_type = dev->adv_data[7];
                 uint32_t msg_counter = (dev->adv_data[8]<<24)|(dev->adv_data[9]<<16)|
                                        (dev->adv_data[10]<<8)| dev->adv_data[11];
@@ -626,9 +922,7 @@ static void demo_task(void *arg)
                 bool reed_relay      = dev->adv_data[18]?true:false;
                 uint8_t accel        = dev->adv_data[19];
 
-                // We'll create the JSON if we are online, else store a compact record
                 if(wifi_status==WIFI_CONNECTED && mqtt_client && mqtt_client_is_connected(mqtt_client)) {
-                    // Construct JSON with a new "GW_MAC" right after "MAC"
                     char json_payload[256];
                     snprintf(json_payload, sizeof(json_payload),
                              "{"
@@ -654,19 +948,15 @@ static void demo_task(void *arg)
                              reed_relay?"true":"false",
                              accel
                     );
-
-                    // Publish now
                     my_mqtt_cmd_publish(json_payload);
 
-                    // debug timestamp
                     uint32_t t = get_current_epoch_time();
                     printf("TIMESTAMP(Online): %lu\r\n", (unsigned long)t);
+                    sys_ms_sleep(400);
 
                 } else {
-                    // offline => store to flash (compact struct)
                     offline_record_t rec;
                     memset(&rec, 0, sizeof(rec));
-                    // store MAC in same order we read it
                     memcpy(rec.peer_mac, dev->peer_addr.addr, 6);
 
                     rec.device_type = device_type;
@@ -676,45 +966,48 @@ static void demo_task(void *arg)
                     rec.battery     = batt;
                     rec.reed_relay  = (reed_relay ? 1 : 0);
                     rec.accel       = accel;
-
-                    rec.offline     = 1; // we were offline
+                    rec.offline     = 1;
                     rec.timestamp   = get_current_epoch_time();
 
                     save_offline_record(&rec);
-
                     printf("TIMESTAMP(Offline): %lu\r\n", (unsigned long)rec.timestamp);
+
                 }
             }
         }
+        if(wifi_status==WIFI_CONNECTED && mqtt_client && mqtt_client_is_connected(mqtt_client))
+        	sys_ms_sleep(ONLINE_SCAN_INTERVAL);
+        else
+            sys_ms_sleep(OFFLINE_SCAN_INTERVAL);
 
-        sys_ms_sleep(7000); // every 7 seconds
     }
 
     sys_task_delete(NULL);
 }
 
-
 // --------------------------------------------------------------------
-// main => OS init, ble_init, wifi_init, raw_flash_init, create "demo_task"
+// main => OS init, ble_init, wifi_init, raw_flash_init, start tasks
 // --------------------------------------------------------------------
 int main(void)
 {
-    // Initialize OS and platform
     sys_os_init();
     platform_init();
 
     dbg_print(NOTICE, "Firmware version: 1.0\r\n");
 
-    // BLE init in main
+    // BLE init
     ble_init(true);
 
-    // Initialize Wi-Fi
+    // Initialize Wi-Fi (station driver)
     if(wifi_init()){
         dbg_print(ERR,"[MAIN] wifi_init failed!\r\n");
         for(;;){}
     }
 
-    // Initialize raw flash subsystem so we can do offline storage
+    // Enable concurrency mode
+    wifi_management_concurrent_set(1);
+
+    // Initialize raw flash
     raw_flash_init();
 
     // Create the main demo task

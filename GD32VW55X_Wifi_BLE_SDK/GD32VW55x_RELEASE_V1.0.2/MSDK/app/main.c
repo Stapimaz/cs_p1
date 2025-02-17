@@ -65,8 +65,8 @@ extern mqtt_client_t *mqtt_client; // declared in mqtt_cmd.c
 // --------------------------------------------------------------------
 // Wi-Fi config (changeable at runtime via the new AP/HTML page)
 // --------------------------------------------------------------------
-static char g_primary_ssid[64]     = "Redmi Note 10S";
-static char g_primary_password[64] = "54321012";
+static char g_primary_ssid[64]     = "Mobiliz NaRGE_Guest";
+static char g_primary_password[64] = "M@b!lz12.*";
 static char g_backup_ssid[64]      = "Redmi Note 10S";
 static char g_backup_password[64]  = "54321012";
 
@@ -364,7 +364,7 @@ typedef struct __attribute__((packed)) {
 
 static void offline_data_erase(void)
 {
-	sys_ms_sleep(1500);
+    sys_ms_sleep(1500);
     raw_flash_erase(OFFLINE_DATA_BASE, OFFLINE_DATA_SIZE);
     uint32_t init_data[2];
     init_data[0] = OFFLINE_MAGIC_VALID;
@@ -414,7 +414,6 @@ static void save_offline_record(const offline_record_t *rec)
     printf("[FLASH] Offline record saved => offset now=%u\r\n", (unsigned)s_ram_offset);
 }
 
-// Add these delay and sync points in the offline_flush_to_mqtt function:
 static void offline_flush_to_mqtt(void)
 {
     if(!offline_initialized){
@@ -428,7 +427,7 @@ static void offline_flush_to_mqtt(void)
     printf("[FLASH] Found %u bytes of offline data => flushing...\r\n",(unsigned)s_ram_offset);
     uint32_t read_pos = 0;
 
-    // Add delay before starting flush
+    // Delay before starting flush
     sys_ms_sleep(1000);  // Give MQTT connection time to stabilize
 
     while(read_pos < s_ram_offset) {
@@ -470,7 +469,7 @@ static void offline_flush_to_mqtt(void)
                  "\"BatteryVoltage\":%u,"
                  "\"ReedRelay\":%s,"
                  "\"Accelerometer\":%u,"
-                 "\"Timestamp\":%lu"  // Always include timestamp for offline records
+                 "\"Timestamp\":%lu"
                  "}",
                  rec.peer_mac[5], rec.peer_mac[4], rec.peer_mac[3],
                  rec.peer_mac[2], rec.peer_mac[1], rec.peer_mac[0],
@@ -488,22 +487,22 @@ static void offline_flush_to_mqtt(void)
         printf("[FLASH] Publishing offline record: %s\r\n", json_payload);
         my_mqtt_cmd_publish(json_payload);
 
-        // Add delay between records
-        sys_ms_sleep(1000);  // Prevent overwhelming MQTT connection
+        // Delay between records
+        sys_ms_sleep(100);
     }
 
-    // Add delay before erasing
+    // Delay before erasing
     sys_ms_sleep(1500);
     offline_data_erase();
 
-    // Add final delay after erase
+    // Final delay after erase
     sys_ms_sleep(1000);
     printf("[FLASH] Offline data flush complete.\r\n");
 }
 
 // --------------------------------------------------------------------
 // Wi-Fi reconnect => tries every 5 min if offline.
-// ***CHANGE #2: first time offline => wait 10s, subsequent => 5 min
+// first time offline => wait 10s, subsequent => 5 min
 // --------------------------------------------------------------------
 static void wifi_reconnect_task(void *arg)
 {
@@ -511,8 +510,6 @@ static void wifi_reconnect_task(void *arg)
 
     while(1) {
         if(wifi_status == WIFI_DISCONNECTED) {
-            // If the user *just* changed config and forced a manual reconnect that failed,
-            // we reset g_first_offline_retry=true. So let's do logic:
             if(g_first_offline_retry) {
                 printf("[RECONNECT] Offline => next attempt in 10 seconds.\r\n");
                 sys_ms_sleep(10000);
@@ -545,7 +542,7 @@ static void wifi_reconnect_task(void *arg)
             }
         }
 
-        // New block to handle the case where Wi-Fi is up but MQTT has disconnected.
+        // If Wi-Fi is up but MQTT is disconnected => reconnect
         if(wifi_status == WIFI_CONNECTED && (!(mqtt_client && mqtt_client_is_connected(mqtt_client)))) {
             printf("[RECONNECT] MQTT disconnected => reconnecting...\r\n");
             my_mqtt_cmd_disconnect();
@@ -573,6 +570,43 @@ static void wifi_reconnect_task(void *arg)
     }
 }
 
+// --------------------------------------------------------------------
+// Helper for URL decoding
+// Decodes %xx to a character, and + to space, in-place
+// --------------------------------------------------------------------
+static int hex_val(char c)
+{
+    if (c >= '0' && c <= '9') return (c - '0');
+    if (c >= 'A' && c <= 'F') return (c - 'A' + 10);
+    if (c >= 'a' && c <= 'f') return (c - 'a' + 10);
+    return -1;
+}
+
+// Decodes in-place: e.g. "M%40b%21lz" -> "M@b!lz"
+static void url_decode_in_place(char *s)
+{
+    char *p = s, *q = s;
+    while (*p) {
+        if (*p == '+') {
+            // + becomes space
+            *q++ = ' ';
+            p++;
+        } else if (*p == '%' && p[1] && p[2]) {
+            int hi = hex_val(p[1]);
+            int lo = hex_val(p[2]);
+            if (hi >= 0 && lo >= 0) {
+                *q++ = (char)((hi << 4) | lo);
+                p += 3;
+            } else {
+                // malformed, just copy as-is
+                *q++ = *p++;
+            }
+        } else {
+            *q++ = *p++;
+        }
+    }
+    *q = '\0';
+}
 
 // --------------------------------------------------------------------
 // Minimal HTTP server for SoftAP
@@ -583,24 +617,30 @@ static void parse_url_params(const char *query,
                              char *b_ssid, size_t b_ssid_len,
                              char *b_pass, size_t b_pass_len)
 {
-    #define SCAN_PARAM(q, name, dest, maxlen) do { \
-        char *p = strstr((q), name "=");           \
-        if(p){                                     \
-            p += strlen(name) + 1;                 \
-            size_t i=0;                            \
-            while(*p && *p!='&' && i<(maxlen-1)){  \
-                if(*p == '+') dest[i] = ' ';       \
-                else dest[i] = *p;                 \
-                i++; p++;                          \
-            }                                      \
-            dest[i] = '\0';                        \
-        }                                          \
+    #define SCAN_PARAM(q, name, dest, maxlen) do {         \
+        char *p = strstr((q), name "=");                   \
+        if(p){                                             \
+            p += strlen(name) + 1;                         \
+            size_t i=0;                                    \
+            while(*p && *p!='&' && i<(maxlen-1)){          \
+                if(*p == '+') dest[i] = ' ';               \
+                else dest[i] = *p;                         \
+                i++; p++;                                  \
+            }                                              \
+            dest[i] = '\0';                                \
+        }                                                  \
     } while(0)
 
     SCAN_PARAM(query, "p_ssid",  p_ssid,  p_ssid_len);
     SCAN_PARAM(query, "p_pass",  p_pass,  p_pass_len);
     SCAN_PARAM(query, "b_ssid",  b_ssid,  b_ssid_len);
     SCAN_PARAM(query, "b_pass",  b_pass,  b_pass_len);
+
+    // Now do a proper decode of any '%xx' sequences
+    url_decode_in_place(p_ssid);
+    url_decode_in_place(p_pass);
+    url_decode_in_place(b_ssid);
+    url_decode_in_place(b_pass);
 
     #undef SCAN_PARAM
 }
@@ -746,19 +786,13 @@ static void http_server_handle_request(int fd)
         // Find {{MAC}} and substitute with g_gateway_mac
         char *title_placeholder = strstr(dynamic_html, "{{MAC}}");
         if (title_placeholder) {
-            // Make a local string to hold the MAC
             char temp[32];
             snprintf(temp, sizeof(temp), "%s", g_gateway_mac);
 
-            // Move the remainder of the string forward by the length of the placeholder minus the length of the MAC
-            // We are effectively removing 7 characters ("{{MAC}}") then inserting the actual MAC length
             size_t mac_len = strlen(temp);
-            memmove(
-                title_placeholder + mac_len,
-                title_placeholder + 7,
-                strlen(title_placeholder + 7) + 1
-            );
-            // Insert the actual MAC
+            memmove(title_placeholder + mac_len,
+                    title_placeholder + 7,
+                    strlen(title_placeholder + 7) + 1);
             memcpy(title_placeholder, temp, mac_len);
         }
 
@@ -840,7 +874,7 @@ exit_server:
         close(listen_fd);
     }
 exit_ap:
-	sys_ms_sleep(500);
+    sys_ms_sleep(500);
     wifi_management_ap_stop();
     printf("[HTTP] SoftAP server ended.\r\n");
 
@@ -902,6 +936,7 @@ static void demo_task(void *arg)
     // We still call init_gw_mac() => writes to flash for future boots
     init_gw_mac();
     sys_ms_sleep(500);
+
     // BLE scanning + offline logic
     while(1){
         for (uint8_t idx=0; ; idx++){
@@ -915,7 +950,7 @@ static void demo_task(void *arg)
 
                 uint8_t device_type = dev->adv_data[7];
                 uint32_t msg_counter = (dev->adv_data[8]<<24)|(dev->adv_data[9]<<16)|
-                                       (dev->adv_data[10]<<8)| dev->adv_data[11];
+                                       (dev->adv_data[10]<<8)|dev->adv_data[11];
                 int16_t temperature  = (int16_t)((dev->adv_data[12]<<8)|dev->adv_data[13]);
                 int16_t humidity     = (int16_t)((dev->adv_data[14]<<8)|dev->adv_data[15]);
                 uint16_t batt        = (uint16_t)((dev->adv_data[16]<<8)|dev->adv_data[17]);
@@ -952,7 +987,7 @@ static void demo_task(void *arg)
 
                     uint32_t t = get_current_epoch_time();
                     printf("TIMESTAMP(Online): %lu\r\n", (unsigned long)t);
-                    sys_ms_sleep(400);
+                    sys_ms_sleep(100);
 
                 } else {
                     offline_record_t rec;
@@ -971,15 +1006,13 @@ static void demo_task(void *arg)
 
                     save_offline_record(&rec);
                     printf("TIMESTAMP(Offline): %lu\r\n", (unsigned long)rec.timestamp);
-
                 }
             }
         }
         if(wifi_status==WIFI_CONNECTED && mqtt_client && mqtt_client_is_connected(mqtt_client))
-        	sys_ms_sleep(ONLINE_SCAN_INTERVAL);
+            sys_ms_sleep(ONLINE_SCAN_INTERVAL);
         else
             sys_ms_sleep(OFFLINE_SCAN_INTERVAL);
-
     }
 
     sys_task_delete(NULL);

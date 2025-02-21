@@ -19,6 +19,9 @@
 #include "dbg_print.h"
 #include "ota_demo.h"
 
+#include "wifi_mqtt.h"  // resetAfterOTA
+
+
 #ifdef CONFIG_OTA_DEMO_SUPPORT
 
 #define HTTP_GET_MAX_LEN            1024
@@ -406,6 +409,7 @@ static void ota_demo_task(void)
     }
 
     app_print("Download new image successfully. Please reboot now.\r\n");
+    resetAfterOTA = true;
 Exit:
     if (ota_demo_cfg.sockfd >= 0)
         close(ota_demo_cfg.sockfd);

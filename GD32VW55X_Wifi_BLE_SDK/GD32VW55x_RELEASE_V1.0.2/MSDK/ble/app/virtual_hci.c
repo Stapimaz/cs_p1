@@ -36,6 +36,7 @@ OF SUCH DAMAGE.
  * INCLUDE FILES
  ****************************************************************************************
  */
+#undef CFG_VIRTUAL_HCI_MODE
 
 #ifdef CFG_VIRTUAL_HCI_MODE
 #include <stdint.h>
@@ -96,7 +97,7 @@ typedef struct
 
 #define VIRTUAL_HCI_STACK_SIZE          768
 #define STATIC_CYCLIC_BUFFER_LEN_MAX    2048
-#define BLE_VIR_HCI_TASK_QUEUE_SIZE     128
+#define BLE_VIR_HCI_TASK_QUEUE_SIZE     512 //KK
 
 static os_queue_t vir_hci_msg_queue;
 

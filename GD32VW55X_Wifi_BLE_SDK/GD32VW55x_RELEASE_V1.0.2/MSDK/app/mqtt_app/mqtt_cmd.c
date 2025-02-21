@@ -28,7 +28,7 @@
 #define AUTO_RECONNECT_LIMIT    5
 bool auto_reconnect = false;
 uint8_t auto_reconnect_num = 0;
-uint32_t auto_reconnect_interval = 20000; // ms, 20s
+uint32_t auto_reconnect_interval = 10000; // ms, 20s
 
 static bool mqtt_task_suspended;
 static void *mqtt_task_handle = NULL;
@@ -680,6 +680,12 @@ void mqtt_msg_pub(int argc, char **argv)
     cmd_msg_pub     = publish_msg_mem_malloc(input_topic_len, input_msg_len);
     if (cmd_msg_pub == NULL) {
         app_print("MQTT mqtt_msg_pub: rtos malloc publish msg fail\r\n");
+
+        char *argsDisconnect[] = { "mqtt", "disconnect" };
+        cmd_mqtt(2, argsDisconnect);
+
+		sys_ms_sleep(3000);
+
         return;
     }
     memcpy(cmd_msg_pub->topic, argv[2], input_topic_len);

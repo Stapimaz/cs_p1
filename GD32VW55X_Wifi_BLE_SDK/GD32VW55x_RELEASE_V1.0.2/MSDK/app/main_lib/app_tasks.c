@@ -17,13 +17,10 @@
 #include "wifi_management.h"
 #include "storage.h"
 
-// For OTA
-// (original code just calls start_ota_demo() directly)
+
 extern void start_ota_demo(void);
 
 
-
-// Our scanning intervals (same values as original)
 static int ONLINE_SCAN_INTERVAL  = 7000;
 static int OFFLINE_SCAN_INTERVAL = 14000;
 
@@ -78,7 +75,6 @@ void main_task(void *arg)
 		for(;;){}
 	}
 
-	// We still call init_gw_mac() => writes to flash for future boots
 	init_gw_mac();
 	sys_ms_sleep(500);
 

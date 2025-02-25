@@ -484,6 +484,7 @@ void ble_init(bool all)
 #endif // (BLE_APP_SUPPORT)
 
     /* ble need to close deep sleep before flash erase */
+    //KK BURAYA BAK
     raw_flash_erase_handler_register(ble_flash_erase_handler);
 #else
 #ifdef CFG_VIRTUAL_HCI_MODE

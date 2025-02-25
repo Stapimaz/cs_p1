@@ -398,7 +398,7 @@ static void http_server_handle_request(int fd)
                 offline_flush_to_mqtt();
             }
             sys_ms_sleep(200);
-            start_ota_demo();
+            //start_ota_demo();
         }
         return;
     }

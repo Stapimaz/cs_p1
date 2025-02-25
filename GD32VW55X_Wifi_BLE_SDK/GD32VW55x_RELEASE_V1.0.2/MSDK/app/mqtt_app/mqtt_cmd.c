@@ -25,6 +25,9 @@
 
 #include "mqtt5_client_config.c"
 
+#include "gd32vw55x_fwdgt.h"
+
+
 #define AUTO_RECONNECT_LIMIT    5
 bool auto_reconnect = false;
 uint8_t auto_reconnect_num = 0;
@@ -681,10 +684,19 @@ void mqtt_msg_pub(int argc, char **argv)
     if (cmd_msg_pub == NULL) {
         app_print("MQTT mqtt_msg_pub: rtos malloc publish msg fail\r\n");
 
-        char *argsDisconnect[] = { "mqtt", "disconnect" };
-        cmd_mqtt(2, argsDisconnect);
+        /* Enable write access to the watchdog */
+        fwdgt_write_enable();
 
-		sys_ms_sleep(3000);
+        /* Set the watchdog timeout to its maximum value (to ensure reset) */
+        fwdgt_config(0x0FFF, FWDGT_PSC_DIV64);
+
+        /* Start the watchdog timer */
+        fwdgt_enable();
+
+        /* Wait for reset (this will not return) */
+        while(1){};
+
+		//sys_ms_sleep(3000);
 
         return;
     }

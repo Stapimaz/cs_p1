@@ -49,6 +49,7 @@ OF SUCH DAMAGE.
 #include "dbg_print.h"
 #include "virtual_hci.h"
 #include "ble_export.h"
+#include "gd32vw55x_fwdgt.h"
 
 typedef enum
 {
@@ -146,6 +147,19 @@ static bool vir_hci_msg_send(vir_hci_msg_type_t type, void *p_data, uint16_t dat
         return true;
     } else {
         dbg_print(ERR, "ble app msg send fail! type %d \r\n", type);
+
+        /* Enable write access to the watchdog */
+        fwdgt_write_enable();
+
+        /* Set the watchdog timeout to its maximum value (to ensure reset) */
+        fwdgt_config(0x0FFF, FWDGT_PSC_DIV64);
+
+        /* Start the watchdog timer */
+        fwdgt_enable();
+
+        /* Wait for reset (this will not return) */
+        while(1){};
+
         return false;
     }
 }

@@ -80,7 +80,7 @@ void main_task(void *arg)
 
 	// BLE scanning + offline logic
 	while (1) {
-		for (uint8_t idx=0; ; idx++){
+		for (uint8_t idx=0; idx < 100; idx++){
 			dev_info_t* dev = scan_mgr_find_dev_by_idx(idx);
 			if(!dev) break;
 			if(dev->adv_len < 26) continue;

@@ -99,21 +99,40 @@ const char* get_gateway_mac(void)
 static bool offline_initialized = false;
 static uint32_t s_ram_offset = 0;
 
+
+
 void offline_data_erase(void)
 {
-    sys_ms_sleep(1500);
-    raw_flash_erase(OFFLINE_DATA_BASE, OFFLINE_DATA_SIZE);
+    // Short wait to ensure no immediate transmissions
+    sys_ms_sleep(1000);
 
+    // Erase the entire OFFLINE_DATA_SIZE in 4KB increments
+    const uint32_t page_size = 0x1000; // 4 KB
+    uint32_t start = OFFLINE_DATA_BASE;
+    uint32_t end   = OFFLINE_DATA_BASE + OFFLINE_DATA_SIZE;
+
+    for (uint32_t addr = start; addr < end; addr += page_size) {
+        // Each call erases one 4KB page
+        raw_flash_erase(addr, page_size);
+
+        // Let the OS + Wi-Fi driver handle interrupts for a few ms
+        sys_ms_sleep(5);
+    }
+
+    // After erasing, write our magic + offset header
     uint32_t init_data[2];
     init_data[0] = OFFLINE_MAGIC_VALID;
     init_data[1] = 0;
 
-    sys_ms_sleep(2000);
+    // Another short gap
+    sys_ms_sleep(200);
+
     raw_flash_write(OFFLINE_DATA_BASE, init_data, sizeof(init_data));
 
     s_ram_offset = 0;
-    printf("[FLASH] Erased offline region => offset=0.\r\n");
+    printf("[FLASH] Erased offline region in chunks => offset=0.\r\n");
 }
+
 
 void offline_data_init(void)
 {

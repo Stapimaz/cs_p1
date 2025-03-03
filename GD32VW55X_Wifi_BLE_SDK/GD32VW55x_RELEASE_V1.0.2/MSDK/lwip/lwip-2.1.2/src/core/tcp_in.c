@@ -61,6 +61,7 @@
 
 #include <string.h>
 
+
 #ifdef LWIP_HOOK_FILENAME
 #include LWIP_HOOK_FILENAME
 #endif
@@ -1118,7 +1119,7 @@ tcp_free_acked_segments(struct tcp_pcb *pcb, struct tcp_seg *seg_list, const cha
                                  (tcpwnd_size_t)pcb->snd_queuelen,
                                  dbg_list_name));
     if (pcb->snd_queuelen != 0) {
-      LWIP_ASSERT("tcp_receive: valid queue length",
+    	LWIP_ASSERT("tcp_receive: valid queue length",
                   seg_list != NULL || dbg_other_seg_list != NULL);
     }
   }

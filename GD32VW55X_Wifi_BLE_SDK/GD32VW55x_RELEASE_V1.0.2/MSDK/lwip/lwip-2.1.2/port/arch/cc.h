@@ -38,6 +38,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "compiler.h"
+
+#include "gd32vw55x_fwdgt.h"
+
 // #include "trng.h"
 
 #if 0
@@ -73,8 +76,19 @@ do {\
     printf x;\
 } while(0);
 
-#define LWIP_PLATFORM_ASSERT(x) do { printf("Assertion \"%s\" failed at line %d in %s\n", \
-                                     x, __LINE__, __FILE__); while (1); } while(0)
+#undef LWIP_PLATFORM_ASSERT
+#define LWIP_PLATFORM_ASSERT(x) do { \
+    printf("Assertion \"%s\" failed at line %d in %s\n", x, __LINE__, __FILE__); \
+    /* Enable write access to the watchdog */ \
+    fwdgt_write_enable(); \
+    /* Set the watchdog timeout to its maximum value (to ensure reset) */ \
+    fwdgt_config(0x0FFF, FWDGT_PSC_DIV64); \
+    /* Start the watchdog timer */ \
+    fwdgt_enable(); \
+    /* Wait for reset (this will not return) */ \
+    while(1){}; \
+} while(0)
+
 
 #define LWIP_RAND() ((u32_t)rand()) // ((u32_t)trng_get())
 
